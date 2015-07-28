@@ -1,0 +1,32 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+	<form action ="{:U('/Admin/do_change_config')}" method="POST" >
+      <div class="form2 no_line">
+        <dl class="lineD">
+          <dt>
+            每页显示{$ts['app']['app_alias']}数：
+          </dt>
+          <dd>          	
+            <input name="live_raws" class="txt" value ="{$live_raws}" />
+            <p>设置{$ts['app']['app_alias']}列表页每页显示数。默认为8条记录。</p>
+          </dd>
+        </dl>
+
+        <dl class="lineD">
+          <dt>
+          	直播服务器地址：
+          </dt>
+          <dd>
+          	<input name="live_server" class="txt" value ="{$live_server}" style="width:220px" />
+            <p>例如:rtmp://172.16.172.211/live</p>
+          </dd>
+        </dl>
+        
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </div>
+    </form>
+  </div>
+<include file="_footer" />

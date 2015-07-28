@@ -1,0 +1,24 @@
+<!-- 资源列表 -->
+<if condition="($num neq 0)">
+    <div class="contc">
+        <div class="coltop">资源 <span>截止目前为止：社区共有资源{$num}个</span> <a href="{:U('square/Resource/index')}" title="资源广场" target="_blank">>> 点击进入</a> </div>
+        <ul class="ccl relist">
+            <volist name="newlist" id="nl" key="i">
+            <li <if condition="$i == 1">style="border-top: 1px dashed #e4e4e4;"</if>>
+                <div class="red1">[{$nl['category_name']}] [{$nl['DataName']}] <a href="{:U('home/Space/index',array('uid'=>$nl['uid']))}" target="_blank">{$nl['uid']|getUserName}</a>  上传资源 <a target="_blank" href="{:U('square/Resource/show',array('id'=>$nl['id']))}" title="{$nl['title']}">《{$nl['title']}》</a></div>
+                <div class="red2">{$nl['time']|date="Y.m.d",###}</div>
+            </li>
+            </volist>
+        </ul>
+        <div class="ccr">
+            <div class="ccrtop"><div>热门资源榜</div></div>
+            <ul class="crrlist">
+                <volist name="hotlist" id="hl" key="i">
+                <li><span class="sp1 <php>if($i <= 3){echo 'sp1h';}</php>">{$i}</span><span class="sp2"><a target="_blank" href="{:U('square/Resource/show',array('id'=>$hl['id']))}"  target="_blank" title="{$hl['title']}">{$hl['title']|getShort=###,15}</a></span><span class="sp3">{$hl['readCount']}</span> </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="c"></div>
+        <div class="cb"></div>
+    </div>
+</if>

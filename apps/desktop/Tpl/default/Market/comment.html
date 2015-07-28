@@ -1,0 +1,9 @@
+<include file="../Public/_header_ajax" />
+<a id="comment"></a>
+<div id="comment_containter_appid_{$app[app_id]}">
+<script src="../Public/js/comment.js" type="text/javascript"></script> 
+<script type="text/javascript" >
+    ajaxget("{:U('desktop/Comment/ajax',array('do'=>'commentform','id'=>$app[app_id],'idtype'=>'appid'))}",'comment_containter_appid_{$app[app_id]}','ajaxwaitid');
+</script>
+</div>
+<include file="../Public/_footer_ajax" />

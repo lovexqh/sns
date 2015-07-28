@@ -1,0 +1,190 @@
+.menu{
+	margin:0;
+	padding:0;
+	width:130px;
+	z-index:9999;
+	color:#FFF;
+}
+.menu-item{
+	position:relative;
+	margin:0;
+	padding:0;
+	height:22px;
+	line-height:20px;
+	width:130px;
+	font-size:12px;
+	cursor:pointer;
+	
+}
+.menu-item-nodelete{
+	position:relative;
+	margin:0;
+	padding:0;
+	height:22px;
+	line-height:20px;
+	width:130px;
+	font-size:12px;
+	cursor:default;
+	
+}
+.menu-item-nodelete .menu-text{
+	position:absolute;
+	left:30px;
+	top:0px;
+	color:#999;
+}
+.menu-active{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/bg2.png', sizingMethod='scale');
+	background-image:url(images/bg2.png) !important;
+	background-image:none;
+	-moz-border-radius:3px;
+	-webkit-border-radius: 3px;
+}
+.menu-text{
+	position:absolute;
+	left:30px;
+	top:0px;
+	color:#FFF;
+}
+.menu-icon{
+	position:absolute;
+	width:16px;
+	height:16px;
+	top:3px;
+	left:5px;
+}
+.menu-rightarrow{
+	position: absolute;
+	width:4px;
+	height:7px;
+	top:7px;
+	right:5px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/menu_rightarrow.png', sizingMethod='scale');
+	background-image:url(images/menu_rightarrow.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.menu-sep{
+	margin:3px 0px 3px 24px;
+	line-height:2px;
+	font-size:2px;
+	height:2px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/menu_rightarrow.png', sizingMethod='scale');
+	background-image:url(images/menu_rightarrow.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+/* ---- DM 样式 ---- */
+.DM
+{
+	
+	font-size: 1px;
+	overflow:hidden;
+	position:fixed;
+}
+
+/* 边框样式 */
+.DM .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	
+	width: 13px;
+	height: 11px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/LEFT_TOP.png', sizingMethod='scale');
+	background-image:url(images/LEFT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.DM .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	vertical-align:top;
+	height: 4px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/TOP.png', sizingMethod='scale');
+	background-image:url(images/TOP.png) !important;
+	background-image:none;
+	background-repeat:repeat-x;
+}
+.DM .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	
+	width: 12px;
+	height: 11px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/RIGHT_TOP.png', sizingMethod='scale');
+	background-image:url(images/RIGHT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	z-index:1;
+}
+.DM .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	align:right;
+	width: 6px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/RIGHT.png', sizingMethod='scale');
+	background-image:url(images/RIGHT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+	background-position:
+}
+.DM .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+		
+	width: 12px;
+	height: 18px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/RIGHT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(images/RIGHT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	z-index:1;
+}
+
+.DM .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+		
+	height: 11px;
+	vertical-align:bottom;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/BOTTOM.png', sizingMethod='scale');
+	background-image:url(images/BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+.DM .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+		
+	width: 13px;
+	height: 18px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/LEFT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(images/LEFT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	z-index:1;
+}
+.DM .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+		
+	width: 6px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/LEFT.png', sizingMethod='scale');
+	background-image:url(images/LEFT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+
+.DM .CONTENT
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/menu/dm/images/bg.png', sizingMethod='scale');
+	background-image:url(images/bg.png) !important;
+	background-image:none;
+	
+}
+
+
+
+
+/* ---- DM 样式 ---- */

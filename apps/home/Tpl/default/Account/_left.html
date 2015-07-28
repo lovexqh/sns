@@ -1,0 +1,18 @@
+  <!-- 应用左侧panel begin -->
+  <div id="panel_left" class="panel_left">
+    <ul class="nav_menu">
+    <volist id="vo" name="accountmenu">
+      <li <php>if(ACTION_NAME==$vo['act']){</php>class="sele"<php>}</php>>
+      <a href="{:U('home/Account/'.$vo['act'], $vo['param'])}">{$vo.name}</a>
+      </li>
+    </volist>
+    </ul>
+    
+    <!-- 垂直条 begin -->
+    <div class="panel_slide"></div>
+    <!-- 垂直条 begin --> 
+    <!-- 应用左侧底部占位块 begin -->
+    <div class="bottom_block"></div>
+    <!-- 应用左侧底部占位块 end --> 
+  </div>
+  <!-- 应用左侧panel end --> 

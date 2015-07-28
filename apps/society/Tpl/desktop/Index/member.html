@@ -1,0 +1,66 @@
+<include file="../Public/_header" />
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+
+	<!-- 左侧begin -->
+	<div class="main_left">
+        <if condition="$diff eq '1'">
+            <div class="member_message">
+                <table>
+                    <tr>
+                        <td width="160px;">圈子成员：<span>{$allmember}</span></td>
+                        <td width="150px;">已注册：<span>{$reged}</span></td>
+                        <td width="150px;">未注册：<span>{$notreged}</span></td>
+                        <td width="220px;"></td>
+                    </tr>
+                </table>
+            </div>
+        </if>
+		<div class="member_icon">
+		<if condition="$diff eq '1'">
+		<h2>已注册</h2>
+		</if>
+			<ul>
+                <volist name="regMember" id="reg">
+                    <li>
+                        <div style="float: left;width: 50px	;height: 50px;"><img  src="{$reg.uid|getUserFace}"></div>
+                        <div>
+                            <p style="padding: 10px 0px 0px 0px;font-size: 15px;color: #4582C5;">
+                            	<a title="{$reg.uid|getUserName}的个人主页" class="username" uid="{$reg.uid}" rel="face" href="javascript:void(0);">{$reg.uid|getUserName}&nbsp;</a>
+                        	</p>
+                        	<!-- 
+                        	<p>{$reg['uid']|society_getUserInfo}</p>
+                        	-->
+                        </div>
+                    </li>
+                </volist>
+			</ul>
+            <div class="page" style="clear: both;">{$pageshow}</div>
+		</div>
+        <if condition="$diff eq '1'">
+            <div class="member_icon">
+        		<h2>未注册</h2>
+                <ul>
+                    <volist name="NotRegMember" id="notreg">
+                        <li>
+                            <div style="float: left;width: 50px	;height: 50px;"><img style="height: 50px;" src="__ROOT__/thumb.php?w=150&h=150&t=c&url=./apps/society/Tpl/desktop/Public/images/society_pic.gif"></div>
+                            <div>
+                                <p style="padding: 17px 0px 9px 0px;font-size: 15px;color: #4582C5;"><a hreflang="javascript:;" onclick="sendEmail('{$notreg.xm}');">{$notreg.xm}</a></p>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+            	<div class="page" style="clear: both;">{$notPageshow}</div>
+            </div>
+        </if>
+	</div>
+	<!-- 左侧end -->
+
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<include file="../Public/_footer" />

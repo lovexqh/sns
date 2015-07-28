@@ -1,0 +1,73 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+  <include file="../Public/_movestate_leftmenu" />
+  <div class="trunk_right_g">
+     <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_honor" /><span class="title">班级作业</span></div>
+     <div class="trunk_right_inner">
+       <div class="right_contents" id="add_announce">
+         <div class="right_content" id="see_announce">
+			<table width="660" cellpadding="0" cellspacing="0" border="0" class="exer_form step-top10">
+            	<tr>
+                	<th width="60" height="38">作业标题:</th>
+                    <td>{$title}</td>
+                </tr>
+                <tr>
+                	<th height="38">代课老师:</th>
+                    <td><space uid="fromuid" class="co">{uname}</space></td>
+                </tr>
+                <tr>
+                	<th height="38">作业科目:</th>
+                    <td>{$courseid|getCourseTitle}</td>
+                </tr>
+                <tr>
+                	<th height="38">作业类型:</th>
+                    <td>{$typeid|getTName}</td>
+                </tr>
+                <tr>
+                	<th height="38">起止时间:</th>
+                    <td>{$stime|date='Y年m月d日',###}——{$etime|date='Y年m月d日',###}</td>
+                </tr>
+                <tr>
+                	<th height="38">预计用时:</th>
+                    <td>{$spendtime}</td>
+                </tr>
+                <tr>
+                	<th valign="top">作业附件:</th>
+                    <td class="res_content">
+                         <ul>
+                             <volist name="attach" id="vo">
+                             <li><a href="{:U('exercise/Attach/download',array('aid'=>$vo['attachid']))}" target="_blank">{$vo.attachid|getAttachName|getShort=12}<img src="__THEME__/square/images/naow.gif"></a></li>
+                          	 </volist>
+                        </ul>
+                    </td>	
+                </tr>
+                <tr>
+                		<th height="10" colspan="2">&nbsp;</th>
+               	</tr>
+                <tr>
+                	<th valign="top">推荐资源:</th>
+                    <td class="res_content">
+                        <ul>
+                             <volist name="resource" id="vo">
+                              <li><a href="{:U('square/Resource/show',array('id'=>$vo['rid']))}" target="_blank">{$vo.rid|getRName|getShort=12}</a></li> 
+                            </volist>
+                        </ul>
+                    </td>	
+                </tr>
+                <tr>
+                		<th height="10" colspan="2">&nbsp;</th>
+               	</tr>
+                <tr>
+                	<th valign="top">作业内容:</th>
+                    <td class="height_space">{$content}</td>
+                </tr>
+                <tr>
+                		<th height="10" colspan="2">&nbsp;</th>
+               	</tr>
+            </table>
+       	 </div>
+       </div>
+     </div>
+     <div class="clear10"></div>
+   </div>
+<include file="../Public/_footer" />

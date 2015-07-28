@@ -1,0 +1,41 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<script type="text/javascript" src="../Public/Js/group.interesting.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<script>
+var display_interesting_group = 'main';
+$(document).ready(function(){
+	change_interesting_group(1,'main');
+});
+</script>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+<div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">        
+        <!-- 我的收藏 -->
+        <div class="group_hot_list">
+          <h2 class="lineS_btm">我的收藏</h2>
+          <php>print_r($favouritelist['data']);</php>
+          <if condition="favoritelist">
+          <ul>
+            <volist name="favoritelist" id="fav">
+                <li>
+                  <img alt="" src="../Public/images/{$fav['appname']}.png" style="padding-right:15px;margin-bottom:-3px;" width="15" /><a href="{$fav['url']}" target="_blank">{$fav['name']}</a>
+                  </li>
+            </volist>
+          </ul>
+          </if>
+        </div>
+        <div id="Pagination" class="page">{$html}</div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <!-- 内容 end --> 
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

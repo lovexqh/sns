@@ -1,0 +1,29 @@
+﻿<div style="display:none">
+ <div id="search_nav"> 
+   <strong>您当前的位置：</strong>
+   <span><a href="{:U('square/Article/index')}">博客中心首页</a></span>
+   <volist name="path" id="vo">
+   	<span>><a href="{:U('square/Article/myblog',array('id'=>$vo['id']))}">{$vo.cname}</a></span>
+   </volist>
+   </div>
+</div>
+<div class="box width">
+<table border="0" cellpadding="0" cellspacing="0" class="category_list" width="97%">
+ <volist name="blog_class.content.data" id="li">
+  <tr style="height:35px;">
+    <td width="15%">
+    <a href="{:U('/Article/myblog',array(blogid=>$li['id']))}"style="color:#999999;">
+    [{$li.id|getcategory_blog|getshort='6'}]
+    </a>
+    </td>
+    <td width="60%" style="padding-left:10px;">
+    <a href="{:U('/Article/context',array(id=>$li['id']))}"style="color:#666666;">{$li.title}</a>
+    </td>
+    <td width="25%" style="white-space:nowrap;">
+    {$li.cTime|friendlyDate}({$li.commentCount}/{$li.readCount})
+    </td>
+  </tr>
+</volist>
+</table>
+<ul class="page">{$blog_class.content.html}</ul>
+</div>

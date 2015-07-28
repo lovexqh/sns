@@ -1,0 +1,42 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_cancel_member">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_memberHeader" />
+			<div class="member_page">
+				<table class="member_tb">
+					<tr class="member_tb_header">
+						<td class="member_cancel_name mem_tb_border">姓名</td>
+						<td class="member_cancel_grade mem_tb_border">年级</td>
+						<td class="member_cancel_ctime">加入时间</td>
+						<td class="member_cancel_dept">部门</td>
+					</tr>
+					<php>if( empty($cancelMember['data']) ){</php>
+					<tr><td colspan="4" style="font-size:14px;line-height:30px;padding-left:10px;">暂无退出成员!</td></tr>
+					<php>}</php>
+					<volist name="cancelMember.data" id="member">
+					<tr class="member_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td>{$member.uid|getUserName}</td>
+						<td>
+							<php>if(!empty($member['grade']) && $member['grade']!=1){</php>
+							{$member.grade}级
+							<php>}else if($member['grade']==1){</php>
+							(老师)
+							<php>}</php>
+						</td>
+						<td>{$member.mtime|friendlyDate=###,'ymd'}</td>
+						<td>{$member.deptname}</td>
+					</tr>
+					</volist>
+				</table>
+				<div class="page" style="text-align:center;">{$cancelMember.html}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,33 @@
+<ul class="feed_list" <eq name='insert' value='1'> id="feed_list"</eq>>
+<volist name="list" id="vo">
+    <li id="list_li_{$vo.weibo_id}"  onmouseover="$(this).find('.feed_c_btm').show();" onmouseout="$(this).find('.feed_c_btm').hide();">
+      <dl>
+        <dt class="userpic"><space uid="vo.uid">{uavatar=m}</space></dt>
+        <dd>
+        <p>
+        	<space uid="vo.uid" class="fn">{uname}</space>说：{$vo.content|formatUrl|format}
+            <php>if($vo['transpond_id']){</php><!-- 是否为原创内容 -->
+
+            <php>}else{</php>
+                {$vo.expend}
+            <php>}</php>
+        </p>
+        <span>
+            <cite>{$vo.ctime|friendlyDate}</cite> 
+            {:L('come_from')}<cite><?php echo getFrom($vo['from'], $vo['from_data']);?></cite>
+            <eq name="denounce" value="1"><gt name="mid" value="0">
+            <i class="vline">|</i> <cite><a href="javascript:void(0)" onclick="denounce('weibo',{$vo.weibo_id},'{$vo.content|getShort=###,140,'...'|t|keyWordFilter|addslashes}','{$vo.uid}',{$mid});">{:L('report')}</a></cite>
+            </gt></eq>
+        </span>
+        </dd>
+        <div class="clear"></div>
+      </dl>
+      <div id="comment_list_{$vo.weibo_id}" style=""></div>
+    </li>
+</volist>
+</ul>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(e) {
+    $(".weibo_pic_rel").colorbox({inline:true,opacity:0.5});
+});
+</script>

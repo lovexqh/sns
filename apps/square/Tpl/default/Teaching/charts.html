@@ -1,0 +1,298 @@
+<include file="../Public/_header" />
+<include file="../Public/_teachheader" />
+<style>
+table {
+margin: 10px;
+width: 97%;
+}
+ td {
+height: 63px;
+text-align: center;
+}
+th {
+height: 28px;
+background: #F2F2F2;
+text-align: center;
+}
+
+</style>
+<SCRIPT type="text/javascript">
+		
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			}
+		};
+		
+		var zNodes =[				
+				<volist name="treeNode" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick('{$obj[id]}')"}
+								
+				</volist>
+		];
+		var treeNoSchool =[				
+				<volist name="treeNoSchool" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}",click:"noteClick2('{$obj[id]}')"}
+								
+				</volist>
+		];
+		
+		function noteClick(id){
+			var from	=	'&from='+$('#from').val();
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学校_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				schoolid	=	'';
+			}else{				
+				schoolid	=	'&schoolid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[3];
+			}
+			if(typeof(newarr[4])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[4];
+			}
+			window.location.href="__URL__&act=charts"+phaseid+schoolid+courseid+gradeid+from;
+		}
+		function noteClick2(id){
+			var from	=	'&from='+$('#from').val();
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[3];
+			}
+			window.location.href="__URL__&act=charts"+phaseid+courseid+gradeid+from;
+		}
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}		
+		$(document).ready(function(e) {
+            $.fn.zTree.init($("#dept_tree"), setting, zNodes);
+			$.fn.zTree.init($("#noschool_tree"), setting, treeNoSchool);
+        });
+	
+function tablist(tab,act){
+	$('ul[name='+tab+']').hide();
+	$('#'+tab+'_'+act).show();
+}	
+function rank(obj){
+	if(obj=='dept_tree'){
+		$('#noschool_tree').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='noschool_tree'){
+		$('#dept_tree').hide();	
+		$('#'+obj).show();		
+	}
+	if(obj=='person'){
+		$('#term').hide();	
+		$('#teaching').hide();	
+		$('#school').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='term'){
+		$('#teaching').hide();	
+		$('#school').hide();		
+		$('#person').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='teaching'){
+		$('#term').hide();			
+		$('#person').hide();	
+		$('#'+obj).show();
+		$('#school').hide();		
+	}else if(obj=='school'){
+		$('#term').hide();			
+		$('#person').hide();			
+		$('#teaching').hide();	
+		$('#'+obj).show();
+	}
+}
+</SCRIPT>
+    <div class="main">
+    <div class="sidebar">
+       
+      <div class="sidebar_box">
+        <h4>导航树</h4>
+        <ul class="star">
+            <li><a href="javascript:void(0)" onclick="rank('dept_tree')">按本校</a></li>
+            <li><a href="javascript:void(0)" onclick="rank('noschool_tree')">按科目</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div>
+          <ul id="dept_tree" class="ztree">
+          </ul>
+          <ul id="noschool_tree" class="ztree" style="display:none">
+          </ul>
+        </div>
+      </div>
+           
+	  
+      <div class="clear"></div>
+    </div>
+    <input type="hidden" id="from" value="{$from}" />
+    <div class="content">
+      
+      <div class="box width">
+        <ul class="course_category">
+          <li <php>if($_GET['from']=='1'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=1">活跃人物<span></span></a></li>
+          <li <php>if($_GET['from']=='2'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=2">优秀团队<span></span></a></li>
+          <li <php>if($_GET['from']=='3'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=3">活跃学校<span></span></a></li>
+          <li <php>if($_GET['from']=='4'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=4">教研活动<span></span></a></li>		
+          <div class="clear"></div>
+          
+        </ul>
+        <eq name='from' value='1'>
+		<table border="0" cellpadding="0" cellspacing="0" width="97%" id="person">
+           <tr>
+                <th width="70px"></th>
+                <th>姓名</th>
+                <th>创建教研数</th>
+                <th>实参加教研</th>
+                <th>应参加教研</th>
+                <th>上传资源数</th>
+                <th>下载资源数</th>
+           </tr>
+           <volist name="person" id="obj" offset='0' length='10'>
+           <tr>
+                <td style="text-align:center;"><a href="@{$obj.uid}"><space uid="obj.uid">{uavatar=m}</space></a></td>
+                <td>{$obj.xm}</td>
+                <td>{$obj.cteachnum}</td>
+                <td>{$obj.sjoinnum}</td>
+                <td>{$obj.joinnum}</td>
+                <td>{$obj.upcount}</td>
+                <td>{$obj.dcount}</td>
+           </tr>
+           </volist>
+		</table>
+        </eq>
+        <eq name='from' value='2'>
+       <table border="0" cellpadding="0" cellspacing="0" width="97%" id="term" >
+           <tr>
+                <th width="70px"></th>
+                <th>协作组名称</th>
+                <th>组长</th>
+                <th>创建教研数</th>
+                <th>协作组人数</th>
+                <th>创建时间</th>
+           </tr>
+           <volist name="terms" id="obj" offset='0' length='10'>
+           <tr>
+                <td style="text-align:center;">
+                
+					<php>if($obj['logo']==null){</php>
+                    <img src="../Public/images/group.png" width="50" height="50">
+                    <php>}else{</php>
+                    <img src="__ROOT__/thumb.php?w=50&h=50&url=./data/uploads/{$obj.logo}">
+                    <php>}</php>
+                </td>
+                <td><a href="{:U('course/Index/club',array('id'=>$obj['id']))}">{$obj.name}</a></td>
+                <td>{$obj.uid|getUserName}</td>
+                <td>{$obj.tcount}</td>
+                <td>{$obj.num}</td>
+                <td>{$obj.ctime|dateFormat}</td>
+           </tr>
+           </volist>
+       </table>
+        </eq>
+        <eq name='from' value='4'>
+       <table border="0" cellpadding="0" cellspacing="0" width="97%" id="teaching"  >
+           <tr>
+                <th>教研活动名称</th>
+                <th>点击数</th>
+                <th>评论数</th>
+                <th>活动资源数</th>
+                <th>应参加人数</th>
+                <th>实际参加人数</th>
+           </tr>
+           <volist name="teachings" id="obj" offset='0' length='10'>
+           <tr>
+                <td style="text-align:left; padding-left:10px;">
+                    <a href="{:U('square/Teaching/show',array('id'=>$obj['meetingid']))}">
+                        {$obj.meetingName|getshort=###,'16','…'}
+                    </a>
+                </td>
+                <td>{$obj.readcount}</td>
+                <td>{$obj.commentcount}</td>
+                <td>{$obj.rcount}</td>
+                <td>{$obj.join}</td>
+                <td>{$obj.sjoin}</td>
+           </tr>
+           </volist>
+       </table>
+        </eq>
+        <eq name='from' value='3'>
+		<table border="0" cellpadding="0" cellspacing="0" width="97%" id="school" >
+           <tr>
+                <th width="70px"></th>
+                <th>学校</th>
+                <th>创建教研数</th>                
+                <th>上传资源数</th>
+           </tr>
+           <volist name="schools" id="obj" offset='0' length='10'>
+           <tr>
+                <td style="text-align:center;"></a></td>
+                <td>{$obj.schoolid|getSchoolName}</td>
+                <td>{$obj.tcount}</td>
+                <td>{$obj.rcount}</td>
+           </tr>
+           </volist>
+		</table> 
+        </eq>
+       </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="../Public/_footer" />

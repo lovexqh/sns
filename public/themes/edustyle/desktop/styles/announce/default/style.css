@@ -1,0 +1,48 @@
+.bubbleContainer{position:absolute;background:url(./images/msgbubble_bg.png) 0 1px no-repeat;height:32px;width:300px;display:none;font-family:tahoma;}
+.bubbleContainer .plus{font-size:10px}
+.bubblePanel{height:22px;margin:5px 8px;cursor:move;line-height:20px;color:#fff}
+.bubblePanel .icon{width:16px;height:16px;display:block;float:left;background:url(./images/msgbubble_icons.png) no-repeat;vertical-align:middle;margin:3px 4px 0}
+.bubblePanel .item{cursor:pointer;position:absolute;margin:0 30px;left:0px;overflow:hidden;height:20px;width:232px;}
+* html .bubblePanel .item{margin:-3px 35px 0 35px;}
+
+.bubblePanel .single{background-position:0 0;}
+
+.bubblePanel .group{background-position:0 -32px}
+.bubblePanel .video{background-position:0 -80px}
+.bubblePanel .system{background-position:0 0}
+.bubblePanel .setting{background-position:0 -48px;float:right;cursor:pointer}
+.bubblePanel .item .body{color:#fff;width:232px;display:block;position:absolute;left:0px;overflow:hidden;vertical-align:middle;}
+*html .bubblePanel .item .body{margin-top:2px;}
+.bubblePanel .item .content{width:20000px;display:inline-block}
+.bubblePanel .item .content a{color:#fff}
+.bubblePanel .item .count{display:inline-block;vertical-align:middle}
+
+.bubbleMsgList{position:absolute;background:url(./images/msgbubble_list_bg.png) no-repeat;width:280px;height:210px;cursor:default;top:-210px;left:10px;display:none}
+.bubbleMsgList h3{margin:0;padding:0 0 0 12px;height:24px;line-height:24px;color:#fff;font-size:12px}
+.bubbleMsgList .bubbleMsgListInner{height:180px;width:270px;margin:0 auto;background:url(./images/msgbubble_list_bg_inner.png) repeat-x #fff}
+.bubbleMsgList .bubbleMsgListContainer{height:180px;overflow-y:auto;margin:0;}
+.bubbleMsgList .bubbleMsgButtons{height:20px;padding:3px 8px 0 12px}
+.bubbleMsgButtons a{text-decoration:none}
+.bubbleMsgButtons a:hover{text-decoration:underline}
+.bubbleMsgButtons .cancelNotify{float:left}
+.bubbleMsgButtons .viewAll{float:right}
+.bubbleMsgList ul,.bubbleMsgList li{list-style:none;margin:0;padding:0}
+.bubbleMsgList ul{padding:12px 5px 0 5px}
+.bubbleMsgListContainer a{text-decoration:none;padding:3px 5px 3px 7px}
+.bubbleMsgListContainer a:hover{background:#cbe7fc}
+.bubbleMsgList .item{cursor:pointer}
+.bubbleMsgList .item .avatar{width:20px;height:20px;vertical-align:middle;margin-right:8px}
+html.ie9_0 .bubbleMsgList .item .avatar{vertical-align:inherit}
+.bubbleMsgList .item .count{color:#45649e;float:right}
+.bubbleMsgList .item .content{overflow:hidden;width:170px;display:inline-block;vertical-align:middle;cursor:pointer}
+.bubbleMsgList .item .content .contentInner{width:20000px;display:block}
+
+* html .bubbleContainer{background-image:url(./images/msgbubble_bg.gif)}
+* html .bubbleMsgList{background-image:url(./images/msgbubble_list_bg.gif);top:-220px;}
+* html .bubblePanel .icon{background-image:url(./images/msgbubble_icons.gif)}
+* html .bubbleMsgList .bubbleMsgButtons{height:20px}
+
+* html .bubblePanel .item .body{line-height:22px}
+* html .bubbleMsgList .item .content{vertical-align:baseline}
+html.webkit .bubblePanel .item .body{vertical-align:baseline}
+html.webkit .bubblePanel .item .count{vertical-align:baseline}

@@ -1,0 +1,55 @@
+@media (max-width: 768px) {
+	header,
+	.containerInner{
+		width:760px!important;
+	}
+	.containerInner .sidesnow{
+		position:absolute;
+		top:150px;
+		left:50%;
+		margin-top:0px;
+		margin-left:-230px;
+	}
+	ul.menubar li ul li{
+		float:none;
+	}
+	.loginbar{
+		left:50%;
+		margin-left:-150px;
+		top:70%;
+	}
+	.learnbox{
+		left:50%;
+		margin-left:-200px;
+		top:65%;	
+	}
+	.top_stick{
+		right:10px;
+		bottom:10px;
+	}
+	
+	.containerMain .mainWarp{
+		padding-left:15px;
+		padding-right:15px;
+	}
+	.clientMain img{
+		max-width:730px;
+	}
+	.clientMain .mobilebox{
+		padding:10px 0;
+		width:100%;
+		float:none;
+		text-align:center;
+	}
+	.clientMain .imbox{
+		padding:10px 0;
+		width:100%;
+		float:none;
+		text-align:center;
+	}
+	.mobilebox img,
+	.imbox img{
+		margin:0 auto;
+		display:block;
+	}
+}

@@ -1,0 +1,12 @@
+
+<div class="trunk_left">
+     <div class="navimember_title">班级成员</div>
+     <div class="navi_content">
+       <ul>
+	  	 <li><img src="__THEME__/space/images/space.gif" class="mem_fam" /><a href="{:U('space/Class/StudentMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('StudentMember')))echo 'id="onvisited"';</php>>学生</a></li>
+         <li><img src="__THEME__/space/images/space.gif" class="mem_tea" /><a href="{:U('space/Class/TeacherMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('TeacherMember')))echo 'id="onvisited"';</php>>教师</a></li>
+         <li><img src="__THEME__/space/images/space.gif" class="mem_cadre" /><a href="{:U('space/Class/LeaderMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('LeaderMember')))echo 'id="onvisited"';</php>>班级干部</a></li> 
+         <li><img src="__THEME__/space/images/space.gif" class="mem_seat" /><a href="{:U('space/Class/SeatMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('SeatMember')))echo 'id="onvisited"';</php>>座位表</a></li>
+       </ul>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+.userCenter{}
+.userCenter .containerOuter{}
+.userCenter .container{}
+.userCenter .containerInner{
+	width:960px;
+	margin:0 auto;
+}

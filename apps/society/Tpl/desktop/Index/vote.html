@@ -1,0 +1,86 @@
+<include file="../Public/_header" />
+<script type="text/javascript">
+	function checkSearchUser(){
+		var userName = $('input[name=userName]').val();
+		userName = rightTrim(leftTrim(userName));
+		if(userName==null || userName == ''){
+			ui.error('请输入要查询的内容！');
+			return false;
+		}
+		$('#userSearch').submit();
+	}
+
+	//投票
+	function vote(toUid,societyId){
+		if(confirm('确认投票？')){
+			$(this).attr('onclick','ui.error("已投票！");');
+			$.post(U('society/Index/doVote'),{ toUid : toUid , societyId : societyId},function(data){
+				var data = eval('(' + data + ')');
+		        if(data.status==1){
+		        	var url = document.location.href;
+		        	var i = url.indexOf('searchForVote');
+		        	if(i==-1){
+		        		window.location.reload();
+		        	}else{
+		        		var page = $('.page .current').html();
+		        		if(page==null){
+		        			page = 1;
+		        		}
+		        		var userName = $('#userSearch input[name=userName]').val();
+		        		window.location.href = "{:U('society/Index/searchForVote')}&userName="+userName+"&page="+page+"&societyId="+societyId;
+		        	}
+		        }else{
+		        	ui.error(data.msg);
+		        }
+			});
+		}
+	}
+</script>
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+	<!-- 左侧begin -->
+	<div class="main_left">
+		<div class="vote_note"></div>
+		<div>
+			<form id="userSearch" onsubmit="checkSearchUser();return false;" action="{:U('society/Index/searchForVote')}" method="post">
+				<input type="hidden" name="societyId" value="{$societyInfo.id}">
+				<table style="margin-left: 70px;">
+					<tr>
+						<td>搜索成员：</td>
+						<td><input type="text" name="userName" style="width: 300px;" value="{$userName}"/></td>
+						<td><input type="submit"value="搜索"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="vote">
+			<ul>
+			<php>if( empty($regMember)){ echo '暂无查看用户！';}</php>
+			<volist name="regMember" id="vo">
+				<li>
+					<div class="icon_vote">
+						<img src="__ROOT__/apps/society/Tpl/desktop/Public/images/<php>if(in_array($vo['uid'],$List)){echo 'orange';}else{echo 'blue';}</php>.png" />
+						<div class="vote_count">
+							<div class="voted">{$vo.uid|voteYesOrNo=###,$societyInfo['id']}</div>
+							<div class="vote_counted">{$vo.uid|getVote=###,$societyInfo['id']}票</div>
+						</div>
+					</div>
+					<div class="user_icon_vote">
+						<img style="width:120px;" src="{$vo.uid|getUserFace='l'}">
+						<div class="vote_user_name">{$vo.uid|getUserName}</div>
+					</div>
+				</li>
+			</volist>
+			</ul>
+		</div>
+		<div class="page" style="clear: both;">{$pageshow}</div>
+	</div>
+	<!-- 左侧end -->
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<include file="../Public/_footer" />

@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+.clear {
+	clear: both;
+}
+.so_main {
+	margin: 0 10px;
+	text-align: left;
+}
+.glory_add {
+	border-collapse: collapse;
+}
+.glory_add tr {
+	border-bottom: 1px dashed #E2E2E2;
+}
+.glory_add td {
+	padding: 8px 0;
+}
+.mon_boder {
+	border: 1px solid #d2d2d2;
+}
+.mon_sel {
+	width: 142px;
+	padding: 3px;
+}
+.mon_detail {
+	width: 510px;
+	margin: 10px 0 20px 0;
+	border: 1px solid #3293de;
+}
+.mon_detail th {
+	border-collapse: collapse;
+	font-weight: bold;
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	border-color: #ccc;
+	text-align: center;
+	background: #f0f0f0;
+	color: #666;
+}
+.mon_detail td {
+	border-collapse: collapse;
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	border-color: #e6e6e6;
+	text-align: center;
+}
+.btn_b {
+	background: url("images/btn_b.gif") no-repeat scroll 0 0 #567AB4;
+	border: 0 none;
+	color: #FFFFFF;
+	height: 24px;
+	width: 60px;
+}

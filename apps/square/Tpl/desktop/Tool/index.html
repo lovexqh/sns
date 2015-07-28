@@ -1,0 +1,309 @@
+<include file="_header" />
+<link type="text/css" rel="stylesheet"
+	href="__THEME__/square/desktop/css/tool.css" />
+<style type="text/css">
+#tab-recommend {
+	position: relative;
+	float: right;
+}
+
+#tab-recommend li,.tab-arrow {
+	width: 70px;
+}
+
+#tab-recommend li {
+	float: left;
+	height: 36px;
+	line-height: 42px;
+	color: #0B79BB;
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+}
+
+.tab-arrow {
+	position: absolute;
+	z-index: 1;
+	top: 29px;
+	left: 0;
+	height: 7px;
+	border-bottom: 1px solid #255c45;
+	overflow: hidden;
+	text-align: center;
+}
+
+.tab-arrow b {
+	display: inline-block;
+	margin-top: -8px;
+	width: 0;
+	height: 0;
+	border-style: dashed dashed solid;
+	border-width: 10px;
+	border-color: transparent transparent #255c45;
+	overflow: hidden;
+	zoom: 1;
+	font-size: 0;
+}
+
+.box-content {
+	margin: auto;
+	width: 520px;
+	height: 210px;
+	padding: 5px 0px;
+	position: relative;
+	overflow: hidden;
+}
+
+#item-recommend {
+	height: 210px;
+	position: absolute;
+}
+
+.item-contect {
+	display: inline;
+	float: left;
+	width: 520px;
+	height: 210px;
+}
+
+.item-contect ul {
+	widht: 100%;
+	height: 100%;
+}
+
+.item-contect li {
+	float: left;
+	margin: 8px 15px;
+	width: 74px;
+	height: 74px;
+}
+
+.item-contect li  img {
+	widht: 70px;
+	height: 70px;
+	border: 0px;
+}
+
+.item-contect li div {
+	text-align: center;
+	margin-top: 3px;
+}
+
+.tools_count {
+	float: left;
+	width: 60px;
+}
+
+.tools_count strong {
+	height: 20px;
+	line-height: 20px;
+}
+
+.tools_count span {
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 8px;
+}
+
+clear { .
+	clear: both;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	//推荐选项卡
+	var tab_wigth=$("#tab-recommend").children().eq(0).width();//选项卡块的宽度
+	var item_wigth=$("#item-recommend").children().eq(0).width();//内容块的宽度
+	$('#tab-recommend li').mouseenter(function(){
+		var tab_hover_index=$(this).index();
+		//alert(tab_hover_index);
+		$(this).siblings(".tab-arrow").animate({left:tab_wigth*tab_hover_index},200);//选项卡移动的速度
+		$('#item-recommend').animate({left:-item_wigth*tab_hover_index},200);//内容块移动的速度
+		});
+});
+</script>
+<div class="wrapper">
+	<include file="header" />
+	<div class="main">
+		<include file="_left" />
+		<div class="content" id="resourcelist">
+			<div class="main_center">
+				<!--推荐下载-->
+				<div class="box">
+					<div class="title">
+						<h2>推荐软件</h2>
+						<ul id="tab-recommend">
+							<volist name="recomment" id="vo">
+							<li>{$vo['category_name']}</li>
+							</volist>
+							<div class="clear"></div>
+						</ul>
+						<div class="clear"></div>
+					</div>
+					<div class="box-content">
+						<ul id="item-recommend">
+							<volist name="value" id="v">
+							<li class="item-contect">
+								<ul>
+									<volist name="v.cate_name.cate" id="val">
+									<li><a
+										href="{:U('square/Tool/show',array('id'=>$val['id']))}"
+										title="{$val['title']}"><img
+											src="{$val['thumb']|logo_path_to_url}">
+										<div>{$val['title']|getShort=4}</div></a></li>
+									</volist>
+								</ul>
+							</li>
+							</volist>
+						</ul>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="so_left">
+					<!--热门工具start-->
+					<div class="box" style="width: 533px;">
+						<div class="title">
+							<h2>最新官方软件</h2>
+							<!-- 按上传时间 -->
+							<a
+								href="{:U('square/Tool/getList',URLformat(array('cateid'=>'42')))}"
+								class="more" title="官方工具">更多>></a>
+							<div class="clear"></div>
+						</div>
+						<ul class="source_list" id="con_all">
+							<volist name="official" id="obj">
+							<li><a
+								href="{:U('square/Tool/show',array('id'=>$obj['id']))}"
+								title="{$obj['title']}"> [{$obj.category}]
+									{$obj.title|getShort=25} <span>{$obj.time|date="Y-m-d",###}</span></li>
+							</volist>
+						</ul>
+					</div>
+					<!--最新工具end-->
+					<!--热门工具start-->
+					<div class="box" style="width: 533px;">
+						<div class="title">
+							<h2>最新大众软件</h2>
+							<a
+								href="{:U('square/Tool/getList',URLformat(array('cateid'=>'41')))}"
+								class="more" title="大众工具"> 更多>> </a>
+							<div class="clear"></div>
+						</div>
+						<ul class="source_list" id="con_sall" style="display: block">
+							<volist name="public" id="obj">
+							<li><a
+								href="{:U('square/Tool/show',array('id'=>$obj['id']))}"
+								title="{$obj['title']}"> [{$obj.category}]
+									{$obj.title|getShort=25} </a> <span>{$obj.time|date="Y-m-d",###}</span>
+							</li>
+							</volist>
+						</ul>
+					</div>
+					<!--热门工具end-->
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="main_right">
+				<div class="source_right">
+					<h3>统计信息：</h3>
+					<div class="source_count">
+						<p>
+							<strong>工具共计：</strong><span class="number">{$count.all.alltool}个</span>
+						</p>
+						<div class="tools_count">
+							<volist name="recomment" id="vo">
+							<p>
+								<strong>{$vo.category_name}：</strong>
+							</p>
+							</volist>
+						</div>
+						<div class="tools_count">
+							<volist name="value" id="va"> <volist
+								name="va.cate_name.all" id="valu"> <span>{$valu['count']}个</span>
+							</volist> </volist>
+						</div>
+						<div class="clear"></div>
+						<p>
+							<strong>软件下载数：</strong><span>{$count.all.alldown}次</span>
+						</p>
+					</div>
+				</div>
+				<div class="so_right">
+					<div class="rank">
+						<h4>贡献排行榜</h4>
+						<table id="con_per" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<th scope="col">&nbsp;</th>
+								<th scope="col" width="70">姓名</th>
+								<th scope="col" width="70">上传数</th>
+								<!-- <th scope="col">下载数</th>-->
+							</tr>
+							<volist name='contribute' id='vo'>
+							<tr>
+								<td><php>if($i==1){</php>
+									<code class="top">{$i}</code> <php>}elseif($i==2){</php>
+									<code class="top2">{$i}</code> <php>}else{</php>
+									<code>{$i}</code> <php>}</php></td>
+								<td><space uid="vo.uid" class="co">{uname}</space></td>
+								<td>{$vo['count']}</td>
+								<!-- <td>11</td>-->
+							</tr>
+							</volist>
+						</table>
+					</div>
+					<div class="rank">
+						<h4>热门软件</h4>
+						<table border="0" cellspacing="0" cellpadding="0" class="tl">
+							<tr>
+								<th scope="col">&nbsp;</th>
+								<th scope="col" width="100">工具</th>
+								<th scope="col">下载</th>
+							</tr>
+							<volist name="hot" id="vo">
+							<tr>
+								<td><php>if($i==1){</php>
+									<code class="top">{$i}</code> <php>}elseif($i==2){</php>
+									<code class="top2">{$i}</code> <php>}else{</php>
+									<code>{$i}</code> <php>}</php></td>
+								<td width="80%"><a
+									href="{:U('square/Tool/show',array('id'=>$vo['id']))}"
+									title="{$vo['title']}"> {$vo['title']|getShort=6}<php>if(strlen($vo['title']) > 12) echo "..."</php></a></td>
+								<td width="20%"><php>if($vo['downCount']){</php>
+									{$vo['downCount']} <php>}else{</php> 0 <php>}</php></td>
+							</tr>
+							</volist>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<include file="_footer" />
+</div>
+<script type="text/javascript">
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('table').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();	
+}
+function centter_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('table').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();	
+}
+function basicsswitch(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('.source_list').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();
+	}
+</script>
+</body>
+</html>

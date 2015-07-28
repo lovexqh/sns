@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <!--对可视区进行矫正，通知浏览器使用移动设备的宽度作为可视宽度-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="./libs/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+<script src="./libs/zepto/zepto.min.js" id="zepto"></script>
+<script src="./apps.js" charset="utf-8"></script>
+<script type="text/javascript">
+    if(location.search != ''){
+        appsConfig.getData = location.search;
+        appsConfig.getData = decodeURI(appsConfig.getData.substr(1));
+        appsConfig.getData = appsConfig.getData.replace(/\//g,'{');
+        appsConfig.getData = appsConfig.getData.replace(/&/g,'}');
+        appsConfig.getData = eval('('+appsConfig.getData+')');
+        appsConfig.show = appsConfig.map[appsConfig.getData.application];
+        if(!appsConfig.show){console.log('show error!')}
+    }
+//    if(appsConfig.getData.application != "mienContent"){
+        X.loadFile('css/post-detail','css');
+        X.loadFile('css/comment-list','css');
+        X.loadFile('css/poster-detail','css');
+//    }
+    $(function(){
+        $.ajax({
+            type    :   'GET',
+            url     :   'tpl/'+appsConfig.show.tpl+'.html',
+            success :   function(res){
+                $("#zepto").before(res);
+            }
+        });
+    })
+</script>
+<script src="./libs/zepto/touch-min.js"></script>
+<script src="./libs/underscore/underscore-min.js"></script>
+<script src="./libs/iscroll4/src/iscroll-min.js"></script>
+</body>
+</html>

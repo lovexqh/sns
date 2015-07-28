@@ -1,0 +1,132 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+});  
+</script> 
+
+
+
+	<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+		function switchbtn(btn) {
+			_GET('srchuserdiv').style.display = btn == 'srch' ? '' : 'none';
+			_GET('srchuserdiv').className = btn == 'srch' ? 'tabcontentcur' : '' ;
+			_GET('srchuserbtn').className = btn == 'srch' ? 'tabcurrent' : '';
+		
+			_GET('readexceldiv').style.display = btn == 'read' ? '' : 'none';
+			_GET('readexceldiv').className = btn == 'read' ? 'tabcontentcur' : '';
+			_GET('readexcelbtn').className = btn == 'read' ? 'tabcurrent' : '';
+		}
+	</script>
+
+	<div class="container">
+		<!--{if $status}-->
+			<div class="{if $status > 0}correctmsg{else}errormsg{/if}"><p>{if $status < 0}<em>{lang user_add_failed}:</em> {/if}{if $status == 2}{lang user_delete_succeed}{elseif $status == 1}{lang user_add_role_succeed}{elseif $status == 3}{lang roster_add_succeed}{elseif $status == -1}{lang user_add_role_ignore}{elseif $status == -2}{lang user_add_role_exists}{elseif $status == -3}{lang uc_roster_failed}{elseif $status == -4}{lang uc_role_check_icon_exits}{elseif $status == -5}{lang uc_role_check_icon_type_failed}{/if}</p></div>
+		<!--{/if}-->
+		<div class="hastabmenu">
+			<ul class="tabmenu">
+				<li id="srchuserbtn" class="tabcurrent"><a href="#" onclick="switchbtn('srch')">{lang roster_search}</a></li>
+				<!--<li id="readexcelbtn"><a href="#" onclick="switchbtn('read')">批量添加数据</a></li>-->
+			</ul>
+	
+    		<div id="srchuserdiv" class="tabcontentcur">
+				<form action="admin.php?m=teacher&a=Search" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+                <input type="hidden" name="schoolid" value="$schoolid">
+                <input type="hidden" name="classid" value="$classid">
+                
+				<table width="100%">
+					<tr>
+						<td>姓名:</td>
+						<td><input type="text" name="xm" value="$xm" class="txt" /></td>
+						<td>工号:</td>
+						<td><input type="text" name="gh" value="$gh" class="txt" /></td>
+						<td>身份证号:</td>
+						<td><input type="text" name="sfzjh" value="$sfzjh" class="txt" /></td>
+						<td><input type="submit" value="查询"  class="btn" /></td>
+					</tr>
+					
+				</table>
+				</form>
+			</div>
+			<div id="readexceldiv" class="tabcontent" style=" display:none;">
+				<form action="admin.php?m=roster&a=ls" method="post" onsubmit="$('filepath').value=getPath($('readexcel'));return true;">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<input type="hidden" id="filepath" name="filepath" />
+				<table width="100%">
+					<tr>
+						<td>{lang select_excel}:</td>
+						<td><input id="readexcel" name="readexcel" type="file"  /></td>
+						<td><input type="submit" value="{lang submit}"  class="btn" /></td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</div>
+
+		<!--{if $adduser}--><script type="text/javascript">switchbtn('add');</script><!--{/if}-->
+          <br />
+          
+          
+		
+        <h3>{$deptName} 用户信息 
+        
+            <!--{if $deptName}-->
+           		<a href="admin.php?m=admin&a=ls">返回</a>
+           	<!--{/if}-->
+          </h3>
+       
+		<div class="mainbox">
+			<!--{if $userList}-->
+				<form action="admin.php?m=admin&a=AddSubmit" onsubmit="return confirm('确定要设为管理员吗?');" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall"/><label for="chkall">管理员</label></th>
+						<th>工号</th>
+						<th>姓名</th>
+						<th>来校年月</th>
+						<th>岗位</th>
+						<th>学历</th>
+						<th>身份证号</th>
+						<th>查看</th>
+					</tr>
+					<!--{loop $userList $user}-->
+						<tr>
+							<td class="option"><input type="checkbox" name="userList[]" value="$user[uid]" class="checkbox" /></td>
+							<td>$user[gh]</td>
+							<td>$user[xm]</td>
+							<td>$user[lxny]</td>
+							<td>$user[gwzym]</td>
+							<td>$user[xlm]</td>
+							<td>$user[sfzjh]</td>
+							<td><a href="admin.php?m=teacher&a=Edit&identityid=$user[identityid]">{lang edit}</a></td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td><input type="submit" value="{lang submit}" class="btn" /></td>
+						<td class="tdpage" colspan="7">$multipage</td>
+					</tr>
+				</table>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+	</div>
+
+
+{template footer}

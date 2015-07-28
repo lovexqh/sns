@@ -1,0 +1,491 @@
+@charset "utf-8";
+
+#navbar{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:35px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:10;
+	overflow:hidden;
+
+}
+#navbar_back{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:35px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:-1;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/bg.png', sizingMethod='scale');
+	background-image:url(bg.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: repeat-x;
+}
+#navbar .nav_mask{
+	position:absolute;
+	display:none;
+	
+}
+#navbar a{
+   text-decoration:none;
+   outline:none;
+}
+#navbar .navlogo_container{
+	float:left;
+	height:30px;
+}
+#navbar .navlogo{
+	float:left;
+	width:165px;
+	height:30px;
+	margin:1px 0px 0px 5px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/public/logotm.png', sizingMethod='scale');
+	background-image:url(../public/logotm.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+#navbar .nav_dname{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	line-height:30px;
+	height:30px;
+	margin:0 0 0 10px;
+	font-weight:bold;
+}
+#navbar .userinfo_container{
+	float:right;
+	height:30px;
+	padding-top:2px;
+	
+}
+#navbar .userinfo{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	
+}
+
+#navbar .login{
+	float:right;
+	font-size:12px;
+	padding:1px 3px 0px 5px;
+	display:inline-block;
+}
+#navbar .vwmy {
+     padding-right: 5px;
+	 padding-left: 5px;
+	 padding-top:0px;
+	 background:none;
+	 background-position:100% 10px;
+}
+#navbar .user_avatar_mask {
+     display:block;
+	 width:34px;
+	 height:34px;
+	 right:0px;
+	 top:0px;
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/touxiang.png', sizingMethod='scale');
+	background-image:url(touxiang.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+}
+#navbar .user_avatar{
+	float:left;
+	
+}
+#navbar .user_avatar img {
+	width:24px;
+	height:24px;
+	padding:4px;
+	background:none;
+	border:none;
+	
+}
+#navbar .sys_thame {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/thame.png', sizingMethod='image');
+	background-image:url(thame.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	float:left;height:18px;;width:18px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:4px 5px;
+	_margin:4px 5px 0;
+	
+}
+#navbar .sys_thame:hover {
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/thame_1.png', sizingMethod='image');
+	background-image:url(thame_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+#navbar .sys_config {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/config.png', sizingMethod='image');
+	background-image:url(config.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	float:left;height:18px;width:18px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:4px 5px;
+	_margin:4px 5px 0;
+}
+#navbar .sys_config:hover {
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/config_1.png', sizingMethod='image');
+	background-image:url(config_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+#navbar .sysindicator_Container{
+	float:left;
+	font-size:14px;
+	color:#FFF;
+	line-height:35px;
+	height:35px;
+	margin:0 0 0 10px;
+}
+#navbar .sysindicator{
+	display:inline-block;
+	height:35px;
+	padding:0px 8px;
+	color:#FFF;
+}
+#navbar .sysindicator:link{
+  
+}
+#navbar .sysindicator:hover{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/bg_2.png', sizingMethod='scale');
+	background-image:url(bg_2.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+#navbar .sysindicator_icon{
+	height:16px;
+	/*padding-right:2px;*/
+	overflow:hidden;
+	padding:0px 5px 5px 0px;_padding:0px 5px 2px 0px;
+}
+
+#navbar .sysindicator_navname{
+	font-size:12px;
+	line-height:16px;
+}
+#navbar .sysnav_current{
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/bg_3.png', sizingMethod='scale');
+	background-image:url(bg_3.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+#navbar .nav_text{
+        padding:0px 0px 5px 0px;
+        _padding:0px 0px 0px 0px;
+	color:#FFF; 
+	font-size:14px;
+	text-shadow: 0px 1px 1px #000,0px 1px 1px #000;
+}
+#navbar .reglink,#navbar .login{background:none;border:none;
+	float:left;
+	font-size:14px;
+	padding:5px;
+	display:inline-block;
+}
+#navbar .navbar_container{
+	position:relative;
+	height:100%;
+	padding:1px 0;
+	overflow:hidden;
+}
+#indicator_Container{
+	float:right;
+	z-index:10;
+}
+#indicator_Container .indicator_op{
+	position:absolute;
+	width:23px;
+	
+	z-index:100;
+	display:none;
+}
+#indicator_pre{
+	left:0px;
+	top:0px;
+	background:url(prev.gif) center no-repeat;
+}
+#indicator_next{
+	right:0px;
+	top:0px;
+	background:url(next.gif) center no-repeat;
+}
+#navbar .indicator{	
+	cursor:pointer;display:inline-block;
+	float:left;height:22px;margin:0;width:22px;color:#FFF;font-family:宋体;font-size:14px;line-height:22px;overflow:hidden;outline:none;text-align:center;
+	padding:4px 5px !important;
+	_width:12px;
+	_margin:5px 5px;
+	_line-height:10px;
+	
+	}
+
+#navbar .indicator:hover{	
+	cursor:pointer;display:inline-block;
+	float:left;height:22px;margin:0;width:22px;color:#FFF;font-family:宋体;font-size:14px;line-height:22px;overflow:hidden;outline:none;text-align:center;
+}
+
+#navbar .indicator_current{
+	cursor:pointer;display:inline-block;
+	float:left;height:22px;margin:0;width:22px;color:#FFF;font-family:宋体;font-size:14px;line-height:22px;overflow:hidden;outline:none;text-align:center;
+	padding:4px 5px;
+	font-weight:bold;
+}
+
+/*navbar_userdetail 用户信息面板 */
+#navbar_userdetail{
+	position:absolute;
+	display:none;
+	width:200px;
+	height:200px;
+	_width:210px;
+	_height:225px;
+	z-index:99999;
+	top:52px;
+	right:10px;
+	background:#FFF;
+	
+}
+#navbar_userdetail .userdetail{
+	margin:5px;
+	clear:both;
+	height:25px;
+	line-height:25px;
+}
+#navbar_userdetail .userdetail dl{
+	display:block;
+	margin:10px 0 0 10px;
+}
+#navbar_userdetail .userdetail dl dt{
+	display:block;
+	width:60px;
+	padding-top:5px;
+	float:left;
+}
+#navbar_userdetail .userdetail dl dt a{}
+
+#navbar_userdetail .userdetail .userpic{
+	width:59px;
+	height:59px;
+	float:left;
+	position:relative
+}
+#navbar_userdetail .userdetail .userpic img {
+	width:59px;
+	height:59px
+}
+#navbar_userdetail .userdetail .userpic a.pic{
+	display:none
+}
+#navbar_userdetail .userdetail .over a.pic{
+	filter:alpha(opacity=60);
+	opacity:0.6;
+	position:absolute;
+	right:0px;
+	bottom:0px;
+	width:100%;
+	background:#000;
+	color:#fff;
+	line-height:20px;
+	text-align:center;
+	display:block
+}
+
+#navbar_userdetail .userdetail .user_name img{
+	 margin-left:4px;
+}
+#navbar_userdetail .userdetail .user_name a{
+	font-size:12px;
+	margin:0;
+}
+
+#navbar_userdetail .userdetail dl dd{
+	display:inline-block;
+	width:110px;
+	height:23px;
+	line-height:23px;
+	float:left;
+	margin-left:10px;
+	color:#999;
+}
+#navbar_userdetail .userdetail dl dd a{
+	margin-right:5px;
+	text-decoration:none;
+}
+#navbar_userdetail .userdetail dl dd a:hover{
+	text-decoration:underline;
+}
+#navbar_userdetail .userdetail dl dd img{
+	vertical-align:middle;
+}
+#navbar_userdetail .userdetail ul{
+	margin:10px 0 0 15px;
+}
+#navbar_userdetail .userdetail li{
+	height:23px;
+	line-height:23px;
+	padding-left:5px;
+	color:#999;
+}
+#navbar_userdetail .userdetail li a{}
+#navbar_userdetail .userdetail li a:hover{}
+#navbar_userdetail .userdetail li em{
+	display:inline-block;
+	background:url(../../images/flag-1.gif) no-repeat;
+	width:31px;
+	height:18px;
+	line-height:18px;
+	text-align:center;
+	text-indent:3px;
+	overflow:hidden;
+	color:#2a8fdd;
+	float:left;
+}
+#navbar_userdetail .userdetail li div{
+	float:left;
+}
+#navbar_userdetail .userdetail li .progress{
+	display:inline-block;
+	width:60px;
+	height:10px;
+	margin-top:4px;
+	overflow:hidden;
+	border:#d8ae7e solid 1px;
+}
+#navbar_userdetail .userdetail li .progress .bg{
+	display:block;
+	height:8px;
+	background:#f7d245;
+	border:#fff solid 1px;
+}
+#navbar_userdetail .userdetail li .percent{
+	color:#c89c5a;
+	margin-left:5px;
+}
+
+/* 边框样式 */
+#navbar_userdetail .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 21px;
+	left:-9px;
+	top:-21px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/LEFT_TOP.png', sizingMethod='scale');
+	background-image:url(LEFT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+#navbar_userdetail .TOP
+{
+	position:absolute;
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 21px;
+	left:0px;
+	top:-21px;
+	width:100%;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/TOP.png', sizingMethod='scale');
+	background-image:url(TOP.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+#navbar_userdetail .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 42px;
+	height: 21px;
+	right:-9px;
+	top:-21px;
+	z-index:10;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/RIGHT_TOP.png', sizingMethod='scale');
+	background-image:url(RIGHT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+
+#navbar_userdetail .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height:100%;
+	right:-9px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/RIGHT.png', sizingMethod='scale');
+	background-image:url(RIGHT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+#navbar_userdetail .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 18px;
+	bottom:-18px;
+	right:-9px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/RIGHT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(RIGHT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+#navbar_userdetail .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	height: 18px;
+	width:100%;
+	bottom:-18px;
+	left:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/BOTTOM.png', sizingMethod='scale');
+	background-image:url(BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+#navbar_userdetail .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 19px;
+	left:-9px;
+	bottom:-19px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/LEFT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(LEFT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+#navbar_userdetail .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height:100%;
+	left:-9px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/hui2/LEFT.png', sizingMethod='scale');
+	background-image:url(LEFT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+
+}

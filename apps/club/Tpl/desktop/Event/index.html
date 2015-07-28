@@ -1,0 +1,135 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_event_page">
+			<include file="../Public/_clubHeader" />
+			<div class="topic_header">
+				<span class="topic_header_word">风采</span>
+			</div>
+			<div class="event_page">
+				<php>if(empty($showEvent) && empty($eventList['data'])){</php>
+				<div style="font-size:14px;margin-left:12px;margin-top:12px;">社团还没有风采展示!</div>
+				<php>}</php>
+				<!--
+				<div class="event_show">
+					<volist name="showEvent" id="vo">
+					<div class="event_show_one event_show_{$i}">
+						<div class="event_show_issue">第{$vo.issue}期</div>
+						<div class="event_show_title"><a href="{:U('club/Event/eventDetail', array('id'=>$vo['clubid'], 'topicid'=>$vo['id']))}">{$vo.title}</a></div>
+						<div class="event_show_ctime">{$vo['ctime']|friendlyDate=###,'ymd'}</div>
+						<php>if( !empty($vo['topicpic']) ){</php>
+						<img class="event_show_pic" src="{$vo.topicpic}">
+						<php>}else{</php>
+						<div class="event_show_content">{$vo.content}</div>
+						<php>}</php>
+					</div>
+					</volist>
+				</div>
+				<div class="c"></div>
+				-->
+				<div class="event_list">
+					<ul class="search">
+						<volist name="eventList.data" id="event">
+						<li class="event_list_btm_line" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+							<div>
+								<span class="event_list_issue">第{$event.issue}期</span>
+								<span class="event_list_title"><a href="{:U('club/Event/eventDetail', array('id'=>$clubInfo['id'], 'topicid'=>$event['id']))}">{$event.title}</a></span>
+								<span class="event_list_ctime">{$event['ctime']|friendlyDate=###,'ymd'}</span>
+							</div>
+						</li>
+						</volist>
+						<li><div class="page" style="text-align:center;">{$eventList.html}</div></li>
+					</ul>
+				</div>
+			</div>
+			<php>if($member['type']==1 || $member['type']==2){</php>
+			<div class="add_new_topic">
+				<form method="post" action="{:U('club/Event/doAddEvent')}" id="addEventForm"  enctype="multipart/form-data">
+					<table style="width:80%">
+						<tr>
+							<td>
+								<input type="text" id="title" class="event_input_title" name="title" value="请输入标题" onfocus="chkFocuc();" onblur="chkBlur();" />
+								<input type="text" name="issue" id="issue" style="width:60px;height:22px;" value="{$issue}" />&nbsp;期
+							</td>
+						</tr>
+						<tr>
+							<td><textarea id="content" name="content" style="height:200px;width:685px;"></textarea></td>
+						</tr>
+						<tr style="line-height:30px;">
+							<td>
+								<input type="radio" name="replyman" value="0" checked="checked" />所有人可回复&nbsp;&nbsp;
+								<input type="radio" name="replyman" value="1" />仅成员可回复
+							</td>
+						</tr>
+						<tr style="line-height:50px;">
+							<td><input type="hidden" id="clubid" name="clubid" value="{$clubInfo['id']}" />
+								<a class="add_topic_button" id='checkAddEvent'></a>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<php>}</php>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	loadEditor("content");
+	$('#checkAddEvent').click(function(){
+		var title = $('#title').val().trim();
+		var issue = $('#issue').val().trim();
+		//$(form.content).val(getEditorContent('content'));
+		var clubid = $('#clubid').val();
+		var content=getEditorContent('content');
+		var replyman = $('input[name="replyman"]:checked').val();
+		var url=$("#addEventForm").attr("action");
+		var reg = /^[0-9]*[1-9][0-9]*$/;
+		if(!title || title=="请输入标题"){
+			ui.error("请输入标题！");
+			return false;
+		}
+		if( getLength(title)>50 ){
+			alert("标题不能超过50个字!");
+			return false;
+		}
+		if(!issue){
+			ui.error("请输入期数！");
+			return false;
+		}
+		if(!issue.match(reg)){
+			ui.error("期数为大于0的整数！");
+			return false;
+		}
+		if(!content){
+			ui.error("请输入内容！");
+			return false;
+		}
+		if( content.indexOf('src="data:image')>0 ){
+			alert("内容请勿采取 截图粘贴 的方式!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: url,
+			data:{title: title,issue:issue, clubid: clubid, content: content, replyman: replyman},
+			success: function (data){
+				if( data==1 ){
+					ui.success('发布成功!');
+					window.location.reload(); 
+					$("#title").val("请输入标题");
+					$('body,html').animate({scrollTop:0},600);
+				}else if(data == 0){
+					$.messager.alert('发布新帖信息','发布失败！'); 
+				}else if(data == 2){
+					alert("期数已存在!");
+				}else{
+					$.messager.alert('发布新帖失败',data);
+				}
+			}
+		});
+		
+	})
+
+</script>
+<include file="../Public/_footer" />

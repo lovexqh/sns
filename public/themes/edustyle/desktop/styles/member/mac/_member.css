@@ -1,0 +1,173 @@
+@charset "utf-8";
+#dock_member{}
+#dock_member_container{}
+.dock_member_top,.dock_member_content,.dock_member_bottom{
+	display:block;
+	background-image:url(bg.png);
+	width:73px;
+}
+
+.dock_member_collapse{
+	position:absolute;
+	top:50%;
+	right:-15px;
+	margin-top:-25px;
+	width:16px;
+	height:50px;
+	overflow:hidden;
+}
+.dock_member_collapse a{
+	display:block;
+	width:100%;
+	padding:17px 0;
+	background-image:url(bg.png);
+	background-repeat:no-repeat;
+	background-position:-206px 0px;
+}
+.dock_member_collapse .arrow-west,.dock_member_collapse .arrow-east{
+	display:block;
+	width:15px;
+	height:15px;
+	background-image:url(arrows.png);
+	background-repeat:no-repeat;
+}
+.dock_member_collapse .arrow-west{
+	background-position:-3px 0px;
+}
+.dock_member_collapse .arrow-east{
+	background-position:-3px -15px;
+}
+
+.dock_member_top{
+	height:15px;
+	background-position:-133px 0px;
+}
+.dock_member_content{
+	color:#fff;
+	background-position:-30px 0px;
+}
+.dock_member_bottom{
+	height:6px;
+	background-position:-133px bottom;
+}
+
+.dock_member_content dl{
+	margin-right:4px;
+}
+.dock_member_content dt{
+	padding-bottom:5px;
+}
+.dock_member_content dt a{
+	color:#fff;
+}
+.dock_member_content dt a:hover{
+	color:#fff;
+}
+.dock_member_content .userpic{
+	position:relative;
+	text-align:center;
+}
+.dock_member_content .userpic img{
+	width:50px;
+	height:50px;
+	border:1px solid #fff;
+}
+.dock_member_content .userface{
+	width:52px;
+	height:52px;
+	border:1px solid #333;
+	margin:0 auto;
+	display:block;
+}
+.dock_member_content .uploadface{
+	position:absolute;
+	height:20px;
+	line-height:20px;
+	width:52px;
+	display:none;	
+}
+.dock_member_content .username{}
+.dock_member_content .over{}
+.dock_member_content .over .uploadface{
+	filter:alpha(opacity=60);
+	opacity:0.6;
+	position:absolute;
+	left:9px;
+	bottom:24px;
+	background:#000;
+	color:#fff;
+	line-height:20px;
+	text-align:center;
+	display:block
+}
+.dock_member_content dd{
+	padding-top:2px;
+	text-align:center;
+	background:url(line.png) repeat-x left top;
+}
+.dock_member_content .pagelink{
+	display:block;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	color:#fff;
+}
+.dock_member_content .pagelink:hover{
+	background-image:url(bg_3.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+	color:#fff;
+	text-decoration:none;
+}
+
+.dock_member_content .sys_thame {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/dzz/thame.png', sizingMethod='image');
+	background-image:url(tools.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	height:18px;;width:18px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:6px 5px;
+	_margin:6px 5px 0;
+	
+}
+.dock_member_content .sys_thame:hover {
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/dzz/thame_1.png', sizingMethod='image');
+	background-image:url(tools_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.dock_member_content .sys_config {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/dzz/config.png', sizingMethod='image');
+	background-image:url(setting.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	height:18px;width:18px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:6px 5px;
+	_margin:6px 5px 0;
+}
+.dock_member_content .sys_config:hover {
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/dzz/config_1.png', sizingMethod='image');
+	background-image:url(setting_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.dock_member_content .btnbox{
+	padding:5px 0;
+}
+.dock_member_content a.button{
+	display:block;
+	width:30px;
+	height:30px;
+	margin:10px auto;
+}
+.dock_member_content a.home{
+	background:url(home.png) no-repeat center center;	
+}
+.dock_member_content a.friend{
+	background:url(friend.png) no-repeat center center;	
+}
+.dock_member_content a.layout{
+	background:url(box.png) no-repeat center center;	
+}

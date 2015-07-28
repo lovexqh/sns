@@ -1,0 +1,10 @@
+<include file="__THEME__/desktop/header" />
+<div class="error500Box statusBox">
+	<div class="statusTopBorder"></div>
+	<div class="statusContent">
+		<h3>500</h3>
+		<p><strong><php>echo ($_GET['msg']) ? urldecode($_GET['msg']) : '服务器内部出现错误！';</php></strong></p>
+		<p>服务器竟然让服务执行不下去了，没办法了，去<a href="{:U('desktop')}">首页</a>看看吧！！</p>
+	</div>
+<!-- end .registerBox --></div>
+<include file="__THEME__/desktop/footer" />

@@ -1,0 +1,121 @@
+ @charset "utf-8";
+/* CSS Document 
+ * Design By 小朱
+ * Ver:Edu SNS 1.0
+ */
+ 
+/*SNS用户中心布局设置*/
+
+
+/*banner模块样式设置*/
+header{position:relative;width:960px;height:auto;margin:0 auto;}
+/*header_link头部banner第一层*/
+header .header_link{width:960px;height:30px;line-height:30px;margin:0 auto;background:url(../images/banner_bg.png) no-repeat left top;}
+.header_link .left{margin-left:15px;}
+.header_link .left span{ letter-spacing:1.5px; padding:0px 2px;}
+.header_link .right{margin-right:20px;}
+.header_link .right span{ letter-spacing:1.5px; padding:0px 2px;}
+
+/*header_middle头部banner第二层*/
+header .header_banner{height:99px;margin:0 auto;background:url(../images/ban.png) no-repeat left top;}
+body{font-size:12px; background:#14a0d3;}
+.containerOuter{
+	width:100%;
+	background:url(../images/topbg.png) no-repeat center top;
+	padding-top:30px;
+}
+.container{
+	width:980px;
+	margin:0 auto;
+	background:url(../images/transparent.png) repeat;}
+.container .containerInner{
+	width:960px;
+	margin:0 auto;
+	background-color:#ffffff;
+}
+
+/*--------------------------------------------------------header start-----------------------------------------------------------*/
+header{position:relative;width:960px;margin:0 auto;}
+/*header_link*/
+header .header_link{width:960px;height:30px;line-height:30px;margin:0 auto;font-family:宋体;background:url(../images/banner_bg.png) no-repeat left top;}
+.header_link .left{margin-left:15px;}
+.header_link .left span{ letter-spacing:1.5px; padding:0px 2px;}
+.header_link .right{margin-right:10px;}
+.header_link .right span{ letter-spacing:1.5px; padding:0px 2px;}
+
+/*-----------------------------------header_banner第1层-----------------------------------*/
+.header_banners{width:960px;position:relative;height:110px;margin:0 auto;background:url(../images/top_logo.gif) no-repeat;}
+
+/*-----------------------------------header_banner第2层-----------------------------------*/
+.header_logo{position:absolute;left:0;bottom:0;width:960px;height:97px;background:url(../images/top_logo.png);}
+.header_search{position:absolute;right:10px;bottom:10px;width:329px;height:29px;font-size:20px;background:url(../images/top_search.png) no-repeat;}
+
+/*-----------------------------------header_search下...----------------------------*/
+.search_input{float:left;padding:0 5px;width:230px;height:26px;border:none;background:none;}
+.search_button{float:left;width:89px;height:29px;cursor:pointer;}
+
+/*-----------------------------------header_nav-----------------------------------*/
+.header_navs{width:960px;line-height:34px;background-color:#1071A6; height: 42px;}
+.header_navs a{display:block;color:#FFF;font-family:"宋体";font-size:14px;text-decoration:none; line-height:42px; }
+
+.header_navs .menu{
+	float:left;
+	position:absolute;
+    margin-left: 40px;
+}
+.header_navs .menu1{
+	float:left;
+	position:absolute;
+    margin-left: 98px;
+}
+.header_navs .menu2{
+	float:left;
+	position:absolute;
+    margin-left: 196px;
+}
+.navs{width:960px;color:#CCC;overflow:hidden;}
+.navs ul{white-space:nowrap;}
+.navs li{ float:left;text-align:center; margin-left:10px;}
+.navs li a{ padding:0px 15px;margn:0px;}
+
+/*-----------------------------------header_nav-----------------------------------*/
+.header_drop{width:960px;line-height:40px;background:#e5e5e5;word-break:break-all; word-wrap:break-word;margin:0 auto;}
+.header_drop a{ display:block; width:100%;color:#000000;font-size:13px;text-decoration:none;line-height:25px;padding:0 5px;}
+.drop{ color:#CCC; padding-left:30px;}
+.drop li{ float:left;margin-right:5px;height:30px;line-height:35px;text-align:center; white-space:nowrap;padding-top:5px;}
+
+/*--------------------------------------------------------header end-----------------------------------------------------------*/
+.containerOuter{width:100%;background:url(../images/topbg.png) no-repeat center top;padding-top:10px;}
+.container{width:980px;margin:0 auto;padding-top:30px;background:url(../images/transparent.png) repeat;}
+.container .containerInner{width:960px;margin:0 auto;}
+
+/*-----------------------------------------------where start----------------------------------------------*/
+.wheres{padding-left:10px;width:950px;height:31px;line-height:30px;color:#666;background:url(../images/where_bg.png); position:relative;}
+.wheres li{float:left; padding:0 2px; font-family:"宋体";}
+.wheres li div{float:left;}
+.wheres li div img{margin:1px 5px 0 0;}
+/*-----------------------------------------------where end----------------------------------------------*/
+
+/*顶部链接样式*/
+.header_link a{}
+.header_link a:hover{
+	color:red;
+	text-decoration:underline;
+}
+.header_link a.red{
+	font-weight:bold;
+	color:red;
+}
+
+/*底部样式*/
+footer{
+	display:block;
+	clear:both;
+	width:960px;
+	margin:0 auto;
+	padding:10px 0px;
+	color:#fff;
+}
+footer a{color:#FF0}
+footer a:hover{color:#FF0;text-decoration:underline}
+footer .menu{float:right}

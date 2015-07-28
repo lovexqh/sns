@@ -1,0 +1,110 @@
+<dl style="margin:10px 0 5px;  height:25px;line-height:25px;">
+      <dt class="left alR " style="width:70px;display:block;float:left">班级名称：</dt>
+      <dd style="margin:0 0 0 70px"><input type="text"  maxlength="20"  id="class_name" value="{$user_class['class_name']}">
+      </dd>
+</dl>
+<dl style="margin:10px 0 5px;  height:25px;line-height:25px; display:none">
+      <dt class="left alR " style="width:70px;display:block;float:left">所属年级：</dt>
+      <dd style="margin:0 0 0 70px">
+      	<select name="class_garde">
+        	<option value="">请选择所属年级</option>
+        </select>
+      </dd>
+</dl>
+
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;" class="alR">
+  <php>if (isset($user_class)) {</php>
+  <input type="button" class="btn_b" onclick="editUserClass()" value="确定" />
+  <php>}else {</php>
+  <input type="button" class="btn_b" onclick="addUserClass()" value="确定" />
+  <php>}</php>
+  <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+var themePath = "__THEME__/images/usergroup_icon/";
+//添加用户类型
+function addUserClass() {
+	var class_name	= $('#class_name').val();
+	if(class_name=='') {
+        ui.error('请输入用户班级名称');
+        return ;
+    }
+
+	//判断是否有重名
+	$.post("{:U('admin/User/isUserClassExist')}", {class_name:class_name}, function(res){
+		if(res == '1') {
+			if( !confirm("该用户班级名称已存在，是否继续？") ) {
+				return false;
+			}
+		}
+		//提交修改
+		$.post("{:U('admin/User/doAddUserClass')}", {class_name:class_name}, function(res){
+			if (res == '0') {
+				ui.error('保存失败');
+            }else if (res == '-1') {
+            	ui.error('用户班级名已存在');
+			}else {
+				var new_class_html = '';
+				new_class_html += '<tr id="class_'+res+'" overstyle="on">';
+				new_class_html += '<td><input type="checkbox" value="'+res+'" onclick="checkon(this)" id="checkbox2" name="checkbox"></td>';
+				new_class_html += '<td>'+res+'</td>';
+				new_class_html += '<td><div style="float: left;">'+class_name+'</div></td>';
+
+				new_class_html += '<td></td>';	
+
+				new_class_html += '<td><php>echo date("Y-m-d H:i");</php></td>';
+				new_class_html += '<td><a href="javascript:void(0);" onclick="edit('+res+')">编辑</a> ';
+				new_class_html += '<a href="javascript:void(0);" onclick="del('+res+');">删除</a></td>';
+				new_class_html += '</tr>';
+				$('#class_list').append(new_class_html);
+				ui.success('添加成功');
+				ui.box.close();
+			}
+		});
+	});
+}
+
+//编辑用户类型
+function editUserClass() {
+	var class_name	= $('#class_name').val();
+	var class_id	= "{$user_class['class_id']}";
+	
+	if(class_name=='') {
+        ui.error('请输入用户班级名称');
+        return ;
+    }
+	
+	//判断名称是否有变化
+	if(class_name == "{$user_class['class_name']}") {
+		ui.success('名称无变化，未提交修改');
+		ui.box.close();
+		return false;
+	}
+
+	//判断是否有重名
+	$.post("{:U('admin/User/isUserClassExist')}", {class_id:class_id, class_name:class_name}, function(res){
+		if(res == '1') {
+			if( !confirm("该用户班级名称已存在，是否继续？") ) {
+				return false;
+			}
+		}
+		//提交修改
+		$.post("{:U('admin/User/doEditUserClass')}", {class_id:class_id, class_name:class_name}, function(res){
+			if (res == '0') {
+				ui.error('保存失败');
+			}else if (res == '-1') {
+				ui.error('用户班级名已存在');
+			}else {
+				$('#class_name_'+user_class_name_).html(class_name);
+			
+				ui.success('保存成功');
+				ui.box.close();
+			}
+		});
+	});
+}
+
+function cancel() {
+	ui.box.close();
+}
+</script>

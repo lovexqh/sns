@@ -1,0 +1,71 @@
+
+<style type="text/css">
+.selects{ background:#1874B7;}
+.nav { width:100%;}
+.nav li a {
+color: #fff;
+font-weight: bold;
+font-size: 12px;
+display: inline-block;
+padding: 0 3px;
+margin: 0 3px 0 0;
+}
+</style>
+  <img width="960" height="113" src="../Public/images/articlehead.png" style="margin:auto; display:block;" />
+  <div class="nav_wrapper">
+    <ul class="nav">
+      <li <php>if($titshow==''){</php> class="selects"<php>}</php>>
+      <a href="{:U('square/Article/index')}"{:getMenuState('index')}>首页</a>
+      </li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <volist name="titles" id="vo">
+      <li <php>if($titshow==$vo['category_name']){</php> class="selects"<php>}</php>>
+      <a href="{:U('square/Article/myblog',array('id'=>$vo['id']))}">{$vo.category_name}</a>
+      </li>
+      <li>
+        <div class="line"></div>
+      </li>
+     </volist>
+      <li <php>if($titshow=='排行榜'){</php> class="selects"<php>}</php>>
+      <a href="{:U('square/Article/chart')}">排行榜</a>
+      </li>
+    </ul>
+   <!-- <a href="#" class="map">
+        <img src="__THEME__/square/desktopimg/nav_sty.gif" />
+        <span>数据地图</span>
+    </a>-->
+  </div>
+  <div class="searchBar"> <strong>快速搜索您需要的文章</strong>
+    <div class="search">
+      <form action="{:U('square/Article/myblog')}">
+      	<input name="app" type="hidden" value="square" />
+        <input name="mod" type="hidden" value="Article" />
+        <input name="act" type="hidden" value="myblog" />
+        <div class="navigation">
+          <input id="tags" class="input" name="tags" value="请输入您要搜索的文章关键词，例小学语文" onclick="search_value();" />
+
+        </div>
+        <input type="submit" class="btn" value="快乐易搜" />
+       <!-- <a href="#">高级搜索</a>-->
+      </form>
+
+    </div>
+      <a onclick='top.OpenWindow("url","__ROOT__/app/blog?title=%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2&redirect=L2FwcC9ibG9nL3Bvc3Q/aWZyYW1lPXllcw==",title,"","titlebutton=close,width=1035,height=600")' href="javascript:viod(0);" style="line-height: 55px;"> <img src="__ROOT__/public/themes/edustyle/square/images/blog_add.png"></a>
+  </div>
+  <script language="javascript" type="text/javascript">
+function search_value()
+{
+	document.getElementById("tags").value = '';
+}
+</script>
+   <div class="navigate_info"> 
+   <div>
+   <strong>您当前的位置：</strong>
+   <span><a href="{:U('square/Article/index')}">文章中心首页</a></span>
+   <volist name="path" id="vo">
+   	<span>><a href="{:U('square/Article/myblog',array('id'=>$vo['id']))}">{$vo.cname}</a></span>
+   </volist>
+   </div>
+   </div>

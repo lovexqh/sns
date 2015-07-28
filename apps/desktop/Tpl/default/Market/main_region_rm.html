@@ -1,0 +1,30 @@
+<include file="../Public/_header_ajax" />
+<div class="appPanel sidePanel radius5 rankingList">
+    <div class="appPanelTitleBar appPanelTitleBarEx" id="appPanel_mainWeekRank_titleBar">
+        <ul>
+            <li class="seled" tid="mainWeekRank_weekRankBox">{:L('weekrank')}</li>
+            <li  class="" tid="mainWeekRank_markRankBox" >{:L('markrank')}</li>
+        </ul>
+    </div>
+    <div class="appPanelListBox" id="appPanel_mainWeekRank_listBox" style="border: medium none;">
+        <div class="appPanel appPanelEx" style="display: block;" id="mainWeekRank_weekRankBox">
+            <script type="text/javascript">ajaxget("{:U('desktop/Market/ajax',array('do'=>'main_region_rank'))}",'mainWeekRank_weekRankBox','ajaxwaited');</script>
+        </div>
+        <div class="appPanel appPanelEx"  style="display: none;" id="mainWeekRank_markRankBox"></div>
+    </div>
+</div>
+<script type="text/javascript" reload="1">
+jQuery('#appPanel_mainWeekRank_titleBar ul li').bind('click',function(){
+    jQuery('#appPanel_mainWeekRank_titleBar ul li').removeClass('seled');
+    jQuery(this).addClass('seled');
+    var targetid=jQuery(this).attr('tid');
+    jQuery('#appPanel_mainWeekRank_listBox>.appPanelEx').hide();
+    jQuery('#'+targetid).show();
+    if(jQuery('#'+targetid+'>appPanelBody').length>0){
+        
+    }else{
+        ajaxget('{DZZSCRIPT}?mod=market&op=ajax&do='+targetid,targetid,'ajaxwaited');
+    }
+});
+</script>
+<include file="../Public/_footer_ajax" />

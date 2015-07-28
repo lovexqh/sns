@@ -1,0 +1,62 @@
+<include file="header" />
+
+<div class="content">
+
+	<div>
+		<div class="c_left">
+			<div class="weibo_menu_tabs">
+				<ul>
+					<volist name="space_menu" id="vo">
+					<li><a id="feed_colleague_item" rel="colleague"
+						style="width: 65px; text-align: center; color: #333"><span>{$vo}</span>
+					</a></li>
+					</volist>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="data">
+				<dl>
+					<dt>个人情况</dt>
+					<volist id="vo" name="userInfo.intro.list"> <php>if($vo['value']){</php>
+					</php>
+					<dd>
+						<div class="c1">{$vo.name}:</div>
+						<div class="c2">{$vo.value}</div>
+					</dd>
+					<php>}</php> </volist>
+				</dl>
+				<dl class="lineD_top">
+					<dt>联系方式</dt>
+					<volist id="vo" name="userInfo.contact.list"> <php>if($vo['value']){</php>
+					</php>
+					<dd>
+						<div class="c1">{$vo.name}:</div>
+						<div class="c2">{$vo.value}</div>
+					</dd>
+					<php>}</php> </volist>
+				</dl>
+
+				<div class="c"></div>
+				<div class="clear"></div>
+
+				<!-- 内容 end -->
+
+			</div>
+
+		</div>
+		<include file="right" />
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div>
+
+<!-- 页面主体内容end -->
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+
+
+<script type="text/javascript">var is_relink = true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script>replace_link('.task_list');</script>
+

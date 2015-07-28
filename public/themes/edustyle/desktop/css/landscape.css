@@ -1,0 +1,20 @@
+@media (min-width: 768px) and (max-width: 979px) {
+	header,
+	.containerInner{
+		width:960px!important;
+	}
+	.containerInner .sidesnow{
+		left:0px;
+	}
+	.loginbar{
+		right:20px; 
+	}
+	ul.menubar li ul li{
+		float:none;
+	}
+	
+	.top_stick{
+		right:10px;
+		bottom:10px;
+	}
+}

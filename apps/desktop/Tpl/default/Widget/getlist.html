@@ -1,0 +1,43 @@
+<include file="../Public/_header_ajax" />
+<if condition="empty($data)">
+	{:L('no_result')}
+<else />
+	<ul class="xl cl mlpp">
+	<volist name="data" id="value" key="key">
+		<li wid="{$value[wid]}" class="widget_block backgound_radius ">
+			<table width="100%" height="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+				<tr height="110"><td align="center"><img class="backgound_radius" src="{$value[icon]}" title="{$value[name]} setup: {$value[setupnum]}" /></td></tr>
+				<tr><td align="center"><div style="width:120px;height:20px; margin:0 auto;">{$value[name]}</div></td></tr>
+			</table>
+		</li>
+	</volist>
+	</ul>
+	<div class="cl">{$html}</div>
+</if>
+       
+<script type="text/javascript" reload="1">
+jQuery(document).ready(function(){
+	jQuery('.widget_block').hover(
+		function(){
+			jQuery(this).addClass('active');
+		},
+		function(){
+			jQuery(this).removeClass('active');
+		}
+	);
+	jQuery('.widget_block').bind('click',function(){
+		var wid=jQuery(this).attr('wid');
+		jQuery.getJSON(U('desktop/Widget/addtodesktop',['wid='+wid,'uid='+_MID_,'ukey={$ukey}','t='+new Date().getTime()]),function(json){
+			if(json.msg=='success'){
+				top._config.sourcedata.widgets[json.data.gid]=json.data;
+				var obj=top._widget.CWidget(json.data.gid);
+				top.showDialog('{:L('widget_add_success')}', 'right', null, null, null, null, null, null, 1000);
+			}else {
+				top.showDialog(json.msg, 'error', null, null, null, null, null, '确定', 2000);
+			}
+		});
+	});
+	
+});
+</script>
+<include file="../Public/_footer_ajax" />

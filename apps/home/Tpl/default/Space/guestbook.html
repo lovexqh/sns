@@ -1,0 +1,178 @@
+<include file="header" />
+<include file="__THEME__/desktop/_kindeditor" />
+<script type="text/javascript">
+var is_relink=true;
+</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+  <div class="sp-sitemap">
+    <h2>留言板</h2>
+  </div>
+  <div class="content">    
+    <div class="guestbook-form">
+		<h3>发表您的留言</h3>
+        <form action="#" method="post">
+        	<textarea id="message_content" onblur="this.className='text'" onfocus="this.className='text2'" class="text"></textarea>
+            <input type="button" value="发送" class="btn medium blue-button" onclick="doPostMessage('','{$uid}','message_content');" id="postbut"/>
+        </form>
+		<div class="clear"></div>
+    </div>
+    <div class="guestbook-list">
+		<div class="titbox">
+        	<h3>留言（{$count}）</h3>
+            <div class="page">{$html}</div>
+        </div>
+        <div class="gblist">
+        	<dl>
+			  <dd>
+          		<div class="feedBox">
+                  <ul class="feed_list">
+                      <li style="padding:0"><php>if(empty($data)) {</php>暂无信息<php>}</php></li>
+                      <volist name="data" id="vo">
+                        <li class="lineD_btm" id="message_{$vo['id']}">
+                          <div class="userPic"><space uid="vo.uid" target="_blank">{uavatar}</space></div>
+                          <div class="feed_c" style="margin-left:50px; *margin-left:58px">
+                              <a href="javascript:void(0);" onclick="ui.confirm(this,'确定要删除该留言?')" callback="delMessage({$vo['list_id']})" class="hover del"></a>
+                              <div class="msgCnt">
+                                    <div style="padding:0 0 10px 0" class="message_two">
+                                      <if condition="$vo['uid'] eq $mid ">
+                                        <space uid="vo['uid']">您</space> 对
+                                        <space uid="vo['to_uid']" >{uname}</space> 说：
+                                      <else />
+                                        <space uid="vo['uid']" >{uname}</space> 对
+                                        <space uid="vo['to_uid']" >您</space> 说：
+                                      </if>
+                                      {$vo.comment|htmlspecialchars_decode|ubb|getShort=###, 200|formatComment=###,true}
+                                      <if condition="$vo['new']"><span class="message_new">&nbsp;</span></if>
+                                    </div>
+                              </div>
+                              <div>
+                              <span class="right pr10">
+                                <a href="javascript:showReply('{$vo['id']}');">回复</a>
+                              </span>
+                              <span style="color:#999">{$vo.cTime|friendlyDate}</span>
+                              </div>
+                          </div>
+                        </li>
+                        <li id="reply_{$vo['id']}" style="display:none;">
+                          <label for="replayForm">我也说一句...</label>
+                          <form name="replayForm" action="#">
+                              <input id="content_{$vo['id']}" type="text" class="ipt-txt" />
+                              <input type="button" class="btn blue-button" value="回复" onclick="doPostMessage('{$vo['id']}','{$vo['uid']}','content_{$vo['id']}')" />
+                          </form>
+                        </li>
+                        <volist name="vo.reply" id="vo">
+                          <li class="lineD_btm" id="message_{$vo['id']}" style="padding-left:50px;">
+                            <div class="userPic"><space uid="vo.uid" target="_blank">{uavatar}</space></div>
+                            <div class="feed_c" style="margin-left:50px; *margin-left:58px">
+                                <a href="javascript:void(0);" onclick="ui.confirm(this,'确定要删除该留言?')" callback="delMessage({$vo['list_id']})" class="hover del"></a>
+                                <div class="msgCnt">
+                                      <div style="padding:0 0 10px 0" class="message_two">
+                                        <if condition="$vo['uid'] eq $mid ">
+                                          <space uid="vo['uid']">您</space> 对
+                                          <space uid="vo['to_uid']" >{uname}</space> 说：
+                                        <else />
+                                          <space uid="vo['uid']" >{uname}</space> 对
+                                          <space uid="vo['to_uid']" >您</space> 说：
+                                        </if>
+                                        {$vo.comment|htmlspecialchars_decode|ubb|getShort=###, 200|formatComment=###,true}
+                                        <if condition="$vo['new']"><span class="message_new">&nbsp;</span></if>
+                                      </div>
+                                </div>
+                            </div>
+                          </li>
+                        </volist>
+                      </volist>
+                  </ul>
+                </div>
+                <div class="page">{$html}</div>
+			  </dd>
+            </dl>
+        </div>
+		<div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 页面主体内容end -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script>
+$(document).ready(function(){
+	_KindEditor('message_content','space','99%','200px');
+});
+/*回复事件绑定*/
+$('dd').on('click','label',function(){
+	$(this).hide(0,function(){
+		$form = $(this).parent().find('form');
+		$form.show();
+		$form.find('.ipt-txt').focus();
+	});
+});
+$('dd').on('blur','input.ipt-txt',function(){
+	$this = $(this);
+	if($.trim($this.val()).length == 0){
+		$this.parent().hide(0,function(){
+			$this.parent().parent().find('label').show();
+		});
+	}
+});
+replace_link('.relink');
+</script>
+
+<script>
+$CONFIG['location'] = 'msglist';
+</script>
+
+<script>
+function butstate(type){
+	if( type == 'open' ){
+		$('#postbut').attr('disabled',false);
+		$('#postbut').val('发送');
+	}
+	if( type == 'close' ){
+		$('#postbut').attr('disabled',true);
+		$('#postbut').val('Loading......');
+	}
+}
+
+function doPostMessage(message_toid, message_touid, content_id) {
+	butstate('close');
+	var message_content = $('#' + content_id).val();
+
+	if (message_content == "") {
+		ui.error("请填写内容");
+		butstate('open');
+		return false;
+	}
+	$.post("{:U('home/Space/doPostContent')}", {toid:message_toid, touid:message_touid, content:message_content}, function(res){
+		res = eval('(' + res + ')');
+		
+		if (res.status==1) {
+			ui.success(res.info);
+			if ('msglist' == $CONFIG.location) {
+				setTimeout('location.reload()', 400);
+			}
+			ui.box.close();
+		} else {
+			ui.error(res.info);
+			butstate('open');
+		}
+	});
+}
+
+// 限制Textarea文本框的输入大小
+$(function() {
+    $('#message_content').keydown(function(event) {
+		$('#postbut').removeAttr('disabled');
+        if(this.value.length > 200 && event.which != '8' && event.which != '46') {
+            event.preventDefault();
+            return;
+        }
+    });
+});
+
+function showReply(id) {
+	$("#reply_" + id).css('display', '');
+}
+</script>

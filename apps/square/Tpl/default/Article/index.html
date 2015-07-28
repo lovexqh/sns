@@ -1,0 +1,80 @@
+﻿<include file="_header" />
+<div class="clear"></div>
+<div class="main">
+  <div class="main_left" style="margin:0;"> 
+    <!--最新博客-->
+    <div class="ml_top">
+      <div style="position:relative;"><img style="display:block; float:left;" src="__THEME__/square/images/new_blog.png"/> <a class="more" href="{:U('/Article/myblog')}"><img src="__THEME__/square/images/more.png"/></a>
+        <div class="clear"></div>
+      </div>
+      <volist name="blog_new" id="li">
+        <div class="new_blog">
+          <div style="float:left;"><space uid="li.uid">{uavatar=m}</space></div>
+          <ul>
+            <li>
+              <p><a href="{:U('/Article/myblog',array(id=>$li['square_id']))}" style="color:#FF0000;">[{$li.id|getcategory_blog}]</a> <a href="{:U('/Article/context',array(id=>$li['id']))}">{$li.title|getshort='10'}</a></p>
+            </li>
+            <li>{$li.content|text|getshort=###,'30','……'}<span><a href="{:U('/Article/context',array(id=>$li['id']))}">查看更多>></a></span></li>
+            <div class="clear"></div>
+          </ul>
+          <div class="clear"></div>
+        </div>
+      </volist>
+      <div class="clear"></div>
+    </div>
+    <!--分区显示-->
+    <div class="ml_down">
+      <volist name="titles" id="li">
+        <div class="fenqu"> <img src="__THEME__/square/images/blog_fenqu.png"/><span>{$li.category_name}</span> <a href="{:U('/Article/myblog',array(id=>$li['id']))}"><img src="__THEME__/square/images/more.png"/></a>
+          <volist name="part[$li['category_name']]" id="v">
+            <li><a href="{:U('/Article/context',array(id=>$v['id']))}">{$v.title|text|getshort='14'}……{$v.cTime|friendlyDate} </a></li>
+          </volist>
+        </div>
+      </volist>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  
+  <!-----------------------------------------------------热门博客----------------------------------------->
+  <div class="main_right">
+    <div class="right_top">
+      <ul>
+        <li><img src="__THEME__/square/images/hot_blog.jpg"/> <a href="{:U('/Article/myblog')}"><img src="__THEME__/square/images/more.png"/></a></li>
+        <volist name="blog_hot" id="li">
+          <li><img src="__THEME__/square/images/right_{$i}.png"/> <a href="{:U('/Article/context',array(id=>$li['id']))}"> {$li.title|text|getshort=###,'10','…'}</a>
+            <p>({$li.readCount})</p>
+          </li>
+        </volist>
+      </ul>
+    </div>
+    <!---------------------------------------------推荐用户----------------------------------------->
+    <div class="right_center">
+      <div><img src="__THEME__/square/images/hot_user.jpg"/> <a href="{:U('/Article/myblog')}"><img src="__THEME__/square/images/more.png"/></a></div>
+      <volist name="user_hot" id="li">
+        <ul>
+          <li>
+            <space uid="li.uid">{uavatar=m}</space>
+          </li>
+          <li><a href="@{$li.uid}">{$li.uid|getweibouser}</a><a href="#"><img src="__THEME__/square/images/add_user.jpg"/></a></li>
+        </ul>
+      </volist>
+    </div>
+    <!----------------------------------------------------评论区----------------------------------------->
+    <div class="right_foot"> <img src="__THEME__/square/images/comment_img.jpg"/> <a href="{:U('/Article/myblog')}"><img src="__THEME__/square/images/more.png"/></a>
+      <volist name="blog_comment" id="li"> <ul 
+        
+        <php>if($i==3){</php>
+        style="border:0px;"
+        <php>}</php>
+        >
+        <li><a href="@{$li.uid}" style=" color:#FB881E;"> {$li.uid|getweibouser}</a>评论了 <a href="@{$li.uid}" style=" color:#A3CF30;"> {$li.to_uid|getweibouser}</a>的博客 <a href="{:U('/Article/context',array(id=>$li['appid']))}"> 《{$li.appid|get_b_title}》</a>{$li.comment|text|getshort=###,'20','…'}……</li>
+        <li>{$li.cTime|friendlyDate} <a href="{:U('/Article/context',array(id=>$li['appid']))}">[评论]</a></li>
+        </ul>
+      </volist>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+<include file="_footer" /> 

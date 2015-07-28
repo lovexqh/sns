@@ -1,0 +1,138 @@
+<include file="../Public/_header" />
+<style type="text/css">
+.select>div>ul {
+	overflow: hidden;
+}
+.search_result>div>ul {
+	max-height: 480px;
+	overflow: hidden;
+}
+.commentOf4 span {
+	padding: 1px 3px 1px 3px;
+	background-color: #FF6A6A;
+	border-radius: 3px;
+	margin-left: 3px;
+	color: #FFF;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".{$type}").addClass('sel');
+		var text = $(".others .search_bk input[name=societyName]").val();
+		text = rightTrim(leftTrim(text));
+		if (text == null || text == ""){
+            $("#search_tip").css('display','block');
+        }
+	});
+	function enter(societyId){
+		$.post(U('society/Index/visitable'),{societyId : societyId,enter : 1},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+				window.location.href = "{:U('society/Index/index')}&societyId="+societyId;
+            }else{
+            	ui.error(data.msg);
+            }
+		});
+	}
+	function searchResult(form){
+		var societyName = $('input[name=societyName]').val();
+		if(!leftTrim(rightTrim(societyName))){
+			ui.error('请输入圈子名称或者标签名!');
+			return false;
+		}else{
+			window.location.href = "{:U('society/Index/showSearch')}&societyName="+societyName;
+		}
+	}
+	function message_visitable(societyId,id){
+		$.post(U('society/Index/message_visitable'),{societyId : societyId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+				window.location.href = "{:U('society/Index/messView')}&societyId="+societyId+"&id="+id;
+            }else{
+            	ui.error(data.msg);
+            }
+		});
+	}
+</script>
+<div class="center" style="min-height: 700px;">
+	<php>if($identitytype==3){</php>
+		<include file="../Public/student" />
+	<php>}else if($identitytype==2){</php>
+		<include file="../Public/teacher" />
+	<php>}else{</php>
+		<include file="../Public/otherUser" />
+	<php>}</php>
+	<div class="others" style="width: 920px; margin: 0 auto; background-color: #FFF; padding: 0px 30px 30px 30px;">
+		<div class="search_bk"  id="tabs-content">
+			<form id="search" onsubmit="searchResult('search');return false;">
+				<input name="societyName" onfocus="showOI_search_bk_f();" onblur="showOI_search_bk_b();" maxlength="12" value="{$societyName}" />
+				<input class="i_search" type="submit" value=""/>
+				<span id="search_tip"  onclick="showOI_search_tip();">请输入圈子名称或者标签名</span>
+			</form>
+		</div>
+		<div class="search_result select">
+			<h2>
+				<a class="banji" href="{:U('society/Index/showBanJi')}">所有班级</a> <a
+					class="zhuanye" href="{:U('society/Index/showZhuanYe')}">所有专业</a> <a
+					class="nianji" href="{:U('society/Index/showNianJi')}">所有年级</a> <a
+					class="yuanxi" href="{:U('society/Index/showYuanXi')}">所有院系</a> <a
+					class="bumen" href="{:U('society/Index/showBuMen')}">所有部门</a> <a
+					class="zidingyi" href="{:U('society/Index/showZiDingYi')}">所有自定义</a>
+				<php>if($type=='search'){</php>
+				<a class="search" href="{:U('society/Index/showSearch')}">&nbsp;搜&nbsp;&nbsp;索&nbsp;</a>
+				<php>}</php>
+			</h2>
+			<div>
+				<ul class="showSocietys">
+				<php>if(empty($societyList['data'])){echo '<li style="width: 870px;text-align: center;">暂无相关圈子！</li>';}else{</php>
+					<volist name="societyList.data" id="vo">
+					<li>
+							<span class="listName">
+								<a id="societyInfo_name" href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>
+							</span>
+						<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+						<div id="societyInfo">
+							<span style="float: right;margin-right:10px;">
+							<php>
+							if($vo['type']==0){
+								echo getResultOfApply($vo['societyId']);									
+							}
+							</php>
+							</span>
+							<span style="float: left;margin-left:70px;">创建者:
+								<php>if($vo['type']==0){</php>
+									<a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}</a>&nbsp;&nbsp;
+								<php>}else{echo '无';}</php>
+							</span>
+						</div>
+						<div style="height: 90px; border: 1px solid #D8D8D8; background-color: #F2F2F2;">
+							<ul style="line-height: 30px;" class="commentOf4">
+								<php> if($type=='search'){ $list =
+								explode(',',getShort_S($vo['tags'],17)); echo '
+								<li>标签：'; if($vo['tags']){ foreach ($list as $value) {
+									if($value){ echo '<span>'.$value.'</span>'; } } } echo '
+								</li>
+								'; } </php>
+								<php>if(empty($vo['message'])){echo '<li>暂无最新动态</li>';}else{</php>
+								<volist name="vo.message" id="voo" key="k">
+								<li><a href="javascript:;" onclick="message_visitable({$voo.societyId},{$voo.id});">{$k}.<php>
+								$voo['title'] = stripslashes($voo['title']);
+								echo htmlspecialchars(getShort_S(htmlspecialchars_decode($voo['title']),15));
+								</php>
+								</a>
+								<e style="clear:both;float: right;margin-right: 3px;">{$voo.cTime|date='m-d H:i',###}</e>
+								</li>
+								</volist>
+								<php>}</php>
+							</ul>
+						</div></li>
+					</volist>
+				<php>}</php>
+				</ul>
+				<div class="page">{$societyList.html}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="clear: both;"></div>
+<include file="../Public/_footer" />

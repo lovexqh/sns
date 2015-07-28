@@ -1,0 +1,38 @@
+<include file="__THEME__/header" />
+<link  href="../Public/share.css" rel="stylesheet" type="text/css"/>   
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->  
+  <include file="top" />
+    <div class="mainbox has_bg">
+     <div class="comfri">
+       <ul>
+      <volist name="fid" id="vo">
+         <li>
+         <a title="查看({$vo|getusername})的时光轴" onclick="top.OpenWindow('url','{:U('timeline/Index/index/',array('uid'=>$vo))}','时光轴','','titlebutton=close|max|min,width=1035,height=600');" href="javascript:">
+          <img src="{$vo|getuserface=b}" />
+          </a>         
+           <span>
+              <h3>{$vo|getusername}</h3>
+              <h3><a href="javascript:" onclick="top.OpenWindow('url','{:U('timeline/Index/index/',array('uid'=>$vo))}','时光轴','','titlebutton=close|max|min,width=1035,height=600');">查看TA的时光轴</a></h3>
+              <h3>共同关注的人（<php> echo count($com[$vo][0]);</php>）</h3>
+              <volist name="com[$vo][0]" id="coms" offset="0" length='4'>               
+               <a title="查看({$coms|getusername})的时光轴" onclick="top.OpenWindow('url','{:U('timeline/Index/index/',array('uid'=>$coms))}','时光轴','','titlebutton=close|max|min,width=1035,height=600');" href="javascript:">
+                <img src="{$coms|getuserface}" />
+               </a>
+              <!--  <php>dump($coms);</php> -->
+              </volist>
+           </span>
+         </li>
+        </volist>
+       </ul>
+        <div class="page">{$html}</div>
+     </div><div class="c"></div>
+    </div>    
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+
+<include file="__THEME__/footer" />

@@ -1,0 +1,98 @@
+<include file="../Public/header" />
+<link href="../Public/css/space.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.STYLE1 {
+	color: #000000
+}
+#follow_state .btn_relation{
+	margin-left:0;
+}
+-->
+</style>
+</head><body>
+<!-- 页面主体内容begin -->
+<div id="wrapper">
+  <div class="header">
+    <div class="header_tx">
+      <div class="tx_sc"><img src="{$uid|getUserFace=b}" alt="头像"></div>
+      <ul class="guanzhu">
+        <li class="gz_sz"><a
+          href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}"><strong
+          style="font-family:Arial, Helvetica, sans-serif; font-size:16px;color:#666">{$spaceCount.following|intval}</strong><br>
+          <font style="color:#666">我关注</font></a></li>
+        <li class="gz_sz_jgx"></li>
+        <li class="gz_sz"><a
+          href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}"><strong
+          style="font-family:Arial, Helvetica, sans-serif; font-size:16px;color:#666">{$spaceCount.follower|intval}</strong><br>
+          <font style="color:#666">关注我</font></a></li>
+        <li class="gz_sz_jgx"></li>
+        <li class="gz_sz"><a
+          href="{:U('home/Space/index',array('uid'=>$uid))}"><strong
+          style="font-family:Arial, Helvetica, sans-serif; font-size:16px;color:#666">{$spaceCount.miniblog|intval}</strong><br>
+          <font style="color:#666">微广播</font></a></li>
+      </ul>
+    </div>
+    <div class="nav">
+      <ul>
+        <volist name="nav_menu" id='vo' key="$key">
+        <li><a href="{$vo}">{$key}</a></li>
+        </volist>
+      </ul>
+    </div>
+    <div class="personal_tag">
+      <div style="line-height:45px; white-space:nowrap;"><strong style="font-size:16px">{$uid|getUserName}(<if condition="($userinfo['identitytype'] == 2)">老师<else />学生</if>)</strong> 微广播地址:{$userinfo['微广播地址']}</div>
+      <div style="line-height:25px">个性简介：
+      <if condition="empty($summary)">
+      	该用户暂无任何签名
+      <else />
+      	{$summary}
+      </if>
+      </div>
+      <div style="line-height:25px;overflow:hidden;width=430px;height:25px;">标签：
+      <if condition="empty($usertags)">
+      	<span>该用户暂无任何标签</span>
+      </if>
+      <volist id="vo" name="usertags"> <a
+      style=" color:#000000;background-color: #FF6A6A ;padding: 3px 8px;border-radius: 2px 2px 2px 2px;"
+      tagid="{$vo.tag_id}"
+      href="javascript:;"
+      onClick="top.OpenBrowser('{:U('home/user/searchtag',array('k'=>urlencode($vo['tag_name'])))}','标签 - {$vo.tag_name}', 'width=1024,height=600,titlebutton=close|max|min');"
+      title="标签 - {$vo.tag_name}">{$vo.tag_name}</a>&nbsp;&nbsp;</volist>
+      </div>
+      <php>if($mid!=$uid && $mid!=0){</php>
+      <php>if($isBlackList){</php>
+      已加入黑名单， <a href="javascript:void(0)"
+      onclick="ui.confirm(this,'确定要将此用户从你黑名单中解除?')"
+      callback="setBlacklist({$uid},'del')">解除</a>
+      </dd>
+      <php>}else{</php>
+      <dd style="width:90%; text-align:left; padding-top:5px"
+      id="follow_state"><script>document.write(followState('{$followstate}'))</script> 
+      </dd>
+      <php>}</php>
+      <php>}</php>
+    </div>
+    <div class="personal_tool">
+      <ul>
+      <if condition="$mid neq $uid">
+        <li class="personal_tool_menu">
+        <a href="javascript:void(0);" onclick="followGroupSelectorBox('{$uid}')"><img src="../Public/images/szfz.png"></a>
+        </li>
+        <li class="personal_tool_menu">
+        <a href="javascript:void(0);" onclick="weibo.quickpublish('快来看看 @{$uid|getUserName} 的微广播')"><img
+          src="../Public/images/txhy.png"></a>
+        </li>
+        <li class="personal_tool_menu">
+        <a href="javascript:void(0);" onclick="ui.sendmessage({$uid})"><img
+          src="../Public/images/fsx.png"></a>
+        </li>
+        <li class="personal_tool_menu">
+        <a href="javascript:void(0);" onclick="ui.confirm(this,'您确定要将此用户加入黑名单?')"
+          callback="setBlacklist({$uid},'add')"><img src="../Public/images/jhmd.png"></a>
+        </li>
+      </if>
+      </ul>
+    </div>
+  </div>
+  <div class="clear"></div>

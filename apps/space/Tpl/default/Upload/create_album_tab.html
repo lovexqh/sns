@@ -1,0 +1,13 @@
+<!--创建相册弹窗-->
+<dl class="pop_create_album">
+        <dt>
+            <label>相册名称：</label>
+            <input  name="name" type="text" class="TextH20" id="name"  style="width:200px;" onfocus="this.className='Text2'" onblur="this.className='TextH20'" maxlength="20" />
+        </dt>
+        <input type="hidden" id="classid" name="classid"  value="{$classid}">
+        <dd>
+            <label>&nbsp;</label>
+            <input type="button" onclick="do_create_album()" class="btn_b" value="确定">
+        </dd>
+</dl>
+<!--End 创建相册弹窗-->

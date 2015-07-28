@@ -1,0 +1,263 @@
+
+/*桌面加载样式*/
+.loading_img{ 
+	position:relative;
+	width:126px; 
+	height:122px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/default/images/loading.png', sizingMethod='scale');
+	background-image:url(./images/loading.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.loading_process{
+	position:absolute;
+	z-index:999999;
+	left:47px;
+	top:40px;
+	width:32px;
+	height:32px;
+	background:url(./images/loading.gif) center no-repeat;
+}
+
+/*start窗体加载样式*/
+.window_content_loadding{
+	position:absolute;top:0px;left:0px;width:100%;height:100%;
+	z-index:999;
+	overflow:hidden;
+}
+.window_content_loadding .window_content_loadding_back {
+	position:absolute;top:0px;left:0px;width:100%;height:100%;
+	z-index:1;
+}
+.window_content_loadding .window_content_loadding_moving {
+	position:absolute;top:0px;left:0px;width:100%;height:100%;
+	z-index:2;
+	background:url(./images/loading_dian.gif) center no-repeat;
+}
+.window_content_loadding .window_content_loadding_back_img {
+	width:38px;
+	height:26px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/default/images/loading_bg.png', sizingMethod='scale');
+	background-image:url(./images/loading_bg.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+/*end窗体加载样式*/
+
+/*start桌面左右切换样式*/
+
+#body_pre{
+	position:absolute;
+	width:1px;
+	height:100%;
+	left:0px;
+	top:0px;
+	overflow:visible;
+	z-index:1;
+}
+#body_pre .operator{
+	position:absolute;
+	left:0;
+	width:33px;
+	height:74px;
+	vertical-align:middle;
+	margin:auto;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/default/images/left.png', sizingMethod='scale');
+	background-image:url(./images/left.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:none;
+}
+#body_next{
+	position:absolute;
+	width:1px;
+	height:100%;
+	right:0px;
+	top:0px;
+	overflow:visible;
+	z-index:1;
+}
+#body_next .operator{
+	position:absolute;
+	right:0px;
+	width:33px;
+	height:74px;
+	margin:auto;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/default/images/right.png', sizingMethod='scale');
+	background-image:url(./images/right.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:none;
+}
+/*end桌面左右切换样式*/
+
+/*start上传时图标样式*/
+.upload_failure_close{
+	width:16px;
+	height:16px;
+	background:url(./images/close.png) no-repeat;
+	position:absolute;
+	z-index:12;
+	right:5px;
+	top:3px;
+	
+}
+.text_div_upload{
+	position:relative;
+	margin:1px;
+	display:block;
+	border:1px solid #d7f7b9;
+}
+.upload_progress_div{
+	height:35px;overflow:hidden;
+}
+.upload_text{
+	left:0px;top:0px;position:relative;z-index:10;width:100%;height:35px;z-index:10;
+}
+.upload_text_back{
+	position:absolute;top:0px;left:0px;width:0%;background:#dff8c9;height:100%;z-index:1;
+}
+.text_div_upload_detail{
+	position:relative;
+	display:inline-block;
+	border:1px solid #d7f7b9;
+}
+/*end上传时图标样式*/
+
+
+
+
+
+
+/*图片浏览器相关*/
+.picop_div_pre{
+	position:absolute;
+	z-index:100;
+	top:0px;
+	left:0px;
+	width:50%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	background:url(./images/b.gif);
+}
+.picop_div_next{
+	position:absolute;
+	z-index:100;
+	top:0px;
+	right:0px;
+	width:50%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	background:url(./images/b.gif);
+}
+.picop_next{
+	z-index:101;
+	width:48px;
+	height:48px;
+	overflow:hidden;
+	cursor:pointer;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/images/picwin/next.png', sizingMethod='scale');
+	background-image:url(./images/picwin/next.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.picop_pre{
+	z-index:101;
+	width:48px;
+	height:48px;
+	overflow:hidden;
+	cursor:pointer;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/images/picwin/prev.png', sizingMethod='scale');
+	background-image:url(./images/picwin/prev.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+/*图片浏览器结束*/
+
+/* 输入框样式*/
+.px, .pt ,.textarea{
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url(./images/px.png) repeat-x scroll 0 0 #FFFFFF;
+    border-color: #707070 #CECECE #CECECE #707070;
+    border-style: solid;
+    border-width: 1px;
+    color: #666666;
+    font-size: 12px;
+    padding: 4px;
+}
+.IcoText_folder .textarea{ padding:0}
+.px:focus, .pt:focus,.textarea:focus {
+    border-color: #6FB1DF;
+    box-shadow: 0 0 5px #6FB1DF;
+    color: #333333;
+}
+.px {
+    height: 20px;
+}
+/*浮动层开始*/
+.stick_container_back{
+	 position:absolute;
+	 background:#eee;
+	z-index:1;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border:#39f solid 1px;
+	filter:Alpha(opacity=50);opacity:0.5;
+	
+}
+#stick_container{
+	 position:absolute;z-index:92999; color:#FFF ;
+	 text-shadow:1px 1px 1px #000;
+	 -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	overflow:visible;
+}
+/*浮动层结束*/
+
+/* dock条切换按钮*/
+.dock_opbar_u{width:30px;height:30px;right:5px;position:absolute;bottom:0px;z-index:999999; }
+.dock_opbar_u a{
+	display:inline-block;
+	width:30px;height:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/defult/images/shang.png', sizingMethod='image');
+	background-image:url(./images/shang.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	}
+.dock_opbar_u a:hover{
+	display:inline-block;
+	width:30px;height:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/defult/images/shang2.png', sizingMethod='image');
+	background-image:url(./images/shang2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	}
+.dock_opbar_d{width:30px;height:30px;right:5px;position:absolute;bottom:0px;z-index:999999; }
+.dock_opbar_d a{
+	display:inline-block;
+	width:30px;height:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/defult/images/xia.png', sizingMethod='image');
+	background-image:url(./images/xia.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	}
+.dock_opbar_d a:hover{
+	display:inline-block;
+	width:30px;height:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/system/defult/images/xia2.png', sizingMethod='image');
+	background-image:url(./images/xia2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	}
+

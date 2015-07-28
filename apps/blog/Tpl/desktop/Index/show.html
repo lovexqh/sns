@@ -1,0 +1,55 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<style>
+    em{
+        word-break: break-all;word-wrap: break-word;
+    }
+</style>
+<div class="divcenter">
+    <div class="blogleft">
+        <php>if($blog != false){</php>
+            <php>if($blog['private'] == 0 || $blog['uid'] == $selfuid){</php>
+            <ul class="bloglist">
+                    <li>
+                        <h1>{$blog['title']}</a></h1>
+                        <h4>
+                            <span style="margin-left: 0px;">发表时间：{$blog['cTime']|friendlyDate}</span>|
+                            <span>{$blog['readCount']}次阅读</span>|
+                            <span><span style="margin: 0px; padding: 0px;" class="total_count">{$blog['commentCount']}</span>次评论</span>|
+                            <span>作者：<a href="{:U('blog/Index/usercate',array('uid'=>$blog['uid']))}">{$blog['uid']|getUserName}</a> </span>
+                            <div class="more">
+                                {:W('Weibo',array('tpl_name'=>'blog_share_weibo','button_title'=>'分享','addon_info'=>''))}
+                                <php>
+                                    $tpl_data = array('author'=>getUserName($blog['uid']),'title'=>$blog['title'],'body'=>getShort(strip_tags($blog['content']),80),'url'=>U('blog/Index/show',array('id'=>$blog['id'])));
+                                    $tpl_data = urlencode(serialize($tpl_data));
+                                </php>
+                                <a href="javascript:;" onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$blog['id']}">分享</a>
+                                <if condition="$blog['uid'] neq $selfuid">
+                                    <i class="vline">|</i>{:W('Favorite',array('fid'=>$blog['id'],'mod'=>'Index','act'=>'show','type'=>'link','count'=>0,'appconfig'=>'blog'))}
+                                </if>
+                            </div>
+                        </h4>
+                        <div class="cnt" style="overflow: hidden;">
+                            {$blog['content']|stripslashes|this_tags_html|}
+                            <div class="clear"></div>
+                        </div>
+                    </li>
+            </ul>
+            <div class="comment" style="width:620px; font-size: 12px;">
+                {:W('Comment',array('type'=>'blog','appid'=>$blog['id'],'author_uid'=>$blog['uid'],'title'=>$blog['title'], 'url'=>U('blog/Index/show',array('id'=>$blog['id'])), 'table'=>'blog','id_field'=>'id','comment_count_field'=>'commentCount'))}
+            </div>
+            <php>}else{</php>
+            <php>$error = '当前文章不公开，你不能查看！';</php>
+            <include file="Public:_error" />
+            <php>}</php>
+        <php>}else{</php>
+            <php>$error = '当前不存在或已经被删除！';</php>
+            <include file="Public:_error" />
+        <php>}</php>
+    </div>
+    <include file="Public:_right" />
+    <div class="clear"></div>
+    <include file="Public:_footer" />
+</div>
+
+

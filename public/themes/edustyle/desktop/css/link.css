@@ -1,0 +1,69 @@
+@charset "utf-8";
+/**
+ +------------------------------------------------------------------------------
+ * CSS Link Document
+ +------------------------------------------------------------------------------
+ * @author		小波 <xiaobosun@gridinfo.com.cn>
+ * @version		1.0
+ +------------------------------------------------------------------------------
+ * 创建时间：	2013-5-13 10:01:58
+ +------------------------------------------------------------------------------
+ */
+A:link {
+	COLOR: #333; TEXT-DECORATION: none; *VERTICAL-ALIGN:baseline; ZOOM:1;
+}
+A:visited {
+	COLOR: #333; TEXT-DECORATION: none; *VERTICAL-ALIGN:baseline; ZOOM:1;
+}
+A:active {
+	COLOR: #333; TEXT-DECORATION: none; *VERTICAL-ALIGN:baseline; ZOOM:1;
+}
+A:hover {
+	COLOR: #45659e; TEXT-DECORATION:underline; *VERTICAL-ALIGN:baseline; ZOOM:1;
+}
+.easyui-linkbutton{
+	cursor:default;
+}
+/*顶部栏按钮*/
+.nav_button:hover{
+	color:#333;
+	text-decoration:none;
+}
+.forwardDisable.nav_button:hover{
+	color:#9fbccf;
+	text-decoration:none;
+}
+/*左侧导航标题扩展链接样式*/
+.panel-list-box h2 a{
+	color:#1a5fac;
+}
+.panel-list-box .more a{
+	color:#1a5fac;
+}
+/*摘要列表右侧筛选链接样式*/
+.list-tabs dt{
+	color:#1a5fac;
+}
+.list-tabs a{
+	color:#1a5fac;
+}
+ul.summary-list .summary-cont a{
+	color:#1a5fac;
+}
+.person_info a{
+	color:#1a5fac;
+}
+.article_title a{
+	color:#1a5fac;
+}
+.article_position a{
+	color:#1a5fac;
+}
+/*内容部分小功能按钮颜色*/
+a.link-act{
+	color:#6c6c6c;
+}
+a.link-act:hover{
+	color:#9c9c9c;
+	text-decoration:none;
+}

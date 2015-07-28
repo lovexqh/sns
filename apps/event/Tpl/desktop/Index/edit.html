@@ -1,0 +1,171 @@
+<include file="__THEME__/desktop/_header" />
+<include file="__THEME__/desktop/_editor" />
+<link rel="stylesheet" href="../Public/css/event.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<!-- 左侧导航栏 start -->
+<div region="west" border="false" split="true" class="westbar sidebar">
+	<include file="../Public/_leftPanel" />
+</div>
+<!-- 左侧导航栏 end -->
+ <!-- 画布 begin  -->
+    <div class="panel-cmain">
+      <div class="mainbox_appC">
+        <!-- page_title end -->
+        <div class="groupBox">
+            <div class="box1">
+              <form method="post" action="{:U('//doajaxEditEvent')}"  enctype="multipart/form-data" onsubmit="return desktopCheck(this);">
+              	<table>
+                  <tr>
+                    <th scope="row"><em>*</em>活动名称：</th>
+                    <td><input name="title" class="easyui-validatebox" data-options="required:true" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" value="{$title}" /></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><em>*</em>活动城市：</th>
+                    <td>
+                      <!-- 
+                      <input type="hidden" id="current" />
+                      <input type="text" name="city" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" id="selectarea" readonly />
+                      <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" /></td>
+                      -->
+                      <input value="{$province}" id="province" name="province" class="easyui-combobox" style="height:29px;" data-options="  
+														            valueField: 'title',  
+														            textField: 'title',  
+														            url: '{:U('event/Area/ajaxArea')}' ,  
+														            onSelect: function(rec){ 
+														            	$('#cityshow').parent().find('.warning-msg').remove();
+														            	var url = U('event/Area/ajaxArea',['pid='+rec.area_id]); 
+														                $('#cityshow').combobox('reload', url);  
+														            }" />  
+			    		<input value="{$subcity}" id="cityshow" name="cityshow" class="easyui-combobox" required="true" missingMessage="请选择活动城市！"  style="height:29px;" data-options="
+			    																																						valueField:'title',
+			    																																						textField:'title',
+			    																																						onSelect:function(crec){
+			    																																							$('#city').val($('#province').combobox('getValue')+' '+crec.title);
+			    																																						}" />
+			    		<input type="hidden" id="city" name="city" />
+                  </tr>
+                  <tr>
+                    <th scope="row"><em>*</em>活动地点：</th>
+                    <td><input value='{$address}' name="address" type="text" class="easyui-validatebox" data-options="required:true" id="address" onfocus="this.className='text2'" onblur="this.className='text'"  maxlength="30"/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><em>*</em>活动分类：</th>
+                    <td><select name="type" class="easyui-combobox" style="height:29px;"  id="type" class="text">
+                        <option value="0">请选择活动分类</option>
+                      <?php foreach($category as $k=>$cate){ ?>
+                      <option value="{$k}" 
+                      <php>if( $cate === $type ) {echo "selected";}</php>
+                      >{$cate}
+                      </option>
+                        <?php } ?>
+                        </volist>
+                      </select></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">活动经费：</th>
+                    <td>
+                    	 <select class="easyui-combobox" style="height:29px;" id="cost" name="cost" class="text">
+                            <option value="0">免费</option>
+                            <option value="1">AA制</option>
+                            <option value="2">50元以下</option>
+                            <option value="3">50-200元</option>
+                            <option value="4">200-500元</option>
+                            <option value="5">500-1000元</option>
+                            <option value="6">1000元以上</option>
+                          </select>
+                          <script type="text/javascript" charset="utf-8">
+				          	$( "#cost option[value='{$cost}']" ).attr( 'selected',true );
+				          </script>
+                          资费说明：
+                          <input name="costExplain" type="text" class="text" id="textfield2" onfocus="this.className='text2'" onblur="this.className='text'" size="30" value="{$costExplain}" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><em>*</em>活动时间：</th>
+                    <td>
+                    	<input name="sTime" type="text" class="easyui-validatebox" data-options="required:true" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" value="<?php echo date( 'Y-m-d H:i:s',$sTime ); ?>" readonly/>
+                      -
+                      <input name="eTime" type="text" class="easyui-validatebox" data-options="required:true" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" value="<?php echo date( 'Y-m-d H:i:s',$eTime ); ?>" readonly />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><em>*</em>截止报名：</th>
+                    <td><input name="deadline" type="text" class="easyui-validatebox" data-options="required:true" id="deadline" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>" readonly /></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">活动人数：</th>
+                    <td>
+                    <input name="limitCount" type="text" class="text" id="limitCount" onfocus="this.className='text2'" onblur="this.className='text'" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5" value="<?php if( $lc == '无限制' ) {echo '0';} else{ echo $limitCount;} ?>" />
+                      <span class="cGray2"> 活动人数上限，设0表示无限制</span>
+                     </td>
+                  </tr>
+                  <tr>
+                    <th valign="top" scope="row"><em>*</em>活动介绍：</th>
+                    <td>
+                    	<textarea id="explain" name="explain" style="width:100%; height:350px;">{$explain}</textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">联系方式：</th>
+                    <td>
+                    	<input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="30" value="{$contact}"/>
+                      <br />
+                      <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span>
+                    </td>
+                  </tr>
+                  <tr>
+                  
+                  <?php 
+          $allow = "";
+          $friend = "";
+            if( $opts['allow'] ){
+              $allow = "checked";
+            }
+            if( $opts['friend'] ){
+              $friend = "checked";
+            }
+          ?>
+                    <th scope="row">活动选项：</th>
+                    <td> <div>
+                        <input type="checkbox" name="friend" id="choice1" value="1" {$friend} />
+                        只允许我关注的人参加该活动 </div>
+                      <div>
+                        <input type="checkbox" name="allow" id="choice2" value="1" {$allow}/>
+                        活动参加人员需要审批 </div></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">活动海报：</th>
+                    <td> <input name="cover" type="file" /></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">&nbsp;</th>
+                    <td>
+                    <div class="c2">
+                    <input type="hidden" name="id" value="{$id}">
+                    <input type="hidden" name="optsId" value="{$optsId}">
+                    <a name="button" type="submit" class="easyui-linkbutton medium-primary" id="button">保存</a>
+                  </div>
+                    </td>
+                  </tr>                  
+                </table>
+              </form>
+            </div>
+          </div>
+          <!-- end  -->
+        </div>
+      </div>
+    
+
+<div id="w" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:200px;padding:10px;">  
+       <include file="../Area/area" />
+</div>
+<!-- 右侧主要内容栏 end -->
+
+<script>
+$(document).ready(function(){
+    loadEditor("explain");
+});
+</script>
+<include file="__THEME__/desktop/_footer" />

@@ -1,0 +1,34 @@
+<div class="divcenter header_top">
+      <img width="960" height="113" src="../Public/images/blog_banner.jpg" style="margin:auto; display:block;" />
+      <a href="{:U('blog/Index/usercate')}" class="grzx"><img src="../Public/images/grzx.png"></a>
+  </div>
+  <div class="divcenter nav_wrapper">
+    <ul class="divcenter nav">
+      <li <php>if(ACTION_NAME == 'index'){</php> class="navhover"<php>}</php>>
+      <a href="{:U('blog/Index/index')}">首页</a>
+      </li>
+      <volist name="titles" id="vo">
+      <li <php>if($id==$vo['id']){</php> class="navhover"<php>}</php>>
+      <a href="{:U('blog/Index/category',array('id'=>$vo['id']))}">{$vo.category_name}</a>
+      </li>
+     </volist>
+    </ul>
+  </div>
+  <div class="divcenter searchBar">
+      <form action="{:U('blog/Index/category')}">
+          <input name="app" type="hidden" value="blog" />
+          <input name="mod" type="hidden" value="Index" />
+          <input name="act" type="hidden" value="category" />
+          <label>快速搜索您需要的文章</label>
+          <input id="tags" class="input" name="tags" value="<php>if($tags != ''){ echo $tags; }else{echo '请输入您要搜索的博客关键词';}</php>" onclick="search_value();" />
+          <input type="submit" class="btn" value="快乐易搜" />
+          <input type="button" class="btn subbtn" onclick="document.location.href='{:U('blog/Index/post')}';" value="发表博客" />
+          <!-- <a href="#">高级搜索</a>-->
+      </form>
+  </div>
+  <script language="javascript" type="text/javascript">
+      function search_value()
+      {
+          document.getElementById("tags").value = '';
+      }
+  </script>

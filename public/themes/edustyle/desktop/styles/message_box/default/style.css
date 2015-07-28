@@ -1,0 +1,87 @@
+/*消息盒子*/
+.MessageBox{
+	margin:10px;
+	width:100%;
+	text-align:left;
+	line-height:25px;	
+}
+#message_box{
+	position:absolute;
+	z-index:9999999;
+	top:29px;
+	right:5px;
+	background:#FFF;
+	box-shadow:0px 0px 5px #000;
+	width:200px;
+	min-height:100px;
+}
+#message_box .header{
+	height:30px;
+	line-height:30px;
+	padding:0px 0px 0px 10px;
+	background:#e2e2e2;
+}
+#message_box .header span{
+	float:left;
+}
+#message_box .header .close{
+	
+	float:right;
+	height:16px;width:16px;color:#000;font-family:宋体;font-size:14px;font-weight:bold;line-height:16px;text-indent:999;outline:none;
+	background:#e2e2e2 url(close.png) center center;
+	border:1px solid #e2e2e2;
+}
+#message_box .header .close:hover{
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+	background:#FCC url(close.png) center center;
+}
+#message_box .bottom{
+	height:30px;
+	line-height:30px;
+	padding:0 10px;
+	background:#e2e2e2;
+}
+#message_box .bottom .left{
+	float:left;
+}
+#message_box .bottom .right{
+	float:right;
+}
+#message_box .message-item{
+	height:26px;
+	line-height:26px;
+	display:block;
+	padding:0 5px;
+	text-decoration:none;
+	text-outline:none;
+}
+#message_box .message-item:hover{
+	background:#F0F8FD;
+}
+#message_box .message-item .item-icon{
+	float:left;
+	width:16px;
+	height:16px;
+	margin:5px;
+	line-height:16px;
+	display:inline-block;
+}
+#message_box .message-item .item-num{
+	float:right;
+	line-height:16px;
+	width:26px;
+	height:16px;
+	margin:5px;
+	display:inline-block;
+}
+#message_box .message-item .item-text{
+	float:left;
+	line-height:16px;
+	margin:5px;
+	height:16px;
+	width:100px;
+	overflow:hidden;
+}

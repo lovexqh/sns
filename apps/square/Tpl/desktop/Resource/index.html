@@ -1,0 +1,206 @@
+<include file="_header" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/desktopcss/resource.css" />
+<div class="wrapper">
+	<include file="header" />
+    <div class="main">
+    <include file="_left" />
+    <div class="content" id="resourcelist">
+      <div class="main_center">
+        <div class="source_left"> 
+        	<img src="__THEME__/square/images/scroll.gif" width="537" height="210" /> 
+        </div>
+        <div class="so_left"> 
+        <!--最新热门资源-->
+        <div class="box">
+          <div class="title">
+            <h2>最新资源</h2>
+           <!-- <a href="#" class="update">换一批</a>-->
+            <div class="clear"></div>
+          </div>
+          <ul class="book_list">
+              <volist name="recommend" id="vo" key="k">
+                <li>
+                    <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}" style="line-height: 0; font-size: 0; overflow: hidden;">
+                    {$vo.title|getShort=10}
+                    	<img src="{$vo['id']|getThumb}" width="90px" height="120px">
+                    </a>
+                    <strong>
+                        <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}" style=" border:0;">
+                        	{$vo.title|getShort=10}
+                        </a>
+                    </strong>
+                    <span>{$vo.readCount}人已读</span>
+                </li>
+              </volist>
+            <div class="clear"></div>
+          </ul>
+        </div>
+        <!--共建共享start-->
+        <div class="box">
+          <div class="title">
+            <h2>共建共享</h2>
+             <a href="{:U('square/Resource/getList',URLformat(array('cateid'=>'31')))}" class="more" title="共建共享">更多>></a>
+            <div class="clear"></div>
+          </div>
+         
+          <ul class="source_list" id="con_all">
+            <volist name="oasics" id="obj">
+            	<li>
+                <php>if($obj[tabletypeid]==1){</php>
+                    <a href="{:U('square/Resource/prepareshow',array('id'=>$obj['id']))}">
+                <php>}elseif($obj[tabletypeid]==2){</php>
+                 	<a href="{:U('square/Resource/chaptershow',array('id'=>$obj['id']))}">
+                <php>}else{</php>
+                 	<a href="{:U('square/Resource/show',array('id'=>$obj['id']))}">
+                <php>}</php>
+                    [{$obj.category_name}] [{$obj.DataName}] {$obj.title|getShort=25}
+                </a>
+                <span>{$obj.time|date="Y-m-d",###}</span>
+            	</li>
+            </volist>
+          </ul>
+        </div>
+        <!--共建共享end-->
+        <!--官方资源start-->
+        <div class="box">
+          <div class="title">
+            <h2>官方资源</h2>
+            <a href="{:U('square/Resource/getList',URLformat(array('cateid'=>'32')))}" class="more" title="官方资源">
+            	更多>>
+            </a>
+            <div class="clear"></div>
+          </div>
+          <ul class="source_list" id="con_sall" style="display:block">
+            <volist name="sasics" id="obj">
+              <li>
+                  <a href="{:U('square/Resource/show',array('id'=>$obj['id']))}">
+                    [{$obj.category_name}] [{$obj.DataName}] {$obj.title|getShort=25}
+                  </a>
+                  <span>{$obj.time|date="Y-m-d",###}</span>
+              </li>
+           </volist>
+          </ul>
+        </div>
+        <!--官方资源end-->
+      </div>
+        <div class="clear"></div>
+      </div>
+      
+      
+      
+      
+      <div class="main_right">
+        <div class="source_right">
+          <h3>统计信息：</h3>
+          <div class="source_count">
+            <p><strong>资源共计：</strong><span class="number">{$count.all.count}个</span> </p>
+            <volist name="count.type" id="vo">
+              <p><strong>{$vo.DataName}：</strong><span>{$vo.count}个</span></p>
+            </volist>
+            <p><strong>资源访问数：</strong><span>{$count.read.count}次</span></p>
+            <p><strong>资源下载数：</strong><span>{$count.down.count}次</span></p>
+          </div>
+         </div>
+               <div class="so_right">
+        <div class="rank">
+          <h4>贡献排行榜</h4>
+          <table id="con_per" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="70">姓名</th>
+              <th scope="col" width="70">上传数</th>
+             <!-- <th scope="col">下载数</th>-->
+            </tr>
+            <volist name='contribute' id='vo'>
+            <tr>
+              <td>
+           		  <php>if($i==1){</php><code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php><code class="top2">{$i}</code>
+                  <php>}else{</php><code>{$i}</code>
+                  <php>}</php> 
+              </td>
+              <td><space uid="vo.uid" class="co">{uname}</space></td>
+              <td>{$vo['count']}</td>
+             <!-- <td>11</td>-->
+            </tr>
+            </volist>
+          </table>
+        </div>
+        <div class="rank">
+          <h4>资源排行榜</h4>
+          <table border="0" cellspacing="0" cellpadding="0" class="tl">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="100">资源</th>
+              <th scope="col">点击</th>
+              <th scope="col">下载</th>
+            </tr>
+            <volist name="rank" id="vo">
+               <tr>
+                <td>
+           		  <php>if($i==1){</php><code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php><code class="top2">{$i}</code>
+                  <php>}else{</php><code>{$i}</code>
+                  <php>}</php> 
+                 </td>
+                 <td width="40%">
+                    <php>if($vo[tabletypeid]==1){</php>
+                        <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                    <php>}elseif($vo[tabletypeid]==2){</php>
+                        <a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                    <php>}else{</php>
+                        <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">
+                    <php>}</php>
+                     {$vo['title']|getShort=5}
+                     </a>
+                 </td>
+                 <td width="20%">
+                 	{$vo['readCount']}
+                 </td>
+                 <td width="20%">
+                 	<php>if($vo['downCount']){</php>
+                 	{$vo['downCount']}
+                    <php>}else{</php>
+                    0
+                    <php>}</php>
+                 </td>
+               </tr>
+            </volist>
+          </table>
+        </div>
+      </div>
+      </div>
+      
+      
+      
+
+    </div>
+  </div>
+    <div class="clear"></div>
+<include file="_footer" />
+</div>
+<script type="text/javascript">
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('table').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();	
+}
+function centter_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('table').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();	
+}
+function basicsswitch(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('.source_list').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();
+	}
+</script>
+</body>
+</html>

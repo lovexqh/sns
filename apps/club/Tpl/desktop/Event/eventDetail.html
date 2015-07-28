@@ -1,0 +1,108 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="topic_detail_page" style="padding:5px 10px 10px;">
+			<div class="allClub_content_title" style="margin-left: 8px;">
+				<img src="../Public/images/all_club.png">
+				<span><a href="{:U('club/Index/index')}">社团首页</a> ></span>
+				<span><a href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">{$clubInfo.title}</a> ></span>
+				<span><a href="{:U('club/Event/index', array('id'=>$clubInfo['id']))}">风采</a></span>
+			</div>
+			<!--活动标题-->
+			<div class="event_title_area">
+				<div class="event_list_issue event_issue">第{$topicInfo.issue}期</div>
+				<div class="event_title">{$topicInfo.title}</div>
+				<div class="event_info">
+					<span>作者:</span>
+					<span style="color:#035A95;">{$topicInfo['uid']|getUserName}</span>
+					<span style="margin-left:12px;">时间:</span>
+					<span style="color:#B7B7B7;">{$topicInfo.ctime|friendlyDate=###,'full'}</span>
+					<a style="color:#42A0ED;margin-left:12px;cursor:pointer;" <php>if($replylimit==1){</php>onclick="$('html').scrollTop(90000);$('#event_reply_edit').focus();"<php>}</php>>评论</a>
+					<span>({$replyList.replycount})</span>
+					<php>if($topicInfo['uid']==$mid){</php>
+					<span>({$topicInfo.whoreply})</span>
+					<php>}</php>
+					<php>if($member['type']==1 || $member['type']==2){</php>
+					<span style="margin:0 12px;">|</span>
+					<a style="cursor:pointer;" onclick="delEvent({$topicInfo.id},{$topicInfo.clubid});">删除</a>
+					<php>}</php>
+					<!--
+					<span style="margin:0 12px;">|</span>
+					<span style="color:#5EA627;">分享</span>
+					<span>(1)</span>
+					-->
+				</div>
+			</div>
+			<!--活动标题-->
+			<!--活动内容-->
+			<div class="event_content">{$topicInfo.content}</div>
+			<!--活动内容-->
+			<!--评论-->
+			<php>if($replylimit==1){</php>
+			<div class="event_reply_area" id="event_reply_area">
+				<div class="event_reply_edit" id="event_reply_edit" contenteditable="true"></div>
+				<a class="event_reply_btn" id="event_reply_btn" topicid="{$topicInfo.id}" replyuid="{$topicInfo.uid}"></a>
+			</div>
+			<php>}</php>
+			<!--评论-->
+			<!--评论内容-->
+			<div class="event_reply_point"></div>
+			<div class="event_reply_content">
+				<php>if( empty( $replyList['data'] ) ){</php>
+				<div style="margin-top:10px;margin-left:10px;font-size:14px;">还没有评论哦!</div>
+				<php>}</php>
+				<volist name="replyList.data" id="reply">
+				<div class="event_reply_one">
+					<img src="{$reply.uid|getUserFace}" />
+					<div class="event_reply_info">
+						<div>
+							<a class="event_reply_username" class="detail_author_name" onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$reply['uid']))}', '{$reply['uid']|getUserName}的个人主页');" href="javascript:;">{$reply['uid']|getUserName}:</a>
+							{$reply.content}
+						</div>
+						<div class="event_reply_time">{$reply.time}</div>
+					</div>
+					<div class="c"></div>
+				</div>
+				</volist>
+			</div>
+			<div class="page" style="text-align:center;margin-bottom:20px;">{$replyList.html}</div>
+			<!--评论内容-->
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#event_reply_btn').click(function(){
+		var content = $("#event_reply_edit").text().trim();
+		var topicid = $(this).attr('topicid');
+		var replyuid = $(this).attr('replyuid');
+		if(!topicid){
+			ui.error("活动错误!");
+			return false;
+		}
+		if(!content){
+			alert("请输入评论内容!");
+			return false;
+		}
+		if( getLength(content)>100 ){
+			alert("评论内容不能超过100个字!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: "{:U('club/Event/doAddEventReply')}",
+			data:{topicid: topicid, content: content, replyuid: replyuid},
+			success: function (data){
+				if( data == 1 ){
+					ui.success('评论成功!');
+					window.location.reload();
+				}else if(data == 0){
+					$.messager.alert('评论活动','评论失败！'); 
+				}else{
+					$.messager.alert('回复评论失败',data);
+				}
+			}
+		});
+	})
+</script>
+<include file="../Public/_footer" />

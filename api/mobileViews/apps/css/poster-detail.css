@@ -1,0 +1,22 @@
+#poster-info .row{
+    margin-top: 5px;
+}
+#poster-info h3{
+    margin: 0;
+    padding: 0;
+    padding-left: 5px;
+    display: inline;
+    word-wrap: break-word;
+}
+#poster-info .post-title{
+    font-size: 15px;
+}
+#poster-info .row:nth-child(4){
+    border-top:1px solid #dadada;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+#poster-info img{
+    max-width: 96%;
+}

@@ -1,0 +1,257 @@
+<!--{dzztemplate header_simple_start}-->
+<link rel="stylesheet" type="text/css" href="dzz/system/images/share/share.css?{VARHASH}" />
+<style>
+ .disabled{
+	 background:#EBEBEB;
+ }
+ .wraper{
+	width:500px; height:400px;
+ }
+.wraper .o {
+    background:#ddd;
+    border-top: 1px solid #CCCCCC;
+    height: 26px;
+    padding: 8px 10px;
+    text-align: right;
+}
+
+</style>
+<script type="text/javascript" src="dzz/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="dzz/scripts/jquery.json-2.3.js"></script>
+<script type="text/javascript">
+var wname = window.name;
+if (wname != "") wname=jQuery.evalJSON(decodeURIComponent(wname));
+var win=top._window.windows[wname.winid];
+</script>
+<script type="text/javascript" src="static/js/calendar.js"></script>
+
+<!--{dzztemplate header_simple_end}-->
+<div class="wraper">
+	
+	<table width="100%" height="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+	<tr><td width="200">
+		<div class="userList_Container">
+		<!--{loop $groups $gid $value}-->
+		<div id="groupHead_$gid" class="groupHead">
+			<div class="groupHeadSelect" gid="$gid"></div>
+			<div class="groupHeadIcon"></div>
+			<div title="$value[grouptitle]" class="groupHeadList_RightContainer">
+				<div class="groupName">$value[grouptitle]</div>
+			</div>
+		</div>
+		<div id="groupBody_$gid" class="groupBody">
+			<!--{loop $value[list] $fuid $value}-->
+				<div id="Buddy_{$fuid}" uid="{$fuid}" username="$value" class="BuddyList_Buddy">
+					<div class="BuddyList_AvatarContainer" id="BuddyList_AvatarContainer_{$fuid}"> 
+						<img src="$_G[setting][ucenterurl]/avatar.php?uid=$fuid&size=small" class="BuddyList_Avatar" uid="$fuid">
+						<div class="BuddyList_State"></div>
+					</div>
+					<div class="BuddyList_RightContainer">
+						<div class="BuddyList_Nick ">$value</div>
+					</div>
+				</div>
+			<!--{/loop}-->
+		</div>
+		<!--{/loop}-->
+		
+		</div>
+		<div class="userList_Container_bottom">
+			<table height="100%" cellpadding="0" cellspacing="0"><tr><td valign="middle"><input id="add_username" class="px" type="text"  style="width:120px;margin:3px;" onkeydown="if(event.keyCode==13){add_user_to_perm();}" /></td><td valign="middle">&nbsp;<a id="add_username_button" class="pn pnc" style="display:inline-block;padding:0 5px;margin:0" onclick="add_user_to_perm();return false">添加</a></td></tr></table>
+		</div>
+	</td>
+	<td><form id="shareform" name="shareform" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=innershare" method="post" autocomplete="off" onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]');">
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="sharesubmit" value="true" />
+			<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+			<input type="hidden" name="icoid" value="$icoid" />
+		<div id="permList_Container" class="permList_Container">
+			<!--{loop $share $fuid $value}-->
+				<div id="Perm_{$fuid}" uid="{$fuid}" username="{$value[fusername]}}" class="PermListItem">
+					<input type="hidden" name="user[$fuid]" value="$value[fusername]" />
+					<div class="BuddyList_AvatarContainer" id="Perm_AvatarContainer_{$fuid}"> 
+						<img src="$_G[setting][ucenterurl]/avatar.php?uid=$fuid&size=small" class="BuddyList_Avatar" uid="$fuid">
+					</div>
+					<div class="PermList_centerContainer" style="float:left;width:100px">
+						<div class="PermList_Nick " style="padding:0px 5px">$value[fusername]</div>
+					</div>
+					
+					<div class="permContainer">
+						<ul>
+							<li uid="{$fuid}" val="1" class="permitem" >编辑</li>
+							<li uid="{$fuid}" val="0"  class="permitem selected">只读</li>
+						</ul>
+						<!--{if $value[perm]==1}-->
+						<i id="Swichbg_{$fuid}" style=" left: 2px;" class="Swichbg"></i>
+						<!--{else}-->
+						<i id="Swichbg_{$fuid}" style=" left: 44px;" class="Swichbg"></i>
+						<!--{/if}-->
+						<input id="permval_{$fuid}" type="hidden" name="perm[$fuid]" value="$value[perm]" />
+					</div>
+					<a href="javascript:;" class="close" uid="{$fuid}"></a>
+				</div>
+			<!--{/loop}-->	
+		</div>
+		<p class="o pns" style="text-align:right;">
+						<span id="return_$_GET[handlekey]" style="float:left;color:red"></span><button type="submit" id="sharesubmit_btn" name="sharesubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button></p>
+		</form>
+		
+	</td>
+	</tr>
+	</table>
+</div>
+<script type="text/javascript">
+	var msgTimer=0;
+	function succeedhandle_$_GET[handlekey](url, msg, values) {
+		top._config.sourcedata.icos[values['icoid']].shareid=values['shareid'];
+		top._ico.setTip_share(values['icoid']);
+		win.Close();
+	}
+	jQuery('.groupHead').on('click',function(){
+		var el=jQuery(this);
+		var headbody=jQuery('#'+this.id.replace('groupHead_','groupBody_'));
+		if(el.hasClass('expand')){
+			headbody.css('height',0);
+			el.removeClass('expand');
+		}else{
+			headbody.css('height','auto');
+			el.addClass('expand');
+		}
+	});
+	jQuery('.groupHeadSelect').on('click',function(){
+		var el=jQuery(this);
+		var gid=el.attr('gid');
+		var el1=jQuery('#'+'groupBody_'+gid);
+		if(el.hasClass('selected')){
+			el1.find('.BuddyList_Buddy').each(function(){
+				CheckPermItem(this,'remove');
+			});
+			el.removeClass('selected');
+		}else{
+			el1.find('.BuddyList_Buddy').each(function(){
+				CheckPermItem(this,'add');
+			});
+			el.addClass('selected');
+		}
+		return false;
+	});
+	jQuery('.BuddyList_Buddy').on('click',function(){
+		var el=jQuery(this);
+		CheckPermItem(this,'');
+		return false;
+	});
+	function CheckPermItem(obj,type){
+		var uid=jQuery(obj).attr('uid');
+		var username=jQuery(obj).attr('username');
+		if(type=='add'){
+			 jQuery(obj).addClass('selected');
+			 addPermItem(uid,username); 
+		}else if(type=='remove'){
+		   jQuery(obj).removeClass('selected');
+		   jQuery('#Perm_'+uid).remove();
+		}else{
+			if(jQuery(obj).hasClass('selected')){
+				 jQuery(obj).removeClass('selected');
+		  		 jQuery('#Perm_'+uid).remove();
+			}else{
+				 jQuery(obj).addClass('selected');
+				 addPermItem(uid,username); 
+			}
+		}
+	}
+	function addPermItem(uid,username){
+		if(document.getElementById('Perm_'+uid)) return false;
+		var template='';
+		template+='<div id="Perm_-uid-" uid="-uid-" username="-username-" class="PermListItem">';
+		template+='	  <input type="hidden" name="user[-uid-]" value="-username-" />';
+		template+='	  <div class="BuddyList_AvatarContainer" id="Perm_AvatarContainer_-uid-"> ';
+		template+='		 <img src="$_G[setting][ucenterurl]/avatar.php?uid=-uid-&size=small" class="BuddyList_Avatar">';
+		template+='	  </div>';
+		template+='	  <div class="PermList_centerContainer" style="float:left;width:100px">';
+		template+='	  	<div class="PermList_Nick " style="padding:0px 5px">-username-</div>';
+		template+='	  </div>';
+		template+='	  <div class="permContainer">';
+		template+='	  	<ul>';
+		template+='	  		<li class="permitem" uid="-uid-" val="1"  >编辑</li>';
+		template+='	  		<li class="permitem selected" uid="-uid-" val="0" >只读</li>';
+		template+='	  	</ul>';
+		template+='	  	<i id="Swichbg_-uid-" style=" left: 44px;" class="Swichbg"></i>';
+		template+='	  	<input id="permval_-uid-" type="hidden" name="perm[-uid-]" value="0" />';
+		template+='	  </div>';
+		template+='	  <a href="javascript:;" class="close" uid="-uid-"></a>';
+		template+='</div>';
+		template=template.replace(/-uid-/g,uid).replace(/-username-/g,username);
+		jQuery(template).appendTo('#permList_Container');
+		return true;
+	}
+	function add_user_to_perm(){
+			var username=document.getElementById('add_username').value;
+			if(username=='') {
+				document.getElementById('add_username').focus();
+				return;
+			}
+		    if(jQuery('.PermListItem[username='+username+']').size()>0){
+				jQuery('#return_$_GET[handlekey]').css('color','green').html('{lang add_user_exist}');
+				if(msgTimer) window.clearTimeout(msgTimer);
+				 msgTimer=window.setTimeout(function(){jQuery('#return_$_GET[handlekey]').css('color','red').html('');},3000);
+				document.getElementById('add_username').value='';
+			}else if(jQuery('.BuddyList_Buddy[username='+username+']').size()>0){
+				CheckPermItem(jQuery('.BuddyList_Buddy[username='+username+']').get(0),'add');
+				jQuery('#return_$_GET[handlekey]').css('color','green').html('{lang add_user_success}');
+				if(msgTimer) window.clearTimeout(msgTimer);
+				 msgTimer=window.setTimeout(function(){jQuery('#return_$_GET[handlekey]').css('color','red').html('');},3000);
+				document.getElementById('add_username').value='';
+			}else{
+				jQuery.post('{DZZSCRIPT}?mod=system&op=dzzcp&do=innershare&type=getuidbyusername',{username:username},function(json){
+					if(json.msg=='success'){
+						
+						addPermItem(json.uid,json.username);
+						jQuery('#return_$_GET[handlekey]').css('color','green').html('{lang add_user_success}');
+						if(msgTimer) window.clearTimeout(msgTimer);
+						 msgTimer=window.setTimeout(function(){jQuery('#return_$_GET[handlekey]').css('color','red').html('');},3000);
+						document.getElementById('add_username').value='';
+					}else{
+						jQuery('#return_$_GET[handlekey]').css('color','red').html(json.msg);
+						if(msgTimer) window.clearTimeout(msgTimer);
+						 msgTimer=window.setTimeout(function(){jQuery('#return_$_GET[handlekey]').html('');},3000);
+						document.getElementById('add_username').value='';
+					}
+				},'json');
+			}
+		};
+		function setWinSize(){
+			var el=jQuery('.wraper');
+			win.ResizeTo(el.outerWidth(true),el.outerHeight(true)>600?600:el.outerHeight(true));
+		}
+	jQuery(document).ready(function(){
+		jQuery('#permList_Container .PermListItem').each(function(){
+			var uid=jQuery(this).attr('uid');
+			jQuery('#Buddy_'+uid).addClass('selected');
+		});
+		jQuery('#permList_Container .PermListItem')
+			.live('mouseover',function(){
+				
+				jQuery(this).find('.close').show();
+			})
+			.live('mouseout',function(){
+				jQuery(this).find('.close').hide();
+			});
+		jQuery('#permList_Container .PermListItem .close').live('click',function(){
+			var uid=jQuery(this).attr('uid');
+			jQuery('#Buddy_'+uid).removeClass('selected');
+			jQuery(this).parent().remove();
+			return false;
+		});
+		
+		jQuery('.permContainer .permitem').live('click',function(){
+			var uid=jQuery(this).attr('uid');
+			var val=jQuery(this).attr('val');
+			jQuery('#permval_'+uid).val(val);
+			jQuery('#Swichbg_'+uid).css('left',42*(1-val)+2);
+			jQuery('.permitem').removeClass('selected');
+			jQuery(this).addClass('selected');
+			return false;
+		});
+		setWinSize();
+	});
+</script>
+<!--{dzztemplate footer}-->

@@ -1,0 +1,42 @@
+<div id="top_nav">
+	<div class="block" onclick="block();"></div>
+	<div class="nav">
+		<div class="nav_left">
+			<ul>
+				<li>暂无您的校方圈子</li>
+			</ul>
+		</div>
+		<div id="nav_back" onclick="top_nav_back();"></div>
+		<div class="nav_center" style="height: 130px; margin-top: 0px;">
+			<div>
+				<ul>
+				<php>if(empty($societyListOfMy)){echo '<li style="width: 360px;">您没有加入或创建任何自定义圈子!</li>';}else{</php>
+				<volist name="societyListOfMy" id='vo'>
+					<li id="s_id_{$vo.id}" >
+						<a href="{:U('society/Index/index')}&societyId={$vo.id}">
+						{$vo.societyName}
+						</a>
+						<php>if(getNewsCount($vo['id'])!=0){</php>
+							(<span onclick="show_news({$vo.id});" class="strong">{$vo.id|getNewsCount}</span>)
+						<php>}</php>
+					</li>
+				</volist>
+				<php>}</php>
+					<li style="display: none; clear: both;"></li>
+				</ul>
+			</div>
+		</div>
+		<div id="nav_forward" onclick="top_nav_forward();"></div>
+		<div class="nav_right">
+			<ul>
+				<li>
+					<a href="javascript:;" onclick="showMyMess();">我的消息（<span style="color: red;"><php>echo count($myNews);</php></span>）
+					</a>
+				</li>
+				<li><a href="javascript:;" onclick="openSociety();">创建圈子</a></li>
+				<li><a href="{:U('society/Index/societyList')}">邀请加入</a></li>
+				<li><a href="{:U('society/Index/showOthersIndex')}">查看更多圈子</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

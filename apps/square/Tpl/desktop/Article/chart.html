@@ -1,0 +1,62 @@
+<include file="_header" />
+    <script type="text/javascript">
+<!--其他视频分类的树-->
+	var settingother = {
+		data: {
+			simpleData: {
+				enable: true
+			}
+		}
+	};
+
+	var zNodesother =[
+		<volist name="sqcategory" id='obj'>
+			{ id:'{$obj[id]}', pId:'{$obj[p_id]}', name:"{$obj[category_name]}",url:"", target:"_self", click:"noteClick({$obj['id']})"<php>if($path){</php><volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist><php>}elseif($i<5){</php>,open:"true"<php>}</php>},				
+		</volist>
+	];
+	function noteClick(id){
+		$.post("__URL__&act=chartsearch", {id:id},			
+			function(data){
+				$('#chartlist').html(data);
+				$('.navigate_info>div').html($(data).find('#search_nav').html());
+					
+		});				
+		
+	}
+	$(document).ready(function(){
+		$.fn.zTree.init($("#navtreeother"), settingother, zNodesother);
+	});
+</script>
+	<include file="__THEME__/desktop/_KnowledgeTree" />
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+	<div class="sidebar">
+      <div class="sidebar_box">
+        <h4>分类索引</h4>
+        <div>
+        <UL id="navtreeother" class="ztree" style="overflow-x: auto; overflow-y: hidden; padding-bottom:20px;"></UL>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="content" id="chartlist">
+      <div class="box width">
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+         <volist name="blogcontent.data" id="li">
+          <tr style="height:35px;">
+            <td><a href="{:U('/Article/myblog',array(blogid=>$li['id']))}"style="color:#999999;">[{$li.id|getcategory_blog}]</a></td>
+            <td width="59%"><a href="{:U('/Article/context',array(id=>$li['id']))}"style="color:#666666;">{$li.title}</a></td>
+            <td>{$li.cTime|friendlyDate}({$li.commentCount}/{$li.readCount})</td>
+          </tr>
+		</volist>
+        </table>
+        <ul class="page">{$blogcontent.html}</ul>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />
+</div>
+</body>
+</html>

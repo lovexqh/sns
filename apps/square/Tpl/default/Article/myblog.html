@@ -1,0 +1,54 @@
+﻿<include file="_header" />
+<!--主体部分-->
+<div class="blogmain">
+<!--左侧信息-->
+	<div class="main_left">
+		<div class="left_center">
+			<img src="__THEME__/square/images/blog_category.jpg"/>
+			<ul id="gray" class="treeview treeview-gray lineS_btm">
+			  <volist id="vo" name="sqcategory">
+				{$vo[style1]}
+				<span><a href="{:U('/Article/myblog',array(id=>$vo['id']))}">{$vo[category_name]}</a></span>
+				{$vo[style2]}
+			  </volist>
+			</ul>
+			<!--<ul>
+				<volist name="show_class" id="li">
+					<li><a href="{:U('/Article/myblog',array(id=>$li['id']))}">{$li.category_name}</a></li>
+				</volist>
+			</ul>-->
+		</div>
+	<!--	<div class="left_foot">
+			<img src="__THEME__/square/images/new_comment.jpg"/>
+			<a href="#"><img src="__THEME__/square/images/more.png"/></a>
+			<volist name="class_comment" id="li">
+				<ul <php>if($i==1){</php>style="border:0px;"<php>}</php>>
+					<li><a href="#" style=" color:#FB881E;">{$li.uid|getweibouser}</a>评论了
+					<a href="#" style=" color:#A3CF30;">{$li.to_uid|getweibouser}</a>的博客
+					<a href="{:U('/Article/context',array(id=>$li['id']))}">
+					《{$li.appid|get_b_title}》</a>{$li.comment|getshort='6'}…………</li>
+					<li>{$li.cTime|friendlyDate}<a href="#" style="color:#FF6600;">[查看]</a></li>
+				</ul>
+			</volist>
+		</div>-->
+		<div class="clear"></div>
+	</div>	
+<!--右侧内容-->			
+	<div class="main_main">
+<!--主体部分-->
+		<div class="m_m_down">
+			<volist name="blog_class.data" id="li">
+				<div class="m_c" <php>if($i==1){</php>style="border:0px;"<php>}</php> >
+					<ul>
+						<li><a href="{:U('/Article/myblog',array(blogid=>$li['id']))}"style="color:#999999;">[{$li.id|getcategory_blog}]</a></li>
+						<li><a href="{:U('/Article/context',array(id=>$li['id']))}"style="color:#666666;">{$li.title}</a></li>
+						<li style="float:right;">{$li.cTime|friendlyDate}({$li.commentCount}/{$li.readCount})</li>
+					</ul>
+				</div>
+			</volist>
+			<div class="page"><center>{$blog_class.html}</center></div>
+		</div>
+	</div>						
+	<div class="clear"></div>
+
+<include file="_footer" />

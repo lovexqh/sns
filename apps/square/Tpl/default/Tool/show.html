@@ -1,0 +1,217 @@
+<include file="_header" />
+
+<script type="text/javascript" charset="utf-8">
+    var ctr = function(){}
+       ctr.prototype = 
+	   {
+		 down:function(id)
+		  {
+	       ui.box.load('__URL__&act=downdetil&id='+id,{title:"下载提示"});
+	      },
+		  detil:function(id)
+		  {
+			ui.box.load('__URL__&act=detil&id='+id,{title:"信息详情"});  
+		  }
+  		}
+    var l = null;
+</script>
+<style type="text/css">
+.uploads {
+	display:block;
+	margin-left:14px;
+	width:112px;
+	height:38px;
+	background:url(__THEME__/square/images/down.gif) no-repeat;
+}
+h2{
+	font-size:14px;
+	margin:10px;
+}
+
+
+#replyinfo{line-height: 26px; padding: 10px 20px; font-size: 14px;}
+#replyinfo strong{font-weight:bold;}
+#replyinfo 
+#replyinfo  h1 strong {
+    vertical-align: middle;
+}
+#replyinfo  h1 span {
+    display: block;
+    padding-top: 5px;
+    vertical-align: middle;
+}
+#replyinfo  strong {
+    font-weight: bold;
+}
+#replyinfo em {
+    font-style: oblique;
+}
+.reply .info_title h1{ float:none;}
+.text{
+border: 1px solid #BDC7D8;
+font-size: 12px;
+font-family: Arial, Helvetica, sans-serif;
+padding: 4px 5px;
+width: 570px;
+height: 45px;
+}
+.send_tool .N_but{background:none;background-color:#05be01; width: 70px; height: 45px; border: 1px solid #434b56; font-size: 14px; border-radius: 4px;}
+</style>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <div class="main_left">
+      <div class="info detail_box">
+        <div class="info_title">
+          <h1>{$result['title']}</h1>
+          <span>{$result['readCount']}人阅读</span>   
+            <php>if($uid !=$resulddt['uid']){</php>
+         	  <span style="float:right;background: url(__THEME__/square/images/t_up.png) no-repeat center left; padding-left: 20px; margin-right: 20px;">
+        	 &nbsp; {:W('Favorite',array('type'=>'link', 'fid'=>$result['id'], 'app'=>'tool', 'mod'=>'Index', 'act'=>'showtool'))}</span>
+         	 <php>}</php>
+          <div class="clear"></div>
+        </div>
+
+	     <div id="replyinfo" >
+			{$result['content']}
+	     </div>
+      <php>if($cat){</php>
+      <div class="detail_box">
+        <div class="relation">
+        
+        <span class="title">猜您所需：</span> 
+        
+        <volist name="cat" id="obj">
+            <span><a href="#">{$obj.category_name}</a></span> 
+        </volist>
+       
+          <div class="clear"></div>
+        </div>
+        <div>
+          <table border="0" cellpadding="0" cellspacing="0" class="booklist" width="100%">
+          <volist name="resource" id="obj">
+            <tr>
+              <td width="450">
+              	<a href="{:U('square/Tool/show',array('id'=>$obj['id']))}">{$obj.title}</a>
+              </td>
+              <td width="90">{$obj.uid}</td>
+              <td width="75">{$obj.downCount}下载</td>
+              <td>{$obj.readCount}人阅读</td>
+            </tr>
+          </volist>
+          </table>
+           </div>
+      </div>
+      <php>}</php>
+      
+    <div style="width:700px;">
+				{:W('Comment',array('type'=>'tool','appid'=>$result['id'], 'author_uid'=>$result['uid'], 'title'=>$result['title'], 'url'=>U('square/Tool/show',array('id'=>$result['id'])), 'table'=>'tool','id_field'=>'id','comment_count_field'=>'commentCount'))}
+		</div>    
+      
+    </div>
+    </div>
+    <div class="main_right">
+      <div class="source_right">
+        <h3>统计信息： 
+        	
+          
+            </h3>
+        <div class="source_count">
+         <php>if($avg){</php>
+          <p><strong>文档评分：</strong>
+           <php>for($i=1;$i<=5;$i++){</php>
+				<php>if($i<=$avg){</php>
+                    <img src="__THEME__/square/images/star_full.png">
+                 <php>}else{</php>
+                    <img src="__THEME__/square/images/star_empty.png">
+                <php>}</php>
+           <php>}</php>
+          <php>}else{</php>
+			<script language="javascript">
+               function qiehuan(num){
+                
+                for(var i = 1;i<=5;i++)
+                {
+                    if(i<=num)
+                    document.getElementById("star"+i).src="__THEME__/square/images/star_full.png";
+                    else
+                    document.getElementById("star"+i).src="__THEME__/square/images/star_empty.png";
+                }
+               }
+               function score(num,id){
+                  //document.getElementById("score").innerHTML=num+"分";
+                  $('#score img').remove();
+                  $('#font').empty();
+                  $.post("{:U('square/Tool/score');}",{score:num,id:id},function(text){
+                      $('#font').append(text+"分");
+                      for(var i=1; i<=5; i++)
+                        {
+                          if(i<=text){
+                            $('#score').append("<img src='__THEME__/square/images/star_full.png'>");
+                          }else{
+                            $('#score').append("<img src='__THEME__/square/images/star_empty.png'>");}
+                        }	
+                     });
+               }
+               </script>  
+               <strong>文档评分：</strong>
+                <img src="__THEME__/square/images/star_empty.png" id="star1" onmouseover="javascript:qiehuan(1)" onclick="score(1,{$result[id]})">
+                       <img src="__THEME__/square/images/star_empty.png" id="star2" onmouseup="javascript:qiehuan(2)" onclick="score(2,{$result[id]})">
+                       <img src="__THEME__/square/images/star_empty.png" id="star3" onmouseup="javascript:qiehuan(3)" onclick="score(3,{$result[id]})">
+                       <img src="__THEME__/square/images/star_empty.png" id="star4" onmouseup="javascript:qiehuan(4)" onclick="score(4,{$result[id]})">
+                       <img src="__THEME__/square/images/star_empty.png" id="star5" onmouseup="javascript:qiehuan(5)" onclick="score(5,{$result[id]})">
+                  <php>}</php>
+          </p>
+          <p><strong>发布人：</strong>
+		  <span><space uid="result['uid']" class="co">{uname}</space></span></p>
+          <p><strong>发布时间：</strong><span>{$result['time']|date="Y-m-d",###}</span></p>
+          <p><strong>文件大小：</strong><span>{$result['toolsize']|getSize}</span></p>
+          <p><strong>版本信息：</strong><span>{$result['version']}</span></p>
+          <p><strong>浏览次数：</strong><span>{$result['readCount']}次</span></p>
+          <p><strong>下载次数：</strong><span>{$downCount}次</span></p>
+        </div>
+        <div>
+        <a href="javascript:void(0);" onclick="l.down({$result['id']})" class="uploads" style="float:left;"></a>
+         	 
+         </div>	 
+        <span class="integral">下载文档所需要积分:</span>
+        <span class="number">{$result['price']}</span>
+        <h2>软件推荐</h2>
+        <ul class="recommend">
+         <volist name='commend' id='vo'>
+            <li style=" margin:10px 3px;">
+          	   <strong>
+                <a href="{:U('square/Tool/show',array('id'=>$vo['id']))}" title="{$vo['title']}">
+               {$vo['title']|getshort='10'}<php>if(strlen($vo['title']) > 20) echo "..."</php></a>
+               <span style="float:right;">点击：{$vo['readCount']}</span>
+               </strong>
+           </li>
+           <div class="clear"></div>
+          </volist>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />
+  <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+l = new ctr();
+</script>
+<script>
+	$(document).ready(function(e){
+		$('a').each(function(i,e){
+			if(typeof($(this).attr('uid'))!='undefined'){
+				var url=$(this).attr('href');
+				$(this).attr('onclick',"top.OpenBrowser('"+url+",'个人主页','width=1024,height=600,titlebutton=close|max|min');");
+				$(this).attr('href','javascript:;');
+			}
+		});
+	});
+</script>
+
+</body>
+</html>

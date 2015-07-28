@@ -1,0 +1,85 @@
+<div class="add_new_topic">
+	<form method="post" action="{:U('club/Topic/doAddTopic')}" id="addTopocForm" enctype="multipart/form-data">
+		<table class="add_topic_table">
+			<tr>
+				<td>
+					<input type="text" id="title" class="input_title" name="title" value="请输入标题" onfocus="chkFocuc();" onblur="chkBlur();" />
+					<php>if($member['type']==1 || $member['type']==2){</php>
+					<input type="checkbox" class="choose_top" id="istop" name="istop" /><span class="word_top">置顶</span>
+					<php>}</php>
+				</td>
+			</tr>
+			<tr>
+				<td><textarea id="content" name="content" style="height: 200px; width: 685px;"></textarea></td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>
+					<input type="radio" name="replyman" value="0" checked="checked" />所有人可回复&nbsp;&nbsp;
+					<input type="radio" name="replyman" value="1" />仅成员可回复
+				</td>
+			</tr>
+			<tr style="line-height:50px;">
+				<td>
+					<input type="hidden" id="clubid" name="clubid" value="{$clubInfo['id']}" />
+					<a class="add_topic_button" id='checkAddTopic'></a>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div class="c"></div>
+<script type="text/javascript">
+	loadEditor("content");
+	$('#checkAddTopic').click(function() {
+		var title = $('#title').val().trim();
+		//var title = trim(titleinput);
+		//$(form.content).val(getEditorContent('content'));
+		var istop = $("input[name='istop']").is(':checked');
+		var clubid = $('#clubid').val();
+		var content = getEditorContent('content');
+		var replyman = $('input[name="replyman"]:checked').val();
+		var url = $("#addTopocForm").attr("action");
+		if (!title || title == "请输入标题") {
+			ui.error("请输入标题！");
+			return false;
+		}
+		if( getLength(title)>60 ){
+			alert("标题不能超过60个字!");
+			return false;
+		}
+		if( content.indexOf('src="data:image')>0 ){
+			alert("内容请勿采取 截图粘贴 的方式!");
+			return false;
+		}
+
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : {
+				title : title,
+				istop : istop,
+				clubid : clubid,
+				content : content,
+				replyman : replyman
+			},
+			success : function(data) {
+				if (data == 1) {
+					ui.success('发布成功!');
+					window.location.href = U('club/Topic/index&id='+clubid);
+					//window.location.reload();
+					//$("#title").val("请输入标题");
+					//$("input[name='istop']").attr("checked", false);
+					//$('body,html').animate({
+						//scrollTop : 0
+					//}, 600);
+				} else if (data == 0) {
+					$.messager.alert('发布新帖信息', '发布失败！');
+				} else {
+					$.messager.alert('发布新帖失败', data);
+				}
+			}
+		});
+
+	})
+
+</script>

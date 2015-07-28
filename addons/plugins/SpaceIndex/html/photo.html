@@ -1,0 +1,16 @@
+<!-- 图片中心 -->
+<if condition="($num neq 0)">
+<div class="contc">
+    <div class="coltop">图片 <span>截止目前为止：社区共有图片{$num}张</span> <a href="{:U('home/Picture/index')}" title="图片广场" target="_blank">>> 点击进入</a> </div>
+    <ul class="phlist">
+        <volist name="list" id="li">
+        <li>
+            <a href="{:U('photo/Index/photo',array(id=>$li['id'],aid=>$li['albumId'],uid=>$li['userId']))}" target="_blank" title="{$li.name}"><img src="{$li.savepath|get_photo_url=###,'m'}" /></a>
+        </li>
+        </volist>
+
+    </ul>
+    <div class="c"></div>
+    <div class="cb" style="margin-top: 0px;"></div>
+</div>
+</if>

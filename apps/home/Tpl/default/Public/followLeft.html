@@ -1,0 +1,14 @@
+	<div id="panel_left" class="panel_left"> 
+		
+		<ul class="nav_menu">
+			<li <php>if($_GET['type']=='following' ){</php>class="sele"<php>}</php>><a href="{:U('home/space/follow',array('type'=>'following','uid'=>$mid))}">我关注</a></li>
+            <li <php>if($_GET['type']=='follower'){</php>class="sele"<php>}</php>><a href="{:U('home/space/follow',array('type'=>'follower','uid'=>$mid))}">关注我</a></li>
+		</ul>
+		
+		<!-- 垂直条 begin -->
+		<div class="panel_slide"></div>
+		<!-- 垂直条 begin -->
+		<!-- 应用左侧底部占位块 begin -->
+		<div class="bottom_block"></div>
+		<!-- 应用左侧底部占位块 end --> 
+	</div>

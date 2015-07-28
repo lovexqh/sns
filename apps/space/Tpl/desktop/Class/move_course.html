@@ -1,0 +1,63 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+               <include file="../Public/_movestate_leftmenu" />
+               <div class="trunk_right_g">
+                 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_course" /><span class="title">课程表</span></div>
+                 <div class="clear10"></div>
+                 <table width="90%" border="1" cellspacing="0" cellpadding="0" class="tab_course">
+                      <tbody>
+                      <tr>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">星期一</th>
+                        <th scope="col">星期二</th>
+                        <th scope="col">星期三</th>
+                        <th scope="col">星期四</th>
+                        <th scope="col"  style=" border-right:0;">星期五</th>
+                      </tr>
+                      </tbody>
+                      
+                      <php>$num1=1;$num2=2;$num3=3;$num4=4;</php>
+                      <tbody id="zzx">{$classinfo['sns_class']['zzx']|getCourse=###,$result['zzx'],$num1,''}</tbody>
+                      <php>if($classinfo['sns_class']['zzx']){</php><tbody><tr><th colspan='6' align='center' style=" border-right:0px;">早休</th></tr></tbody><php>}</php>
+                      <tbody id="zw">{$classinfo['sns_class']['zw']|getCourse=###,$result['zw'],$num2,''}</tbody>
+                      <php>if($classinfo['sns_class']['xw']){</php><tbody><tr><th colspan='6' align='center' style=" border-right:0px;">午休</th></tr></tbody><php>}</php>
+                      <tbody id="xw">{$classinfo['sns_class']['xw']|getCourse=###,$result['xw'],$num3,$classinfo['sns_class']['zw']}</tbody>
+                      <php>if($classinfo['sns_class']['wzx']){</php><tbody><tr><th colspan='6' align='center' style=" border-right:0px;">晚休</th></tr></tbody><php>}</php>
+                      <tbody id="wzx">{$classinfo['sns_class']['wzx']|getCourse=###,$result['wzx'],$num4,''}</tbody>
+                    </table>
+                    <div class="clear10"></div>
+               </div>
+<include file="../Public/_footer" />
+<script language="javascript" type="text/javascript">
+		function clickshow(){
+				$('#add_announce').toggle();
+		}
+
+	function checkannounce(){
+		var title = $("#title").val();
+		if( !title || getLength(title.replace(/\s+/g,"")) == 0){
+			ui.error("标题不能为空");
+			$("#title").focus();
+			return false;
+		}else if(getLength($("#title").val()) > 25){
+			ui.error("标题不得大于25个中文字符");
+			$("#title").focus();
+			return false;
+		}else if(getEditorContent('content') == '' || checkPostContent(getEditorContent('content')) == 0){
+			ui.error("公告内容不能为空");
+			$("#content").focus();
+			return false;
+		}
+	}
+	// 过滤html，字串检测长度
+	function checkPostContent(content)
+	{
+		content = content.replace(/&nbsp;/g, "");
+		content = content.replace(/<br>/g, "");
+		content = content.replace(/<p>/g, "");
+		content = content.replace(/<\/p>/g, "");
+		return getLength(content);
+	}
+	
+
+</script>

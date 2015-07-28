@@ -1,0 +1,81 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_notice_page">
+			<include file="../Public/_clubHeader" />
+			<div style="float: left;width: 707px;border: 2px solid #DDDDDD;margin: 10px 10px;">
+				<div class="clubEvent_title" style="width: 707px;margin: 0;">
+						<span class="my_club">公告</span>
+				</div>
+			<input id="notice_clubid" type="hidden" value="{$clubInfo['id']}"/>
+			<php>if(count($noticeList) == 0){</php>
+				<div style="text-align:center;font-size:20px;">
+					<span>暂无公告！</span>
+				</div>
+			<php>}</php>
+				<volist name="noticeList" id="vo">
+				<div class="clubNotice_show_left" id="notice_one_{$vo.id}">
+					<div class="clubNotice_show_icon">
+						<div class="clubNotice_show_left_head">
+							<img src="{$vo.uid|getUserFace}" style="height: 55px;height: 55px;"/>
+						</div>
+						<div class="clubNotice_show_left_name">
+							{$vo['uid']|getUserName}
+						</div>
+					</div>
+					<div class="clubNotice_show_content">
+						<div class="clubNotice_show_content_c">{$vo.content}</div>
+						<div class="clubNotice_show_content_t">{$vo.ctime|date="Y-m-d H:i",###}</div>
+						<div class="c"></div>
+					</div>
+					<if condition="$isManager eq 1">
+					<div class="clubNotice_show_content_d" onclick="delNoticeAction({$vo.id});"></div>
+					</if>
+				</div>
+				</volist>
+				<php>if($member['type']==1 || $member['type']==2){</php>
+				<div class="notice_publish">
+					<form>
+						<table style="margin-left: 80px;width: 605px;">
+							<tr>
+								<td style="font-size:15px;line-height: 30px;font-family: 微软雅黑;font-size: 15px;">发布公告</td>
+							</tr>
+							<tr>
+								<td><textarea id="club_content" name="content" style="height:96px;width: 595px;"></textarea></td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 5px 0;">
+									<div style="margin-left: 0px;" class="banner_opera_queren" onclick="publishNoticeAction();"></div>
+								<!-- <div class="banner_opera_quxiao" onclick="cancelAction();"></div> -->
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<php>}</php>
+			</div>
+		</div>
+		<div class="c"></div>
+		<a name="publish_notice"></a>
+		<div class="clubNotice_footer">
+			<img src="../Public/images/noticebottom.png"/>
+		</div>
+		<div class="c"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	loadEditor("content");
+	
+	$('#publish').click(function(){
+		$('body,html').animate({
+			scrollTop : 9999
+		},'fast');
+	})
+	
+	$('body,html').animate({
+		scrollTop : $('#notice_one_{$nid}').offset().top
+	},'fast');
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,125 @@
+<link type="text/css" rel="stylesheet" href="../Public/css/glory_sty.css" />
+<div class="so_main">
+<form action="{:U('/Admin/typeSave')}" onsubmit="return check();" enctype="multipart/form-data" method="post">
+  <table class="glory_add" border="0" cellspacing="0" cellpadding="0">
+  	<input name="gloryid" type="hidden" value="{$type['id']}" />
+    <tr>
+      <td>荣誉名称：</td>
+      <td width="250"><input name="name" type="text" class='mon_boder mon_sel' value="{$type['name']}"/></td>
+      <td>荣誉类型：</td>
+      <td><select name="type"  class='mon_boder mon_sel'>
+          <option value="1" selected="selected">类型一</option>
+        </select></td>
+    </tr>
+    <tr>
+      <td>荣誉标志：</td>
+      <td colspan="3">
+      <img width="35" height="35" src="{$picPath}{$type['pic']}">
+      <input name='photo[]' type="file"/>
+      </td>
+    </tr>
+    <tr>
+      <td>荣誉描述：</td>
+      <td colspan="3"><textarea style="width:520px; height:94px;" name="comment">{$type['comment']}</textarea></td>
+    </tr>
+  </table>
+  <div class="clear"></div>
+  <div class="mon_detail" style="width:600px; overflow:visible;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+      <tbody>
+        <tr>
+        <!--   <th width="100" height="35">ID</th> -->
+          <th width="100">等级</th>
+          <th width="120" height="35">基数</th>
+          <th width="150">描述</th>
+          <th style="border-right:0 none;">标志</th>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clear"></div>
+    <div style=" width:100%; height:120px; overflow-y:auto; overflow-x:hidden">
+      <table border="0" cellpadding="0" cellspacing="0" style="width:100%;" align="left">
+        <tbody>
+          <tr>
+          	<input name="id[]" type="hidden" value="{$pics[0]['id']}" />
+            <td width="100" height="35"><input type="hidden" value="1" name='piclvl[]'/><div>等级一</div></td>
+            <td width="120">
+            <select name="picradix[]"  class='mon_boder'>
+	          <option value="1" selected="selected">1的倍数</option>
+	          <option value="10" >10的倍数</option>
+	          <option value="100">100的倍数</option>
+	        </select></td>
+            <td width="150"><input name="describe[]" type="text" class="mon_boder" value="{$pics[0]['comment']}" /></td>
+            <td style="border-right:0 none; padding-left:10px;"><input name='photo[]' type="file" /></td>
+          </tr>
+          <tr>
+          	<input name="id[]" type="hidden" value="{$pics[1]['id']}" />
+            <td width="100" height="35"><input type="hidden" value="2" name='piclvl[]'/><div>等级二</div></td>
+            <td width="120">
+            <select name="picradix[]"  class='mon_boder'>
+	          <option value="1">1的倍数</option>
+	          <option value="10" selected="selected">10的倍数</option>
+	          <option value="100">100的倍数</option>
+	        </select></td>
+            <td width="150"><input name="describe[]" type="text" class="mon_boder" value="{$pics[1]['comment']}" /></td>
+            <td style="border-right:0 none; padding-left:10px;"><input name='photo[]' type="file" /></td>
+          </tr>
+          <tr>
+          	<input name="id[]" type="hidden" value="{$pics[2]['id']}" />
+            <td width="100" height="35"><input type="hidden" value="3" name='piclvl[]'/><div>等级三</div></td>
+            <td width="120">
+            <select name="picradix[]"  class='mon_boder'>
+	          <option value="1">1的倍数</option>
+	          <option value="10" >10的倍数</option>
+	          <option value="100" selected="selected">100的倍数</option>
+	        </select></td>
+            <td width="150"><input name="describe[]" type="text" class="mon_boder" value="{$pics[2]['comment']}" /></td>
+            <td style="border-right:0 none; padding-left:10px;"><input name='photo[]' type="file" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <input class="btn_b" type="submit" value="确定" style="margin-left:265px;" />
+  <input type="reset" class="btn_b" style="margin-left:15px;" value="重置" />
+</form>
+</div>
+<script>
+function check(){
+	var name = $("[name='name']").val();
+	if(name==null || name.length == 0 ){
+		ui.error("荣誉名称不能为空");
+		$("[name='name']").focus();
+		return false;
+	}
+	//检查上传文件
+	var fileList = $("[name='photo[]']");
+	for(var i=0;i<fileList.length;i++) {
+		if(i==0 && fileList[i].value=='') {
+			ui.error("请选择要上传的荣誉标志！");
+			return false;
+		} else if(fileList[i].value=='') {
+			ui.error("请选择要上传的第"+i+"行等级标志！");
+			return false;
+		}
+		var flag = fileType(fileList[i].value);
+		if(!flag) {
+			ui.error("必须上传'jpg','gif','png','jpeg','bmp'格式的图片！");
+			return false;
+		}
+	}
+	
+}
+//判断文件类型
+function fileType(objFile) {
+    var objtype=objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
+    var fileType=new Array('.jpg','.gif','.png','.jpeg','.bmp');
+    for(var i=0; i<fileType.length; i++){
+        if(objtype==fileType[i]){
+             return true;
+             break;
+        }
+    }
+    return false;
+}
+</script>

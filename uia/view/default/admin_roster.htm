@@ -1,0 +1,230 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+  var nat=["汉族","藏族","维吾尔族","壮族","裕固族","彝族","瑶族","锡伯族","乌孜别克族","佤族","土家族","土族","塔塔尔族","塔吉克族","水族","畲族","撒拉族","羌族","普米族","怒族","纳西族","仫佬族","苗族","蒙古族","门巴族","毛南族","满族","珞巴族","僳僳族","黎族","拉祜族","柯尔克孜族","景颇族","京族","基诺族","回族","赫哲族","哈萨克族","哈尼族","仡佬族","高山族","鄂温克族","俄罗斯族","鄂伦春族","独龙族","东乡族","侗族","德昂族","傣族","达斡尔族","朝鲜族","布依族","布朗族","保安族","白族","阿昌族"];
+  $.each( nat, function(i, n){
+  var nation = "{$roster[nation]}";
+  var selected ="";
+  if(n==nation)
+  	selected = "selected";
+  $("#newrosternation").append("<option value='"+n+"' "+selected+">"+n+"</option>");
+}); 
+
+});
+</script>
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+});  
+</script> 
+
+<!--{if $a == 'ls'}-->
+
+	<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+		function switchbtn(btn) {
+			_GET('srchuserdiv').style.display = btn == 'srch' ? '' : 'none';
+			_GET('srchuserdiv').className = btn == 'srch' ? 'tabcontentcur' : '' ;
+			_GET('srchuserbtn').className = btn == 'srch' ? 'tabcurrent' : '';
+			
+			//_GET('adduserdiv').style.display = btn == 'add' ? '' : 'none';
+			//_GET('adduserdiv').className = btn == 'add' ? 'tabcontentcur' : '';
+			//_GET('adduserbtn').className = btn == 'add' ? 'tabcurrent' : '';
+			
+			
+			_GET('readexceldiv').style.display = btn == 'read' ? '' : 'none';
+			_GET('readexceldiv').className = btn == 'read' ? 'tabcontentcur' : '';
+			_GET('readexcelbtn').className = btn == 'read' ? 'tabcurrent' : '';
+		}
+	</script>
+
+	<div class="container">
+		<!--{if $status}-->
+			<div class="{if $status > 0}correctmsg{else}errormsg{/if}"><p>{if $status < 0}<em>{lang user_add_failed}:</em> {/if}{if $status == 2}{lang user_delete_succeed}{elseif $status == 1}{lang user_add_role_succeed}{elseif $status == 3}{lang roster_add_succeed}{elseif $status == -1}{lang user_add_role_ignore}{elseif $status == -2}{lang user_add_role_exists}{elseif $status == -3}{lang uc_roster_failed}{elseif $status == -4}{lang uc_role_check_icon_exits}{elseif $status == -5}{lang uc_role_check_icon_type_failed}{/if}</p></div>
+		<!--{/if}-->
+		<div class="hastabmenu">
+			<ul class="tabmenu">
+				<li id="srchuserbtn" class="tabcurrent"><a href="#" onclick="switchbtn('srch')">{lang roster_search}</a></li>
+				<!--<li id="adduserbtn"><a href="#" onclick="switchbtn('add')">{lang roster_add}</a></li>-->
+				<li id="readexcelbtn"><a href="#" onclick="switchbtn('read')">{lang read_excel}</a></li>
+			</ul>
+			<!--<div id="adduserdiv" class="tabcontent" style=" display:none;">
+				<form action="admin.php?m=roster&a=ls&addrole=yes" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table width="100%">
+					<tr>
+						<td>{lang roster_name}:</td>
+						<td><input type="text" name="addrolename" class="txt" /></td>
+						
+						<td><input type="submit" value="{lang submit}"  class="btn" /></td>
+					</tr>
+				</table>
+				</form>
+			</div>-->
+			<div id="srchuserdiv" class="tabcontentcur">
+				<form action="admin.php?m=roster&a=ls" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table width="100%">
+					<tr>
+						<td>{lang roster_name}:</td>
+						<td><input type="text" name="rostername" value="$rostername" class="txt" /></td>
+						<td>{lang roster_userno}:</td>
+						<td><input type="text" name="rosteruserno" value="$rosteruserno" class="txt" /></td>
+						<td>{lang roster_identity}:</td>
+						<td><input type="text" name="rosteridentity" value="$rosteridentity" class="txt" /></td>
+						<td><input type="submit" value="{lang submit}"  class="btn" /></td>
+					</tr>
+					
+				</table>
+				</form>
+			</div>
+			<div id="readexceldiv" class="tabcontent" style=" display:none;">
+				<form action="admin.php?m=roster&a=ls" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table width="100%">
+					<tr>
+						<td>{lang select_excel}:</td>
+						<td><input id="readexcel" name="readexcel" type="file"  /></td>
+						<td><input type="submit" value="{lang submit}"  class="btn" /></td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</div>
+
+		<!--{if $adduser}--><script type="text/javascript">switchbtn('add');</script><!--{/if}-->
+          <br />
+		<h3>{lang roster_list}</h3>
+		<div class="mainbox">
+			<!--{if $rosterlist}-->
+				<form action="admin.php?m=roster&a=ls" onsubmit="return confirm('{lang roster_delete_confirm}');" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall"/><label for="chkall">{lang delete}</label></th>
+						<th>{lang roster_userno}</th>
+						<th>{lang roster_name}</th>
+						<th>{lang roster_sex}</th>
+						<th>{lang roster_nation}</th>
+						<th>{lang roster_classname}</th>
+						<th>{lang roster_seatno}</th>
+						<th>{lang edit}</th>
+					</tr>
+					<!--{loop $rosterlist $roster}-->
+						<tr>
+							<td class="option"><input type="checkbox" name="delete[]" value="$roster[id]" class="checkbox" /></td>
+							<td>$roster[userno]</td>
+							<td>$roster[name]</td>
+							<td>$roster[sex]</td>
+							<td>$roster[nation]</td>
+							<td>$roster[classname]</td>
+							<td>$roster[seatno]</td>
+							<td><a href="admin.php?m=roster&a=edit&ID=$roster[id]">{lang edit}</a></td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td><input type="submit" value="{lang submit}" class="btn" /></td>
+						<td class="tdpage" colspan="7">$multipage</td>
+					</tr>
+				</table>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+	</div>
+<!--{else}-->
+	<div class="container">
+		<h3 class="marginbot">{lang role_edit_profile}
+			{if getgpc('fromadmin')}
+				<a href="admin.php?m=admin&a=ls" class="sgbtn">{lang admin_return_admin_ls}</a>
+			{else}
+				<a href="admin.php?m=roster&a=ls" class="sgbtn">{lang admin_return_roster_ls}</a>
+			{/if}
+		</h3>
+		<!--{if $status == 1}-->
+			<div class="correctmsg"><p>{lang roster_edit_profile_sucessfully}</p></div>
+		<!--{elseif $status == -1}-->
+			<div class="correctmsg"><p>{lang roster_edit_profile_failed}</p></div>
+		<!--{elseif $status == -2}-->
+			<div class="note"><p class="i">{lang roster_exit_profile_failed}</p></div>
+		<!--{/if}-->
+		<div class="mainbox">
+			<form action="admin.php?m=roster&a=edit&ID=$id" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="opt">
+					
+					<tr>
+						<th>{lang roster_name}:</th>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="newrostername" value="$roster[name]" class="txt" />
+							<input type="hidden" name="oldrostername" value="$roster[name]" class="txt" />
+						</td>
+					</tr>
+					<tr>
+						<th>{lang roster_classname}:</th>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="newrosterclassname" value="$roster[classname]" class="txt" />
+						</td>
+					</tr>
+					<tr>
+						<th>{lang roster_sex}:</th>
+					</tr>
+					<tr>
+						<td>
+						   <input name="newrostersex" type="radio" value="0" {if $roster[sex]==0}checked{/if} />{lang roster_sex_female}
+						   <input name="newrostersex" type="radio" value="1" {if $roster[sex]==1}checked{/if} />{lang roster_sex_male}
+						</td>
+					</tr>
+					<tr>
+						<th>{lang roster_userno}:</th>
+					</tr>
+					<tr>
+						<td>
+						<input type="text" name="newrosteruserno" value="$roster[userno]" class="txt" />
+						<input type="hidden" name="oldrosteruserno" value="$roster[userno]" class="txt" />
+						</td>
+					</tr>
+					<tr>
+						<th>{lang roster_identity}:</th>
+					</tr>
+					<tr>
+						<td>
+						<input type="text" name="newrosteridentity" value="$roster[identity]" class="txt" />
+						<input type="hidden" name="oldrosteridentity" value="$roster[identity]" class="txt" />
+						</td>
+					</tr>
+					<tr>
+						<th>{lang roster_nation}:</th>
+					</tr>
+					<tr>
+						<td>
+						<ul>
+						
+						<select name="newrosternation" id="newrosternation">
+						</select>
+						</td>
+					</tr>
+				</table>
+				<div class="opt"><input type="submit" name="submit" value=" {lang submit} " class="btn" tabindex="3" /></div>
+			</form>
+		</div>
+	</div>
+<!--{/if}-->
+{template footer}

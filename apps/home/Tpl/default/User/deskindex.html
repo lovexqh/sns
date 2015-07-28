@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的微博收藏</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/member/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/main.css" rel="stylesheet" type="text/css" />
+    
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/html5.js"></script>
+<![endif]-->
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+
+<link media="all" rel="stylesheet" type="text/css" href="__PUBLIC__/js/colorbox/colorbox.css" />
+<!-- 打开窗口样式 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorbox.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script>
+$(document).ready(function(){
+	<php>if($mid > 0) {</php>
+		ui.countNew();
+		setInterval("ui.countNew()",120000);
+	<php>}</php>
+});
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.autocomplete.js"></script>
+</head>
+<body style="background:none;">
+	<div id="cont-follow" class="contentbox weibo_box" style="min-height:1200px">
+    	<div id="countNew"></div>
+        <php>if($gid){</php>
+            {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>2))}
+        <php>}else{</php>
+            {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>3))}
+        <php>}</php>
+        
+        <div class="page" style="text-align: right;font-size: 16px;">{$list['html']}</div>
+        
+                            </div>
+<script language="javascript" type="text/javascript">
+var weibo = $.weibo({
+      sinceId: parseInt('{$sinceId}'),
+      
+	  <php>if(ACTION_NAME=="index"){</php>
+      timeStep : 30000,
+      initForm:true,
+      <php>}</php>
+
+      lastId:parseInt('{$lastId}'),
+      show_feed:parseInt('{$show_feed}'),
+      follow_gid:parseInt('{$follow_gid}'),
+      gid:parseInt('{$gid}'),
+      weiboType:'{$weibo_type}',
+      type:parseInt('{$type}'),
+      typeList:{
+          WEIBO:parseInt(<php>echo UserAction::INDEX_TYPE_WEIBO;</php>),
+          GROUP:parseInt(<php>echo UserAction::INDEX_TYPE_GROUP;</php>),
+          ALL:parseInt(<php>echo UserAction::INDEX_TYPE_ALL;</php>)
+      }
+});
+
+/*载入更多的微广播信息*/
+function loadweibo(obj){
+	var count = $(obj).parent().find('ul>li').length;
+	$.ajax({
+		url	:	"{:U('home/User/getWeiboList')}",
+		type:	"POST",
+		data:	{count:count},
+		timeout	:	50000,
+		dataType:"json",
+		beforeSend: function(){
+			// Handle the beforeSend event
+			$(obj).find('#loadsuccess').hide();
+			$(obj).find('#loading').show();
+		},
+		success: function(result){
+			var length = result.length;
+			if (typeof(length) == "undefined") 
+			{ 
+				loadweibo(obj); //如果未返回任何值，则重新请求这个方法
+				return;
+			} 
+			if(length==0){
+				$(obj).find('#loadsuccess').html('没有更多数据了');
+			}
+			var html = "";
+			for(i=0;i<length;i++){
+				html += "<li>";
+				html += "<dl>";
+				html += "<dt><a class=\"userface\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\"><img src=\""+result[i].face+"\"></a></dt>";
+				html += "<dd><p><a class=\"fn\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\">"+result[i].name+"</a>说："+result[i].content+"</p><span>["+result[i].time+"]</span></dd>";
+				html += "<div class=\"clear\"></div>";
+				html += "</dl>";
+				html += "</li>";
+			}
+			$(obj).parent().find('ul').append(html);
+		},
+		complete: function(){
+			// Handle the complete event
+			$(obj).find('#loading').hide();
+			$(obj).find('#loadsuccess').show();
+			$(obj).find('#retract').show();
+		}
+		// ...
+	});
+}
+//微广播收起功能
+function retract(obj){
+	 var length = $(obj).parent().find('ul>li').length;
+	 if(length>5){
+		 $(obj).parent().find('ul>li').each(function(i, e) {
+            if(i>=5){
+				$(this).remove();	
+			}
+        });
+		weibo.sinceId = parseInt('{$sinceId}');
+	 }
+	 $(obj).find('#loadMoreDiv').html('<span class="ico_morefoot"></span>更多');
+}
+</script>
+{:Addons::hook('weibo_js_plugin')}
+</body>
+</html>

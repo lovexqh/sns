@@ -1,0 +1,59 @@
+
+<div class="header_banner">
+	<!--<form action="{:U("square/teaching/doSearch")}" method="POST" enctype="multipart/form-data">
+		<ul class="se_form">
+			<li><input name="tags" type="text"  class="sea_input" /></li>
+			<li><input type="image" name="submit" src="__THEME__/square/images/search.gif" /></li>
+			<div class="clean"></div>
+		</ul>
+	</form>-->
+	<div class="clean"></div>
+</div>
+<div class="clean"></div>
+<div class="header_nav">
+  <ul class="nav">
+	<li>
+		<a href="{:U('square/Teaching/index')}" <php>if(in_array((ACTION_NAME),array('index')))echo 'class="nav_visit"';</php>>
+			首页
+		</a>
+	</li>
+	<li>
+		<a href="{:U('square/Teaching/getList')}" <php>if(in_array((ACTION_NAME),array('getList')))echo 'class="nav_visit"';</php>>
+			教研活动
+		</a>
+	</li>
+	<li>
+		<a href="{:U('square/Teaching/getresList')}" <php>if(in_array((ACTION_NAME),array('getresList')))echo 'class="nav_visit"';</php>>
+			活动资源
+		</a>
+	</li>
+	<li>
+		<a href="{:U('square/Teaching/gettermList')}" <php>if(in_array((ACTION_NAME),array('gettermList')))echo 'class="nav_visit"';</php>>
+			协作组
+		</a>
+	</li>
+	<li>
+		<a href="{:U('square/Teaching/charts')}" <php>if(in_array((ACTION_NAME),array('charts')))echo 'class="nav_visit"';</php>>
+			排行榜
+		</a>
+	</li>
+	<div class="clean"></div>
+  </ul>
+  <div class="clean"></div>
+</div>
+<div class="clean"></div>
+<php>if(count($column)>0){</php>
+<div class="crumbs">
+	<div class="crumbs_left">
+		<ul>
+			<li>当前位置</li>
+			<li>&gt;&gt;&nbsp;{$column}</li>
+			<volist name="path" id="obj">
+				<li>&gt;&gt;&nbsp;{$obj.cname}</li>
+			</volist>
+		</ul>
+	</div>
+</div>
+<php>}else{</php>
+<div class="clear10"></div>
+<php>}</php>

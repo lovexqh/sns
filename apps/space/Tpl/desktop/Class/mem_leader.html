@@ -1,0 +1,65 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_member_leftmenu" />
+   <div class="trunk_right_m">
+	 <div class="clear10"></div>
+	 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="mem_cadre" /><span class="title">班干部</span></div>
+	 <div class="clear10"></div>
+	 <table width="98%" border="0" cellspacing="0" cellpadding="0" class="memberlist">
+		 <tr>
+		  <volist name="leader" id="vo" key='k'>
+				<td width="120" align="center" height="145">
+				  <table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td height="80" colspan="2" valign="top">
+							<if condition="($vo['uid'] eq '')">
+								<img src="__THEME__/images/user_pic_bigjj.gif" class="head_pic"/>
+							<else />
+								<space uid="vo.uid" class="head_pic">{uavatar=b}</space>
+							</if>
+						</td>
+					</tr>
+					<tr>
+						<td height="40">
+							<!--<a href="" class="friendadd">加好友</a>-->
+						</td>
+						<td height="40">
+                        <if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+							<a href="javascript:ui.sendclassmessage({$vo['uid']})" class="priv">发私信</a>
+                        <else/>
+                        &nbsp;
+                        </if>
+						</td>
+					</tr>
+				  </table>
+				</td>
+				<td width="215" align="left" valign="top">
+				  <table border="0" cellpadding="0" cellspacing="0" align="left">
+					<tr>
+						<td height="25">姓名：{$vo.identityid|get_namebyidentityid=###,3}</td>
+					</tr>
+					<tr>
+						<td>职位：
+							<volist name="vo['positionid']" id="v">
+								<php>if($i!=1){</php>、<php>}</php>{$v.positionid|get_positionname}
+							</volist>
+						</td>
+					</tr>
+					<tr><td>
+                    <if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+					<div id="follow_list_{$vo.uid}" class="follow_{$vo.uid}">
+						<script>document.write(followStateClass('{:getFollowState($mid, $vo[uid])}','dolistfollowClass',{$vo.uid}))</script>
+					</div>
+                    </if>
+				</td></tr>
+				  </table>
+				</td>
+			  <php>if($k%2==0){</php>
+				</tr><tr>
+			  <php>}</php>
+		  </volist>
+		  </tr>
+		</table>
+	 <div class="clear10"></div>
+   </div>
+<include file="../Public/_footer" />

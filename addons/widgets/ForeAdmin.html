@@ -1,0 +1,22 @@
+<php>if($otherMenu || ($isAuditApp && strpos($popedom,'A')!==false)) {</php>
+    <div class="panel-list-box bottom-line">
+      <h2><i class="icon-manage"></i>{$title}管理</h2>
+      <ul class="list">
+        <!-- 权限控制菜单 start -->
+        <php>foreach($config as $act=>$c) {</php>
+        <php>if(strpos($popedom,'A')!==false) {</php>
+        <li><a href="javascript:;" onclick="tabs.iframe('{$c.title}已审核','{:U($app_name.'/ForeAdmin/'.$act,array('admin'=>'audited'))}');">{$c.title}已审核</a></li>
+        <php>}</php>
+        <php>if(strpos($popedom,'A')!==false) {</php>
+        <li><a href="javascript:;" onclick="tabs.iframe('{$c.title}待审核','{:U($app_name.'/ForeAdmin/'.$act,array('admin'=>'audit'))}');">{$c.title}待审核</a></li>
+        <php>}</php>
+        <php>}</php>
+        <!-- 权限控制菜单 end -->
+        <!-- 其他菜单 start -->
+        <php>foreach($otherMenu as $text=>$url) {</php>
+        <li><a href="javascript:;" onclick="tabs.iframe('{$text}','{$url}');">{$text}</a></li>
+        <php>}</php>
+        <!-- 其他菜单 end -->
+      </ul>
+    </div>
+<php>}</php>

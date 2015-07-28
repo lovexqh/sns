@@ -1,0 +1,55 @@
+/* ---------------------------------------- public */
+/*列表去除padding*/
+.listCls .x-list-item-body{
+    min-height: 46px;
+    padding: 0.0em 0.0em;
+}
+/*分类选项*/
+.selectFileldCls{
+    border: none;
+}
+.selectFileldCls *{
+    text-align: center!important;
+}
+/*列表按钮*/
+.listBtn{
+    background:rgba(0,0,0,0);
+    border:none;
+}
+/*列名*/
+.labelCenter{
+    /*text-align: left !important;*/
+    /*padding:10px;*/
+    line-height: 50px;
+}
+/* ---------------------------------------- LoginV.js */
+.loginBtn{
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #3492d3), color-stop(1, #3461d3));
+    border: none;
+    color: #ffffff;
+}
+.loginPressBtn{
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #0c3bb0), color-stop(1, #2270f1));
+}
+/* ---------------------------------------- PaperV.js */
+/*tab图标*/
+.libIcon{
+    background:no-repeat center url("../images/MainV/lib.png") !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+.paperIcon{
+    background:no-repeat center url("../images/MainV/paper.png") !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+.examIcon{
+    background:no-repeat center url("../images/MainV/exam.png") !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+.gradeIcon{
+    background:no-repeat center url("../images/MainV/grade.png") !important;
+    width: 30px !important;
+    height: 30px !important;
+}

@@ -1,0 +1,46 @@
+<!-- 视频中心 -->
+<if condition="($num neq 0)">
+<div class="contc">
+    <div class="coltop">社团 <span>截止目前为止：社区共有社团{$clubnum}个</span> <a href="{:U('club/Index/index')}" title="社团中心">>> 点击进入</a> </div>
+    <div class="ccl">
+        <ul class="cublist">
+            <volist name="hotClub" id="club">
+            <li>
+                <img src="__ROOT__/thumb.php?w=45&h=45&t=f&url={$club['photourl']}">
+                <span>
+                <p>
+                	<a class="asty1" href="{:U('club/Topic/index',array('id'=>$club['clubid']))}" title="{$club.title}">{$club.title}</a>
+                	<php>if($club['type']==1){</php>
+					<span class="icon club_school_icon"></span>
+					<php>}else if($club['type']==2){</php>
+					<span class="icon club_academy_icon"></span>
+					<php>}else if($club['type']==3){</php>
+					<span class="icon club_student_icon"></span>
+					<php>}</php>
+                </p>
+                <p>成员：{$club.membercount}</p>
+                </span>
+                <div class="c"></div>
+                <volist name="club.topic" id="top" key="i">
+                <div class="<php>if($i=1){echo 'topic_first';}</php> one_topic"><span>{$i}.&nbsp;</span><a href="{:U('club/Topic/topicDetail',array('id'=>$top['clubid'],'topicid'=>$top['topicid']))}">{$top.title}</a></div>
+                </volist>
+            </li>
+            </volist>
+    	</ul>
+    </div>
+    <div class="ccr">
+        <div class="ccrtop"><div>社团热帖榜</div></div>
+        <ul class="crrlist">
+            <volist name="hotTopic" id="topic" key="i">
+            <li>
+            	<span class="sp1 <php>if($i <=3){echo 'sp1h';}</php>">{$i}</span>
+            	<span class="sp2"><a href="{:U('club/Topic/topicDetail',array('id'=>$topic['clubid'],'topicid'=>$topic['id']))}" title="{$topic.title}">{$topic.title}</a></span>
+            	<span class="sp3">{$topic.replycount}</span>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="c"></div>
+    <div class="cb"></div>
+</div>
+</if>

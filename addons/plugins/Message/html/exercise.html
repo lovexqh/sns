@@ -1,0 +1,65 @@
+<!-- 作业 start -->         	
+<ul class="top_title">
+    <volist name="exercisemenu" id="vo">
+    <li class="<if condition="$isdefault eq $key">onfocs</if>">
+    	<a href="javascript:;" sx="{$key}" title="{$vo}">{$vo}</a>
+        <!--<div class="close red_close">5</div>-->
+    </li>
+    </volist>
+</ul>
+<div class="clearfix"></div>
+<div id="jsp_fexercise" class="scroll_panel <if condition="$isdefault neq 'fexercise'">hide</if>">
+	<ul class="border-letter">
+    <if condition="!empty($fexercise) and count($fexercise)">
+        <volist name="fexercise" id="vo">
+        <li>
+        	<i class="unread"></i>
+            <a href="{$vo.url}" title="{$vo.title}" target="_blank"><span>[{$vo.coursename}]</span>
+            &nbsp;{$vo.title}</a>
+            <span class="time">[{$vo['fbdate']|date='Y-m-d',###}]</span>
+        </li>
+        </volist>
+    <else />
+        <li>暂无相关作业</li>
+    </if>
+    </ul>
+</div>
+
+<div id="jsp_exercise" class="scroll_panel <if condition="$isdefault neq 'exercise'">hide</if>">
+	<ul class="border-letter">
+    <if condition="!empty($exercise) and count($exercise)">
+        <volist name="exercise" id="vo">
+        <li>
+        	<i class="unread"></i>
+            <a href="{$vo.url}" title="{$vo.title}" target="_blank"><span>[{$vo.coursename}]</span>
+            &nbsp;{$vo.title}</a>
+            <span class="time">[{$vo['fbdate']|date='Y-m-d',###}]</span>
+        </li>
+        </volist>
+    <else />
+        <li>暂无相关作业</li>
+    </if>
+    </ul>
+</div>
+
+<div id="jsp_exerciseinfo" class="scroll_panel <if condition="$isdefault neq 'exerciseinfo'">hide</if>">
+	<ul class="border-letter">
+    <if condition="!empty($exerciseinfo) and count($exerciseinfo)">
+        <volist name="exerciseinfo" id="vo">
+        <li>
+        	<i class="unread"></i>
+            <a href="{$vo.url}" title="{$vo.title}" target="_blank"><span>[{$vo.coursename}]</span>
+            &nbsp;{$vo.title}</a>
+            <span class="time">[{$vo['fbdate']|date='Y-m-d',###}]</span>
+        </li>
+        </volist>
+    <else />
+        <li>暂无相关作业</li>
+    </if>
+    </ul>
+</div>
+<div class="clearfix"></div>
+<!-- 作业 end -->
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.border-letter');</script>

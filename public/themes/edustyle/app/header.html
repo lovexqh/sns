@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><neq name="ts['site']['page_title']" value="">{$ts['site']['page_title']} {$ts['site']['site_name']}<else/>{$ts['site']['site_name']}</neq></title>
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<meta name="generator" content="GSN {VERSION}" />
+<meta name="author" content="GSN" />
+<meta name="copyright" content="2012-2013 gridinfo.com.cn." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<base href="__ROOT__" />
+<!-- 全局风格CSS -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.7.2.min.js"></script>
+
+<script src="__PUBLIC__/js/desktop/jquery.ui.draggable.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/desktop/jquery.alerts.js" type="text/javascript"></script>
+
+<!-- other -->
+<script type="text/javascript" src="__PUBLIC__/js/desktop/mask.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.callback.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.top-prompt.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.metadata.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/lang/validate.message_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.chosen.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/chosen.proto.min.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/desktop/chosen/chosen.css" type="text/css"/>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/tbox/box.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/desktop/tbox/box.css" />
+<link rel="stylesheet" href="__PUBLIC__/js/desktop/jquery.alerts.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="__THEME__/desktop/css/reset.css" type="text/css"/>
+<link rel="stylesheet" href="__THEME__/desktop/css/scroll.css" type="text/css"/>
+<link rel="stylesheet" href="__THEME__/desktop/css/applayout.css" type="text/css"/>
+
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/desktop/html5.js"></script>
+<![endif]-->
+<!--[if lt IE 7]>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/pngfix.js"></script>
+<script language="javascript">
+$(document).ready(function(e) {
+	DD_belatedPNG.fix('.pngfix');
+});
+</script>
+<![endif]-->
+
+<script language="javascript" type="text/javascript">
+var _UID_   = <php> echo (int) $uid;</php>;
+var _MID_   = <php> echo (int) $mid;</php>;
+var _URL_   = '{:getSiteUrl()}';
+var _ROOT_  = '__ROOT__';
+var _THEME_ = '__THEME__';
+var _PUBLIC_ = '__PUBLIC__';
+var _APP_INDEX_ = '{$GLOBALS['ts']['_app']}/{$GLOBALS['ts']['_mod']}/{$GLOBALS['ts']['_act']}';
+var _APP_PUBLIC_ = '../Public';
+var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+var SITEURL = '__ROOT__';
+var JSPATH = '../Public/js/';
+var IMGPATH = '../Public/images/';
+var $CONFIG = {
+	};
+	$CONFIG['uid'] = _UID_;
+	$CONFIG['mid'] = _MID_;
+	$CONFIG['root_path'] =_ROOT_;
+	$CONFIG['theme_path'] = _THEME_;
+	$CONFIG['public_path'] = _PUBLIC_;
+	$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+</script>
+</head>
+<body>
+<!-- 顶部工具栏begin -->
+<header>
+	<ul class="tools_menu">
+		<li><a href="javascript:void(0);" onClick="win.homepage();"><i class="icon_homepage"></i>首页</a></li>
+		<li>|</li>
+		<li><a href="javascript:void(0);" onClick="win.refreshs();"><i class="icon_refresh"></i>刷新</a></li>
+	</ul>
+</header>
+<!-- 顶部工具栏end --> 

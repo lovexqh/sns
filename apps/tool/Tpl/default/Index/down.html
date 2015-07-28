@@ -1,0 +1,118 @@
+<include file="__THEME__/desktop/_header" />
+<link rel="stylesheet" href="../Public/css/tool.css" type="text/css" media="screen" charset="utf-8" />
+
+
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.table_list input').attr("checked",true);   
+      });  
+}); 
+function getChecked() {
+    var ids = new Array();
+    $.each($('.table_list input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+   
+}
+
+function del(){
+	var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要删除的下载工具信息");return false;
+		}
+		if( confirm("是否删除所选信息？") ){
+		  $.post( '__URL__&act=deldown',{id:id},function(text ){
+			  if( text == 1 ){
+				  ui.success( "删除多个工具信息成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#list_'+id_list[j]).remove(); 
+				  }
+			  }else if( text == 2 ){
+				  ui.success( "删除成功" );
+				  $('#list_'+id).remove();
+				 // window.location.reload();
+			  }else{
+				  ui.error( "删除失败" );
+			  }
+		  });
+		}
+}
+function delone(id){
+	var id = id ? id : getChecked();
+		id = id.toString();
+		if( confirm("是否删除所选下载资源信息资源？") ){
+		  $.post( '__URL__&act=deldown',{id:id},function(text ){
+			  if( text == 1 ){
+				  ui.success( "删除多个下载资源信息成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#list_'+id_list[j]).remove(); 
+				  }
+			  }else if( text == 2 ){
+				  ui.success( "删除成功" );
+				  $('#list_'+id).remove();
+			  }else{
+				  ui.error( "删除失败" );
+			  }
+		  });
+		}
+}
+
+</script>
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false">
+  
+  <!-- 右侧主要内容 start -->
+  <div class="panel-cmain">
+        <div class="clearfix"></div>
+        <!-- 主要内容 start -->
+			  <div class="r_1">
+             	<div class="clearfix" style=" height:10px;"></div>
+                <table cellpadding="0" cellspacing="0" width="100%" class="table_list">
+                    <tr>
+                        <th width="5%">选择</th>
+                        <th>标题</th>
+                        <th width="10%">工具类型</th>
+                         <th width="10%">版本信息</th>
+                        <th width="15%">下载时间</th>
+                         <th width="15%">收藏量</th>
+                          <th width="15%">下载量</th>
+                          <th>操作</th>
+                    </tr>
+                <volist name="result.data" id='vo' key="k">
+                    <tr id="list_{$vo['d_id']}">
+                        <td width="5%"><input name="id"  value="{$vo['d_id']}" type="checkbox" /></td>
+                        <td>
+                        <a href="javascript:;" onclick="parent.tabs.iframe('{$vo['title']}','{:U('tool/Index/showtool',array('id'=>$vo['id'],iframe=>'yes'))}');">
+                        {$vo.title|getShort=11}
+                        </a>
+                        </td>
+                        <td width="10%">{$vo['category_name']}</td>
+                        <td width="10%">{$vo['version']}</td>
+                        <td width="15%">{$vo['time']|date="Y-m-d",###}</td>
+                        <td width="10%">{$vo['collectCount']}</td>
+                      <td width="10%">{$vo['downCount']}</td>
+                        <td><a href="javascript:void(0);" onclick="delone({$vo['d_id']});">删除</a></td>
+                    </tr>
+                </volist>
+                </table>
+				  <php>if($result['data']){</php>
+                      <div class="page_left">
+                          <a href="javascript:void(0);" id="chkall">全选</a>/
+                          <a href="javascript:void(0);" onclick="del()">删除</a>
+                      </div>
+                   
+                  <php>}</php>
+				  <div class="page right">{$html}</div>
+			  </div>
+		<!-- /右侧主要内容 end -->
+  </div>
+<!-- 右侧主要内容栏 end -->
+<include file="__THEME__/desktop/_footer" />
+
+
+

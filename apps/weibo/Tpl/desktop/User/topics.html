@@ -1,0 +1,102 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main">
+    <div class="mainbox">
+      <include file="../Public/_right" />
+      <div class="mainbox_appC boxspace_L" >
+        {:Addons::hook('home_topic_detail_left_top')}
+        <if condition="$topics['topic_id']">
+        <div class="topics_info">
+          <if condition="$topics['pic']"><img alt="#{$topics.name}#" src="thumb.php?url={:SITE_URL}/data/uploads/{$topics.pic}&w=625&h=170" /></if>
+          <dl class="topics_info_dl">
+            <dt>#{$topics.name}#</dt>
+            <dd>{$topics.content}<if condition="$topics['link']"><a href="{$topics.link}" target="_blank">&gt;&gt;详细</a></if></dd>
+          </dl>
+        </div>
+        </if>
+        {:Addons::hook('home_topic_detail_left_middle')}
+		<div class="talkBox send_weibo">
+		  <form id="miniblog_publish" action="{:U('weibo/operate/publish')}" method="post" oncomplete="false">
+			<input name="publish_type" type="hidden" value="0">
+			<h2>
+			  <div class="wordNum numObj">你还可以输入<strong id="strconunt">{$GLOBALS['ts']['site']['length']}</strong>字</div>
+			  <div class="title"><span>快来说点什么吧……</span></div>
+			</h2>
+			<div class="cntBox">
+			  <textarea name="content" class="contentObj" id="content_publish" rows="2" cols="20">#{$topics.name}#</textarea>
+			  <div class="txtShadow" style="z-index: -1000;"></div>
+			</div>
+			<div class="funBox">
+			  <input class="btn_big_disable hand buttonObj right" id="publish_handle" type="button" value="" error="发布失败">
+			  <php>if(Addons::requireHooks("home_index_middle_publish")){</php>
+				<div class="right" style="width: 50px; padding-bottom: 5px; cursor: pointer; _padding-top: 5px;" onclick='weibo.showAndHideMenu("Sync", this, "", "");'>
+					同步<a class="ico_sync_on" href="#"></a>
+				</div>
+				<div id="Sync" style="top: 30px; right: 80px; display: none; position: absolute; z-index: 9999;">
+					<div class="topic_app"></div>
+					<div class="pop_inner">
+						{:Addons::hook('home_index_middle_publish')}
+					</div>
+				</div>
+			  <php>}</php>
+				<div class="kind" id="publish_type_content_before">
+					{:Addons::hook('home_index_middle_publish_type',array('position'=>'index'))}
+				</div>
+			</div>
+			<input style="display: none;" type="text">
+		  </form>
+		</div>
+
+        <div class="tab-menu"><!-- 切换标签 begin  -->
+          <ul>
+            <li><a href="###" class="on feed_item"><span>热议网友</span></a></li>
+          </ul>
+        </div>
+        <div class="MenuSub alR">
+        	<span class="left cGray">该话题共有"<span class="cRed">{$list.data|count}</span>"条相关微广播</span>
+	        <volist name="weibo_menu" id="vo"><php>if ($i > 1) {</php>|<php>}</php><a
+	        href="{:U('weibo/user/topics', array('k'=>urlencode($search_key),'type'=>$key))}" 
+	        <eq name="type" value="$key">class="on"</eq>>{$vo}</a></volist>
+	    </div>
+        <div class="feedBox">
+          {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1))}
+        </div>
+        <div class="c"></div>
+        <div class="page">{$list.html}</div>
+        {:Addons::hook('home_topic_detail_left_bottom')}
+      </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+var weibo = $.weibo({
+	initForm:false
+});
+var default_string = "#{$topics.name}#";
+weibo.initForm("miniblog_publish",{       
+	enter:function(formObj,buttonObj,contentObj,numObj,txt){
+		var content = $('#content_publish').val();
+		var isTopics = content.search(default_string);
+		if(isTopics != -1) {
+			$('#feed_list').prepend( txt ).slideDown('slow');
+		}
+		contentObj.val(default_string);
+	}
+});
+$(document).ready(function(e) {
+	$('a').each(function(i, e) {
+		if(typeof($(this).attr('uid'))!='undefined'){
+			var url = $(this).attr('href');
+			$(this).attr('onclick',"top.OpenBrowser ('"+url+"','个人主页', 'width=1024,height=600,titlebutton=close|max|min');");
+			$(this).attr('href','javascript:;');
+		}
+	});
+});
+</script>
+{:Addons::hook('weibo_js_plugin')}
+<include file="../Public/_footer" /> 

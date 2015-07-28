@@ -1,0 +1,99 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  
+  <div class="page_tit">知识点管理</div>
+  <div class="tit_tab">
+    <ul>
+    <li><a <eq name="do" value="">class="on"</eq> href="{:U('admin/Category/knowledge')}">管理知识点</a></li>
+    <li><a <neq name="do" value="">class="on"</neq> href="{:U('admin/Category/modifyknowledge')}"><eq name="do" value="add">添加</eq><neq name="do" value="add">修改</neq>知识点</a></li>
+    </ul>
+  </div>
+  
+  <form method="post" action="{:U('admin/Category/doModifyKnowledge')}" onsubmit="return checkForm(this);">
+  <div class="form2">
+    <dl class="lineD">
+      <dt>出版(或发行)者：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="publisher">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataPublisher">
+                <option value="{$val['DataCode']}" <php>if($data[Publisher] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select>
+    </dl>
+
+    <dl class="lineD">
+      <dt>科目：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="subject">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataSubject">
+                <option value="{$val['DataCode']}" <php>if($data[Subject] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select> 
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>年级：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="grade">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataGrade">
+                <option value="{$val['DataCode']}" <php>if($data[Grade] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>知识点：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input type="text" name="course" id="course" style="width:260px" value="{$data.Course}" />
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>备注：</dt>
+      <dd>
+        <textarea name="remark" id="remark" cols="40" rows="3">{$data.Remark}</textarea>
+      </dd>
+    </dl>
+	
+    <div class="page_btm">
+    	<input type="hidden" name="do" value="{$do}" />
+      <if condition="$data['id']">
+      	<input name="id" type="hidden" value="{$data['id']}" />
+      </if>
+      <if condition="$jumpUrl">
+      	<input name="jumpUrl" type="hidden" value="{$jumpUrl}" />
+      </if>
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </div>
+  </form>
+</div>
+
+<script>
+function checkForm(o)
+{
+	if (o.publisher.value==0) {
+		ui.error('请选择出版(或发行)者');
+		o.publisher.focus();
+		return false;
+	} else if (o.subject.value==0) {
+		ui.error('请选择科目');
+		o.subject.focus();
+		return false;
+	} else if (o.grade.value==0) {
+		ui.error('请选择年级');
+		o.grade.focus();
+		return false;
+	} else if (o.course.value.length <= 0) {
+		ui.error('请输入知识点内容');
+		o.course.focus();
+		return false;
+	}
+}
+</script>
+<include file="../Public/_footer" />

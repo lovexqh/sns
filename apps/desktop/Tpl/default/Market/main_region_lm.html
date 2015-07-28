@@ -1,0 +1,72 @@
+<include file="../Public/_header_ajax" />
+<div class="appPanel categoryPanel" _olddisplay="block" style="display: block;">
+    <div class="categoryPanelTitle">{:L('latest_index')}</div>
+    <div class="categoryPanelContainer"> 
+        <div class="horizontalListOuter">
+            <div class="horizontalListOuter2">
+                <div class="appPanelBody horizontalList" id="appPanel_main_newrank_body" style="width:100%;"> 
+                  <volist name="list" id="value">
+                    <a cmd="introduce" cat="{$value.classid}" appid="{$value.appid}"  href="javascript:void(0);" class="appListItem">
+                        <img src="{$value.appico}" title="{$value.appname}" class="appMidIcon" onload="fixpng(this)">
+                        <span class="appName">{$value.appname}</span>
+                    </a>
+                    <div class="appButton_poptips_html" style="display:none">
+                        <if condition="empty($myicos)">
+                            <a class="appOpenBtn tips_appAdded"  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="top.OpenWindow('',encodeURI('{$value[appurl]}'),'{$value[app_alias]}');return false;">{:L('added')}</a>
+                        <elseif condition="$myicos[$value['appid']] gt 0" />
+                            <a class="appOpenBtn tips_appAdded "  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="top._ico.Open('{$myicos[$value[appid]]}');return false;">{:L('added')}</a>
+                        <else />
+                            <a class="appAddBtn tips_appAdded appAddBtn_{$value.appid}"  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="addapp('appAddBtn_{$value.appid}','{$value.appid}');return false;">{:L('added')}</a>
+                        </if>
+                        <div class="tips_item tips_name">{$value.appname}</div>
+                        <div class="tips_item tips_cat">{$value.group_name}</div>
+                        <div class="tips_item tips_desc">{$value.appdesc}</div>
+                        <div class="tips_item tips_vote">
+                        <div class="appStars" title="{$value[star]} {:L('fen')}"><div class="appStar" style="width:<php>echo $value[star]*10</php>%"></div> </div>
+                        <div class="avgVote">{$value[star]}</div><div class="tips_addedCnt"><span class="tips_addedCnt_bold">{$value[setupnum]|intval}</span>{:L('person')}{:L('added')}</div>
+                        </div>
+                    </div>
+                    </volist>
+                </div>
+                <div class="appPanelBody2 horizontalList" id="appPanel_main_newrank_body2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" reload="1">
+jQuery('#appPanel_main_newrank_body .appListItem').bind('click',function(){
+                jQuery('#appButton_poptips').remove();
+                var cat=parseInt(jQuery(this).attr('cat'));
+                var appid=parseInt(jQuery(this).attr('appid'));
+                var cmd=jQuery(this).attr('cmd');
+                control_click(jQuery(this),cmd,cat,0,appid);
+                return false;
+            });
+    var appPanel_main_newrank_body_width='{$maxwidth}';
+    var main_region_lm_timer=null;
+	
+    jQuery('#appPanel_main_newrank_body>.appListItem').bind('mouseover',function(e){
+            jQuery('#appButton_poptips').remove();
+            window.clearTimeout(main_region_lm_timer);
+            var tip=document.createElement('div');
+            tip.className='tips';
+            tip.id='appButton_poptips';
+            tip.style.display='block';
+            var pos=jQuery(this).offset();
+            tip.style.left=pos.left-15+'px'
+            tip.style.top=pos.top-143+'px';
+            var appid=jQuery(this).attr('appid');
+            tip.innerHTML=jQuery(this).next().html();
+            jQuery(tip).bind('mouseover',function(){
+                window.clearTimeout(main_region_lm_timer);
+            });
+            jQuery(tip).bind('mouseout',function(){
+                main_region_lm_timer=setTimeout(function(){jQuery('#appButton_poptips').remove();},500);
+            });
+            document.body.appendChild(tip);
+    });
+    jQuery('#appPanel_main_newrank_body>.appListItem').bind('mouseout',function(e){
+        main_region_lm_timer=setTimeout(function(){jQuery('#appButton_poptips').remove();},500);
+    });
+</script>
+<include file="../Public/_footer_ajax" />

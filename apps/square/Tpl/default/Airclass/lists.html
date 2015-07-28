@@ -1,0 +1,93 @@
+<include file="_header" />
+
+  <div class="navigate_info">
+    <strong>您当前的位置：</strong>
+    <php>$where = array();</php>
+    <span><a href="{:U('square/Airclass/index')}">课堂中心首页</a></span>
+    <php>
+    if($section){
+    $where['section'] = $section;
+    </php>
+    <span> > <a href="{:U('square/Airclass/lists',$where)}">{$section|getXueduan}</a></span>
+    <php>
+    }
+    if($Subject){
+    $where['Subject'] = $Subject;
+    </php>
+    <span> > <a href="{:U('square/Airclass/lists',$where)}">{$Subject|getCourseName}</a></span>
+    <php>
+    }
+    if($Grade){
+    $where['Grade'] = $Grade;
+    </php>
+    <span> > <a href="{:U('square/Airclass/lists',$where)}">{$Grade|getDataName}</a></span>
+    <php>
+    }
+    if($Publisher){
+    $where['Publisher'] = $Publisher;
+    </php>
+    <span> > <a href="{:U('square/Airclass/lists',$where)}">{$Publisher|getDataName}</a></span>
+    <php>
+    }
+    </php>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <include file="_left" />
+      <div class="clear"></div>
+    </div>
+    <div class="content">
+      <div class="box width">
+        <ul class="class_sign">
+          <li <if condition="empty($Publisher)">class="on"</if>><a href="{:U('square/Airclass/lists')}">全部</a></li>
+          <li <if condition="$Publisher eq 'PEP'">class="on"</if>><a href="{:U('square/Airclass/lists',array('Publisher'=>'PEP'))}">人教版课标</a></li>
+          <li <if condition="$Publisher eq 'BNUP'">class="on"</if>><a href="{:U('square/Airclass/lists',array('Publisher'=>'BNUP'))}">北师大课标</a></li>
+          <li <if condition="$Publisher eq 'PPM'">class="on"</if>><a href="{:U('square/Airclass/lists',array('Publisher'=>'PPM'))}">苏教版课标</a></li>
+          <li <if condition="$Publisher eq 'SEP'">class="on"</if>><a href="{:U('square/Airclass/lists',array('Publisher'=>'SEP'))}">鲁教版课标</a></li>
+          <div class="clear"></div>
+        </ul>
+        <volist name="VolumeList" id='vo'>
+        <div class="course_name"> <strong>{$vo[name]}</strong>
+          <ul class="course_list">
+            <volist name="vo.Cell" id='vo2'>
+            <li><a href="javascript:;" title="{$vo2[name]}">{$vo2[name]} </a></li>
+            </volist>	
+          </ul>
+          <div class="clear"></div>
+        </div>
+      	</volist>
+      </div>
+      <div class="box width">
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+          <volist name="classes.data" id='vo'>
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="4" width="135" style="border-right:1px solid #e6e6e6;">
+                    <php>if($vo['coversavepath']==null){</php>
+                    <a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}"><img src="../Public/images/airclass_little.png" width="128" height="80" /></a>
+                    <php>}else{</php>
+                    <a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}"><img src="__ROOT__/thumb.php?w=140&h=105&url=./data/uploads/{$vo.coversavepath}/{$vo.coversavename}" width="128" height="80" /></a>
+                    <php>}</php>
+                  </td>
+                  <td width="380"><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}" class="name">《{$vo[name]}》</a>&nbsp;&nbsp;{$vo.category|getCategoryName}</td>
+                </tr>
+                <tr>
+                  <td>{$vo.schoolid|getSchoolName} <if condition="$vo['xdName']">> {$vo.xdName}</if> <if condition="$vo['SubjectName']">> {$vo.SubjectName}</if> <if condition="$vo['GradeName']">> {$vo.GradeName}</if> <if condition="$vo['PublisherName']">> {$vo.PublisherName}</if> <if condition="$vo['VolumeName']">> {$vo.VolumeName}</if> <if condition="$vo['CourseName']">> {$vo.CourseName}</if></td>
+                </tr>
+                <tr>
+                  <td>创建者：{$vo.uid|getUserSpace}&nbsp;&nbsp;开课时间：{$vo.stime|date="Y-m-d H:i",###}</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+        </table>
+        <ul class="page">
+          {$classes_hot.html}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</body></html>

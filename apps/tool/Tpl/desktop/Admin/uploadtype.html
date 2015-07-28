@@ -1,0 +1,105 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    add:function(id){
+	       ui.box.load('__URL__&act=addType',{title:"添加文件类型"});
+	      },
+	edit:function(id){
+	       ui.box.load('__URL__&act=editType&id='+id,{title:"修改文件类型"});
+	 }
+}
+var c = null;
+ function removeItem(id) {
+            $('#attach_'+id).remove();
+    }
+function del(ids) {
+    	var length = 0;
+    	if(ids) {
+    		length = 1;    		
+    	}else {
+    		ids    = getChecked();
+    		length = ids.length;
+            ids    = ids.toString();
+    	}
+    	
+    	if(ids=='') {
+    		ui.error('请先选择一个一条记录');
+    		return ;
+    	}
+    	if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+    		$.post("{:U('tool/Admin/delType')}",{ids:ids},function(res){
+    			if(res=='1') {
+    				ui.success('删除成功');
+    				removeItem(ids);
+    			}else {
+    				ui.error('删除失败');
+    			}
+    		});
+    	}
+    }
+</script>
+<div class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />
+       
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+		<a href="javascript:void(0);" class="btn_a" onclick="c.add()"><span>添加上传类型</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="del();"><span>删除文件类型</span></a>
+    </div>
+
+    <div class="list">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+    <th style="width:30px;">
+      <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    </th>
+    <th class="line_l">文件扩展名</th>
+	<th class="line_l">注释</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="result" key="k">
+      <tr overstyle='on' id="attach_{$k}">
+	    <td><input name="checkbox" value="{$vo['id']}" type="checkbox"/></td>
+        <td>{$vo.exttype}</td>
+		<td>{$vo.remark}</td>
+        <td>
+            <a href="javascript:void(0);" class="btn_a" onclick="c.edit({$vo['id']})">编辑</a>
+        </td>
+      </tr>
+  </volist>
+  </table>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

@@ -1,0 +1,41 @@
+<!-- 左侧收起按钮 start -->
+<div class="panel-tool">
+<a class="layout-button-left" href="javascript:void(0)" onclick="panel.collapse('nv_dsk','west');"></a> 
+</div>
+<!-- 左侧收起按钮 end -->
+<div class="panel-list-box">
+  <h2><i class="icon-note"></i>所有招贴</h2>
+  <ul class="list">
+    <li><a href="javascript:;" onclick="tabs.iframe('我关注的人的招贴','{:U('poster/Index/index', array('order'=>'following'))}');">我关注的人的招贴</a></li>
+    <li><a href="javascript:;" onclick="tabs.iframe('我管理的招贴','{:U('//personal')}');">我管理的招贴</a></li>                                                
+    <li><a href="javascript:;" onclick="tabs.iframe('我收藏的招贴','{:U('poster/Index/favorite')}');">我收藏的招贴</a></li>                                                
+  </ul>
+</div>
+
+<php>//print_r($posterTree);</php>
+<php>if(!empty($posterTree)){</php>
+	<div class="panel-list-box bottom-line">
+		<h2><i class="icon-star"></i>招贴分类</h2>
+		<ul class="easyui-tree" style="margin-left:35px;">
+		   <volist name="posterTree" id="posterNode">   
+	       		 <li data-options="state:'closed'">
+	       		 <span><a href="javascript:;" onclick="tabs.iframe('{$posterNode['name']}','{:U('//',array('pid'=>$posterNode['id'],'t'=>'1'))}');">{$posterNode['name']}</a></span>
+	       		 <php>if(count($posterNode['children']) > 0){</php>
+	       		 	<ul>
+	       		 		<volist name="posterNode['children']" id="posterLeaf">
+	       		 			<li><span><a href="javascript:;" onclick="tabs.iframe('{$posterLeaf['name']}','{:U('//',array('pid'=>$_GET['pid'],'stid'=>$posterLeaf['id'],'t'=>'1'))}');">{$posterLeaf['name']}</a></span></li>
+	       		 		</volist>
+	       		 	</ul>
+	       		 <php>}</php>
+	       		 </li>
+	        </volist>
+		</ul>
+	</div>
+<php>}</php>
+
+<!-- 招贴管理 start -->
+    {:W('ForeAdmin',array('title'=>'招贴','type'=>'leftlist'))}
+<!-- 课堂管理 end -->
+
+<!-- 左侧列表分类 end --> 
+

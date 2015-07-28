@@ -1,0 +1,83 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    window.setInterval(autoShowManager,3000)
+});
+</script>
+<div class="main_right">
+	<div class="right_title">&nbsp;&nbsp;公告
+		<div class="brow">
+			<if condition="$isManage eq '1'">
+				<a class="edit" id="report" onclick="top_report(event);"></a>
+			</if>
+		</div>
+	</div>
+	<div class="editRep _report">
+		<div style="float: right;margin-right: 6px;cursor: pointer;" class="close_report" onclick="right_close_report();">x</div>
+		<p>请输入公告：<p>
+		<textarea name="report" style="width: 225px;height: 75px;">{$societyInfo.notice}</textarea>
+		<input class="btn_bR" onclick="top_btn_bR();" type="button" value="确认"/>
+	</div>
+	<div class="<php>if($societyInfo['notice']){echo 'report';}else{echo 'report_em';}</php>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$societyInfo['notice']}</div>
+	<div class="right_title">&nbsp;&nbsp;管理员</div>
+	<div class="manager">
+		<ul style="width: <php>
+							if(count($societyManage)>4){
+								if($societyInfo['type']!=0){
+									echo (count($societyManage)-1)*67.5;
+								}else{
+									echo (count($societyManage))*67.5;
+								}
+							}else{
+								echo 4*67.5;
+							}
+						</php>px;">
+            <volist name="societyManage" id="vo">
+            <php>if($vo['uid']!=0){</php>
+				<li><div><img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"><p><a title="{$vo.uid|getUserName}的个人主页" class="username"
+								uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a></p></div>
+				<php>if($vo['uid']!=1){</php>
+					<php>if($societyInfo['type']!=0){</php>
+					<p style="border-radius: 5px; background-color: #4582C5;width: 50px;margin-left: 8px;">{$vo.uid|getVote=###,$societyInfo['id']}</p>
+					<php>}</php>
+				<php>}else{</php>
+					<php>if($societyInfo['type']!=0){</php>
+					<p>创建者</p>
+					<php>}</php>
+				<php>}</php>
+			<php>}</php>
+			<php>if($vo['uid']==0&&count($societyManage)==1){echo '<li><p>暂无管理员</p></li>';}</php>
+			</li>
+			</volist>
+		</ul>
+	</div>
+	<div class="right_title">
+		&nbsp;&nbsp;成员访客
+		<div class="brow">今日浏览：{$memberTimes.todayTimes} 总浏览：{$memberTimes.allTimes}</div>
+	</div>
+	<div class="brower">
+		<ul>
+            <volist name="memberVisitor" id="vo">
+			<li><div><img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"><p><a title="{$vo.uid|getUserName}的个人主页" class="username"
+							uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a></p></div>
+				<p><em>{$vo.cTime|date="m-d H:i",###}</em></p>
+			</li>
+			</volist>
+
+		</ul>
+	</div>
+	<div class="right_title">
+		&nbsp;&nbsp;来访游客
+		<div class="brow">今日浏览：{$otherTimes.todayTimes} 总浏览：{$otherTimes.allTimes}</div>
+	</div>
+	<div class="brower">
+		<ul>
+			<php>if(empty($otherVisitor)){echo '暂无来访游客！';}else{</php>
+            <volist name="otherVisitor" id="vo">
+			<li><div><img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}"><p><a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a></p></div>
+			<p><em>{$vo.cTime|date="m-d H:i",###}</em></p>
+			</li>
+			</volist>
+			<php>}</php>
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>吉林建筑大学 - 图片墙</title>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/dskui/ui.css?{$verhash}{:time()}" />
+<script type="text/javascript" src="../Public/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.infinitescroll.min.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+<script type="text/javascript" src="__ROOT__/apps/desktop/Tpl/default/Public/js/dsk.js?{$verhash}{:time()}"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+var loadpic = '__PUBLIC__/js/lightbox/images/loading.gif';
+var closepic = '__PUBLIC__/js/lightbox/images/closelabel.gif';
+var _ROOT_ = '__ROOT__';
+</script>
+
+    <script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/lightbox/jquery.lightbox.js"></script>
+<link rel="stylesheet" type="text/css" href="../Public/css/picture.css"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/lightbox/css/lightbox.css"/>
+<script>
+	$(document).ready(function(){
+		
+		$(".lightbox-2").lightbox({
+		    fitToScreen: true,
+		    scaleImages: true,
+		    xScale: 1.2,
+		    yScale: 1.2,
+		    displayDownloadLink: true
+	    });
+	});
+
+</script>
+</head>
+
+<body>
+<if condition="($picture['count'] gt 0)">
+<div id="container">
+  <volist name="picture['data']" id="pic">	
+  	<div class="item" id="pic_{$pic['id']}">
+  		<a href="{$pic['savepath']|get_photo_url}" class="lightbox-2" id="{$pic['id']}" rel="flowers" title="{$pic['name']}"><img src="{$pic['savepath']|get_photo_url}" alt="{$pic['name']}" width="330" /></a>
+  		<p>
+  			{$pic['name']}
+  		</p>
+  		<div class="ruserinfo">
+  			<div  class="ruserpic">
+  				<img alt="{$pic['userId']|getUserName}" src="{$pic['userId']|getUserFace}" width="50" height="50" />
+  			</div>
+  			<div class="ruseri">
+				<div style="width:100%;height:20px;line-height:20px;"><a style="color:#3089e3;" href="javascript:;" onclick="top.OpenBrowser('{:U('home/Space/index',array('uid'=>$pic['userId'],'iframe'=>'yes'))}','{$pic['userId']|getUserName}','width=1024,height=600,titlebutton=close|max|min');" title="{$pic['userId']|getUserName}" >{$pic['userId']|getUserName}</a></div>
+				<div style="width:100%;height:30px;line-height:30px;"><a href="javascript:;" onclick="top.OpenBrowser('{:U('photo/Index/album',array('id'=>$pic['albumId'],'uid'=>$pic['userId'],'iframe'=>'yes'))}','{$pic['albumname']}','width=1024,height=600,titlebutton=close|max|min');">{$pic['albumname']}</a></div>
+			</div>
+  			<div class="ruserother">
+  				{:W('Favorite',array('fid'=>$pic['id'],'app'=>'photo','mod'=>'Index','act'=>'photo','type'=>'link','count'=>1,'appconfig'=>'photo'))} <br />
+  				<a href="{$pic['savepath']|get_photo_url}" class="lightbox-2" id="{$pic['id']}" rel="flowers" title="{$pic['name']}">评论({$pic['commentCount']})</a>
+  			</div>
+  			<div id="ari_{$pic['id']}" style="width:100%;height:150px;background:red;display:none;"></div>
+  		</div>
+  	</div>
+  </volist>
+  </div>
+  <php>if((int)$picture['nowPage'] < (int)$picture['totalPages']){</php>
+  <php>$nextPage = (int)$picture['nowPage'] + 1;</php>
+  <php>$url = U('home/Picture/index',array('p'=>$nextPage));</php>
+  <php>}else{</php>
+  <php>$url = '';}</php>
+  <div id="page-nav" style="display:none;"><a href="{$url}"></a></div>
+</if>
+
+
+<script type="text/javascript">
+var $container = $('#container');
+$(document).ready(function(){
+	
+	$container.imagesLoaded( function(){  
+		  $container.masonry({  
+			  columnWidth: 40, //每两列之间的间隙为5像素
+			  itemSelector: '.item'
+		  });  
+	}); 
+	
+	$container.infinitescroll({
+		navSelector  : '#page-nav',    // 选择的分页导航 
+		nextSelector : '#page-nav a',  // 选择的下一个链接到（第2页）
+		itemSelector : '.item',     // 选择检索所有项目
+		loading: {
+			finishedMsg: '没有更多的页面加载。'
+		}
+	},function(newElements){
+		
+			// 隐藏新的项目，而他们正在加载
+			var newElems = $( newElements ).css({ opacity: 0 });
+		
+			// 确保的图像装载增加砖石布局
+			newElems.imagesLoaded(function(){
+			
+				// 元素展示准备
+				newElems.animate({opacity:1});
+				$container.masonry( 'appended', newElems, true ); 
+			
+			});
+			
+			$(".lightbox-2").lightbox({
+			    fitToScreen: true,
+			    scaleImages: true,
+			    xScale: 1.2,
+			    yScale: 1.2,
+			    displayDownloadLink: true
+		    });
+		}
+	);
+	
+	
+});
+</script>
+<include file="__THEME__/member/footer" />

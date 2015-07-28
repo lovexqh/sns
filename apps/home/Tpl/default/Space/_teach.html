@@ -1,0 +1,39 @@
+        	<ul>
+              <if condition="empty($data)">
+                <li style="line-height:80px;">还没有发布教研</li>
+              </if>
+              <volist name="data" id='vo'>
+                <li class="win">
+                  <div class="mid">
+                    <strong>教研标题:<a href="{:U('teach/Index/showTeaching', array('meetingId'=>$vo['meetingId']))}" target="_blank">{$vo['meetingName']}</a></strong>
+                    <span>教研类型:{$vo.teachingtype|getSelectItem} 举行方式:{$vo.dostyle|getSelectItem} 创建人:{$vo.uid|getUserSpace}</span>
+                    <span>{$vo.auditStatus} 隶属于:{$vo['schoolid']|getSchoolName} 开始于:{$vo['startTime']|dateFormat} 结束于:{$vo['endTime']|dateFormat}</span>
+                  </div>
+                  <div class="rt">                               
+                    <a href="{:U('teach/Index/showTeaching', array('meetingId'=>$vo['meetingId']))}" target="_blank">查看详情</a><i class="vline">|</i> 
+                        
+                    {:W('Weibo',array('tpl_name'=>'teaching_share_weibo','button_title'=>'分享'))}
+                    <php>
+                    $tpl_data = array('author'=>getUserName($vo[uid]),'title'=>$vo[meetingName],'url'=>U('teach/Index/showTeaching',array('meetingId'=>$vo[meetingId])),'type'=>6);
+                    $tpl_data = urlencode(serialize($tpl_data));
+                    </php>
+                    <a href="javascript:void(0)" onclick="_widget_weibo_start('', '{$tpl_data}');"  class="link-act">分享</a>
+                    <php>if($vo['uid']!=$mid){ </php>
+                    <i class="vline">|</i>
+                    {:W('Favorite',array('fid'=>$vo['meetingId'],'app'=>'teach','mod'=>'Index','act'=>'showTeaching','type'=>'link','count'=>1))}  
+                    <php>}</php>
+                  </div>
+                </li>
+              </volist>
+            </ul>
+            
+<script type="text/javascript">var is_relink = true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script>replace_link('.win');</script>
+<script language="javascript">
+<!--
+function joinMetting(meetingId){
+	ui.box.load(U('teaching/Index/alertPwdWindow')+"&meetingId="+meetingId,{title:"加入会议"});
+}
+//-->
+</script>

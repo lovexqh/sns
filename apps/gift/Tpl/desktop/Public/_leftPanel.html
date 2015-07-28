@@ -1,0 +1,24 @@
+<!-- 左侧收起按钮 start -->
+<div class="panel-tool">
+    <a class="layout-button-left" href="javascript:void(0)" onclick="panel.collapse('nv_dsk','west');"></a>
+</div>
+<!-- 左侧收起按钮 end -->
+
+
+<div class="panel-list-box bottom-line">
+	<h2><i class="icon-star"></i>相关活动</h2>
+	<ul class="list">
+		<volist name="categorys" id="category">
+		    <li><a href="javascript:void(0)" onclick="tabs.iframe('{$category['name']}','{:U('gift/Index/index',Array('catid'=>$category['id']))}')">{$category['name']}</a></li>
+		</volist>
+	</ul>
+</div>
+
+
+<div class="panel-list-box bottom-line">
+	<h2><i class="icon-event"></i>我的礼物</h2>
+	<ul class="list">
+		<li><a href="javascript:void(0)" onclick="tabs.iframe('我送出的礼物','{:U('gift/Index/sendbox')}')">我送出的礼物</a> </li>
+        <li><a href="javascript:void(0)" onclick="tabs.iframe('我收到的礼物','{:U('gift/Index/receivebox')}')">我收到的礼物</a></li>
+	</ul>
+</div>

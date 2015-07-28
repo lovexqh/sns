@@ -1,0 +1,113 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+	 
+	 $("#AddSubmitBtn").click(function(){ 
+		$.post('admin.php?m=grade&a=AddSubmit',$('#AddSubmit').serialize(),function(data){
+				if(data.code==1){
+					window.location.href="admin.php?m=grade&a=ls";
+				}else{
+					$('#errmesg').addClass("errormsg");
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+					$('#errmesg').focus();
+				}
+
+	    },'json');	
+     }); 
+	 
+	 $("#EditSubmitBtn").click(function(){ 
+		$.post('admin.php?m=grade&a=EditSubmit',$('#EditSubmit').serialize(),function(data){
+				if(data.code==1){
+					window.location.href="admin.php?m=grade&a=ls";
+				}else{
+					$('#errmesg').addClass("errormsg");
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+					$('#errmesg').focus();
+				}
+
+	    },'json');	
+		
+     });
+	 
+});  
+</script> 
+
+	<div class="container" >
+    <div class="" id="errmesg"></div>
+    	         
+		<h3>级部信息
+          <a href="admin.php?m=grade&a=ls" class="sgbtn">返回级部信息列表</a>
+        </h3>
+		<div class="mainbox">
+			<!--{if $onAdd}-->
+				<form  id="AddSubmit">
+                    <input type="hidden" name="xxid" value="$xxid">
+			<!--{else}-->
+                <form  id="EditSubmit">
+               		<input type="hidden" name="id" value="$grade[id]">
+                    <input type="hidden" name="xxid" value="$grade[xxid]">
+            <!--{/if}-->	
+                
+                <input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+                    <tr>
+                       <td>学校名称</td>
+                     <!--{if $onAdd}-->           
+                       <td>
+                            <select id="cid" name="xxid" >
+                            <!--{if $schoolList}-->
+					           	<!--{loop $schoolList $school}-->
+							   <option value ="$school[schoolid]" >$school[title]</option>
+					           <!--{/loop}-->
+			               	<!--{/if}-->
+                            </select>
+                         </td>
+                      <!--{else}-->
+                       	<th>$schoolName</th>
+                      <!--{/if}-->	
+                    </tr>
+                   <tr>
+                       <td><em style="color:#F00">*</em>学段</td>
+                       <td>
+                            <select id="cid" name="jd" >
+                                <option value="31" {if $grade[jd] == 31}selected{/if}>初中</option>
+                                <option value="34" {if $grade[jd] == 34}selected{/if}>高中</option>
+                                <option value="21" {if $grade[jd] == 21}selected{/if}>小学</option>
+                            </select>
+                         </td>
+                    </tr>
+                    <tr>
+                       <td><em style="color:#F00">*</em>年级</td>
+                       <td><input  type="text" name="nj" value="$grade[nj]" class="Atxt" /></td>
+                    </tr>
+                    <tr>
+                       <td>年级名称</td>
+                       <td><input  type="text" name="njmc" value="$grade[njmc]" class="Atxt" /></td>
+                    </tr>
+                   
+					<tr class="nobg">
+						
+                        <!--{if $onAdd}-->
+                           <td><input type="button" value="{lang submit}" class = "btn" id="AddSubmitBtn" /></td>
+                        <!--{else}-->
+                          <td><input type="button" value="{lang submit}" class = "btn" id="EditSubmitBtn" /></td>
+                        <!--{/if}-->	
+                        
+					</tr>
+				</table>
+				</form>
+			
+		</div>
+	</div>
+
+
+{template footer}

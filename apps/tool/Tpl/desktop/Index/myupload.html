@@ -1,0 +1,383 @@
+<include file="__THEME__/desktop/_header" />
+<include file="__THEME__/desktop/_editor" />
+<link rel="stylesheet" href="../Public/css/tool.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/swfupload/css/newupload.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/swfupload/css/buttons.css" />
+<script type="text/javascript" src="__PUBLIC__/js/swfupload/js/newuploader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/swfupload/js/swfupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="../Public/js/verification.js"></script>
+<link href="__PUBLIC__/js/swfupload/css/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(document).ready(function(e) {
+    setTimeout(function swfupload(){
+	swfu = new SWFUpload({
+		//debug:true,
+		//upload_url : "{$con['server']}manage.aspx",
+        upload_url: "{:U('tool/Index/doupload')}",	// Relative to the SWF file (or you can use absolute paths)
+        post_params: {"PHPSESSID" : "<?php echo session_id(); ?>"},
+        //flash_url : "{$con['server']}swfupload/swfupload.swf",
+        flash_url : "__PUBLIC__/js/swfupload/swfupload.swf",
+		file_size_limit : "1024 MB",
+		file_types : "<volist name='type' id='vo'>*.{$vo['exttype']};</volist>",
+		file_types_description : "Recognized Files",
+		file_post_name: "file",
+		use_query_string: true,  //传递参数否则无法使用
+        /*
+		post_params: {           //传递给应用的参数
+		    "action": "add",
+            "app":"tool" //请求的应用 
+	    },
+	    */
+		button_placeholder_id : "spanSWFUploadButton",
+		button_width : 70,
+		button_height : 26,
+		button_image_url:"__PUBLIC__/js/swfupload/images/upload.png",
+		
+		file_upload_limit : 1,
+		file_queue_limit : 0,
+		button_cursor : SWFUpload.CURSOR.HAND,
+		
+		swfupload_preload_handler : Uploader.Handler.preLoad,//当Flash控件成功加载后触发的事件处理函数,此处是判断需要播放器9.028或以上才能使用上传插件
+		swfupload_load_failed_handler : Uploader.Handler.loadFailed,//加载失败
+		file_queued_handler : Uploader.Handler.fileQueued,		//fileQueued事件侦听函数
+		file_queue_error_handler : Uploader.Handler.fileQueueError,	//文件错误事件侦听函数
+		upload_complete_handler : Uploader.Handler.uploadComplete,	//单个文件上传成功
+		upload_start_handler : Uploader.Handler.uploadStart,		//开始上传
+		upload_error_handler : Uploader.Handler.uploadError,
+		upload_progress_handler : Uploader.Handler.uploadProgress,
+		upload_success_handler : Uploader.Handler.uploadSuccess,
+		
+		custom_settings : {
+					progressTarget : "fsUploadProgress1",
+					cancelButtonId : "btnCancel1"
+				},
+	});
+},350);
+});
+
+</script>
+
+<script type="text/javascript">
+//选择备课节点时给隐藏域相应输入框赋值
+function zTreeOnClick(event, treeId, treeNode) {
+	$("input[name='section']").val('');
+	$("input[name='grade']").val('');
+	$("input[name='subject']").val('');
+	$("input[name='publisher']").val('');
+	$("input[name='volume']").val('');
+	$("input[name='cell']").val('');
+	$("input[name='courseid']").val('');
+	
+	if(typeof(treeNode.section)!='undefined'){
+		$("input[name='section']").val(treeNode.section);
+	}
+		
+	if(typeof(treeNode.Grade)!='undefined'){
+		$("input[name='grade']").val(treeNode.Grade);
+	}
+	if(typeof(treeNode.Subject)!='undefined'){
+		$("input[name='subject']").val(treeNode.Subject);
+	}
+	if(typeof(treeNode.Publisher)!='undefined'){
+		$("input[name='publisher']").val(treeNode.Publisher);
+	}
+	if(typeof(treeNode.Volume)!='undefined'){
+		$("input[name='volume']").val(treeNode.Volume);
+	}
+	if(typeof(treeNode.Cell)!='undefined'){
+		$("input[name='cell']").val(treeNode.Cell);
+	}
+	if(typeof(treeNode.CourseID)!='undefined'){
+		$("input[name='courseid']").val(treeNode.CourseID);
+	}
+	//查找所有父节点，并且将父节点的name拼成备课名称
+	var parentname=treeNode.name;
+	var pNode = treeNode.getParentNode();
+	while(!!treeNode.parentTId && !!pNode) {
+		parentname=pNode.name+parentname;
+		var pNode = pNode.getParentNode();
+	}
+};
+</script>
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<style type="text/css">
+.ztree li ul{
+	padding:0 0 0 8px;
+}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript">
+<!--单节点展开开始-->
+var curExpandNode = null;
+function beforeExpand(treeId, treeNode) {
+	var pNode = curExpandNode ? curExpandNode.getParentNode():null;
+	var treeNodeP = treeNode.parentTId ? treeNode.getParentNode():null;
+	var zTree = $.fn.zTree.getZTreeObj("navtreeothers");//显示子节点
+	for(var i=0, l=!treeNodeP ? 0:treeNodeP.children.length; i<l; i++ ) {
+		if (treeNode !== treeNodeP.children[i]) {
+			zTree.expandNode(treeNodeP.children[i], false);
+		}
+	}
+	while (pNode) {
+		if (pNode === treeNode) {
+			break;
+		}
+		pNode = pNode.getParentNode();
+	}
+	if (!pNode) {
+		singlePath(treeNode);
+	}
+
+}
+function singlePath(newNode) {
+	if (newNode === curExpandNode) return;
+	if (curExpandNode && curExpandNode.open==true) {
+		var zTree = $.fn.zTree.getZTreeObj("navtreeothers");
+		if (newNode.parentTId === curExpandNode.parentTId) {
+			zTree.expandNode(curExpandNode, false);
+		} else {
+			var newParents = [];
+			while (newNode) {
+				newNode = newNode.getParentNode();
+				if (newNode === curExpandNode) {
+					newParents = null;
+					break;
+				} else if (newNode) {
+					newParents.push(newNode);
+				}
+			}
+			if (newParents!=null) {
+				var oldNode = curExpandNode;
+				var oldParents = [];
+				while (oldNode) {
+					oldNode = oldNode.getParentNode();
+					if (oldNode) {
+						oldParents.push(oldNode);
+					}
+				}
+				if (newParents.length>0) {
+					zTree.expandNode(oldParents[Math.abs(oldParents.length-newParents.length)-1], false);
+				} else {
+					zTree.expandNode(oldParents[oldParents.length-1], false);
+				}
+			}
+		}
+	}
+	curExpandNode = newNode;
+}
+function onExpand(event, treeId, treeNode) {
+	curExpandNode = treeNode;
+}
+<!--单节点展开结束-->
+function filter(treeId, parentNode, childNodes) {
+	if (!childNodes) return null;
+	for (var i=0, l=childNodes.length; i<l; i++) {
+		childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+	}
+	return childNodes;
+}
+
+
+
+<!--其他视频分类的树-->
+var settingother = {
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+		}
+	},
+	callback: {
+		//onClick: noteClick,
+		beforeExpand: beforeExpand,
+		onExpand: onExpand
+	}
+};
+
+var zNodesother =[<volist name="sqcategory" id="vo" key="k">
+		<php>if($k!=1){</php>,<php>}</php>
+		{ id:"{$vo['id']}", pId:"{$vo['p_id']}", name:"{$vo['category_name']}", click:"noteClick('{$vo['id']}')"}
+	</volist>];
+function noteClick(id){
+	if(typeof(id)!='undefined'){
+		$("input[name='section']").val(id);
+		
+	}
+}
+$(document).ready(function(){
+	$.fn.zTree.init($("#navtreeothers"), settingother, zNodesother);
+});
+</script>
+
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false" style="padding-bottom:30px;">
+  <!-- 右侧主要内容 start -->
+  <div class="panel-cmain">
+    <div class="clearfix"></div>
+    <!-- 主要内容 start -->
+     <form name="upload" id="upload_resource" action="__URL__&act=domyupload" method="post" enctype="multipart/form-data" onsubmit="return checkmyuploads(this);">
+        <input type="hidden" name="ajax" value="yes" />
+        <input name="savepath" id="savepath" type="hidden"/>
+        <input name="savename" id="savename" type="hidden"/>
+        <input name="savetype" id="savetype" type="hidden"/>
+        <input name="toolsize" id="size" type="hidden"/>
+        <input name="filecode" id="filecode" type="hidden"/>
+        <table border="0" cellpadding="0" cellspacing="0" width="95%" align="left">
+            <tbody>
+                <tr>
+                   <th width="100" height="50"><em>*</em>标&nbsp;&nbsp;&nbsp;题&nbsp;:</th>
+                   <td width="100%">
+                   <input name="title" type="text" value="" class="easyui-validatebox" hideFocus maxlength="25" style="width:65%" missingMessage="请先填写资源标题！" data-options="required:true"/>
+                   </td>
+                </tr>
+                
+              <!--   <tr>
+                   <th height="40"><em>*</em>关&nbsp;键&nbsp;字:</th>
+                   <td>
+                    <input name="tags" type="text" value="" class="easyui-validatebox" hideFocus style="width:65%" missingMessage="请填写关键字！" data-options="required:true"/>
+                   </td>
+                </tr> -->
+              <!--     <tr>
+                   <th height="40"><em>*</em>版&nbsp;&nbsp;&nbsp;&nbsp;本:</th>
+                   <td>
+                    <input name="version" type="text" value="" class="easyui-validatebox" hideFocus style="width:30%" missingMessage="请填写版本号！" data-options="required:true"/>
+                   </td>
+                </tr> -->
+                <tr>
+				<th>缩 略 图:</th>
+				<td width="100%">
+				 <input type="file" name="file" accept="image/*"  style="color:red"/><span style="color:red">允许上传的格式：jpg,gif,png,jpeg,bmp</span>
+				</td> 
+			</tr>
+                <tr>
+                   <th height="40">积&nbsp;&nbsp;&nbsp;分&nbsp;:</th>
+                   <td>
+                       <select class="easyui-combobox"  style=" width:100px;height:29px;" name="price">
+                           <option value="0" <if condition="$price eq 0">selected="selected"</if>>免积分</option>
+                           <option value="1" <if condition="$price eq 1">selected="selected"</if>>1</option>
+                           <option value="2" <if condition="$price eq 2">selected="selected"</if>>2</option>
+                           <option value="3" <if condition="$price eq 3">selected="selected"</if>>3</option>
+                           <option value="4" <if condition="$price eq 4">selected="selected"</if>>4</option>
+                           <option value="5" <if condition="$price eq 5">selected="selected"</if>>5</option>
+                           <option value="6" <if condition="$price eq 6">selected="selected"</if>>6</option>
+                           <option value="7" <if condition="$price eq 7">selected="selected"</if>>7</option>
+                           <option value="8" <if condition="$price eq 8">selected="selected"</if> >8</option>
+                           <option value="9" <if condition="$price eq 9">selected="selected"</if>>9</option>
+                           <option value="10" <if condition="$price eq 10">selected="selected"</if>>10</option>
+                       </select>
+                   </td>
+                </tr>
+                <tr>
+                
+                
+                </tr>
+                <tr>
+                   <th style=" vertical-align:top; padding-top:20px;"><em>*</em>工具介绍:</th>
+                   <td>
+                    <textarea name="content" id="content" style=" width:65%; height:150px;" missingMessage="请先填写工具介绍！"  required="true"></textarea>
+                   </td>
+                </tr>
+           </tbody>
+            <tbody id="rclass3" >
+                <tr>
+                    <th style=" vertical-align:top; padding-top:5px;">选择分类:</th>
+                    <td>  
+                        <UL id="navtreeothers" class="ztree"  style=" width:65%; height:150px; overflow-y:scroll;"></UL>
+                        <input type="hidden" name="section" value="41"/><!-- 具体分类  -->
+                    </td>
+                </tr>
+           </tbody>
+            <tbody>
+             <tr>
+                   <th height="60" valign="top"><em>*</em>上传工具:</th>
+                   <td>允许的资源格式:
+                        <volist name="type" id="vo" key='k'>
+                            <if condition="$k neq 1">,</if>{$vo.exttype}
+                        </volist>
+                        <div style=" display:block">
+                           <div class="fieldset flash" style=" float:left; margin-right:10px;" id="fsUploadProgress1"></div><div style="float:left; margin-top:5px;"><span  id="spanSWFUploadButton"></span></div>
+                          <div class="clearfix"></div>  
+                        </div><span style="float:right; margin-right:500px;color:red">最大：1G</span>
+                        <div class="clearfix"></div>
+                   </td>
+                </tr> 
+            <tr>
+            	 <th>&nbsp;</th>
+                 <td >
+                        <a class="easyui-linkbutton medium-primary" type="button" style="margin-right:300px;" id="subButton" onclick="$('#upload_resource').submit();"> 上  传 </a>
+                 </td>
+            </tr>
+           </tbody>
+        </table>
+   </form>
+           <div class="clearfix"></div>
+    <!-- /右侧主要内容 end -->
+  </div>
+</div>
+<!-- 右侧主要内容栏 end -->
+<script type="text/javascript">
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+	var data	=	eval('('+serverData+')');
+	if(data.status==1){
+		$("#savename").val(data.savename);
+		$("#savepath").val(data.webpath);
+		$("#savetype").val(data.ext);
+		$("#size").val(data.size);
+		$("#filecode").val(data.filecode);
+		return true;
+	}else{
+		alert(data.info);
+        return false;
+	}
+}
+
+
+//单图上传回调函数,返回上传完成文件的信息
+function savePost(){
+	/*
+	$.post($('#upload_resource').attr('action'),$('#upload_resource').serialize(),function(data){
+			var data = eval('(' + data + ')');
+			//判断返回的data值(将在action中控制ajax提交时将返回执行成功时的状态值)
+			if(data.status>0){
+				parent.win.refresh_left();
+				parent.ui.success(data.info);	
+				parent.tabs.redirect('我上传的工具',U('tool/Index/my',['iframe=yes']));
+				
+			}else{
+				parent.ui.error(data.info);	
+			}
+	});
+	*/
+	var form = $('#upload_resource');
+	$(form).form('submit', {
+		url: $(form).attr('action'),
+		onSubmit: function(){
+			
+			var isValid = $(this).form('validate');
+			return isValid;	// return false will stop the form submission
+		},
+		success: function(data){
+			//alert(data);
+		var data = eval('(' + data + ')');  // change the JSON string to javascript object
+			//判断返回的data值(将在action中控制ajax提交时将返回执行成功时的状态值)
+			parent.mask.hide();
+			if(data.status>0){
+				parent.win.refresh_left();
+				parent.ui.success(data.info);	
+				parent.tabs.redirect('我上传的工具',U('tool/Index/my',['iframe=yes']));
+				
+			}else{
+				parent.ui.error(data.info);	
+			}
+		}
+	});
+}
+
+</script>
+<script type="text/javascript">
+loadEditor("content");
+</script>
+<include file="__THEME__/desktop/_footer" />

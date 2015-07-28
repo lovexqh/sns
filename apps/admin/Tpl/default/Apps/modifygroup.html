@@ -1,0 +1,100 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">应用分组</div>
+  
+  <div class="tit_tab">
+    <ul>
+    <li><a <neq name="isadd" value="1">class="on"</neq> href="{:U('admin/Apps/appGroup')}">管理分组</a></li>
+    <li><a <eq name="isadd" value="1">class="on"</eq> href="{:U('admin/Apps/modifyGroup')}"><eq name="do" value="add">添加</eq><neq name="do" value="add">修改</neq>分组</a></li>
+    </ul>
+  </div>
+  
+  <div class="form2">
+  <form method="post" action="{:U('admin/Apps/doModifyGroup')}" onsubmit="return checkForm(this)" enctype="multipart/form-data">
+  <input type="hidden" name="do" value="{$do}" />
+  <input type="hidden" name="id" value="{$data.group_id}" />
+
+	<!--<dl> 
+	<dd style="background:url({$data.large_icon_url}) no-repeat;"></dd>
+	</dl>-->
+	
+    <dl class="lineD">
+      <dt>分组名称<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<input type="text" name="group_name" id="group_name" maxlength="4" value="{$data.group_name}" /> （例如：视频）
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>描  述：</dt>
+      <dd>
+        <textarea name="description" id="description" cols="40" rows="3">{$data.description}</textarea>
+      </dd>
+    </dl>
+    
+	
+	  <dl class="lineD">
+      <dt>分组图片:</dt>
+      <dd>
+      	<input type="file" name="large_icon_url" id="large_icon_url" value="{$data.large_icon_url}" /> 
+      </dd>
+    </dl>
+	
+	
+    <dl class="lineD">
+      <dt>数字排序：</dt>
+      <dd>
+        <input type="text" name="display_order" id="display_order" value="<php>if($data[display_order]){echo $data[display_order];}else{echo 0;}</php>" /> （注意：数字越小越靠前）
+      </dd>
+    </dl>
+    
+   <dl class="lineD">
+      <dt>组内应用：</dt>
+      <dd class="app_layout">
+      	<volist name="apps" id="app" key="k">
+            <php>
+            $checked = '';
+            if(in_array($data['group_id'],explode(',',$app['group_id']))){
+            	$checked = 'checked="checked"';
+            }
+            </php>
+        	<label>
+            	<input name="apps[]" type="checkbox" value="{$app.app_id}" {$checked}>
+            	<img src="{$app.large_icon_url}" width="24" height="24" style="vertical-align:middle;" />&nbsp;&nbsp;{$app.app_alias}
+            </label>
+            <eq name="k%5" value="0"><br/></eq>
+        </volist>
+        <div class="clear"></div>
+      </dd>
+    </dl>
+	
+    <div class="page_btm">
+                  <input type="submit" class="btn_b" value="确定" />
+    </div>
+
+  </form>
+  </div>  
+  
+  <div class="Toolbar_inbox">
+    <!-- <div class="page right">{$html}</div> -->
+    <span>&nbsp;</span>
+  </div>
+</div>
+<script language="javascript" type="text/javascript">
+//表单验证
+function checkForm(form){
+	var group_name = form.group_name;
+	var msg = '';
+	if(group_name.value==''){
+		errinfo = '分组名称不能为空！';
+		msg += msg==''?errinfo:'\r\n'+errinfo;
+	}
+	if(msg!=''){
+		alert(msg);
+		//ui.error(msg);
+		return false;
+	}else
+		return true;
+}
+</script>
+<include file="../Public/_footer" />

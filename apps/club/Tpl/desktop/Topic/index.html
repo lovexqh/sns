@@ -1,0 +1,184 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_topic_page">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_topicHeader" />
+			<div class="topic_page">
+				
+				<php>if( empty($topicList['data']) && empty($topTopic) ){</php>
+				<div class="no_topic">还没有帖子哦!</div>
+				<php>}</php>
+				<div class="all_topic_table">
+					<volist name="topTopic" id="top">
+					<div class="top_topic_line" id="topic_{$top.id}">
+						<div class="topic_info">
+							<div class="topic_title">
+								<a href="{:U('club/Topic/topicDetail', array('id'=>$clubInfo['id'], 'topicid'=>$top['id']))}">{$top['title']}</a>
+								<img alt="置顶" src="../Public/images/zding.jpg">
+								<php>if($top['tjian']==1){</php>
+								<img alt="推荐" src="../Public/images/tjian.jpg">
+								<php>}</php>
+							</div>
+							<div class="topic_author author_name"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$top['uid']))}', '{$top['uid']|getUserName}的个人主页');" href="javascript:;">{$top['uid']|getUserName}</a></div>
+							<div class="topic_count rep_count"><span class="top_count">{$top['replycount']}</span>/<span class="top_count click_count">{$top['clickcount']}</span></div>
+							<div class="topic_replytime rep_name"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$top['replyuid']))}', '{$top['replyuid']|getUserName}的个人主页');" href="javascript:;">{$top['replyuid']|getUserName}</a></div>
+							<php>if($member['type']==1 || $member['type']==2){</php>
+								<div class="manager_operate_top" topicid="{$top.id}">
+									<ul class="manager_operate_menu" id="operate_menu_top_{$top.id}">
+										<li><a onclick="operateTopic({$top.id}, 1, 0);">取消置顶</a></li>
+										<li><php>if($top['tjian']==1){</php><a onclick="operateTopic({$top.id}, 2, 0);">取消推荐</a><php>}else{</php><a onclick="operateTopic({$top.id}, 2, 1);">推荐</a><php>}</php></li>
+										<li><a onclick="delTopic({$top.id});">删除</a></li>
+									</ul>
+								</div>
+							<php>}</php>
+							<div class="c"></div>
+						</div>
+					</div>
+					</volist>
+					<volist name="topicList.data" id="topic">
+					<div class="all_topic_line" id="topic_{$topic.id}">
+						<div class="topic_info">
+							<div class="topic_title_line">
+								<div class="topic_title">
+									<a href="{:U('club/Topic/topicDetail', array('id'=>$clubInfo['id'], 'topicid'=>$topic['id']))}">{$topic['title']}</a>
+									<php>if($topic['zding']==1){</php>
+									<img alt="置顶" src="../Public/images/zding.jpg">
+									<php>}</php>
+									<php>if($topic['tjian']==1){</php>
+									<img alt="推荐" src="../Public/images/tjian.jpg">
+									<php>}</php>
+								</div>
+								<div class="topic_author"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$topic['uid']))}', '{$topic['uid']|getUserName}的个人主页');" href="javascript:;">{$topic['uid']|getUserName}</a></div>
+								<div class="topic_count">{$topic['replycount']}</div>
+								<div class="topic_replytime"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$topic['replyuid']))}', '{$topic['replyuid']|getUserName}的个人主页');" href="javascript:;">{$topic['replyuid']|getUserName}</a></div>
+								<php>if($member['type']==1 || $member['type']==2){</php>
+									<div class="manager_operate" topicid="{$topic.id}">
+										<ul class="manager_operate_menu" id="operate_menu_{$topic.id}">
+											<li><php>if($topic['zding']==1){</php><a onclick="operateTopic({$topic.id}, 1, 0);">取消置顶</a><php>}else{</php><a onclick="operateTopic({$topic.id}, 1, 1);">置顶</a><php>}</php></li>
+											<li><php>if($topic['tjian']==1){</php><a onclick="operateTopic({$topic.id}, 2, 0);">取消推荐</a><php>}else{</php><a onclick="operateTopic({$topic.id}, 2, 1);">推荐</a><php>}</php></li>
+											<li><a onclick="delTopic({$topic.id});">删除</a></li>
+										</ul>
+									</div>
+									<php>}</php>
+								<div class="c"></div>
+							</div>
+							<div class="topic_content_line">		
+								<div class="topic_content">
+									<div class="topic_content_area">{$topic.content}</div>
+								</div>
+								<div class="topic_author pub_time">{$topic['ctime']}</div>
+								<div class="topic_count click_count">{$topic['clickcount']}</div>
+								<div class="topic_replytime rep_time">{$topic['replytime']}</div>
+								<div class="c"></div>
+							</div>
+							<php>if(!empty($topic['imglist'])){</php>
+							<div class="topic_pic">
+								<volist name="topic.imglist" id="img">
+								<php>if(!empty($img['url'])){</php>
+								<img class="topic_pic_img" src="{$img.url}" id="smallpic_{$topic.id}_{$img.num}" topicid="{$topic.id}" imgnum="{$img.num}">
+								<div class="big_pic_area" id="bigpic_{$topic.id}_{$img.num}">
+									<a class="big_pic_fold" topicid="{$topic.id}" imgnum="{$img.num}">收起</a>
+									<div class="c"></div>
+									<div class="big_pic_show">
+										<img src="{$img.url}" style="max-height:340px;">
+										<php>if($img['num']==2 || $img['num']==3){</php>
+										<div class="pic_click_left" topicid="{$topic.id}" imgnum="{$img.num}"></div>
+										<php>}</php>
+										<php>if(($img['num']==1&&$topic['imgcount']>1)||($img['num']==2&&$topic['imgcount']>2)){</php>
+										<div class="pic_click_right" topicid="{$topic.id}" imgnum="{$img.num}"></div>
+										<php>}</php>
+									</div>
+								</div>
+								<php>}</php>
+								</volist>
+							</div>
+							<php>}</php>
+						</div>
+					</div>
+					</volist>
+					<php>if( !empty($topicList['html']) ){</php>
+					<div class="page" style="text-align:center;margin-bottom:20px;">{$topicList.html}</div>
+					<php>}</php>
+				</div>
+			</div>
+			<php>if($publish==1){</php>
+			<include file="addTopic" />
+			<php>}</php>
+			<div class="c"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	$('.manager_operate_top').mouseenter(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_top_"+topicid).show();
+	})
+	$('.manager_operate_top').mouseleave(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_top_"+topicid).hide();
+	})
+	$('.manager_operate').mouseenter(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_"+topicid).show();
+	})
+	$('.manager_operate').mouseleave(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_"+topicid).hide();
+	})
+	
+	$('.topic_pic_img').click(function(){
+		var topicid = $(this).attr('topicid');
+		var imgnum = $(this).attr('imgnum');
+		if(!topicid || !imgnum){
+			ui.error("操作失败!");
+			return false;
+		}
+		for(var i=1;i<4;i++){
+			$('#smallpic_'+topicid+'_'+i).hide();
+		}
+		$('#bigpic_'+topicid+'_'+imgnum).show();
+	});
+	
+	$('.big_pic_fold').click(function(){
+		var topicid = $(this).attr('topicid');
+		var imgnum = $(this).attr('imgnum');
+		if(!topicid || !imgnum){
+			ui.error("操作失败!");
+			return false;
+		}
+		$('#bigpic_'+topicid+'_'+imgnum).hide();
+		for(var i=1;i<4;i++){
+			$('#smallpic_'+topicid+'_'+i).show();
+		}
+	});
+	
+	$('.pic_click_right').click(function(){
+		var topicid = $(this).attr('topicid');
+		var imgnum = $(this).attr('imgnum');
+		if(!topicid || !imgnum){
+			ui.error("操作失败!");
+			return false;
+		}
+		var nextnum = parseInt(imgnum) + 1;
+		$('#bigpic_'+topicid+'_'+imgnum).hide();
+		$('#bigpic_'+topicid+'_'+nextnum).show();
+	});
+	
+	$('.pic_click_left').click(function(){
+		var topicid = $(this).attr('topicid');
+		var imgnum = $(this).attr('imgnum');
+		if(!topicid || !imgnum){
+			ui.error("操作失败!");
+			return false;
+		}
+		var lastnum = parseInt(imgnum) - 1;
+		$('#bigpic_'+topicid+'_'+imgnum).hide();
+		$('#bigpic_'+topicid+'_'+lastnum).show();
+	});
+
+</script>
+<include file="../Public/_footer" />

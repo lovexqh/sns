@@ -1,0 +1,51 @@
+<include file="../Public/_header" />
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+	<!-- 左侧begin -->
+	<div class="main_left">
+		<php>if((checkMember($societyInfo['id']))!=1){</php>
+			<div class="wall_input">
+				<input onblur="wall_wall_input();" type="text" name="content" maxlength="50" style="width: 559px; height: 25px;" /> <a href="javascript:void(0);" onclick="wall_input_a();" ></a>
+				<span class="tip" onclick="wall_tip();">万水千山总是情，留个印象行不行!</span>
+			</div>
+		<php>}</php>
+		<div class="wall_list">
+			<ul>
+			<php>if( empty($wallList)){ echo '<p style="text-align: center;">目前还没有用户添加印象!<p>';}</php>
+			<volist name="wallList" id="vo" key="i">
+				<li id="wall_{$vo.id}" class="wall_<php>echo $i%4;</php>">
+					<div class="wall_content">{$vo.content}</div>
+					<div class="wall_user">
+						<div class="wall_user_icon">
+							<img style="width: 50px;" src="{$vo.uid|getUserFace}" />
+						</div>
+						<div class="wall_user_mess">
+							<p><a class="username" title="{$vo.uid|getUserName}的个人主页" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}</a></p>
+							<p>{$vo['uid']|society_getUserInfo}</p>
+							<p>{$vo.cTime|date="Y-m-d H:i:s",###}</p>
+						</div>
+					</div>
+					<php>if($isManage==1){</php>
+					<div style="position: absolute; top:175px;left: 245px;" topicid="{$vo.id}" class="manager_operate_top" >
+						<ul id="operate_menu_top_{$vo.id}" class="manager_operate_menu" style="display: none;">
+							<li><a onclick="delWall({$vo.id},{$vo.societyId});">删除</a></li>
+						</ul>
+					</div>
+					<php>}</php>
+				</li>
+			</volist>
+			</ul>
+		</div>
+		<div style="clear: both;"></div>
+		<div class="page">{$html}</div>
+	</div>
+	<!-- 左侧end -->
+
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<include file="../Public/_footer" />

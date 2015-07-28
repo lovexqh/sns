@@ -1,0 +1,238 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<script type="text/javascript" src="../Public/js/uploader.js"></script>
+<script type="text/javascript" src="../Public/js/swfupload.js?{$verhash}"></script>
+<script type="text/javascript">
+ 
+ var APP_NAME = "{$ts['app']['app_alias']}";
+ $(function(){
+ 	swfu = new SWFUpload({
+ 		//debug:true,
+        flash_url : "{$con['server']}swfupload/swfupload.swf",
+		upload_url : "{$con['server']}manage.aspx",
+ 		file_size_limit : "{$upload.maxSize} MB",
+ 		file_types : "{$upload.showExts}",
+ 		file_types_description : "{$upload.showExts}",
+ 		file_post_name: "file",
+ 		file_upload_limit:"1", 
+ 		file_queue_limit :"1",
+ 		use_query_string: true,  //传递参数否则无法使用
+ 		post_params: {           //传递给应用的参数
+ 			"action": "add",
+            "app": "resource", //请求的应用 
+            "convertAble": "0"  //0不转,1转
+ 	    },
+ 		button_placeholder_id : "spanSWFUploadButton",
+ 		button_width : 71,
+ 		button_height : 26,
+ 		button_image_url:"apps/club/Tpl/desktop/Public/images/upload_btn.png",
+ 		button_text : '',
+ 		button_text_left_padding : 3,
+ 		button_text_top_padding : 2,
+ 		button_cursor : SWFUpload.CURSOR.HAND,
+ 		
+ 		//handler
+ 		file_dialog_complete_handler:Uploader.Handler.file_dialog_complete,
+ 		file_queued_handler : Uploader.Handler.fileQueued,
+ 		file_queue_error_handler : Uploader.Handler.fileQueueError,
+ 		upload_start_handler : Uploader.Handler.uploadStart,
+ 		upload_progress_handler : Uploader.Handler.uploadProgress,
+ 		upload_success_handler : Uploader.Handler.uploadSuccess
+ 	});
+ })
+ 
+</script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_document_page">
+			<include file="../Public/_clubHeader" />
+			<div class="topic_header">
+				<span class="topic_header_word">文档</span>
+			</div>
+			<div class="document_page">
+				<form method="POST" action="{:U('club/Document/downloadDoc')}" name="downloadform" target="_blank">
+  					<input type="hidden" name="clubid" value="{$clubInfo.id}">
+  					<input type="hidden" name="docid" value="">
+				</form>
+				<div class="document_top">
+					<div class="document_info">
+						<span>共<span class="doc_count">{$fileCount}</span>个文件</span>
+						<span>占存容量<span class="doc_count">{$usedSpace|formatsize}</span></span>
+					</div>
+				</div>
+				<div class="c"></div>
+				<table class="document_list_table">
+					<tr class="document_header">
+						<td class="document_header_cbx doc_tb_border"></td>
+						<td class="document_header_title doc_tb_border">文件名称</td>
+						<td class="document_header_size doc_tb_border">文件大小</td>
+						<td class="document_header_author doc_tb_border">上传者</td>
+						<td class="document_header_ctime doc_tb_border">上传时间</td>
+						<td class="document_header_downcount doc_tb_border">下载次数</td>
+						<td class="document_header_operate">操作</td>
+					</tr>
+					<php>if( empty($fileList['data']) ){</php>
+					<tr><td colspan="7" style="font-size:14px;line-height:30px;padding-left:10px;">还没有文档哦!</td></tr>
+					<php>}</php>
+					<volist name="fileList.data" id="file">
+					<tr id="document_list" class="document_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td class="document_cbx doc_tb_align doc_tb_border">
+							<php>if($member['type']==1 || $member['type']==2){</php>
+                			<input name="file_id[]" type="checkbox" value="{$file.id}" />
+              				<php>}</php>
+						</td>
+						<td class="document_title doc_tb_border">
+							<img src="../Public/images/icon/{$file['filetype']}.gif" class="alM doc_icon" />
+							<span class="doc_title">{$file.title}</span></td>
+						<td class="document_size doc_tb_align doc_tb_border">{$file.filesize|formatsize}</td>
+						<td class="document_author doc_tb_align doc_tb_border">{$file.uid|getUserName}</td>
+						<td class="document_ctime doc_tb_align doc_tb_border">{$file.ctime|friendlyDate=###,'full'}</td>
+						<td class="document_downcount doc_tb_align doc_tb_border">{$file.downcount}次</td>
+						<td class="document_operate doc_tb_align"><a class="doc_download" onclick="downloadDoc({$file.id});"></a></td>
+					</tr>
+					</volist>
+				</table>
+				<div class="manager_doc_operate">
+					<php>if($member['type']==1 || $member['type']==2){</php>
+					<label><input type="checkbox" value="" onClick="check_all_file(this)" />全选</label>&nbsp;&nbsp;
+            		<a href="javascript:;" onclick="delDoc()">删除</a>
+            		<php>}</php>
+				</div>
+				<php>if( !empty($fileList['html']) ){</php>
+					<div class="page" style="text-align:center;margin-bottom:20px;">{$fileList.html}</div>
+				<php>}</php>
+			</div>
+
+			<php>if( $uplimit == 1 ){</php>
+			<div class="upload_document" id="upload_doc_area">
+				<form name="save_video" id="save_video" method="post" action="{:U('club/Document/uploadDocument',array(clubid=>$clubInfo['id']))}">
+					<div class="up_doc_area">
+						<div class="fl up_doc_line">
+							<div style="float:left;">选择文件：</div>
+							<div style="width:350px;height:29px;background:#a9d3d4;float:left;position:relative;line-height:29px;margin-right:12px;">
+								<div id="showfilename" style="padding-left:10px;width:300px;overflow:hidden;font-size: 13px;">选择上传文件</div>
+								<div id="showprocess" style="height:14px;background:#4255c8;width:0%;"></div>
+								<div id="showprecent" style="position:absolute;top:0px;right:0px;width:30px;height:29px;line-height:29px;font-size:14px;">0%</div>
+							</div>
+							<a type="button" class="easyui-linkbutton medium-primary" id="spanSWFUploadButton" style="margin-left:10px;float:left;margin-top:3px;">选择文件</a>
+							<div class="c"></div>
+						</div>
+						<div class="c2 up_doc_line">
+							<span>仅支持：{$upload.allowExts}&nbsp;&nbsp;</span>
+							<span>最大上传文件：{$upload.maxSize}M</span>
+						</div>
+					    <div class="up_doc_line">
+					    	<input class="btn" type="button" onclick="upload()" value="上传">
+					    </div>
+					</div>
+				</form>
+			</div>
+			<php>}</php>
+
+		</div>
+	</div>
+</div>
+<script>
+function downloadDoc(id) {
+	if (!id) {
+		ui.error('文档参数错误');
+		return false;
+	}
+	document.downloadform.docid.value = id; 
+	document.downloadform.submit();
+}
+
+function checkForm() {
+	if($('#file').val() == '') {alert('请选择上传文件');return false;}
+	return true;
+}
+
+function unSetFile() {
+    document.getElementById("uploadDocument").reset();
+    $("#file").attr("value", "");
+ }
+
+
+function ts_upload_success(serverData) {
+	var data = eval('(' + serverData + ')');
+	if (data.status == 1) {
+		$.ajax({
+			url : "{:U('club/Document/uploadDocument')}",
+			type : "POST",
+			dataType : "json",
+			data : {
+				clubid : {$clubInfo.id},
+				title : data.name,
+				filesize : data.size,
+				filetype : data.ext,
+				//fileurl : "{$con['server']}" + data.webpath + data.savename,
+				savepath : data.webpath,
+				savename : data.savename
+			},
+			success : function(ajaxData) {
+				if (ajaxData == 1) {
+					ui.success('上传成功!');
+					window.location.reload();
+				} else if (ajaxData == 0) {
+					ui.error('上传失败！');
+				} else {
+					$.messager.alert('上传文档失败', data);
+				}
+			},
+		});
+		return true;
+	} else {
+		return false;
+	}
+}
+
+var check_all_file = function(e)
+{
+	var $files_list_input = $('#document_list input[name="file_id[]"]');
+	if( e.checked == true ){
+		$files_list_input.attr('checked','true');
+    }else{
+    	$files_list_input.removeAttr('checked');
+    }
+}
+
+function delDoc(){
+	var fids = get_checked_id();
+	if (fids == '') {
+		ui.error('请选择文件');
+		return false;
+	}
+	if(confirm("确定要删除文档吗?")){
+		$.ajax({
+			type: "POST",
+			url:  "{:U('club/Document/delDocument')}",
+			data:{fids: fids},
+			dataType:"json",
+			success: function(data){
+				if (data == 1) {
+					ui.success('删除成功!');
+					window.location.reload();
+				} else if (data == 0) {
+					$.messager.alert('删除文档', '删除失败！');
+				} else {
+					$.messager.alert('删除文档失败', data);
+				}
+			}
+		});
+	}
+}
+
+var get_checked_id = function()
+{
+    var ids = new Array();
+    $.each($('#document_list input:checked'), function(i, n){
+        var id = $(n).val();
+        if (id > 0) {
+            ids.push( id );
+        }
+    });
+    return ids;
+}
+
+</script> 
+<include file="../Public/_footer" />

@@ -1,0 +1,16 @@
+<include file="../Public/_header_ajax" />
+<!--<if condition="$param['showmsg']">-->
+{$msg}
+<!--</if>-->
+<script type="text/javascript" reload="1">
+	hideWindow('{$param.handlekey}');
+	<!--<if condition="$param['showdialog']">-->
+	showDialog('{$msg}', '{$param.status}', null, null, 0, null, null, null, null, {$param.closetime|intval}, null);
+	<!--</if>-->
+	<!--<if condition="$param['status'] eq 'right'">-->
+	setTimeout(function(){
+		window.location.reload();
+		},{$param.closetime|intval}*1000);
+	<!--</if>-->
+</script>
+<include file="../Public/_footer_ajax" />

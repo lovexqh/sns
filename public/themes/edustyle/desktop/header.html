@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title><neq name="ts['site']['page_title']" value="">{$ts['site']['page_title']} {$ts['site']['site_name']}<else/>{$ts['site']['site_name']}</neq></title>
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.callback.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js"></script>
+<!--script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.slide.js"></script-->
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.metadata.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/lang/validate.message_cn.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/index.js"></script>
+<link rel="shortcut icon" href="__ROOT__/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="__THEME__/desktop/css/reset.css" type="text/css"/>
+<link rel="stylesheet" href="__THEME__/desktop/css/scroll.css" type="text/css"/>
+<link rel="stylesheet" href="__THEME__/desktop/css/index.css?{time()}" type="text/css"/>
+<link rel="stylesheet" media="all and (orientation:portrait)" href="__THEME__/desktop/css/portrait.css?{time()}">
+<link rel="stylesheet" media="all and (orientation:landscape)" href="__THEME__/desktop/css/landscape.css?{time()}">
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/desktop/html5.js"></script>
+<![endif]-->
+<!--[if lt IE 7]>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/pngfix.js"></script>
+<script language="javascript">
+$(document).ready(function(e) {
+	DD_belatedPNG.fix('.pngfix');
+});
+</script>
+<![endif]-->
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+</script>
+<script language="javascript">
+$(function(){
+	if ($.browser.msie && $.browser.version < 10 ){
+    	$('<style type="text/css">.bodyContainer{ position:relative; }</style>').appendTo('head');
+		if($.browser.version < 10){
+			$('#system_warring').html('社区小助手很遗憾的通知您，您目前使用的浏览器版本太低暂不支持本系统。建议您下载我们最新版本的 <a href="http://soft.hao123.com/index.php?ct=stat&ac=aladdin&bd=1&id=881&f=aHR0cDovL3NvZnRkb3dubG9hZC5oYW8xMjMuY29tL2hhbzEyMy1zb2Z0LW9ubGluZS1iY3Mvc29mdC9DLzIwMTMtMTAtMTdfQ2hyb21lU3RhbmRhbG9uZVNldHVwLmV4ZQ==" target="_blank">谷歌浏览器</a> 或 <a href="http://soft.hao123.com/index.php?ct=stat&ac=aladdin&bd=1&id=883" target="_blank">火狐浏览器</a> <a href="http://soft.hao123.com/index.php?ct=stat&ac=aladdin&bd=1&id=881&f=aHR0cDovL3NvZnRkb3dubG9hZC5oYW8xMjMuY29tL2hhbzEyMy1zb2Z0LW9ubGluZS1iY3Mvc29mdC9DLzIwMTMtMTAtMTdfQ2hyb21lU3RhbmRhbG9uZVNldHVwLmV4ZQ==" class="btn" target="_blank">点此下载</a><a href="###" onClick="$(\'.system_warring\').slideUp(\'fast\');" class="close">关闭</a>');	
+		}
+		$('#system_warring').show();
+	}
+});
+</script>
+</head>
+<body onResize="ReSet()" onLoad="ReSet()">
+<!-- system warring -->
+<div id="system_warring" class="system_warring" style="display:none"></div>
+<!-- end .system_warring -->
+<div id="slidebackgroud" class="slideback">
+<if condition="empty($backgroup)">
+	<img src="__THEME__/desktop/images/index/1.jpg" />
+<else />
+	<div class="content-box">
+		<ul class="slide-content">
+		<volist name="backgroup" id="vo">
+			<li><img src="{$vo.img}" description="{$vo.title}" /></li>
+		</volist>
+		</ul>
+		<div class="slide-nav">
+			<a class="prev" href="#"><i>&#8249;</i></a>
+			<a class="next" href="#"><i>&#8250;</i></a>
+		</div>
+	</div>
+</if>
+<!-- end .slideback --></div>
+
+<div class="container bodyContainer">
+  <div class="headerback"></div>
+  <header>
+    <h1><a href="{:U('home')}">吉林建筑大学 道教·网络空间</a></h1>
+	<ul class="menubar">		
+		<nosession name="userInfo">
+		<li><a href="{:U('home/Public/register')}">注册</a></li>
+		<li><a href="{:U('home/Public/login')}">登录</a></li>
+		</nosession>
+		<session name="userInfo">
+		<li><a href="{:U('home/Public/logout')}">退出</a></li>
+		</session>
+		<!--<li class="suggest"><a href="javascript:;">给我们建议<sup>new</sup></a></li>-->
+	</ul>
+  </header>
+  
+  <div class="containerInner">

@@ -1,0 +1,187 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">应用分组</div>
+  
+  <div class="tit_tab">
+    <ul>
+    <li><a <neq name="isadd" value="1">class="on"</neq> href="{:U('admin/Apps/appGroup')}">管理分组</a></li>
+    <li><a <eq name="isadd" value="1">class="on"</eq> href="{:U('admin/Apps/modifyGroup')}">添加分组</a></li>
+    </ul>
+  </div>
+  
+  <div class="Toolbar_inbox">
+    <!-- <div class="page right">{$html}</div> -->
+    <span>分组列表</span>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+        <label for="checkbox"></label>
+    </th>
+   <!-- <th class="line_l">ID</th>-->
+	<!--<th class="line_l">分组图片</th>-->
+    <th class="line_l">分组名称</th>
+    <th class="line_l">描述</th>
+    <th class="line_l">创建时间</th>
+	<th class="line_l">更新时间</th>
+    <th class="line_l">排序</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data.data">
+      <tr overstyle='on' id="{$vo.group_id}">
+        <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.group_id}"></td>
+       <!-- <td>{$vo.group_id}</td>-->
+          <!--
+           <td style="height:68px;">
+
+          <php>
+          /*
+          if(empty($vo['large_icon_url'])){
+              $vo['large_icon_url']=__THEME__.'/member/images/nogrouppic.gif';
+          }else{
+              $vo['large_icon_url']=SITE_URL.'/data/uploads/'.$vo['large_icon_ur'];
+          }*/
+          </php>
+          <img src="{$vo[large_icon_url]}" width="70px" height="70px" />
+
+		 </td>
+		 -->
+        <td>{$vo.group_name}</td>
+        <td>{$vo.description}</td>
+        <td>{$vo.ctime|date="Y-m-d H:i",###}</td>
+        <td>{$vo.mtime|date="Y-m-d H:i",###}</td>
+		
+        <td>
+		<php>if($vo['operation']!=1){</php>
+		 <a href="javascript:void(0)" class="ico_top" onclick="move('{$vo['group_id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp;
+         <a href="javascript:void(0)" class="ico_btm" onclick="move('{$vo['group_id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>
+		<php>}</php>
+		&nbsp;
+		</td>
+        <td>
+		<php>if($vo['operation']!=1){</php>
+            <a href="{:U('admin/Apps/modifyGroup',array('id'=>$vo['group_id']))}">编辑</a>
+            <a href="javascript:void(0);" onclick="deleteAppGroup('{$vo.group_id}')">删除</a>
+            <!--
+            <a href="{:U('admin/Apps/appSetPrivate',array('id'=>$vo['group_id']))}" onclick="return setPrivate(this)">权限</a>
+            -->
+		<php>}</php>
+		&nbsp;
+        </td>
+		
+      </tr>
+  </volist>
+  </table>
+  </div>
+   <div class="tit_tab">
+    <ul>
+    <li><a href="{:U('admin/Apps/appGroup')}">管理分组</a></li>
+    <li><a href="{:U('admin/Apps/modifyGroup')}">添加分组</a></li>
+    </ul>
+  </div>
+ <!-- <div class="Toolbar_inbox">
+    <!-- <div class="page right">{$html}</div> -->
+    <span>&nbsp;</span>
+  </div>
+</div>
+
+<script>
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+    
+    function deleteAppGroup(ids) {
+
+        var length = 0;
+        if(ids) {	
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一条数据！');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+            $.post("{:U('admin/Apps/doDeleteGroup')}",{ids:ids},function(res){
+                if(res=='1') {
+                    ui.success('删除成功');
+                    removeItem(ids);
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+    
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+	function move(group_id, direction) {
+		var baseid  = direction == 'up' ? $('#'+group_id).prev().attr('id') : $('#'+group_id).next().attr('id');
+		if(!baseid) {
+			direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+		}else {
+			$.post("{:U('admin/Apps/doGroupAppOrder')}", {group_id:group_id, baseid:baseid}, function(res){
+	
+				if(res == '1') {
+					//交换位置
+					direction == 'up' ? $('#'+group_id).insertBefore('#'+baseid) : $("#"+group_id).insertAfter('#'+baseid);
+					ui.success('保存成功');
+				}else {
+				
+					ui.error('保存失败');
+				}
+			});
+		}
+	}
+	
+	//设置浏览权限
+	function setPrivate(obj) {
+		ui.box.load($(obj).attr('href'), {title:'设置该应用分组的使用角色'});
+		return false;
+	}
+</script>
+
+<include file="../Public/_footer" />

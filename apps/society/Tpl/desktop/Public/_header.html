@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><neq name="ts['site']['page_title']" value="">{$ts['site']['page_title']} {$ts['site']['site_name']}<else/>{$ts['site']['site_name']}</neq></title>
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<meta name="generator" content="GSN {VERSION}" />
+<meta name="author" content="GSN" />
+<meta name="copyright" content="2012-2013 gridinfo.com.cn." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<base href="__ROOT__" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/dskui/ui.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/icon.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/common.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/desktop/tbox/box.css" />
+<link rel="stylesheet" href="__THEME__/desktop/css/scroll.css" type="text/css"/>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.callback.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/mask.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.json-2.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/easyloader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/tbox/box.js"></script>
+<script language="javascript" type="text/javascript">
+if(typeof easyloader == 'object') {
+	easyloader.locale = "zh_CN";
+}
+</script>
+<script language="javascript" type="text/javascript">
+var _UID_   = <php> echo (int) $uid;</php>;
+var _MID_   = <php> echo (int) $mid;</php>;
+var _URL_   = '{:getSiteUrl()}';
+var _ROOT_  = '__ROOT__';
+var _THEME_ = '__THEME__';
+var _PUBLIC_ = '__PUBLIC__';
+var _APP_INDEX_ = '{$GLOBALS['ts']['_app']}/{$GLOBALS['ts']['_mod']}/{$GLOBALS['ts']['_act']}';
+var _APP_PUBLIC_ = '../Public';
+var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+var DZZSCRIPT="{:U('desktop/Index/index')}";
+var STYLEID = '{$style.styleid}';
+var STATICURL = '__THEME__';
+var IMGDIR = '__THEME__/images/common';
+var VERHASH = '{$verhash}';
+var charset = 'utf-8';
+var discuz_uid = '{$uid}';
+var cookiepre = '{$config.cookie.cookiepre}';
+var cookiedomain = '{$config.cookie.cookiedomain}';
+var cookiepath = '{$config.cookie.cookiepath}';
+var showusercard = '{$setting.showusercard}';
+var attackevasive = '{$config.security.attackevasive}';
+var disallowfloat = '{$setting.disallowfloat}';
+var creditnotice = "<php>if($setting['creditnotice']){echo $setting['creditnames'];}</php>";
+var defaultstyle = '{$style.defaultextstyle}';
+var REPORTURL = '$_G[currenturl_encode]';
+var SITEURL = '__ROOT__';
+var JSPATH = '../Public/js/';
+var IMGPATH = '../Public/images/';
+var $CONFIG = {};
+	$CONFIG['uid'] = _UID_;
+	$CONFIG['mid'] = _MID_;
+	$CONFIG['root_path'] =_ROOT_;
+	$CONFIG['theme_path'] = _THEME_;
+	$CONFIG['public_path'] = _PUBLIC_;
+	$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+</script>
+<link href="../Public/css/form.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/link.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/main.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/menu.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/space.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/society.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="__ROOT__/public/js/desktop/relink.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/weibo.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/load.js"></script>
+<script type="text/javascript" src="../Public/js/society.js"></script>
+</head>
+<body>

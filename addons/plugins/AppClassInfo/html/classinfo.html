@@ -1,0 +1,190 @@
+  <!-------- 搜索分类 -------->
+  <div id="searchClassinfo_div" <neq name="type" value="searchClassinfo">style="display:none;"</neq>>
+  	<div class="page_tit">搜索分类 [ <a href="javascript:void(0);" onclick="searchClassinfo();">隐藏</a> ]</div>
+	
+	<div class="form2">
+	<form method="post">
+	<php>if($type != 'searchClassinfo') $uid = '';</php>
+    <dl class="lineD">
+      <dt>选择应用：</dt>
+      <dd>
+        <select name="app_id" class="">
+        <option value="0">全部应用</option>
+        <volist id="val" name="dataApp">
+            <option value="{$val['app_id']}" <php>if($app_id == $val['app_id']) echo 'selected';</php>>{$val['app_alias']}</option>
+        </volist>
+        </select>
+        <p>请选择你要查找分类所属的应用，也可选择全部应用</p>
+      </dd>
+      <dt>分类名称：</dt>
+      <dd>
+        <input name="classname" id="classname" type="text" value="{$classname}">
+        <p>请填写要搜索的分类名称，支持模糊查询</p>
+      </dd>
+      <dt>选择用户：</dt>
+      <dd>
+        <input name="username" id="username" type="text" value="{$username}">
+        <button type="button" onClick="showMenu();" class="btn_w">选择</button>　<font color="#FF0000">(此功能尚未开放)</font>
+        <p>请填写要搜索的用户名称，支持模糊查询</p>
+      </dd>
+	  <dt>系统分类：</dt>
+      <dd>
+        <input type="checkbox" name="status" <php>if($status){echo 'checked';}</php> />
+        <p>请选择是否只搜索系统分类</p>
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+  
+  <!-------- 知识点列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$dataList.html}</div>
+    <form method="post">
+	<a href="javascript:void(0);" class="btn_a" onclick="searchClassinfo();">
+		<span class="searchClassinfo_action"><neq name="type" value="searchClassinfo">搜索分类<else/>搜索完毕</neq></span>
+	</a>
+    <div class="btn_a select_box"><span>
+    <select name="app_id" class="" onchange="$(this.form).submit();">
+    <option value="0">全部应用</option>
+    <volist id="val" name="dataApp">
+    	<option value="{$val['app_id']}" <php>if($app_id == $val['app_id']) echo 'selected';</php>>{$val['app_alias']}</option>
+    </volist>
+    </select>
+    </span></div>
+    </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">APP</th>
+    <th class="line_l">父级分类</th>
+    <th class="line_l">当前分类</th>
+    <th class="line_l">分类归属</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="dataList.data">
+	  <tr overstyle='on' id="row_{$vo['id']}">
+	    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+	    <td>{$vo.class_id}</td>
+	    <td>{$vo.app_id|getAppName}</td>
+		<td><php>if(!$vo[parentid]){echo '系统分类';}else{echo getAppClassName($vo[parentid]);};</php></td>
+	    <td>{$vo.class_name}</td>
+	    <td><php>if($vo[status]){echo '<font color="#009900">应用系统</font>'; }else{ echo getUserName($vo[uid]);}</php></td>
+	    <td>
+            <a href="{:Addons::adminPage('addClass', array('id'=>$vo['class_id']))}">编辑</a>
+            <a href="javascript:void(0)" onclick="c.del({$vo.app_id})">删除</a>
+		</td>
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$dataList.html}</div>
+	<form method="post">
+	<a href="javascript:void(0);" class="btn_a" onclick="searchClassinfo();">
+		<span class="searchClassinfo_action"><neq name="type" value="searchClassinfo">搜索分类<else/>搜索完毕</neq></span>
+	</a>
+    <div class="btn_a select_box"><span>
+    <select name="app_id" class="" onchange="$(this.form).submit();">
+    <option value="0">全部应用</option>
+    <volist id="val" name="dataApp">
+    	<option value="{$val['app_id']}" <php>if($app_id == $val['app_id']) echo 'selected';</php>>{$val['app_alias']}</option>
+    </volist>
+    </select>
+    </span></div>
+    </form>
+    
+  </div>
+<script>
+	//鼠标移动表格效果
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function () {
+		    $(this).addClass("bg_hover");
+		  },
+		  function () {
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+
+	//搜索分类
+	var isSearchHidden = <neq name="type" value="searchClassinfo">1<else/>0</neq>;
+	function searchClassinfo() {
+		if(isSearchHidden == 1) {
+			$("#searchClassinfo_div").slideDown("fast");
+			$(".searchClassinfo_action").html("搜索完毕");
+			isSearchHidden = 0;
+		}else {
+			$("#searchClassinfo_div").slideUp("fast");
+			$(".searchClassinfo_action").html("搜索分类");
+			isSearchHidden = 1;
+		}
+	}
+
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('tr').addClass('bg_on') ;
+		}else{
+			$(o).parents('tr').removeClass('bg_on') ;
+		}
+	}
+
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+			$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择知识点的ID数组
+	function getChecked() {
+		var ids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			var val = $(n).val();
+			if (val > 0) {
+				ids.push( $(n).val() );
+			}
+		});
+		return ids;
+	}
+	
+	var ctrl = function(){
+	}
+	ctrl.prototype = {
+	    del:function(id)
+	    {
+	    	var id = id ? id : getChecked();
+	        if(id == '' || id ==0){
+	        	ui.error("请选择要删除的分类");return false;
+	        }
+			if(confirm('<此功能尚未开放>\r\n请确认是否删除该分类？该操作不可恢复，请慎重选择！')){
+				$.post("{:Addons::adminPage('deleteClassinfo')}",{id:id},function(data){
+					if(data<0){
+						ui.error("该类别含有下属类别，必须先删除其下属类别方能删除！");
+					}
+					if(data>0){
+						window.navigate(location);
+					}
+					if(0==data){
+						ui.error("类别删除失败！");
+					}
+				});
+			}
+	    }
+	}
+	var c = new ctrl();
+</script>
+<include file="../Public/_footer" />

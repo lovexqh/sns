@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><neq name="ts['site']['page_title']" value="">{$ts['site']['page_title']} {$ts['site']['site_name']}<else/>{$ts['site']['site_name']}</neq></title>
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<meta name="generator" content="GSN {VERSION}" />
+<meta name="author" content="GSN" />
+<meta name="copyright" content="2012-2013 gridinfo.com.cn." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<base href="__ROOT__" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/dskui/ui.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/icon.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/common.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/desktop/tbox/box.css" />
+<link rel="stylesheet" href="__THEME__/desktop/css/scroll.css" type="text/css"/>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.callback.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/mask.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.json-2.3.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/load.js?{$verhash}{:time()}"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/easyloader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/tbox/box.js"></script>
+<script language="javascript" type="text/javascript">
+if(typeof easyloader == 'object') {
+	easyloader.locale = "zh_CN";
+}
+</script>
+<!--[if IE 6]>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/ie6.js?{$verhash}"></script>
+<![endif]-->
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/html5.js"></script>
+<![endif]-->
+<script language="javascript" type="text/javascript">
+var _UID_   = <php> echo (int) $uid;</php>;
+var _MID_   = <php> echo (int) $mid;</php>;
+var _URL_   = '{:getSiteUrl()}';
+var _ROOT_  = '__ROOT__';
+var _THEME_ = '__THEME__';
+var _PUBLIC_ = '__PUBLIC__';
+var _APP_INDEX_ = '{$GLOBALS['ts']['_app']}/{$GLOBALS['ts']['_mod']}/{$GLOBALS['ts']['_act']}';
+var _APP_PUBLIC_ = '../Public';
+var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+var DZZSCRIPT="{:U('desktop/Index/index')}";
+var STYLEID = '{$style.styleid}';
+var STATICURL = '__THEME__';
+var IMGDIR = '__THEME__/images/common';
+var VERHASH = '{$verhash}';
+var charset = 'utf-8';
+var discuz_uid = '{$uid}';
+var cookiepre = '{$config.cookie.cookiepre}';
+var cookiedomain = '{$config.cookie.cookiedomain}';
+var cookiepath = '{$config.cookie.cookiepath}';
+var showusercard = '{$setting.showusercard}';
+var attackevasive = '{$config.security.attackevasive}';
+var disallowfloat = '{$setting.disallowfloat}';
+var creditnotice = "<php>if($setting['creditnotice']){echo $setting['creditnames'];}</php>";
+var defaultstyle = '{$style.defaultextstyle}';
+var REPORTURL = '$_G[currenturl_encode]';
+var SITEURL = '__ROOT__';
+var JSPATH = '../Public/js/';
+var IMGPATH = '../Public/images/';
+</script>
+
+<!-- 判断是否为tabs框架页打开 start -->
+<php>
+if(!empty($_REQUEST['iframe'])){
+	$layout = 'class="iframe"';
+	$uitabs = '';
+</php>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/iframe.js?{$verhash}{:time()}"></script>
+<php>
+if($_REQUEST['iframe'] == 'content'){</php>
+<script>
+$("body",parent.document).find('.panel-body').animate({scrollTop: ($("body",parent.document).find('.panel-nav-map').height()+55)}, 'slow');
+</script>
+<php>}</php>
+<php>
+}else{
+	$layout = 'class="easyui-layout"';
+	$uitabs = 'easyui-tabs';
+</php>
+<script>
+$(document).ready(function(e) {
+	//$.mask();
+});
+</script>
+<php>}</php>
+<!-- 判断是否为tabs框架页打开 end -->
+</head>
+<body id="nv_dsk" unselectable="on" onselectstart="return event.srcElement.type== 'text';" {$layout}>
+<div id="append_parent" style="z-index:9999;"></div><div id="ajaxwaitid" style="z-index:9999;"></div>

@@ -1,0 +1,57 @@
+<style>
+<!--
+.tdsty{font-size:14px; color:#6c6c6c;background:#edecec;line-height:15px;}
+.nowdt{background:#4582c5;color:white;}
+.tdsty2{font-size:12px;color:#6c6c6c;line-height:22px;}
+-->
+</style>
+<!-- 课程 start -->
+<ul class="top_title">
+<volist name="group" id="vo">
+    <li class="<if condition="$isdefault eq $key">onfocs</if>">
+    	<a href="javascript:void(0);" sx="{$key}" title="{$vo}">{$vo}</a>
+    	<!--div class="close red_close">5</div-->
+    </li>
+    </volist>
+</ul>
+<div class="clearfix"></div>
+
+<if condition="!empty($list) and count($list)">
+	<div id="jsp_day" class="scroll_panel <if condition="$isdefault neq 'day'">hide</if>">
+    <table width="530" border="1" cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border:1px solid #ffffff;">
+	  <tr>
+	    <td width="124" height="45" align="center" valign="middle" scope="col" class="tdsty">&nbsp;</td>
+	    <php>for($i=0;$i<3;$i++){</php>
+	    <td width="139" align="center" valign="middle" scope="col" class="tdsty <php>if($i == 0){echo 'nowdt';}</php>">
+	    	星期<php>if(((int)$thiswk+$i)%7 == 0){echo change_big(7,1); }else{ echo change_big(((int)$thiswk+$i)%7,1);}</php><br>
+	    	<span style="font-size:12px;">（{$datear[$i]}）</span>
+	    </td>
+	    <php>}</php>
+	  </tr>
+	  <php>for($i=1;$i<7;$i++){</php>
+	  <tr>
+	    <td height="50" align="center" valign="middle" class="tdsty">第{$i|change_big}节</td>
+	    <php>for($j=0;$j<3;$j++){</php>
+	    <td align="center" valign="middle" class="tdsty2">
+	    	<php>$k = ((int)$thiswk+$j)%7;</php>
+	    	<a href="{:U('teaching/Index/index',array('from'=>'topright'))}" target="_blank" title="我的课程表">
+	    	<strong><php>echo $list[$k.$i]['kcm'];</php><br></strong>
+	    	<php>echo $list[$k.$i]['jxlm'].$list[$k.$i]['jsm'];</php>
+	    	</a>
+	    </td>
+	    <php>}</php>
+	    <td align="center" valign="middle">&nbsp;</td>
+	    <td align="center" valign="middle">&nbsp;</td>
+	  </tr>
+	  <php>}</php>
+	</table>
+	</div>
+<else />
+    <span>暂无相关课程</span>
+</if>
+
+<div class="clearfix"></div>
+<!-- 我的消息 end -->
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.tdsty2');</script>

@@ -1,0 +1,110 @@
+﻿<include file="_header" />
+<style type="text/css">
+/*微广播回复框*/
+.box_comment{padding:10px;background-color: #F3F5F8;_width:96.5%;}
+.box_comment .massage_comment{padding:0}
+.box_comment .massage_comment dt{font-size:14px;font-weight:bold;float:none}
+.box_comment .massage_comment dd{padding:10px 0 0 0;float:none}
+.box_comment .massage_comment dd .ck{margin:-3px 3px 0 0;vertical-align:middle}
+.box_comment .massage_comment dd span{line-height:23px}
+.box_comment .massage_comment dd a.faceicon1:link, a.faceicon1:visited{margin:3px 3px 0 0;background-position:5px 0}
+.box_comment .massage_comment dd .N_but{ padding:4px 10px;}
+/* 微广播回复框 - 未登录状态 */
+.box_comment .comment_no_login{background-color:#FFFFFF;}
+
+/*回复内容*/
+.feed_list .feed_wb{margin:7px 0px 10px 5px;position:relative;width:460px;float:right}
+.new_position{padding:6px 0 10px}
+a.faceicon1:link, a.faceicon1:visited{display:block;float:left;height:17px;margin-right:4px;margin-top:4px;width:27px;background-position:0 0}
+.new_position textarea  {margin-right:5px;width:310px;}
+.position_list{border-top: 1px dashed #d8d8d8;float:left;width:100%;padding-top:10px}
+.position_list .pic{float:left;margin-right:5px}
+.position_list .list_c{ margin:0;color:#707070;margin-left:45px}
+.feedBox{overflow:hidden;*zoom:1}
+.feed_msg_new,a.feed_msg_new{height:22px;margin-top:4px;color:#BB861C;display:block;text-align:center;padding-top:5px}
+.feed_list{margin:0;}
+.feed_list input{margin:1px 0 0 0;_margin:0}
+.feedBox .feed_list{margin:0}
+.feed_list li {overflow:hidden;padding:10px 0;*zoom:1}
+.feed_list li.t{background-color:#fbfbfb;padding:5px 0;margin:5px 0;*padding:2px 0;}
+.feed_list .ck{margin:0 5px 0 0;padding:0;vertical-align:middle}
+.feed_list .feed_dpm{border:#ddd solid 2px}
+.feed_list .current{border:#0281CF solid 2px}
+.right_box .userPic img{border:solid 1px #ccc;padding:1px}
+.feed_list li .feed_c{margin-left:70px} 
+.feed_list li .feed_c img{vertical-align:top}
+.feed_list li .feed_c .msgCnt{padding-bottom:6px;word-wrap: break-word;font-size:14px;line-height:23px}
+.feed_list li .feed_c .msgCnt em{color:#999}
+.feed_list li .feed_c .hover,.feed_list li .feed_massage .hover{float:right;margin:0 0 0 5px;display:none}
+.feed_list li .feed_c:hover .hover,.feed_list li .feed_massage:hover .hover{float:right;display:block}
+.feed_list li .feed_c .message_new{background: url(__THEME__/images/icon_new.gif) no-repeat scroll 0 0 transparent;display:inline-block;width:24px;height:10px;margin-left:4px}
+.feed_list li .feed_c .username{vertical-align:top}
+
+.feed_list li .feed_c h4{display:inline;vertical-align:middle}
+.feed_list li .feed_massage{padding: 10px;border: 1px solid rgb(221, 221, 221);border-radius: 3px 3px 3px 3px;margin-left: 70px;line-height:20px}
+.feed_list li .feed_massage .line_massage{padding:5px 0}
+.feed_list li .feed_massage .date{color:#999}
+.feed_list .my_reply .userPic{float:right}
+.feed_list .my_reply .arr_left{float:right;margin:10px 9px 0 0;background-position:-9px -14px}
+.feed_list .my_reply .feed_massage{margin-right:70px;background-color:#eee}
+.feed_list .reply .feed_massage{margin-right:70px}
+.feed_list .reply .arr_left{float:left;margin:10px 0 0 9px}
+.feed_list .send_msg,.feed_list .my_reply,.feed_list .reply{}
+.feed_list .send_msg .feed_massage{margin-right:70px;padding:0;border:none 0}
+.feed_list .send_msg .userPic{float:right}
+.feed_list .send_msg .arr_left{position:absolute;right:63px;top:20px;background-position:-9px 0}
+.feed_showPic{background-color:#F6F6F6;border-radius:3px;padding:0 10px 10px}
+.feed_showPic_small img{border:#ccc solid 1px;padding:1px}
+
+.feed_c_btm .right{color:#999}
+.feed_c_btm{padding-top:10px;position:relative}
+.feed_c_btm a:link,.feed_c_btm a:visited{color:#333}
+.feed_list .feed_quote{margin:7px 5px 10px 0;position:relative;*z-index:9}
+.feed_quote a:hover{text-decoration:none;}
+.feed_list .feed_quote .q_ico_arrow{background-position: -80px -4px;height:10px;width:19px;left:53px;overflow:hidden;position:absolute;top:-9px}
+.feed_list .feed_quote .q_ico_arrow2{background-position: -103px -4px;height:8px;width:15px;right:10px;overflow:hidden;position:absolute;top:-7px}
+.feed_list .feed_quote .q_tit{_height:none;height: 5px;background-position:right 0;overflow:hidden;display:none}
+.feed_list .feed_quote .q_tit_l{height: 5px;background-position:left 0;float:left}
+
+.feed_list .feed_quote .q_btm{_margin-right:3px;_margin-left:3px;height: 5px;background-position: right -7px;overflow:hidden;display:none}
+.feed_list .feed_quote .q_btm .q_btm_l{height: 5px;background-position: 0 -7px;float:left}
+.feed_list .feed_quote .q_con{line-height:1.7em;overflow:hidden;*zoom:1;padding:12px;border:solid 1px;border-color:#e4e4e4 #e4e4e4 #e4e4e4 #e4e4e4;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;background-color: #fbfbfb}
+.feed_list .feed_quote .q_con1{line-height:1.7em;overflow:hidden;*zoom:1;padding:0px 10px 5px 10px;border:solid 1px;border-color:#F6F6F6 #F6F6F6 #F6F6F6 #F6F6F6;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;background-color: #fbfbfb}
+.feed_list .feed_quote .q_con .feed_quote .q_con{line-height:1.7em;overflow:hidden;*zoom:1;border:none 0}
+.feed_list .feed_quote .q_con .feed_quote .q_ico_arrow{background:none}
+.feed_list .feed_quote .q_con .comment{display:block;padding:5px 0 0 0}
+.feed_list .feed_quote .q_con .comment span{}
+.feed_list .feed_quote .q_con .comment .vline,.feed_c_btm .vline,.feed_list .vline{margin:0 5px;color:#999;font-style:normal}
+.feed_list .feed_quote .q_con .comment a:link,.feed_list .feed_quote .q_con .comment a:visited{color:#6D84B4}
+.feed_list .hover .del{visibility:hidden;_visibility:visible}
+.feed_list .hover:hover .del{visibility:visible}
+</style>
+<!--主体部分-->
+<div class="content">
+<!--左侧信息-->
+	<div class="main_left">
+		<space uid="blog_content.uid">{uavatar=m}</space>
+		<p>{$blog_content.uid||getweibouser}共{$count}篇博客&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</div>	
+<!--右侧内容-->			
+	<div class="main_main">
+		<div class="context">
+			<div class="title">
+				<p><a href="#"><span>{$blog_content.title}</span></a>（{$blog_content.cTime|friendlyDate}）</p>
+				<p>标签：<a href="{:U('/Article/myblog',array(tags=>$blog_content['tags']))}">{$blog_content.tags}</a>    
+				分类：<a href="{:U('/Article/myblog',array(id=>$blog_content['id']))}">{$blog_content.id|getcategory_blog}</a></p>
+			</div>
+			<p>{$blog_content.content|htmlspecialchars_decode}</p>
+			<p><a style="color:#93B7F1;">阅读（{$blog_content.readCount}）</a>|<a style="color:#93B7F1;">评论（{$blog_content.commentCount}）</a></p>
+			<!--<div class="main_context_foot">
+			<a href="#">上一篇：我的奶奶</a>     | 	<a href="#">下一篇：把回忆当昨天</a>
+			</div>-->
+		</div>
+
+<!--博客评论------------------------------------------------------------------------------------------------------------>
+		<div style="width:750px;">
+				{:W('Comment',array('type'=>'blog','appid'=>$blog_content['id'], 'author_uid'=>$blog_content['uid'], 'title'=>$blog_content['title'], 'url'=>U('blog/Index/show',array('id'=>$blog_content['id'],'mid'=>$blog_content['uid'])), 'table'=>'blog','id_field'=>'id','comment_count_field'=>'commentCount'))}
+		</div>	
+	</div>
+</div>
+<include file="_footer" />

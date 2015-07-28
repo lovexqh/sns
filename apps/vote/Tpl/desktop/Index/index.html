@@ -1,0 +1,67 @@
+<include file="__THEME__/desktop/_header" />
+<include file="../Public/_searchBar" />
+<link rel="stylesheet" href="../Public/poll.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<!-- 左侧导航栏 start -->
+<div region="west" border="false" split="true" class="westbar sidebar"> <include file="../Public/_leftPanel" /> </div>
+<!-- 左侧导航栏 end --> 
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false"> 
+  <!-- 右侧主要内容 start -->
+  <div class="panel-cmain">
+    <div class="clearfix"></div>
+    <!-- 主要内容的tab切换 start -->
+    <div id="tab-tools">
+    <a href="javascript:;" onclick="tabs.iframe('发起投票','{:U('vote/Index/addPoll')}');" class="easyui-linkbutton medium-primary">发起投票</a>
+    </div> 
+    <div id="tabs-main" class="{$uitabs} list-tabs cblock" data-options="tools:'#tab-tools'" style="width:auto;height:auto;">
+      <!-- 热门投票 start -->
+      <div id="tabs-content" title="热门投票" style="padding:10px">
+         <div class="pollBox">
+          <div class="LogList">
+            <ul class="summary-list" style="padding-right:20px;">
+              <volist name="votes.data" id="vo" empty="暂时没有热门投票">
+                <li>
+                  <dl class="user">
+                    <dd class="userPic"><a href="javascript:;" onclick="top.OpenBrowser('{:U('home/Space/index',array('uid'=>$vo['uid']))}','{$vo.uid|getUserName}','width=1024,height=600,titlebutton=close|max|min');" class="showpage" ><img src="{$vo.uid|getUserFace}" /></a></dd>
+                    <dt><a href="javascript:;" onClick="top.OpenBrowser('{:U('home/Space/index',array('uid'=>$vo['uid']))}','{$vo.uid|getUserName}','width=1024,height=600,titlebutton=close|max|min');">{$vo.uid|getUserName}</a></dt>
+                  </dl>
+                  <div class="vote_joinum">
+                      <div><a href="javascript:;" onclick="tabs.iframe('{$vo.title}','{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}');" class="U medium-primary"><strong>{$vo.vote_num}</strong></a>参与人数</div>
+                    </div>
+                  <dl class="info">
+                    <dt class="title"><a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}" class="U">{$vo.title}</a><php>if( $vo['deadline'] < time() ){</php>
+                    <span class="cRed " style = "color:red">(已结束)</span></p>
+                    <php>}else{</php>
+                     <php>}</php></dt>
+                    <volist name="vo.opts" id="opt">
+                      <php>if($vo['type'] == "0"){</php>
+                      <dd><input type="radio" name="checkbox" id="checkbox" disabled="true" class="ck"/><php>}else{</php>
+                      <dd><input type="checkbox" name="checkbox" id="checkbox" disabled="true" class="ck"/><php>}</php>{$opt.name}</dd>
+                    </volist>
+                    <php>if( $vo['deadline'] < time() ){</php>
+                    <dd><span class="right cGray2">发起时间：{$vo.cTime|date="Y-m-d H:i:s",###}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}">查看投票&gt;&gt;</a></span>．．．</dd>
+                    <php>}else{</php>
+                    <dd><span class="right cGray2">发起时间：{$vo.cTime|date="Y-m-d H:i:s",###}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}">参与投票&gt;&gt;</a></span>．．．</dd>
+                    <php>}</php>
+                  </dl>
+                </li>
+              </volist>
+            </ul>
+            <div id="Pagination" class="page">{$votes.html}</div>
+          </div>
+        </div>
+        <!-- 分页样式start -->
+			<div class="page">
+				{$html}
+			</div>
+			<!-- 分页样式end -->
+      </div>
+      <!-- 热门投票end -->
+    </div>
+    <!-- 主要内容的tab切换 end --> 
+  </div>
+  <!-- /右侧主要内容 end --> 
+</div>
+<!-- 右侧主要内容栏 end --> 
+<include file="__THEME__/desktop/_footer" /> 

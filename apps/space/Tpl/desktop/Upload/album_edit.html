@@ -1,0 +1,106 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_manage_leftmenu" />
+   <div class="trunk_right_p">
+     <div class="navi_rtitle"><span class="title">班级相册</span></div>
+     <div class="clear10"></div>
+        <div class="photoBox">
+          <div class="lineS_btm lh30"><span class="photo_tit"><strong>{$album.name}</strong></span> <a href="{:U('/Upload/album_order',array(id=>$album['id'],classid=>$classid))}">相册图片排序</a> | <a href="{:U('/Upload/delete_album',array('id'=>$album[id],classid=>$classid))}" onclick="return confirm('删除该{$ts['app']['app_alias']}的同时，将删除其所有图片，确定删除？');">删除该相册</a> | <a href="{:U('/Upload/album',array(id=>$album['id'],classid=>$classid))}">返回该相册</a></div>
+          <form method="post" action="{:U('/Upload/do_update_album')}" name="do_update_album" onsubmit="return check_form(this);">
+            <div class="edit_box">
+                <div class="li">
+                    <div class="c1">相册名称：</div>
+                    <div class="c2"><input name="album_name" type="text" class="text" id="album_name" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2';change_flag=true;" value="{$album.name}" /></div>
+                </div>
+                <div class="clear" style="margin-left:65px">
+                    <br />
+                    <input type="hidden" name="albumId" value="{$album.id}" />
+                    <input type="hidden" name="classid" value="{$classid}" />
+                    <input type="submit" class="btn_b" value="保存" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#" onclick="$('#edit_photos').toggle()">编辑所有图片？</a>
+                </div>
+            </div>
+            <div class="edit_list" id="edit_photos" style="display:none;">
+               <ul>
+<volist name="photos" id="li">
+<li class="bg04">
+    <div class="box">
+        <div class="c1"><div class="photo100"><a href="#"><img src="__ROOT__/thumb.php?w=130&h=130&t=f&url={$li.savepath|get_photo_url}{$li.savename}" alt="{$li.name}" /></a></div></div>
+        <div class="c2">
+            <dl>
+                <dt>
+                <input value="{$li.name}" name="name[{$li.id}]" type="text" class="text" id="attach_{$li.id}" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2';change_flag=true;" />
+                </dt>
+                <dd><label><input name="album_cover" type="radio" value="{$li.id}" <if condition=" $li['id'] eq $album['coverImageId']">checked='checked'</if> /> 设为该相册封面</label></dd>
+                <dd>转移到：
+                    <select name="move_to[{$li.id}]" onchange="change_flag=true;">
+                        <volist name="albumlist" id="al">
+                            <option value="{$al.id}" <if condition=" $al['id'] eq $album['id']">selected='selected'</if>>{$al.name}</option>
+                        </volist>
+                    </select>
+                </dd>
+            </dl>
+        </div>
+        <div class="clear"></div>
+    </div>
+</li>
+</volist>
+</ul>
+               <div class="clear ml10">
+                        <input type="hidden" name="albumId" value="{$album.id}" />
+                        <input type="submit" class="btn_b" value="保存" />
+               </div>
+            </div>
+          </form>
+          <div class="clear10"></div>
+        </div>
+   </div>
+<include file="../Public/_footer" /> 
+<script type="text/javascript">
+/** 离开页面提醒 **/
+	var change_flag = false;	//修改标识
+	var pb_strConfirmCloseMessage	=	"你的修改还没有保存，如果离开本页，修改不会生效！";
+	function ConfirmClose() {
+		window.event.returnValue = pb_strConfirmCloseMessage;
+	}
+	function ShowConfirmClose(blnValue) {
+		if(blnValue) {
+			document.body.onbeforeunload = ConfirmClose;
+		} else {
+			document.body.onbeforeunload = null;
+		}
+	}
+	//如果页面被修改则弹出提醒
+	if(change_flag){
+	//	ShowConfirmClose(true);
+	}
+/** 离开页面提醒 **/
+
+//初始化密码框
+if($('#privacy').val()==4){
+	$('#need_password').show();
+}
+
+//显示密码框
+function changePrivacy(obj){
+	if(obj.value==4){
+		$('#need_password').show();
+	}else{
+		$('#need_password').hide();
+	}
+}
+
+//表单验证
+function check_form(obj){
+	var name = $("#album_name").val();
+	if(obj.album_name.value=='' || getLength(name.replace(/\s+/g,"")) == 0){
+		ui.error('相册名字不能为空');
+		return false;
+	}
+
+	//提交表单不弹出提醒
+	//ShowConfirmClose(false);
+	return true;
+}
+</script>

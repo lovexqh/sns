@@ -1,0 +1,252 @@
+<include file="../Public/_header" />
+<include file="../Public/_teachheader" />
+<SCRIPT type="text/javascript">
+		
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			}
+		};
+		
+		var zNodes =[				
+				<volist name="treeNode" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick('{$obj[id]}')"}
+								
+				</volist>
+		];
+		var treeNoSchool =[				
+				<volist name="treeNoSchool" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick2('{$obj[id]}')"}
+								
+				</volist>
+		];
+		
+		function noteClick(id){
+			var from	=	'&from='+$('#from').val();
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学校_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				schoolid	=	'';
+			}else{				
+				schoolid	=	'&schoolid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[3];
+			}
+			if(typeof(newarr[4])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[4];
+			}
+			window.location.href="__URL__&act=groupList"+phaseid+schoolid+courseid+gradeid+from;
+		}
+		function noteClick2(id){
+			var from	=	'&from='+$('#from').val();
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[3];
+			}
+			window.location.href="__URL__&act=groupList"+phaseid+courseid+gradeid+from;
+		}
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}		
+		$(document).ready(function(e) {
+            $.fn.zTree.init($("#dept_tree"), setting, zNodes);
+			$.fn.zTree.init($("#noschool_tree"), setting, treeNoSchool);
+			$(".star li").click(function(){
+				$(this).parents("ul").find("li").removeClass('on');
+				$(this).addClass('on');
+				$(this).parents(".rank").find("table").css("display","none");
+				$(this).parents(".rank").find("table").eq($(this).parents("ul").find("li").index($(this))).css("display","");
+			});
+        });
+		
+function rank(obj){
+	if(obj=='dept_tree'){
+		$('#noschool_tree').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='noschool_tree'){
+		$('#dept_tree').hide();	
+		$('#'+obj).show();		
+	}
+}
+</SCRIPT>
+    <div class="main">
+    <div class="sidebar">
+        
+      <div class="sidebar_box">
+        <h4>导航树</h4>
+        <ul class="star" style="background-color:#F5F5F5">
+            <li><a href="javascript:void(0)" onclick="rank('dept_tree')">按本校</a></li>
+            <li><a href="javascript:void(0)" onclick="rank('noschool_tree')">按科目</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div>
+          <ul id="dept_tree" class="ztree">
+          </ul>
+          <ul id="noschool_tree" class="ztree" style="display:none">
+          </ul>
+        </div>
+      </div>
+         
+	  
+      <div class="clear"></div>
+    </div>
+    <input type="hidden" id="from" value="{$from}" />
+    <div class="content">
+      
+      <div class="box width">
+        <ul class="course_category">
+          <li <php>if($_GET['from']=='3'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=3">行政教研组<span></span></a></li>
+          <li <php>if($_GET['from']=='1'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=1">行政备课组<span></span></a></li>
+          <li <php>if($_GET['from']=='2'){</php>class="on"<php>}</php>><a href="<php>
+          $arr	=	explode('&from',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&from=2">教研协作组<span></span></a></li>
+
+          <div class="clear"></div>
+        </ul>
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list" >
+        <eq name='from' value='2'>
+          <volist name='group.data' id='vo'>
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="4" width="80" style="border-right:1px solid #e6e6e6;">
+                   <img src="../Public/images/group.png" width="59" height="59" />
+                  </td>
+                  <td width="380"><a href="<php>echo U('course/Index/club',array('id'=>$vo['id']));</php>">{$vo.name}</a></td>
+                </tr>
+                <tr>
+                  <td>{$vo.phaseid|getPhaseName}&nbsp;{$vo.courseid|getCourseName}&nbsp;{$vo.id|getGradeName=###,1}&nbsp;成员{$vo.id|getNum}人</td>
+                </tr>
+                <tr>
+                  <td>创建于：{$vo.ctime|dateFormat}</td>
+                </tr>
+                <tr>
+                  <td>创始人：{$vo.uid|getUserName}</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+          </eq>
+        <eq name='from' value='1'>
+          <volist name='group.data' id='vo'>
+
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="4" width="80" style="border-right:1px solid #e6e6e6;">
+                    <img src="../Public/images/group.png" width="59" height="59" />
+                  </td>
+                  <td width="380">{$vo.name}备课组</td>
+                </tr>
+                <tr>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>{$vo.xdmc}</td>
+                </tr>
+                <tr>
+                  <td>{$vo.xxmc}</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+        </eq>
+        <eq name='from' value='3'>
+          <volist name='group.data' id='vo'>
+<!--          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="2" width="70"> <img src="../Public/images/group.png" width="59" height="59" /></td>
+                  <td width="150">{$vo.name}教研组</td>
+                  <td width="380"></td>
+                  <td ></td>
+                </tr>
+                <tr>
+                  <td>{$vo.xxmc}</td>
+                  <td>{$vo.xdmc}</td>
+                  <td ></td>
+                </tr>
+              </table></td>
+          </tr>-->
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="4" width="80" style="border-right:1px solid #e6e6e6;">
+                    <img src="../Public/images/group.png" width="59" height="59" />
+                  </td>
+                  <td width="380">{$vo.name}教研组</td>
+                </tr>
+                <tr>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>{$vo.xdmc}</td>
+                </tr>
+                <tr>
+                  <td>{$vo.xxmc}</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+        </eq>
+        </table>
+        <ul class="page">
+				{$group.html}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="../Public/_footer" />

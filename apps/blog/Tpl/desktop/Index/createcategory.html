@@ -1,0 +1,47 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<link href="__THEME__/square/css/video.css" rel="stylesheet" type="text/css" />
+<div class="index">
+	<form name="categoryform" id="categoryform" action="{:U('blog/Index/do_create_category')}" method="post" onsubmit="javascript:submitCategory();return false;">
+		<div style="padding:20px 0 0 15px;height:60px;">
+		<div style="float:left;margin-right:10px;line-height:25px;">请填分类名：</div>
+		<div  style="float:left;">
+            <input name="catename" id="catename" maxlength="15"  style="width:200px;height:25px;line-height:25px;" type="text" value="{$name}">
+            <input name="cid" id="cid" value="{$id}" type="hidden">
+        </div>
+		</div>
+		<div style="width:100%;height:30px;background:url(../Public/images/crcatebk.jpg);padding-top:5px;text-align:right;">
+			<a href="javascript:;" onclick="javascript:submitCategory();"><img src="../Public/images/crqueding.jpg"></a>&nbsp;
+			<a href="javascript:;" onclick="javascript:ui.box.close();"><img src="../Public/images/crcancle.jpg"></a>&nbsp;&nbsp;&nbsp;
+		</div>
+	</form>	
+</div>
+<script type="text/javascript">
+function submitCategory(id){
+	var catename = $('#catename').val();
+    var cid = $('#cid').val();
+	if(catename == ''){
+		alert('分类名称不能为空！');
+		$('#catename').focus();
+		return false;
+	}
+	var form = $('#categoryform');
+	$.post(form.attr('action'),form.serialize(),function(data){
+        var obj	=	eval('(' + data + ')');
+		if(obj.status == 1){
+            if(cid != ''){
+                document.location.href = document.location.href;
+            }else{
+                $('#category').append('<option value="'+ obj.cateid +'" selected="selected">'+ obj.catename +'</option>');
+                $("#category option[value='0']").remove();
+                $('#category').append('<option value="0"> +添加分类</option>');
+                ui.box.close();
+            }
+
+		}else{
+            alert(obj.msg);
+		}
+	});
+	
+}
+
+</script>

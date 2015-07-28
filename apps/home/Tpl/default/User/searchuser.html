@@ -1,0 +1,224 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/miniblog.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+      <div class="mainbox_appR">
+        <gt name="mid" value="0">
+        <div class="right_box">
+          <h2><a href="#">关注的话题</a></h2>
+          <ul class="topic_list">
+          	<volist id="vo" name="followTopic">
+            	<li><a href="{:U('home/user/topics',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}</a></li>
+			</volist>
+          </ul>
+        </div>
+        </gt>	
+		
+        {:Addons::hook('home_list_user_related')}
+        
+        <div class="right_box">
+    	{:W('HotTopic', array('type'=>'recommend'))}
+        </div>
+      </div>
+      <div class="mainbox_appC boxspace_L"> 
+ 
+        <div class="tab-menu">
+          <gt name="mid" value="0">
+          <div class="right" style="display:none">
+            <input name="" class="btn_b pt5" value="发微广播" maxlength="30" onclick="weibo.quickpublish('')" type="button" />
+          </div>
+          </gt>
+          <ul>
+			<li><a feed_item" href="{:U('home/user/search',array('k'=>urlencode($search_key)))}"><span>搜微广播</span></a></li>
+            <li><a class="on feed_item" href="{:U('home/user/searchuser',array('k'=>urlencode($search_key)))}"><span>搜人({$list.count})</span></a></li>
+            <li><a class="feed_item" href="{:U('home/user/searchtag',array('k'=>urlencode($search_key)))}"><span>标签</span></a></li>
+          </ul>
+        </div>
+        <div class="Search_box">
+        
+          <div class="cGray2 lh30" style=" height:15px;"></div>
+          <div class="Search_bg">
+          <div>
+          <form action="{:U('home/user/searchuser')}" method="post" >
+          	<ul>
+            	<li class="identity">
+                	<span>角色</span>
+                    <label><input type="radio" name="identity" value="" <eq name="identity" value="">checked="checked"</eq>/>全部</label>
+                    <label><input type="radio" name="identity" value="2" <eq name="identity" value="2">checked="checked"</eq>/>老师</label>
+                    <label><input type="radio" name="identity" value="3" <eq name="identity" value="3">checked="checked"</eq>/>学生</label>
+                    <label><input type="radio" name="identity" value="4" <eq name="identity" value="4">checked="checked"</eq>/>家长</label>
+                </li>
+                <li class="username">
+                	<span>姓名</span>
+                    <php>if(empty($search_key)){</php>
+                    <label onclick="$(this).parent().find('input').focus();">输入朋友的姓名或昵称，如：小A</label>
+                    <php>}</php>
+                    <input type="text" name="k" maxlength="40" value="{$search_key}" 
+                    onfocus="if(this.value == '')$(this).parent().find('label').hide()" onblur="if(this.value == '')$(this).parent().find('label').show();" />
+                </li>
+                <li class="username">
+                        <span>性别</span>
+                            <select name="sex">
+                                <option value="">全部</option>
+                                <option value="1" <eq name="sex" value="1">selected="selected"</eq>>男</option>
+                                <option value="0" <eq name="sex" value="0">selected="selected"</eq>>女</option>
+                            </select>
+                   
+                </li>
+               <!--  <li class="morebtn">
+                	<a href="javascript:;" id="moreselect">↓更多选项</a>
+                </li>
+                <php>
+                $dp = 'none';
+                if($sex!='' || $school!='' || $class!=''){
+                	$dp = '';
+                }
+                </php> -->
+        <!--         <li id="morebox" class="morebox" style="display:{$dp}">
+                	<dl>
+                        <dt>性别</dt>
+                        <dd>
+                            <select name="sex">
+                                <option value="">全部</option>
+                                <option value="1" <eq name="sex" value="1">selected="selected"</eq>>男</option>
+                                <option value="0" <eq name="sex" value="0">selected="selected"</eq>>女</option>
+                            </select>
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt>学校</dt>
+                        <dd>
+                            <select name="school" onchange="selectSchool(this.value)">
+                                <option value="">全部</option>
+                                <php>echo "232323"; dump($schoollist);</php>
+                                <volist name="schoollist" id="vo">
+                                <option value="{$vo.id}" <eq name="school" value="$vo.id">selected="selected"</eq>>{$vo.xxmc}</option>
+                                </volist>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>班级</dt>
+                        <dd>
+                            <select id="classSelect" name="class">
+                                <option value="">全部</option>
+                                <volist name="classlist" id="vo">
+                                <option value="{$vo.id}" <eq name="class" value="$vo.id">selected="selected"</eq>>{$vo.bj}</option>
+                                </volist>
+                            </select>
+                        </dd>
+                    </dl>
+                </li> -->
+                <li class="btnbox">
+                	<input class="btn_search_big" type="submit" value=""/>
+                </li>
+            </ul>
+            </form>
+            </div>
+            <script language="javascript" type="text/javascript">
+			$('#moreselect').bind('click',function(){
+				if($('#morebox').css('display')=='none'){
+					$('#morebox').slideDown('fast');
+				}else{
+					$('#morebox').slideUp('fast');
+				}
+			});
+			
+			//判断是否为json格式
+			function isjson(obj){
+				var isjson = typeof(obj) == "object" && obj.length;    
+				return isjson;
+			}
+
+			//根据学校ID获取班级列表
+			function selectSchool(id){
+				if(id>0){
+					$.post(U('home/User/getClassList'),{'sid':id},function(data){
+						$("#classSelect option").remove();
+						$("#classSelect").prepend("<option value=''>全部</option>");
+						var obj = eval(data);
+						if(isjson(obj)){
+							for(i=0;i<obj.length;i++){
+								$("#classSelect").append("<option value='"+obj[i]['id']+"'>"+obj[i]['bj']+"</option>");
+							}
+						}
+					});
+				}else{
+					$("#classSelect option").remove();
+					$("#classSelect").prepend("<option value=''>全部</option>");
+				}
+			}
+			</script>
+          </div>
+		  <div class="search_line mt10">华丽的分割线</div>
+          <div class="lh35 left" style="width:100%">
+			<p><php>if(empty($search_key)) {</php>
+			请输入关键字后点击搜索
+			<php>}else {</php>
+			搜索"<span class="cRed">{$search_key}</span>"找到 {$list.count}  位相关用户
+			<php>}</php></p>
+          </div>
+        </div>
+        <div class="usercardBox">
+        	<ul class="userlist">
+            <volist id="vo" name="list.data">
+            	<li>
+                	<div class="usercard">
+                    	<div class="contbox">
+                        	<dl>
+                            	<dt>
+                                	<div class="userPic"><space uid="vo.uid">{uavatar}</space></div>
+                                </dt>
+                                <dd class="h">
+                                	<space uid="vo.uid">{uname}</space>{$vo.uid|getUserGroupIcon} 
+                                    <switch name="vo.sex">
+                                        <case value="0"><img src="__THEME__/images/sex_0.gif" title="女生" /></case>
+                                        <case value="1"><img src="__THEME__/images/sex_1.gif" title="男生" /></case>
+                                        <default  />
+                                    </switch>
+                                </dd>
+                                <dd><php>if(!empty($vo['realname'])){</php><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" class="realname">{$vo.realname}</a><php>}</php>
+                                {:getUserIdentity($vo['uid'])}</dd>
+                                <dd>{:getUserSchool($vo['uid'])}</dd>
+                                <dd>{:getUserDepartment($vo['uid'])}</dd>
+                            </dl>
+                        </div>
+                        <div class="bottombox">
+                        	<a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" class="showpage" target="_blank">浏览 TA 的主页</a>
+                            <php>if($ts['user']['uid']!=$vo['uid']){</php>
+                  			<gt name="mid" value="0">
+                            <div id="follow_list_{$vo.uid}" class="follow_btn">
+                            <script>document.write(userfollowState('{$vo.followState}','userdolistfollow',{$vo.uid}))</script>
+                            </div>
+                            </gt>
+				  			<php>}</php>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+            </ul>
+        </div>
+        <div class="clear"></div>
+
+        <div class="c"></div>
+        <div class="page">{$list['html']}</div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+  var weibo = $.weibo({
+          timeStep : 60000
+    });
+</script>
+{:Addons::hook('weibo_js_plugin')}
+
+<include file="__THEME__/footer" /> 

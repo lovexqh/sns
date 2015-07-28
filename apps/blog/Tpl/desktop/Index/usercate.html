@@ -1,0 +1,107 @@
+﻿<include file="Public:_header" />
+<include file="Public:header" />
+<link href="__THEME__/square/css/video.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/js/blog.js"></script>
+<div class="divcenter">
+    <div class="userleft">
+        <div class="vuserinfo">
+            <div class="vuserimg <php>if($userinfo['xb'] == 0){echo 'u0';}</php>" style="text-align:center;">
+                <div class="uname ">{$userinfo['uid']|getUserName}</div>
+                <a href="{:U('home/Space/index',array('uid'=>$userinfo['uid']))}" target="_blank" title="{$userinfo['uid']|getUserName}" ><img alt="{$userinfo['uid']|getUserName}" src="{$userinfo['uid']|getUserFace=###,'b'}" width="150"></a>
+            </div>
+            <php>if($thisuid != $userinfo['uid']){</php>
+            <div class="vusername" id="follow_state" style="text-align:center; padding:10px 0;">
+                <script>document.write(followState('{$followstate}'))</script>
+            </div>
+            <php>}</php>
+            <ul class="ucateinfo">
+                <li>关注数：{$userinfo['data']['count']['following']}</li>
+                <li>粉丝数：{$userinfo['data']['count']['follower']}</li>
+                <li>博客数：{$userinfo['data']['count']['blog']}</li>
+            </ul>
+            <ul class="ucatelist">
+                <li <php>if($cid == ''){echo 'class="hover"';}</php>><a class="cate_all" href="{:U('blog/Index/usercate',array('uid'=>$uid))}" target="_self" >显示全部</a></span></li>
+                <volist name="userinfo['data']['usercate']" id="uc">
+                    <li <php>if($uc['id'] == $cid){echo 'class="hover"';}</php>><a class="cate_{$uc['id']}" href="{:U('blog/Index/usercate',array('cid'=>$uc['id']))}" target="_self" >{$uc['name']}</a><span onclick="del_category({$uc['id']})"></span></span></li>
+                </volist>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="userright">
+
+        <div class="newtopline" style="width: 739px;">
+            <div class="liveintro_left cate_{$cid}" id="cTitle" style="float:left; line-height: 20px;" data-back="{$title}" data-categoryId="{$cid}">{$title}</div>
+            <php>if( $cid > 0 && $thisuid == $userinfo['uid']){</php>
+            <div class="useroper">
+                <a class="oper-ico" href="javascript:void(0);" onclick="javascript:editCategory('{$cid}');return false;"><img src="../Public/images/viedit.png"/>修改</a>
+                <a href="javascript:;" onclick="del_category({$cid})" class="oper-ico" ><img src="../Public/images/viclose.png"/>删除</a>
+            </div>
+            <php>}</php>
+            <div class="lvm_top">
+                <div class="tleft">
+                    共 {$bloglist['count']} 篇博客
+                </div>
+            </div>
+            <div style="width:100%;height:10px;overflow:hidden;clear:both;"></div>
+        </div>
+        <div style="width:100%;height:10px;overflow:hidden;clear:both;"></div>
+
+        <ul class="bloglist" style="width: 720px;">
+            <volist name="bloglist['data']" id="li">
+                <li>
+                    <h1><a href="{:U('blog/Index/show',array(id=>$li['id']))}" title="{$li.title}" target="_blank">{$li.title}</a></h1>
+                    <h4>
+                        <span style="margin-left: 0px;">发表时间：{$li.cTime|friendlyDate}</span>|
+                        <span>{$li.readCount}次阅读</span>|
+                        <span>{$li.commentCount}次评论</span>|
+                        <span>作者：<a href="{:U('blog/Index/usercate',array('uid'=>$li['uid']))}">{$li['uid']|getUserName}</a> </span>
+                        <if condition="($thisuid == $uid)">
+                            |<span><a class="hover" href="{:U('blog/Index/post',array('id'=>$li['id']))}">编辑</a> </span>
+                            |<span><a class="hover" href="javascript:;" onclick="javascript:delblog('{$li['id']}');">删除</a> </span>
+                        </if>
+                    </h4>
+                    <div class="cnt"> {$li.content|stripslashes|strip_tags|getShort=###,100}..</div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <include file="Public:_footer" />
+    <script language="javascript">
+        function delblog(bid){
+            if(confirm('你确定要删除当前博客信息吗？')){
+                $.post("{:U('blog/Index/delete')}",
+                        {bid:bid,time:new Date().getTime()},
+                        function(data){
+                            var obj = eval('('+data+')');
+                            if(obj.status == 1){
+                                document.location.href = document.location.href;
+                            }else{
+                                alert(obj.msg);
+                            }
+                        });
+            }
+        }
+        function editCategory(cid){
+            ui.box.load(U('blog/Index/createcategory',['cid='+cid]),{title:'修改专辑'});
+        }
+
+        function del_category(cid){
+            if(confirm('你确认删除当前分类吗？注意：删除分类同时会把当前分类下面的博客一块删除')){
+                $.post("{:U('blog/Index/delcategory')}",
+                        {cid:cid,time:new Date().getTime()},
+                        function(data){
+                            var obj = eval('('+data+')');
+                            if(obj.status == 1){
+                                document.location.href = obj.url;
+                            }else{
+                                alert(obj.msg);
+                            }
+                        });
+            }
+        }
+    </script>
+</div>
+
+

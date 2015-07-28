@@ -1,0 +1,49 @@
+<include file="_header" />
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	$(window).scroll(function(){
+		var bot=100;
+		if ((bot + $(window).scrollTop()) >= ($(document).height() - $(window).height())) {
+			var url=$("#index_page").children("span").next().attr('url');
+			if (!url) return;
+			if ($('.feed-layout-wraper.hove').length > 0) return;
+			$('.feed-layout-wraper').addClass('hove');
+			$('.tip-content').html('正在加载内容，请稍侯...');
+			$.ajax({ 
+				url: url,
+				timeout: 29000,
+				success: function(html){
+				    $('#index_page').remove();
+					$("#blog_list").append(html);
+					$('.feed-layout-wraper').removeClass('hove');
+					$('.tip-content').html('此处精彩已尽收眼底');
+					},
+				error : function(){
+					$('.feed-layout-wraper').removeClass('hove');
+					$('.tip-content').html('加载数据失败');
+				},
+			});
+		}
+	})
+});
+//-->
+</script>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <include file="_left" />
+    <div class="content" id="bloglist">
+      <div class=" width" style="width:100%;">
+        <div class="news_box myblog" id="blog_list">
+           <include file="blog_list" />
+        </div>
+        <div class="feed-layout-wraper"><div class="loading-icon"></div><div class="tip-content">此处精彩已尽收眼底</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="_footer" />
+</div>
+</body>
+</html>

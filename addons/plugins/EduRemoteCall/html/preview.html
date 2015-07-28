@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>采集预览</title>
+<style type="text/css">
+body{font-size:12px;}
+td{padding:0 5px; height:22px; line-height:22px;}
+</style>
+</head>
+
+<body>
+<table width="500" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#f0f0f0" style="margin:60px">
+  <tr>
+    <td bgcolor="#FFFFFF" nowrap>序号</td>
+    <td bgcolor="#FFFFFF" nowrap>链接</td>
+    <td bgcolor="#FFFFFF" nowrap>标题</td>
+    <td bgcolor="#FFFFFF" nowrap>时间</td>
+  </tr>
+  <volist name="result" id="vo" k="i">
+  <tr>
+    <td bgcolor="#FFFFFF">{$i}</td>
+    <td bgcolor="#FFFFFF" nowrap><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+    <td bgcolor="#FFFFFF" nowrap>{$vo.name}</td>
+    <td bgcolor="#FFFFFF" nowrap>{$vo.date}</td>
+  </tr>
+  </volist>
+</table>
+</body>
+</html>

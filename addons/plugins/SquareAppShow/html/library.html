@@ -1,0 +1,72 @@
+<link href="{:SITE_URL}/apps/{$app_show}/Tpl/default/Public/css/library.css" rel="stylesheet" type="text/css" />
+<script src="{:SITE_URL}/apps/{$app_show}/Tpl/default/Public/js/preview.js" type="text/javascript"></script>
+<script>
+	var library_preview = '{$library_preview}';
+</script>
+
+<div class="mainbox_R">
+  <div class="box_create"><a href="{:U('library/Upload/index')}" class="btn_library_s"></a></div>
+  <div class="right_box">
+    <h2>推荐书目</h2>
+    <ul class="list_Reccategorys">
+    <div class="tit"><a href="#" class="ico_down"></a></div>
+      <volist name="IsHotList" id="li"> 
+   	    <li>
+          <div class="categorys_img"><a href="{:U('library/Index/category',array(uid=>$li['userId'],id=>$li['id']))}" target="_blank"><img src="{$li.id|get_category_cover=###,$li,66,66}" /></a></div>
+          <div class="categorys_info">
+            <dl>
+              <dt><a href="{:U('library/Index/category',array(uid=>$li['userId'],id=>$li['id']))}" target="_blank" class="OverH">{$li.name}</a> 共{$li.libraryCount}个</dt>
+              <dd>作者:<a href="{:U('home/Space/index',array(uid=>$li[userId]))}">{$li.userId|getUserName}</a></dd>
+              <dd>时间:2011-12-7</dd>
+            </dl>
+          </div>
+        </li>
+	  </volist>
+    <div class="btm"><a href="#" class="ico_up"></a></div>
+    </ul>
+  </div>
+</div>
+<div class="mainbox_C main_pad">
+<div class="tab-menu">
+	<ul>
+	<php>if('new' == $_GET['order']){</php>
+		<li><a href="{:U('home/Square/library', array_merge((array)$_GET, array('order'=>'hot')))}"><span>热门文档</span></a></li>
+        <li><a href="#" class="feed_item on"><span>最新文档</span></a></li>
+	<php>}else{</php>
+		<li><a href="#" class="feed_item on"><span>热门文档</span></a></li>
+        <li><a href="{:U('home/Square/library', array_merge((array)$_GET, array('order'=>'new')))}"><span>最新文档</span></a></li>
+	<php>}</php>
+    </ul>
+</div>
+<div class="libraryBox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tb_library_list" style="margin-top:15px">
+<thead>
+  <tr>
+    <td width="30">格式</td>
+    <td>文档名称</td>
+    <td width="100">上传者</td>
+    <td width="50">点击量</td>
+    <td width="140">上传时间</td>
+  </tr>
+</thead>
+<tbody>
+<volist name="librarys.data" id="li">
+  <tr<php>if($i%2==0){</php> class="row2"<php>}</php>>
+    <td><span class="libico ico_{$li.oldfilename|get_suffix}_s">{$li.oldfilename|get_suffix}</span></td>
+    <td><a href="{:U('library/Index/library',array(id=>$li['id'],aid=>$li['categoryId'],uid=>$li['userId']))}<neq name="type" value="">&type={$type}</neq>#show_doc" title="{$li.name}" class="title" >{$li.name|getShort='14'}</a></td>
+    <td><a href="{:U('home/Space/index',array(uid=>$li[userId]))}" target="_blank">{$li.userId|getUserName}</a></td>
+    <td>{$li.readCount}次</td>
+    <td>{$li.cTime|friendlyDate}</td>
+  </tr>
+</volist>
+</tbody>
+<tfoot style="display:none">
+    <td align="right" colspan="4">
+    	<div class="page">{$librarys['html']}</div>
+    </td>
+</tfoot>
+</table>
+</div>
+<div class="page">{$librarys['html']}</div>
+</div>
+<div class="c"></div>

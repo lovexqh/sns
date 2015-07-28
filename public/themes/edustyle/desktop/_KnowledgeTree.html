@@ -1,0 +1,121 @@
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<style type="text/css">
+.ztree li ul{
+	padding:0 0 0 8px;
+}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript">
+<!--
+//如果未定义zTreeOnClick方法时初始化空方法 孙晓波 2013-7-3
+if(typeof(zTreeOnClick)=='undefined') zTreeOnClick = function(){}
+//生成主配置参数  孙晓波 2013-7-3
+var setting = {
+	view: {
+		selectedMulti: false,
+		showIcon:true,
+		showLine:false
+	},
+	data: {
+		simpleData: {
+		enable:true,
+		idKey: "id",
+		pIdKey: "pId",
+		rootPId: ""
+		}
+	},
+	async: {
+		enable: true,
+		url: getUrl
+	},
+	callback: {
+		onClick: zTreeOnClick,
+		beforeExpand: beforeExpand,
+		onExpand: onExpand
+	}
+};
+var zNodes =[
+	<volist name='treenode' id='vo' key='k'>
+	<if condition="$k neq 1">,</if>
+	{ name:"{$vo['name']}", id:"{$vo['id']}",pId:"{$vo['pId']}",type:"{$vo['type']}",section:"{$vo['section']}",<if condition ="$vo['Grade'] neq ''">Grade:"{$vo['Grade']}",</if><if condition ="$vo['Subject'] neq ''">Subject:"{$vo['Subject']}",</if><if condition ="$vo['Publisher'] neq ''">Publisher:"{$vo['Publisher']}",</if><if condition ="$vo['Volume'] neq ''">Volume:"{$vo['Volume']}",</if><if condition ="$vo['Cell'] neq ''">Cell:"{$vo['Cell']}",</if><if condition ="$vo['CourseID'] neq ''">CourseID:"{$vo['CourseID']}",</if> isParent:"{$vo['isParent']}",open:"{$vo['open']}"}
+	</volist>
+];
+function getUrl(treeId, treeNode) {
+	if(treeNode==null) return; //如果treeNode为空时return 孙晓波 2013-7-3
+	var param = "&id="+treeNode.id+"&type="+treeNode.type+"&name="+treeNode.name+"&section="+treeNode.section+"&Subject="+treeNode.Subject+"&Grade="+treeNode.Grade+"&Publisher="+treeNode.Publisher+"&Volume="+treeNode.Volume+"&Cell="+treeNode.Cell;
+	return "__ROOT__/index.php?app=home&mod=Tree&act=getKnowledgeTree" + param;
+}
+<!--单节点展开开始-->
+var curExpandNode = null;
+function beforeExpand(treeId, treeNode) {
+	var pNode = curExpandNode ? curExpandNode.getParentNode():null;
+	var treeNodeP = treeNode.parentTId ? treeNode.getParentNode():null;
+	var zTree = $.fn.zTree.getZTreeObj("navtree");
+	for(var i=0, l=!treeNodeP ? 0:treeNodeP.children.length; i<l; i++ ) {
+		if (treeNode !== treeNodeP.children[i]) {
+			zTree.expandNode(treeNodeP.children[i], false);
+		}
+	}
+	while (pNode) {
+		if (pNode === treeNode) {
+			break;
+		}
+		pNode = pNode.getParentNode();
+	}
+	if (!pNode) {
+		singlePath(treeNode);
+	}
+
+}
+function singlePath(newNode) {
+	if (newNode === curExpandNode) return;
+	if (curExpandNode && curExpandNode.open==true) {
+		var zTree = $.fn.zTree.getZTreeObj("navtree");
+		if (newNode.parentTId === curExpandNode.parentTId) {
+			zTree.expandNode(curExpandNode, false);
+		} else {
+			var newParents = [];
+			while (newNode) {
+				newNode = newNode.getParentNode();
+				if (newNode === curExpandNode) {
+					newParents = null;
+					break;
+				} else if (newNode) {
+					newParents.push(newNode);
+				}
+			}
+			if (newParents!=null) {
+				var oldNode = curExpandNode;
+				var oldParents = [];
+				while (oldNode) {
+					oldNode = oldNode.getParentNode();
+					if (oldNode) {
+						oldParents.push(oldNode);
+					}
+				}
+				if (newParents.length>0) {
+					zTree.expandNode(oldParents[Math.abs(oldParents.length-newParents.length)-1], false);
+				} else {
+					zTree.expandNode(oldParents[oldParents.length-1], false);
+				}
+			}
+		}
+	}
+	curExpandNode = newNode;
+}
+function onExpand(event, treeId, treeNode) {
+	curExpandNode = treeNode;
+}
+<!--单节点展开结束-->
+function filter(treeId, parentNode, childNodes) {
+	if (!childNodes) return null;
+	for (var i=0, l=childNodes.length; i<l; i++) {
+		childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+	}
+	return childNodes;
+}
+$(document).ready(function(){
+	$.fn.zTree.init($("#navtree"), setting,zNodes);
+});
+//-->
+</script>

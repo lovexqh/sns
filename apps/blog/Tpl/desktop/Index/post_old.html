@@ -1,0 +1,180 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<div class="divcenter">
+	<div class="uptop">上传视频</div>
+	<div class="upcnt">
+		<form name="save_video" id="save_video" method="post" action="{:U('video/Upload/save_single_video')}" onsubmit="return add_video();">
+			<input type="hidden" name="ajax" value="1" />
+			<input type="hidden" id="fcode" name="info[fcode]" value="" />
+			<input type="hidden" id="outfilename" name="info[outfilename]" value="" />
+			<input type="hidden" id="filename" name="info[filename]" value="" />
+			<input type="hidden" id="savepath" name="info[savepath]" value="" />
+			<input type="hidden" name="info[serverpath]" value="{$config['serverurl']}" />
+			<table width="605" border="0" cellspacing="0" cellpadding="0" class="uptablel">
+			    <tr>
+			      <th width="109" height="30" scope="row">选择文件：</th>
+			      <td width="503">
+			      	<a type="button" class="easyui-linkbutton medium-primary" id="spanSWFUploadButton">选择文件</a>
+			      </td>
+			    </tr>
+			    <tr style="margin:0px;padding:0px;">
+			      <th height="30" scope="row">&nbsp;</th>
+			      <td>
+			      	<div class="uptdt showfile">少年派漂流记</div>
+			      </td>
+			    </tr>
+			    <tr style="margin:0px;padding:0px;">
+			      <th height="30" scope="row">&nbsp;</th>
+			      <td>
+			      	<div class="fileoper">
+				  	<div class="processbar">
+						<div class="process"></div>
+					</div>
+					<div class="processext showprocess">0%</div>
+					<div class="processext"><a href="javascript:;" onclick="javascript:Uploader.Handler.uploadCancel();">取消上传</a></div>
+					</div>
+				  </td>
+			    </tr>
+			    <tr>
+			      <th height="45" scope="row"><em class="red">*</em>标    题：</th>
+			      <td>
+			      <input type="text" class="upinsty1" name="info[name]" id="videoname" /></td>
+			    </tr>
+			    <tr>
+			      <th height="30" scope="row">简    介：</th>
+			      <td>
+			      <textarea name="info[info]" rows="6" class="uptext" id="info[info]"></textarea></td>
+			    </tr>
+			    <tr>
+			      <th height="30" scope="row">视频专辑：</th>
+			      <td>
+			      	{:W('CategoryList',array( 'uid'=>$mid , 'form_name'=>'categoryId' , 'selected'=>intval($_GET['categoryId']), 'style'=>array('height'=>'29px') ) )}
+					<a href="javascript:;" onclick="javascript:createCategory();"><img style="margin-bottom:-10px;" src="../Public/images/crcate.jpg"></a>
+				  </td>
+			    </tr>
+			    <tr>
+			      <th height="30" scope="row">访  问：</th>
+			      <td>
+			      	<select name="info[privacy]" id="info_privacy" onChange="javascript:changePrivacy();">
+			            <option value="1">所有人可见</option>
+			            <option value="2">仅我关注可见</option>
+			            <option value="3">仅自己可见</option>
+			        </select>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th height="30" scope="row">是否原创：</th>
+			      <td>
+			        <select name="info[orgin]" id="info[orgin]">
+			          <option value="0">否</option>
+			          <option value="1">是</option>
+			      </select></td>
+			    </tr>
+		  </table>
+		  <div class="upright">
+		  	<div class="uprtop"><em class="red">*</em>广场分类</div>
+			<div class="c2" style="width:265px;">
+				<input type="hidden" id="info_square" name="info[square]" value="" />
+				<ul id="navtreeother" class="ztree uptree"></ul>
+			</div>
+		  </div>
+		</form>
+		<div class="c"><input type="hidden" name="uid" id="uid" value="{$this->mid}"></div>
+	</div>
+	<div class="clear10"></div>
+	<div class="dosave"><a href="javascript:;" onclick="javascript:$('#save_video').submit();"><img src="../Public/images/dosave.jpg" ></a></div>
+</div>
+<script type="text/javascript">
+function add_video(){
+	var videoname = $('#videoname').val();
+	var privacy = $('#info_privacy').val();
+	var square = $('#info_square').val();
+	/*
+	var reobj = swfu.getFile(0);
+	if(reobj == null){
+		alert('请选择上传文件');
+		return false;
+	}
+	*/
+	if(!isfile){
+		alert('请选择上传文件');
+		return false;
+	}
+	if(privacy == 1){
+		if(square == ''){
+			alert('请选择广场分类！');
+			return false;
+		}
+	}
+	swfu.startUpload();
+	return false;
+}
+function createCategory(){
+	ui.box.load(U('square/Video/createcategory'),{title:'创建专辑'});
+}
+function changePrivacy(){
+	var privacy = $('#info_privacy').val();
+	if(privacy != 1){
+		$('.upright').hide();
+	}else{
+		$('.upright').show();
+	}
+}
+</script>
+<script type="text/javascript">
+//选择备课节点时给隐藏域相应输入框赋值
+function zTreeOnClick(event, treeId, treeNode) {
+	if(typeof(treeNode.Grade)!='undefined'){
+		$("input[name='info[grade]']").val(treeNode.Grade);
+	}
+	if(typeof(treeNode.Subject)!='undefined'){
+		$("input[name='info[subject]']").val(treeNode.Subject);
+	}
+	if(typeof(treeNode.Publisher)!='undefined'){
+		$("input[name='info[publisher]']").val(treeNode.Publisher);
+	}
+	if(typeof(treeNode.Volume)!='undefined'){
+
+		$("input[name='volume']").val(treeNode.Volume);
+	}
+	if(typeof(treeNode.Cell)!='undefined'){
+
+		$("input[name='cell']").val(treeNode.Cell);
+	}
+	if(typeof(treeNode.CourseID)!='undefined'){
+		$("input[name='info[courseid]']").val(treeNode.CourseID);
+	}
+	var parentname=treeNode.name;
+	while(!!treeNode.parentTId && !!pNode) {
+		parentname=pNode.name+parentname;
+		var pNode = pNode.getParentNode();
+	}
+	$("input[name='fenlei']").val(parentname);
+};
+
+var settingother = {
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+		}
+	}
+};
+var zNodesother =[
+	<volist name="sqcategory" id="vo" key="k">
+		{ id:"{$vo['id']}", pId:"{$vo['p_id']}", name:"{$vo['category_name']}", click:"noteClick({$vo['id']})"<php>if(in_array($vo['id'],$path) || $vo['p_id'] == 2){</php>,open:"true"<php>}</php>},
+	</volist>];
+function noteClick(id){
+	if(typeof(id)!='undefined'){
+			$("input[name='info[square]']").val(id);
+		}
+}
+$(document).ready(function(){
+	try{
+		$.fn.zTree.init($("#navtreeother"), settingother, zNodesother);
+	}catch(e){}
+});
+</script>
+<script src="../Public/js/category.js?{$verhash}" type="text/javascript"></script>
+<include file="../Public/_footer" />

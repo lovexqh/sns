@@ -1,0 +1,177 @@
+﻿{template header}
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<link rel="stylesheet" href="js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
+
+<script language="javascript" type="text/javascript">
+var userAgent = navigator.userAgent.toLowerCase();
+var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+function checkall(name) {
+	var e = is_ie ? event : checkall.caller.arguments[0];
+	obj = is_ie ? e.srcElement : e.target;
+	var arr = document.getElementsByName(name);
+	var k = arr.length;
+	for(var i=0; i<k; i++) {
+		arr[i].checked = obj.checked;
+	}
+}
+</script>
+	<SCRIPT type="text/javascript">
+		<!--
+			var tree_setting = {
+				view: {
+					selectedMulti: false
+				},
+				async: {
+					enable: true,
+					url:"admin.php?m=student&a=ClassTreeNav",
+					autoParam:["id", "title=n", "deepL=lv","schoolid=scid","id=acadid"],
+					dataFilter: filter
+				},
+				callback: {
+					beforeClick: beforeClick,
+					beforeAsync: beforeAsync,
+					onAsyncError: onAsyncError,
+					onAsyncSuccess: onAsyncSuccess
+				},
+				data: {
+					key: {
+						name: "title"
+					}
+				}
+			};
+
+			function filter(treeId, parentNode, childNodes) {
+				if (!childNodes) return null;
+				for (var i=0, l=childNodes.length; i<l; i++) {
+					childNodes[i].title = childNodes[i].title.replace(/\.n/g, '.');
+				}
+				return childNodes;
+			}		
+			function beforeClick(treeId, treeNode) {
+				if (!treeNode.isParent || treeNode.deepL=="school") {
+					if(treeNode.id<1){
+						return false;
+					}
+
+					var url ="";
+
+					if (treeNode.deepL=="school") {
+						url = "admin.php?m=student&a=TreeNav&schoolid="+treeNode.schoolid+"&schoolName="+treeNode.title;
+					}else{
+						url = "admin.php?m=student&a=TreeNav&classId="+treeNode.id+"&className="+treeNode.title;
+					}
+					
+					form = document.getElementById('class_form');
+					form.action = url;
+					form.submit();
+					return true;
+
+				} else {
+					return false;
+				}
+			}
+			function allPrpos(obj) {
+				// 鐢ㄦ潵淇濆瓨鎵�湁鐨勫睘鎬у悕绉板拰鍊�
+				var props = "";
+				// 寮�閬嶅巻
+				for(var p in obj){
+					// 鏂规硶
+					if(typeof(obj[p])=="function"){
+						//obj[p]();
+					}else{
+						// p 涓哄睘鎬у悕绉帮紝obj[p]涓哄搴斿睘鎬х殑鍊�
+						props += p + "=" + obj[p] + ";  ";
+					}
+				}
+				// 鏈�悗鏄剧ず鎵�湁鐨勫睘鎬�
+				alert(props);
+			}
+
+			var log, academyName = "dark";
+			function beforeAsync(treeId, treeNode) {
+				academyName = (academyName === "dark" ? "":"dark");
+				return true;
+			}
+			function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+
+			}
+			function onAsyncSuccess(event, treeId, treeNode, msg) {
+
+			}
+
+			function refreshNode(e) {
+				var zTree = $.fn.zTree.getZTreeObj("class_tree"),
+				type = e.data.type,
+				silent = e.data.silent,
+				nodes = zTree.getSelectedNodes();
+				if (nodes.length == 0) {
+					alert("璇峰厛閫夋嫨涓�釜鐖惰妭鐐�);
+				}
+				for (var i=0, l=nodes.length; i<l; i++) {
+					zTree.reAsyncChildNodes(nodes[i], type, silent);
+					if (!silent) zTree.selectNode(nodes[i]);
+				}
+			}
+
+			function switchbtn(btn) {
+				var ids = Array('srchdept','adddepttype');
+				for(i=0;i<ids.length;i++){
+					document.getElementById(ids[i]+'div').style.display = 'none';
+					document.getElementById(ids[i]+'div').className = '' ;
+					document.getElementById(ids[i]+'btn').className = '';
+				}
+				document.getElementById(btn+'div').style.display = '';
+				document.getElementById(btn+'div').className = 'tabcontentcur' ;
+				document.getElementById(btn+'btn').className = 'tabcurrent';
+			}
+
+			//閮ㄩ棬绫诲瀷娣诲姞鎻愪氦楠岃瘉
+			function checktypeform(form){
+				if(form.typename.value==''){
+					alert('璇疯緭鍏ョ被鍨嬪悕绉�绫诲瀷鍚嶇О涓嶈兘涓虹┖锛�);
+					return false;
+				}
+				form.submit();
+				form.typename.value='';
+				return false;
+			}
+
+			$(document).ready(function(){
+				$.fn.zTree.init($("#class_tree"), tree_setting);
+				$("#refreshNode").bind("click", {type:"refresh", silent:false}, refreshNode);
+				$("#refreshNodeSilent").bind("click", {type:"refresh", silent:true}, refreshNode);
+				$("#addNode").bind("click", {type:"add", silent:false}, refreshNode);
+				$("#addNodeSilent").bind("click", {type:"add", silent:true}, refreshNode);
+			});
+		//-->
+    </SCRIPT>
+	<div class="container">
+        <div class="mainbox">
+            <form id="class_form" action="#" method="post" target="class_main">
+            </form>
+            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+              <tr>
+                <td width="250" valign="top">
+                    <div class="structmenu" style="width:250px">
+                        <ul class="tabmenu">
+                            <li class="tabcurrent"><a href="javascript:;">{lang dept_struct}</a></li>
+                        </ul>
+                        <div class="structcontentcur">
+                                <ul id="class_tree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </td>
+                <td width="5"></td>
+                <td valign="top">
+                    <iframe id="class_main" name="class_main" width="99%" height="560" src="admin.php?m=student&a=Init" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>
+                </td>
+              </tr>
+            </table>
+        </div>
+	</div>
+
+
+{template footer}

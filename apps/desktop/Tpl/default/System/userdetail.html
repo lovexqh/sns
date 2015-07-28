@@ -1,0 +1,35 @@
+<include file="../Public/_header_ajax" />
+		<div class="userdetail lineD_btm">
+            <dl>
+                <dt class="userpic" onmouseover="this.className='userpic over'" onmouseout="this.className='userpic'">
+                    <space uid="mid" class="nocard">{uavatar}</space>
+                    <a class="pic" href="{:U('home/account/index')}#face">上传头像</a>
+                </dt>
+                <dd class="user_name">
+                    <a href="{:U('home/Space/index', array('uid' => $uid))}">{$userInfoCache['uname']}</a><php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</dd>
+                <php>if(!empty($ucInfoCache['deptinfo'])){</php>
+                <eq name="ucInfoCache['identitytype']" value="2"><!-- 老师 -->
+                    <dd>老师</dd>
+                    <dd>{$ucInfoCache['deptinfo']['schoolname']}</dd>
+                </eq>
+                <eq name="ucInfoCache['identitytype']" value="3"><!-- 学生 -->
+                    <dd>{$ucInfoCache['deptinfo']['schoolname']}</dd>
+                    <dd><php>echo empty($ucInfoCache['deptinfo']['bj'])?'无班级信息':$ucInfoCache['deptinfo']['bj'];</php></dd>
+                </eq>
+                <eq name="ucInfoCache['identitytype']" value="4"><!-- 家长 -->
+                    <dd>{$ucInfoCache['deptinfo']['bj']}</dd>
+                    <dd>{$ucInfoCache['deptinfo']['sonname']}的家长</dd>
+                </eq>
+                <php>}</php>
+            </dl>
+            <div class="clear"></div>
+            <ul>
+                <li><span class="left mr10">资料完整度</span><div class="progress"><span class="bg" style="width:{$userinfo_rate}%"></span></div><div class="percent">{$userinfo_rate}%</div></li>
+                <li><span class="left mr10">我关注的人</span><em><a href="{:U('home/space/follow',array('type'=>'following', 'uid'=>$mid))}">{$userInfoCache['following']}</a></em></li>
+                <li><span class="left mr10">关注我的人</span><em><a href="{:U('home/space/follow',array('type'=>'follower', 'uid'=>$mid))}">{$userInfoCache['follower']}</a></em></li>
+                <li><dd><a href="{:U('home/Public/logout')}" style="float:right;margin-right:20px;color:red" class="pagelink">退出系统</a></dd></li>
+            </ul>
+            <div class="clear pb10"></div>
+        </div>
+		
+<include file="../Public/_footer_ajax" />

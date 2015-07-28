@@ -1,0 +1,147 @@
+<include file="_header" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/desktopcss/resource.css" />
+<div class="wrapper">
+	<include file="header" />
+    <div class="main">
+        <include file="_left" />
+        <div class="content">
+            <div class="box width" id="con_per" style="width:700px;">
+            <ul class="course_category">
+              <li <php>if($get['charttype']=='rank'||$get['charttype']==''){</php>class="on"<php>}</php>>
+              	<a href="{:U('square/Resource/chart',URLformat(array('charttype'=>'rank','classified'=>$get['classified'],'subject'=>$get['subject'],'publisher'=>$get['publisher'],'grade'=>$get['grade'],'volume'=>$get['volume'],'cell'=>$get['cell'],'course'=>$get['course'],'attribute'=>$get['attribute'],'cateid'=>$get['cateid'])))}">优秀资源排行榜</a>
+              </li> 	
+              <li <php>if($get['charttype']=='contribute'){</php>class="on"<php>}</php>>
+              	<a href="{:U('square/Resource/chart',URLformat(array('charttype'=>'contribute','classified'=>$get['classified'],'subject'=>$get['subject'],'publisher'=>$get['publisher'],'grade'=>$get['grade'],'volume'=>$get['volume'],'cell'=>$get['cell'],'course'=>$get['course'],'attribute'=>$get['attribute'],'cateid'=>$get['cateid'])))}">活跃人物排行榜</a>
+              </li>
+              <div class="clear"></div>
+            </ul>
+            <php>if($get['charttype']=='rank'||$get['charttype']==''){</php>
+            	<table border="0" cellpadding="0" cellspacing="0" class="category_list">
+           
+                  <volist name="rank.data" id="vo">
+                  <tr>
+                    <td>
+                    <table class="small_table">
+                       <tr>
+                          <td rowspan="3" width="70">
+                            <php>if($obj[tabletypeid]==1){</php>
+                                <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                            <php>}elseif($obj[tabletypeid]==2){</php>
+                                <a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                            <php>}else{</php>
+                                <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">
+                            <php>}</php> 
+                          <img src="{$vo['id']|getThumb}" width="49px" height="61px">
+                          </a>
+                          </td>
+                          <td style="font-weight:bold;width:500px; height:25px;">
+                           <php>if($vo[tabletypeid]==1){</php>
+                                <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                            <php>}elseif($vo[tabletypeid]==2){</php>
+                                <a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                            <php>}else{</php>
+                                <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">
+                            <php>}</php> 
+                          {$vo['title']}&nbsp;&nbsp;
+                          </a>
+                          </td> 
+                          <td class="last_table">{$vo['readCount']}人已阅读</td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <php>if($vo['subject']){</php>{$vo['subject']|getDictionary}  <php>}</php>
+                               <php>if($vo['grade']){</php>{$vo['grade']|getDictionary}  <php>}</php>
+                               <php>if($vo['publisher']){</php>{$vo['publisher']|getDictionary}  <php>}</php>
+                               <php>if($vo['chapters']){</php>{$vo['chapters']|getCourse}  <php>}</php>
+                               <php>if($vo['attribute']){</php>{$vo['attribute']|getbyDC}  <php>}</php>
+                               <php>if($vo['type']){</php>{$vo['type']|getbyDC}  <php>}</php>
+                               <php>if($vo['category_id']){</php>{$vo['category_id']|getcategory}  <php>}</php>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                             <php>if($vo['mtime']){</php>
+                              <td>上传于：{$vo['mtime']|date="Y-m-d H:i",###}   贡献者：{$vo['uid']|getUserName=###}</td>
+                             <php>}elseif($vo['time']){</php>
+                              <td>上传于：{$vo['time']|date="Y-m-d H:i",###}   贡献者：{$vo['uid']|getUserName=###}</td>
+                             <php>}</php> 
+                              
+                             <td style="border-left:1px solid #e6e6e6;width:110px;">
+                               <php>if($vo[tabletypeid]==1||$vo[tabletypeid]==2){</php>
+                               [{$vo.schoolid|getSchoolName}]
+                               <php>}else{</php>
+                               <php>for($i=1;$i<=5;$i++){</php>
+                                 <php>if($i<=getAVG($vo['id'])){</php>
+                                 <img src="__THEME__/square/images/star_full.png">
+                                 <php>}else{</php>
+                                 <img src="__THEME__/square/images/star_empty.png">
+                                 <php>}</php>
+                               <php>}}</php>
+                             </td>
+                        </tr>
+                      </table>
+                      </td>
+                  </tr>
+                  </volist>
+                </table>
+            	<div class="page">{$rank.html}</div>
+            
+            <php>}if($get['charttype']=='contribute'){</php>
+                <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+                <tr>
+                    <th width="20%" >头像</th>
+                    <th width="30%">姓名</th>
+                    <th width="15%">上传数</th>
+                    <th width="15%">下载数</th>
+                    <th width="15%">原创数</th>
+                    <th width="5%">&nbsp;</th>
+                  </tr>
+                <volist name="contribute.data" id="vo">
+                  <tr>
+                    <td style="padding:10px;"><space uid="vo['uid']" target="_blank">{uavatar=m}</space></td>
+                    <td width="20%"><space uid="vo.uid" class="co">{uname}</space></td>
+                    <td width="20%">{$vo['count']}</td>
+                    <td width="20%">{$vo['uid']|getdowncount}</td>
+                    <td width="20%">{$vo['original']}</td>
+                  </tr>
+                  </volist>
+                </table>
+                <div class="page">{$html}</div>
+                <php>}if($get['charttype']=='schoolcon'){</php>
+				<table border="0" cellpadding="0" cellspacing="0" width="98%" class="category_list" id="con_school">
+                    <tr>
+                        <th width="15%">&nbsp;</th>
+                        <th width="35%">学校</th>
+                        <th width="25%">上传数</th>
+                        <th width="12%">总点击数</th>
+                      </tr>
+                    <volist name="schoolcon.data" id="vo">
+                      <tr>
+                        <td style="padding:10px;">
+                        {$i}
+                        </td>
+                        <td>{$vo['schoolid']|getSchoolName}</td>
+                        <td>{$vo['count']}</td>
+                        <td>{$vo['readcount']}</td>
+                      </tr>
+                      </volist>
+                      
+                    </table>
+                    <div class="page">{$html}</div>
+            <php>}</php>
+          </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+   <include file="_footer" />
+</div>
+<script type="text/javascript">
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().parent().parent().parent().find('.box').hide();
+	$(obj).parent().addClass('on');
+	$("#con_"+id).show();	
+}
+</script>
+</body>
+</html>

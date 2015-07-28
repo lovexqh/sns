@@ -1,0 +1,139 @@
+<script type="text/javascript">
+	$('html').css('height', '100%');
+	$('html').css('width', '100%');
+	$('html').css('overflow', 'hidden');
+	$('.close').click(function() {
+		$('html').css('height', '100%');
+		$('html').css('width', '100%');
+		$('html').css('overflow', 'auto');
+	});
+$(document).ready(function(){
+	$(".userList>ul>li img").live("click",function(){
+		$('.userList>ul>li').removeClass('user_sel');
+		$(this).parent().parent().addClass('user_sel');
+	});
+	$("input[name=jiesan]").click(function(){
+		var jiesan = $("input[name=jiesan]:checked").val();
+		if(jiesan==0){
+			$('.tuichu .manager').css('display','block');
+		}else{
+			$('.tuichu .manager').css('display','none');
+			$('.userList').css('display','none');
+		}
+	});
+	$("input[name=other]").click(function(){
+		var jiesan = $("input[name=other]:checked").val();
+		if(jiesan==-99){
+			$('.userList').css('display','block');
+		}else{
+			$('.userList').css('display','none');
+		}
+	});
+	$('.querenM').click(function(){
+		var societyId = $("input[name=societyId]").val();
+		var jiesan = $("input[name=jiesan]:checked").val();
+		var other  = $("input[name=other]:checked").val();
+		var uid    = $(".user_sel").attr('name');
+		if(!jiesan){
+			ui.error('您没有任何操作');
+			return false;
+		}else if(jiesan==0){
+			if(!other){
+				ui.error('请选择您要交接的人选!');
+				return false;
+			}else if(other=='-99'){
+				if(!uid){
+					ui.error('请选择您要交接的人选!');
+					return false;
+				}
+			}
+		}
+		$.post(U('society/Index/doTuiChuQuanZi'),{
+			societyId : societyId ,
+			jiesan    : jiesan ,
+			other     : other ,
+			uid       : uid,
+			tuichuType: 1
+			},function(data){
+			var data = eval('(' + data + ')');
+			if(data.status==1){
+				ui.success('操作成功！');
+	      		location.href = ('{:U('society/Index/showOthersIndex')}');
+	     	}else{
+	     		ui.error(data.msg);
+		 	}
+		});
+	});
+	$('.querenN').click(function(){
+		var societyId = $("input[name=societyId]").val();
+		$.post(U('society/Index/doTuiChuQuanZi'),{
+			societyId : societyId,
+			tuichuType: 0
+			},function(data){
+			var data = eval('(' + data + ')');
+			if(data.status==1){
+				ui.success('退出成功！');
+	      		location.href = ('{:U('society/Index/showOthersIndex')}');
+	     	}else{
+	     		ui.error(data.msg);
+		 	}
+		});
+	});
+});
+</script>
+<style type="text/css">
+.manager input{margin-left: 20px;}
+</style>
+<php>if($myInfo['status']==2){</php>
+<div style="width: 750px;height: 500px;overflow-Y: scroll;background-color: #F9F9F9;"class="tuichu">
+	<!-- 创建者  -->
+	<div class="tuichu_xuanxiang">
+		<p style="font-size: 15px;">您是圈主,退出圈子请选择</p>
+		<p>
+			<input type="radio" name="jiesan" value="1">解散本圈子
+		</p>
+		<php>if(count($members)>1){</php>
+		<p>
+			<input type="radio" name="jiesan" value="0">圈主交接
+		</p>
+		<php>}</php>
+	</div>
+	<div class="manager" style="margin-left: 80px;margin-top: 10px;display: none;width: 630px;">
+		<volist name="members" id="vo">
+		<php>if ($vo['status']==1){</php>
+			<input type="radio" name="other" value="{$vo.uid}">
+			<img width="20" height="20" src="{$vo.uid|getUserFace}">
+			<a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="user" href="javascript:void(0);">{$vo.uid|getUserName}</a>
+		<php>}</php>
+		</volist>
+		<input type="radio" name="other" value="-99">选择其他成员
+	</div>
+	<div style="max-height:290px;overflow-Y: scroll; margin-left: 80px; background-color: #FFF;display: none;" class="userList">
+		<ul>
+		<volist name="members" id="vo">
+			<php>if ($vo['status']==0){</php>
+			<li name="{$vo.uid}">
+				<div style="text-align: center;">
+					<img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}">
+					<p><a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="user" href="javascript:void(0);">{$vo.uid|getUserName}</a></p>
+				</div>
+			</li>
+			<php>}</php>
+		</volist>
+		</ul>
+	</div>
+	<div style="clear: both; margin-top: 15px; text-align: center; margin-bottom: 30px;">
+		<a class="queren querenM"></a>
+	</div>
+<php>}else{</php>
+<div style="width: 750px; max-height: 540px; overflow-Y: scroll;background-color: #F9F9F9;" class="tuichu">
+	<!-- 普通成员  -->
+	<div class="tuichu_xuanxiang">
+		<a style="font-size: 15px;">确认退出本圈子？</a>
+	</div>
+	<div
+		style="clear: both; margin-top: 15px; text-align: center; margin-bottom: 30px;">
+		<a class="queren querenN"></a>
+	</div>
+<php>}</php>
+</div>

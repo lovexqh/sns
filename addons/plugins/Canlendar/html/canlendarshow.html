@@ -1,0 +1,93 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<style>
+.divCourse{width:1px;height:1px;position: relative;float:right;}
+.aCourse{display:block;width:100%;height:15px;line-height: 15px;overflow:hidden;float:right;}
+.aCoursehover{background:#B8ABFA;}
+.floatCourse{width:200px;height:200px;display:none;position:absolute;right:30px;top:-205px;border:2px solid #B8ABFA;background:#d7d0fb;}
+.floatCourse td{padding-left:20px;}
+</style>
+<script>
+	function canlendarChange(val){
+		if(val != ''){
+			$.post("<php>echo $ajaxurl;</php>",
+			{wknum:val,time:new Date().getTime()},
+			function(data){
+				$('#showCalendar').html(data);
+			});
+		}
+	}
+	
+	function showCourse(val,weeknum){
+		$('.aCourse').removeClass("aCoursehover");
+		$('#aCourse'+val).addClass("aCoursehover");
+		$('.floatCourse').hide();
+		$('#ShowCourse'+val).show();
+	}
+	function closeCourse(){
+		$('.aCourse').removeClass("aCoursehover");
+		$('.floatCourse').hide();
+	}
+</script>
+<div class="boxitem" style="padding: 0px; margin: 0px; height: auto;">
+	<div class="box_title">
+		<h2>课程表</h2>
+	</div>
+	<div style="width: 100%; height: 20px; clear: both; text-align: right; padding-top: 10px;">当前第 <php>echo (int)$weeknum+1;</php> 周 - 
+		<select id="wknum" name="wknum" onchange="javascript:canlendarChange(this.value);">
+			<php>for($k=0;$k<$total;$k++){</php>
+			<option value="<php>echo $k;</php>" <php>if($weeknum == $k){echo 'selected';}</php>>第 <php>echo $k+1;</php> 周</option>
+			<php>}</php>
+		</select>
+	</div>
+	<div id="showCalendar">
+		<table width="100%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0">
+			<php>for($i=0;$i<7;$i++){</php>
+			<php>if ($i == 0){</php>
+			<tr style="background:#b8abfa;">
+				<td width="12">&nbsp;</td>
+				<td width="31" align="center">一</td>
+				<td width="32" align="center">二</td>
+				<td width="33" align="center">三</td>
+				<td width="30" align="center">四</td>
+				<td width="30" align="center">五</td>
+				<td width="32" align="center">六</td>
+			</tr>
+			<php>}else{</php>
+			<tr>
+				<td width="12" style="background:#b8abfa;text-align:center;"><php> echo $i;</php></td>
+				<php>for($j=1;$j<=6;$j++){</php>
+				<td width="31" align="center" <php> if($thiswk == $j){echo 'style="background:#eeeeee;"';}</php> >
+					<php>if($courseList[$weeknum][$j.$i]['kcm'] !=''){</php>
+					<a href="#" onmouseover="javascipt:showCourse('<php> echo $j.$i;</php>','<php>echo $weeknum;</php>');"  onmouseout="javascript:closeCourse();" title="<php>echo $courseList[$weeknum][$j.$i]['kcm'];</php>" class="aCourse" id="aCourse<php> echo $j.$i;</php>"><php>echo $courseList[$weeknum][$j.$i]['kcm'];</php></a>
+					<div class="divCourse" id="<php>echo 'show'.$j.$i;</php>">
+						<div class="floatCourse" id="ShowCourse<php> echo $j.$i;</php>">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							  <tr>
+							    <td height="30" width="91" bgcolor="#B8ABFA"><strong>课程名称：</strong></td>
+							  </tr>
+							  <tr>
+							    <td height="30"><php>echo $courseList[$weeknum][$j.$i]['kcm'];</php></td>
+							  </tr>
+							  <tr>
+							    <td height="30" bgcolor="#B8ABFA"><strong>授课老师：</strong></td>
+							  </tr>
+							  <tr>
+							    <td height="30"><php>echo $courseList[$weeknum][$j.$i]['jsxm'];</php></td>
+							  </tr>
+							  <tr>
+							    <td height="30" bgcolor="#B8ABFA"><strong>上课地点：</strong></td>
+							  </tr>
+							  <tr>
+							    <td height="30"><php>echo $courseList[$weeknum][$j.$i]['jxlm'].' '.$courseList[$weeknum][$j.$i]['jsm'];</php></td>
+							  </tr>
+							</table>
+						</div>
+					</div>
+					<php>}</php>
+				</td>
+				<php>}</php>
+			</tr>
+			<php>}}</php>
+		</table>
+	</div>
+</div>

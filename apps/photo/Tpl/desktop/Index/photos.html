@@ -1,0 +1,99 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<div class="divcenter">
+    <div class="poluser bkwhite" style="width: 930px;">
+        <span><img src="{$uid|getUserFace}" width="55"></span>
+        <span class="line-height25">
+            <p><a style="color: #058cf1;" href="{:U('photo/Index/photos',array('uid'=>$uid))}">{$uid|getUserName}</a> </p>
+            <p>上传：{$num}张  </p>
+        </span>
+        <if condition="$isself neq true">
+        <div class="vusername" id="follow_state" style="text-align:center; padding:10px 0;">
+            <script>document.write(followState('{$followstate}','',{$uid}));</script>
+        </div>
+        </if>
+        <div class="clear"></div>
+    </div>
+    <div class="polalbum bkwhite">
+        <div class="albumtop"><span id="albumname">{$uid|getUserName} - 个人中心</span> </div>
+    </div>
+    <div class="divcenter">
+        <ul id="container" class="piclist">
+            <if condition="$p eq 1">
+            <li class="item">
+                <div class="albumlist">
+                    <div class="portop">相册列表</div>
+                    <ul class="categorylist">
+                        <volist name="right_albums" id="ra"  empty="$temp_empty_xc">
+                            <li class="height50">
+                                <span><a href="{:U('photo/Index/album',array('id'=>$ra['id']))}" target="_blank" title="{$ra['name']}"><img src="{$ra.id|get_album_cover=###,$li}" width="50" height="50"> </a> </span>
+                                <span>
+                                    <p>相册名称：</p>
+                                    <p><a href="{:U('photo/Index/album',array('id'=>$ra['id']))}" target="_blank" title="{$ra['name']}">{$ra['name']}</a></p>
+                                </span>
+                            </li>
+                        </volist>
+                        <li class="clear"></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </li>
+            </if>
+            <volist name="photos.data" id="po" empty="$temp_empty">
+                <li class="item" id="item_{$po['id']}">
+                    <p><a href="{:U('photo/Index/photo',array('id'=>$po['id']))}" target="_blank" title="{$po['name']}" ><img src="{$po['savepath']|get_photo_url}" alt="{$po['name']}" width="228"></a></p>
+                    <p class="t"><a href="{:U('photo/Index/photo',array('id'=>$po['id']))}" target="_blank" title="{$po['name']}" > {$po['name']} </a></p>
+                    <p class="t"><a href="{:U('photo/Index/album',array('id'=>$po['albumId']))}" target="_blank" title=" {$po['albumId']|get_album_name} " > {$po['albumId']|get_album_name} </a></p>
+                    <p class="t">{$po['cTime']|friendlyDate}</p>
+                    <if condition="$isself eq true">
+                        <p class="t" style="text-align: right;padding-right:15px;"> <a href="javascript:;" onclick="javascript:editphotoBox('{$po['id']}','{$po['albumId']}');">修改</a> <a href="javascript:;" onclick="javascript:delphoto('{$po['id']}','{$po['albumId']}','center');">删除</a> </p>
+                    </if>
+                </li>
+            </volist>
+        </ul>
+        <php>if((int)$photos['nowPage'] < (int)$photos['totalPages']){</php>
+        <php>$nextPage = (int)$photos['nowPage'] + 1;</php>
+        <php>$url = U('photo/Index/photos',array('p'=>$nextPage));</php>
+        <php>}else{</php>
+        <php>$url = '';}</php>
+        <div id="page-nav" style="display:none;"><a href="{$url}"></a></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+    var $container = $('#container');
+    $(document).ready(function(){
+
+        $container.imagesLoaded( function(){
+            $container.masonry({
+                columnWidth: 40, //每两列之间的间隙为5像素
+                itemSelector: '.item'
+            });
+        });
+
+        $container.infinitescroll({
+                    navSelector  : '#page-nav',    // 选择的分页导航
+                    nextSelector : '#page-nav a',  // 选择的下一个链接到（第2页）
+                    itemSelector : '.item',     // 选择检索所有项目
+                    loading: {
+                        finishedMsg: '  ',
+                    }
+                },function(newElements){
+
+                    // 隐藏新的项目，而他们正在加载
+                    var newElems = $( newElements ).css({ opacity: 0 });
+
+                    // 确保的图像装载增加砖石布局
+                    newElems.imagesLoaded(function(){
+
+                        // 元素展示准备
+                        newElems.animate({opacity:1});
+                        $container.masonry( 'appended', newElems, true );
+
+                    });
+
+                }
+        );
+    });
+</script>
+<include file="Public:_footer" />

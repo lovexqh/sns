@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- QQ登录 -->
+<meta property="qc:admins" content="61701556566401633636375" />
+<!-- Sina登录 -->
+<meta property="wb:webmaster" content="eea9139908d213b0" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/public.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__THEME__/layout.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__THEME__/main.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+<script src="__PUBLIC__/js/jquery.isotope.min.js"></script>
+
+
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<!--<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/html5.js"></script>
+<![endif]-->
+
+<style type="text/css">
+.headerHolder{
+	width:100%;
+	height:33px;
+	line-height:33px;
+	z-index:99999999;position:fixed;_position:absolute;width:100%;min-width:1000px;
+	left:0;top:0;
+	background:url(__THEME__/member/images/header_src.png) repeat-x left -100px;
+}
+
+.header .logo{float:left;width:150px;}
+.header .logo a{height: 40px;width: 150px;display: block;text-decoration: none}
+.header .logo a:hover{display: block;text-decoration: none}
+
+/*导航下拉共用箭头小图标*/
+.header .nav ul li .ico_arrow,.header .person li .ico_arrow{background:url(__THEME__/member/images/ico_arrow.gif) no-repeat 0 0;*background:url(images/ico_arrow_1.gif) no-repeat 0 -2px;_background:url(__THEME__/member/images/ico_arrow.gif) no-repeat 0 0;width:13px;height:12px;display:inline-block}
+.header .nav ul li .arrow-bg,.header .person li .arrow-bg{background:url(__THEME__/member/images/ico_arrow_hover.gif) no-repeat 0 0;*background:url(images/ico_arrow_1.gif) no-repeat 0 -2px;_background:url(__THEME__/member/images/ico_arrow.gif) no-repeat 0 0;width:13px;height:12px;display:inline-block}
+.header .nav ul li.hover .ico_arrow,.header .person li.hover .ico_arrow{background-image:url(__THEME__/member/images/ico_arrow_hover.gif);background-repeat:no-repeat;width:13px;height:12px;display:inline-block}
+.header .nav ul li .ico_new,.header .person li .ico_new{position:absolute;top:-10px;right:0px;z-index:10}
+
+/*左导航*/
+.header .nav {padding-left:15px; float:left;}
+.header .nav ul{list-style-type:none;margin: 0px;height:30px}
+.header .nav ul li{font-size:14px;color:#333;float:left;position:relative;display:block;margin:0 5px 0 0;list-style-type: none;z-index:999}
+.header .nav ul li a{font-size:12px; color:#333; display:block; padding:0 10px;}
+
+/*导航搜索区*/
+.quick_search_form{
+	position:absolute;
+	left:440px;
+	top:0px;
+	margin:0px;
+	padding:0px;
+}
+.soso{float:left;height:24px; line-height:26px;border:1px solid #ccc;background-color:#fff;width:199px;position:relative;top:3px;box-shadow: 0 1px 0 0 #F0F0F0 inset}
+.soso label{padding-left: 5px; margin-top: 0px;position: absolute;color:#999;cursor: text;width:170px;background-color:#fff;height:24px; line-height:24px;}
+.so_text{width:173px;*width:170px;border:0 none;background-color:#fff;color:#999;-moz-border-radius: 1px;-khtml-border-radius: 1px;-webkit-border-radius: 1px;border-radius: 1px;margin: 2px;outline: 0 none;padding-left:5px;}
+.line-text{border:0;height:20px;width:180px}
+
+/*右导航*/
+.header .person {padding-left:10px;float:right}
+.header .person{list-style-type:none;margin: 0px;height:37px}
+.header .per-info{list-style-type:none;margin-right: 300px;margin-top:6px;font-weight:bold}
+.header .person li{font-size:12px;color:#333;float:left;position:relative;display:block;margin:0;list-style-type: none;z-index:9}
+.header .person li a.username{ overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 65px;word-wrap:normal}
+
+/*导航链接样式*/
+.header .nav ul li a.application{line-height:16px;padding:8px 8px;_padding:8px 5px;display: block;color:#333;overflow:hidden;}
+.header .person li a.application{line-height:16px;padding:8px 8px;_padding:8px 5px;display: block;color:#333}
+.header .nav ul li.hover a.application{padding:6px 8px 12px;_padding:6px 5px 11px;color:#143149}
+.header .nav ul li.hover a.application:hover{padding:6px 8px 12px;_padding:6px 5px 11px;text-decoration:none}
+.header .person li.hover a.application{padding:6px 8px 12px;_padding:8px 5px 11px;color:#143149}
+.header .person li.hover a.application:hover{padding:6px 8px 12px;_padding:8px 5px 11px; text-decoration:none}
+
+.ico_app_add{height:16px;width:16px;background-position:-87px -35px;margin-top:-1px;vertical-align:middle}
+
+/*新消息列表*/
+.header .person li.hover .dropmenu .message{color:#999;clear:both;border-bottom:1px solid #ccc;width:170px;padding:0}
+.header .person li.hover .dropmenu-right .message{color:#999;clear:both;border-bottom:1px solid #ccc;width:170px;padding:0}
+.header .person li.hover .dropmenu .message_list_new{border-bottom:1px solid #ccc;overflow:hidden;*zoom:1;*width:170px}
+.header .person li.hover .dropmenu .message_list_new li{color: #666;padding: 0 10px;float:none}
+.header .person li.hover .dropmenu .message_list_new li a{display: inline;padding: 0 7px;color:#333;}
+.header .person li.hover .dropmenu .message_list_new li a:hover{background:none;text-decoration:underline;display:inline}
+
+.header .person li.hover .dropmenu-right.message_list_new{border-bottom:1px solid #ccc;overflow:hidden;*zoom:1;*width:170px}
+.header .person li.hover .dropmenu-right .message_list_new li{color: #666;padding: 0 10px;float:none}
+.header .person li.hover .dropmenu-right .message_list_new li a{display: inline;padding: 0 7px;color:#333;}
+.header .person li.hover .dropmenu-right.message_list_new li a:hover{background:none;text-decoration:underline}
+
+/*具体背景加样式*/
+.header .nav ul li.hover .dropmenu,.header .person li.hover .dropmenu{background-color: #fff;border: 1px solid #95C3D8;border-top:0 none}
+.header .nav ul li.hover .dropmenu a:hover,.header .person li.hover .dropmenu a:hover{background-color: #B0E0FA;text-decoration: none;display:block}
+.header .nav ul li.hover .dropmenu .app_list dd a:hover {background-color:#B0E0FA}
+.header .nav ul li a.fb14:hover,.header .person li a.fb14:hover{background-color:#3A90BE;text-decoration:none;white-space:nowrap;display: block}
+
+/*导航当前状态样式*/
+.header .nav ul li a.fb14,.header .person li a.fb14{color:#333;white-space:nowrap;line-height:17px;padding:8px 10px 8px;display: block;*padding:8px 10px 8px}
+.header .nav ul li a.fb14:hover,.header .person li a.fb14:hover{background-color:#f0f0f0;text-decoration:none;white-space:nowrap;display: block;line-height:17px;padding:7px 10px 6px;*padding:7px 10px 4px;}
+.header .nav ul li a.nav-bg,.header .person li a.nav-bg{color:#494949;white-space:nowrap;line-height:16px;padding:14px 10px 10px;display: block;font-size:14px}
+.header .nav ul li a.info-bg,.header .person li a.info-bg{color:#B85B00;white-space:nowrap;line-height:16px;padding:13px 10px 10px;display: block;font-size:14px;font-weight:bold}
+.header .nav ul li a.nav-bg:hover,.header .person li a.nav-bg:hover{background-color:#dbdbdb;text-decoration:none;white-space:nowrap;display: block;padding:12px 10px 9px}
+.header .nav ul li a.info-bg:hover,.header .person li a.info-bg:hover{background-color:#dbdbdb;text-decoration:none;white-space:nowrap;display: block;padding:12px 10px 9px}
+.header .nav ul li.on,.header .person li.on {background-color:#143149}
+.header .nav ul li.on a.fb14,.header .person li.on a.fb14{color:#333}
+.header .nav ul li.hover a.fb14,.header .person li.hover a.fb14{color:#193E5C}
+
+/*次导航*/
+.header .nav_sub{background: none repeat scroll 0 0; position: absolute; right: 10px;top:0;white-space: nowrap;height:26px;overflow:hidden}
+.header .nav_sub a:link,.header .nav_sub a:visited{color:#333}
+.header .nav_sub_hover{height:auto}
+.header .nav_sub ul li{float:left}
+.header .nav_sub dl{padding:4px 5px 5px 5px}
+.header .nav_sub dl dt{padding:0 5px;margin-bottom:5px}
+.header .nav_sub dl dd{line-height:22px}
+.header .nav_sub dl dd a{display:block;padding:0 5px}
+.header .nav_sub dl dd a:hover{display:block;background-color:#274c66}
+
+.header .nav ul li .msg_top{background: url(__THEME__/member/images/msg.gif) no-repeat 0px 0px;display: block;height: 18px;text-align: center;padding-left: 8px;text-decoration: none;position: absolute;top:3px;left:47px;font-weight: bold}
+.header .nav ul li .msg_top a{display: block;background: url(__THEME__/images/msg.gif) no-repeat right 0px;height: 18px;padding-right: 9px;margin-right: -6px;text-decoration: none;line-height: 18px;float: left;color: #fff;white-space: nowrap;font-size:10px}
+.header .nav ul li.hover .msg_top{../background: url(__THEME__/images/msg.gif) no-repeat 0px 0px;display: block;height: 18px;text-align: center;line-height: 18px;padding-left: 8px;color: #fff;text-decoration: none;position: absolute;top:3px;left:47px;}
+
+/*消息提醒框样式*/
+.header .layer_massage_box{background:url(__THEME__/memberimages/layer_bg1.png) repeat scroll 0 0 transparent;border-radius:3px 3px 3px 3px;border:#797979 solid 1px;padding:10px;position:absolute;right:52px;top:33px;width:180px}
+.header .layer_massage_box .del{position:absolute;right:0;top:0}
+.header .layer_massage_box li{line-height:23px}
+</style>
+
+<session name="system">
+<style type="text/css">
+.headerHolder{
+	display:none;
+}
+.containerOuter .wrap{
+	padding:0;
+}
+</style>
+</session>
+
+{:Addons::hook('public_head',array('uid'=>$uid))}
+</head>
+
+<body>
+<div class="containerOuter">
+<div class="wrap">
+
+<session name="userInfo">
+<php>if(isMobile()){</php>
+<include file="__THEME__/mobile_header" />
+<php>}else{</php>
+<!--顶部导航-->
+<div class="headerHolder">
+ <div class="header">
+    <div class="logo"><a href="{:U('home/Index/main')}"><img src="<php>echo $ts['site']['site_logo']?$ts['site']['site_logo']:__THEME__.'/member/images/logo.png';</php>" style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=crop)" /></a></div>
+    <form action="{:U('home/user/search')}" id="quick_search_form" class="quick_search_form" method="post">
+    <div class="soso br3"><label id="_header_search_label" style="display: block;" onclick="$(this).hide();$('#_header_search_text').focus();">搜名字/标签/微广播</label><input type="text" class="so_text" value="" name="k" id="_header_search_text" onblur="if($(this).val()=='') $('#_header_search_label').show();"/><input name="" type="button" onclick="$('#quick_search_form').submit()" class="so_btn hand br3"/></div>
+	<script>
+	if($('#_header_search_text').val()=='')
+		$('#_header_search_label').show();
+	else
+		$('#_header_search_label').hide();
+	</script>
+    </form>
+    <div class="nav">
+      <ul>
+        <li><a href="{:U('home/User/index')}" class="fb14">首页</a></li>
+		<li class="header_dropdown"><a href="{:U('square/Index/indexs')}" class="application">广场<span class="ico_arrow"></span></a>
+        	<div class="dropmenu">
+                <dl class="square_list">
+                <dd><a href="{:U('square/Article/index')}"><span class="ico_pub ico_pub_blog"></span>文章中心</a></dd>
+                <dd><a href="{:U('square/Video/index')}"><span class="ico_pub ico_pub_video"></span>视频中心</a></dd>
+				<dd><a href="{:U('square/Resource/index')}"><span class="ico_pub ico_pub_library"></span>资源中心</a></dd>
+            </dl>
+          </div>
+        </li>
+        <php>if(!empty($my_group_list)){</php>
+		<li id="iframe_group_li" class="header_dropdown"><a href="{:U('group/index/newIndex')}" class="application">社团<span class="ico_arrow"></span></a>
+          <div id="iframe_group" class="dropmenu"><iframe id="iframe_g" style="position:absolute;_filter:alpha(opacity=0);opacity=0;z-index:-1;width:100%;height:100%;top:0;left:0;scrolling:no;" frameborder="0" src="about:blank"></iframe>
+                <dl class="group_list">
+                            <php>$moreGroup = false;</php>
+                            <php>foreach($my_group_list as $key=>$value){</php>
+                                <dd><a href="{:U('group/group/index',array('gid'=>$value['id']))}">{$value['name']}</a></dd>
+                                 <php>if($key>=5){
+                                       $moreGroup = true;
+                                       break;
+                                       }
+                                 </php>
+                            <php>}</php>
+                </dl>
+                <dl class="group_list_add">
+                <dd><php>if($moreGroup){</php><a href="{:U('group/SomeOne')}" class="right">更多&raquo;</a><php>}</php><a href="{:U('group/Index/add')}">创建社团</a></dd>
+                </dl>
+          </div>
+        </li>
+        <php>}</php>
+        <li id="iframe_app_li" class="header_dropdown"><a href="{:U('home/Index/addapp')}" class="application">应用<span class="ico_arrow"></span></a>
+          <div id="iframe_app" class="dropmenu"><iframe id="iframe_a" style="position:absolute;_filter:alpha(opacity=0);opacity=0;z-index:-1;width:100%;height:100%;top:0;left:0;scrolling:no;" frameborder="0" src="about:blank"></iframe>
+            <dl class="app_list">
+                <?php foreach ($ts['user_app'] as $_temp_type => $_temp_apps) { ?>
+                <?php foreach ($_temp_apps as $_temp_app) { ?>
+                    <dd>
+                        <?php if($_temp_type == 'local_app' || $_temp_type == 'local_default_app') { ?>
+                        <a href="<?php echo $_temp_app['app_entry'];?>"<if condition="$_temp_app['host_type']"> target="_blank"</if> class="a14">
+                            <img class="app_ico" src="<?php echo $_temp_app['icon_url'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }else { ?>
+                        <a href="__ROOT__/apps/myop/userapp.php?id=<?php echo $_temp_app['app_id'];?>" class="a14">
+                            <img class="app_ico" src="http://appicon.manyou.com/icons/<?php echo $_temp_app['app_id'];?>" />
+                            <?php echo $_temp_app['app_alias'];?>
+                        </a>
+                        <?php }?>
+                    </dd>
+                <?php } // end of foreach?>
+                <?php } // end of foreach?>
+                </dl>
+                <dl class="app_list_add">
+                <dd><a href="{:U('home/Index/addapp')}"><span class="ico_app_add"></span>添加更多应用</a></dd>
+                </dl>
+          </div>
+        </li>
+  		{:Addons::hook('header_topnav', array('menu' => & $header_topnav))}
+  		<volist name="header_topnav" id="vo">
+  		<li><a href="{$vo['url']}" class="fb14">{$vo['name']}</a></li>
+  		</volist>
+      </ul>
+    </div>
+	<!--个人信息区-->
+    <ul class="person">
+		<li>{:getUserSpace($mid,'fb14 username nocard','','',false)}</li>
+		<li class="header_dropdown" id="message_show"><a href="{:U('home/message/index')}" class="application">消息<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <ul class="message_list_container message_list_new">
+                </ul>
+                <dl class="message">
+      					<dd><a href="{:U('home/message/index')}">查看私信<gt name="userCount['message']" value="0">({$userCount.message})</gt></a></dd>
+      					<dd><a href="{:U('home/user/atme')}">查看@我<gt name="userCount['atme']" value="0">({$userCount.atme})</gt></a></dd>
+      					<dd><a href="{:U('home/user/comments')}">查看评论<gt name="userCount['comment']" value="0">({$userCount.comment})</gt></a></dd>
+      					<dd><a href="{:U('home/message/notify')}">系统通知<gt name="userCount['notify']" value="0">({$userCount.notify})</gt></a></dd>
+      					<dd><a href="{:U('home/message/appmessage')}">应用消息<gt name="userCount['appmessage']" value="0">({$userCount.appmessage})</gt></a></dd>
+                </dl>
+                <dl class="square_list">
+                <dd><a href="javascript:ui.sendmessage(0)">发私信</a></dd>
+                </dl>
+          </div>
+        </li>
+		<li class="header_dropdown" id="account_show"><a href="{:U('home/Account')}" class="application">帐号<span class="ico_arrow"></span></a>
+          <div class="dropmenu">
+                <dl class="setup">
+                <dd><a href="{:U('home/User/findfriend')}"><span class="ico_pub ico_pub_find"></span>找人</a></dd>
+                <dd><a href="{:U('home/Account')}"><span class="ico_pub ico_pub_set"></span>设置</a></dd>
+                <dd><a href="{:U('home/Account/invite')}"><span class="ico_pub ico_pub_invitation"></span>邀请</a></dd>
+                <dd><a href="{:U('home/Account/weiboshare')}"><span class="ico_pub ico_pub_tool"></span>小工具</a></dd>
+                {:Addons::hook('header_account_tab', array('menu' => & $header_account_drop_menu))}
+				        <volist name="header_account_drop_menu" id="vo">
+                	<dd><a href="{$vo['url']}"><span class="ico_pub ico_pub_{$vo['act']}"></span>{$vo['name']}</a></dd>
+				        </volist>
+                <eq name="isSystemAdmin" value="TRUE"><dd><a href="{:U('admin/index/index')}"><span class="ico_pub ico_pub_admin"></span>后台管理</a></dd></eq>
+                </dl>
+                <dl class="square_list_add">
+                <dd><a href="{:U('home/Public/logout')}"><span class="ico_pub ico_pub_signout"></span>退出</a></dd>
+                </dl>
+          </div>
+        </li>
+    </ul>
+	<!--/个人信息区-->
+	<!--消息提示框-->
+    <div id="message_list_container" class="layer_massage_box" style="display:none;">
+    	<ul id="is_has_message" class="message_list_container">
+        </ul>
+        <a href="javascript:void(0)" onclick="ui.closeCountList(this)" class="del"></a>
+    </div>
+	<!--/消息提示框-->
+  </div>
+</div>
+<!--/顶部导航--->
+<php>}</php>
+</session>
+<nosession name="userInfo">
+<div class="headerHolder">
+	<div class="header">
+      <div class="logo"><a href="{:U('home/Index')}"><img src="<php>echo $ts['site']['site_logo']?$ts['site']['site_logo']:__THEME__.'/member/images/logo.png';</php>" style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=crop)" /></a></div>
+      <div class="nav_sub">
+        <p>
+      	<!--eq name="ts['site']['site_anonymous_square']" value="1">
+      	  <a href="{:U('square/Index/index')}">微广播广场</a>&nbsp;|&nbsp;
+      	</eq-->
+      	<a href="{:U('home/Public/register')}">注册</a>&nbsp;|&nbsp;
+      	<a href="javascript:ui.quicklogin();">登录</a>
+        <p>
+      </div>
+  </div>
+</div>
+</nosession>
+
+{* 头部广告 *}
+<volist name="ts['ad']['header']" id="vo">
+    <div class="ad_header"><div class="ke-post">{$vo['content']}</div></div>
+</volist>
+
+<script>
+$(document).ready(function(){
+	$(".header_dropdown").hover(
+		function(){
+      var type = $(this).attr('id');
+      if(type == 'message_show' || type == 'account_show') {
+        var obj = document.getElementById('message_list_container');
+        if(obj !== null) {
+          var isHas = $('#is_has_message').html();
+          if(isHas) {
+            $('#message_list_container').css("display", 'none');
+          }
+        }
+      }
+      $(this).addClass("hover");
+    },
+		function(){
+      var type = $(this).attr('id');
+      if(type == 'message_show' || type == 'account_show') {
+        var obj = document.getElementById('message_list_container');
+        if(obj !== null) {
+          var isHas = $('#is_has_message').html();
+          if(isHas) {
+            $('#message_list_container').css("display", '');
+          }
+        }
+      }
+      $(this).removeClass("hover");
+    }
+	);
+
+	<php>if($mid > 0) {</php>
+		ui.countNew();
+		setInterval("ui.countNew()",120000);
+	<php>}</php>
+});
+</script>

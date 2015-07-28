@@ -1,0 +1,142 @@
+
+<div class="setupBox">
+	<div class="setItems">
+		<div class="setFold setUnfold" rel="verified">
+			<h2>
+				认证资料
+				<span id="verified_tips" class="cRed" style="font-weight: normal;"></span>
+			</h2>
+		</div>
+		<php>if(!empty($info)){</php>
+		<div style="padding: 10px; line-height: 26px;">
+			<div style="font-size: 14px; color: #FF0000;">已认证</div>
+			<div>学校：{$info.school}</div>
+			<div>身份：{$info.identity}</div>
+			<div>姓名：{$info.name}</div>
+		</div>
+		<php>}else{</php>
+		<div style="display: block;" class="setItemsInfo">
+			<div class="right" style="width: 280px; padding: 0 0 0 20px; line-height: 20px;">{$verifyruler['verifyruler']|nl2br}</div>
+			<div class="data" style="border-right: 1px solid #ddd">
+				<form action="{:Addons::createAddonUrl('UserVerified', 'home_account_do')}" method="POST" id="form_verified" class="form_validator" enctype="multipart/form-data">
+					<ul>
+						<li>
+							<div class="left" style="width: 15%; text-align: right; display: block">
+								<span class="cRed pr5" style="color: #F00;">*</span>我是：
+							</div>
+							<div class="left" style="width: 50%;">
+								<div class="left mr5">
+									<input type="radio" name="identity" value="3" />学生
+									<input type="radio" name="identity" value="2" />老师
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left" style="width: 15%; text-align: right; display: block">
+								<span class="cRed pr5" style="color: #F00;">*</span>学校：
+							</div>
+							<div class="left" style="width: 50%;">
+								<div class="left mr5">
+									<select name="schoolid" id="schoolid">
+										<option value="">请选择</option>
+										<volist name="schoolList" id="vo">
+										<option value="{$vo.id}">{$vo.xxmc}</option>
+										</volist>
+									</select>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left" style="width: 15%; text-align: right; display: block">
+								<span class="cRed pr5" style="color: #F00;">*</span>真实姓名：
+							</div>
+							<div class="left" style="width: 50%;">
+								<div class="left mr5">
+									<input name="realname" type="text" class="text" style="width: 200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+									不会公开显示
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left" style="width: 15%; text-align: right; display: block">
+								<span class="cRed pr5" style="color: #F00;">*</span>身份证号：
+							</div>
+							<div class="left" style="width: 50%;">
+								<div class="left mr5">
+									<input name="idcard" type="text" class="text" style="width: 200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+									不会公开显示
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left" style="width: 15%; text-align: right; display: block">&nbsp;</div>
+							<div class="left" style="width: 50%;">
+								<input type="hidden" name="id" value="{$verified.id}" />
+								<input type="button" id="btn_submit" class="btn_b" value="提交" onclick="return modifyVerified();" />
+							</div>
+							<div class="left" style="width: 15%;"></div>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+		<php>}</php>
+	</div>
+</div>
+<div class="c"></div>
+<script>
+	$(document).ready(function() {
+		var hs = document.location.hash;
+		changeModel(hs.replace('#', ''));
+		$('.setFold').click(function() {
+			if ($(this).attr('class') == 'setFold') {
+				changeModel($(this).attr('rel'));
+			} else {
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href = '#' + $(this).attr('rel');
+		})
+	});
+
+	//切换操作模块
+	function changeModel(type) {
+		var t = type || 'verified';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="' + t + '"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+
+	function modifyVerified(o) {
+
+		var $btn_submit = $('#btn_submit');
+		var $realname = $('input[name="realname"]');
+		var $idcard = $('input[name="idcard"]');
+		var identity = $("input[name='identity']:checked").val();
+		var schoolid = $("#schoolid").val();
+		var realname = $realname.val();
+		var idcard = $idcard.val();
+
+		if (!identity) {
+			ui.error('请选择身份');
+			$identity.focus();
+			return false;
+		} else if (!schoolid) {
+			ui.error('请选择学校');
+			$schoolid.focus();
+			return false;
+		} else if (!realname.match(/^[\u4e00-\u9fa5]+$|^[a-zA-Z\.·]+$/)) {
+			ui.error('请输入真实姓名');
+			$realname.focus();
+			return false;
+		} else if (!idcard) {
+			ui.error('请输入正确身份证号');
+			$idcard.focus();
+			return false;
+		}
+
+		document.getElementById('form_verified').submit();
+	}
+</script>

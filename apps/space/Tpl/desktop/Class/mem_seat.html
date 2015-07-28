@@ -1,0 +1,47 @@
+<include file="../Public/_header" />
+<script src="../Public/js/preview.js" type="text/javascript"></script>
+<include file="../Public/_tab" />
+   <include file="../Public/_member_leftmenu" />
+   <div class="trunk_right">
+                 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="mem_seat" />座位表</div>
+                 <div class="clear10"></div>
+                 <div class="manage_seat">
+                     <script>
+					  var photo_preview ='1';
+				  </script>
+                     <div class="tab_seat" id="nn">
+                          <ul class="tab_seat" id="save">
+                        	<php>
+                              for($i=0;$i<$row;$i++)
+                               {
+                                 for($j=0;$j<$col;$j++)
+                                  {
+                                  		if($xms[$i+1][$j+1])
+                                         $obj="<a href='javascript:void(0);'  value='".$identityids[$i+1][$j+1]."' onmouseover='moveover()'  rel='".$headpic[$i+1][$j+1]."' class='preview' style='cursor:default'>".$xms[$i+1][$j+1]."</a>";
+                                        else
+                                         $obj="<a href='javascript:void(0);' style='cursor:default'>&nbsp;</a>";
+                                       if($i==0)
+                                       {
+                                            if($j==0)
+                                            {echo "<li style=' border-top:#999 1px solid;border-left:#999 1px solid;width:".$width."%'>".$obj."</li>";}
+                                            else
+                                            {echo "<li style=' border-top:#999 1px solid;width:".$width."%'>".$obj."</li>";}
+                                       }
+                                       else
+                                       {
+                                       		 if($j==0)
+                                             {echo "<li style='border-left:#999 1px solid;width:".$width."%'>".$obj."</li>";}
+                                             else
+                                             {echo "<li style='width:".$width."%'>".$obj."</li>";}
+                                       }
+                                  }
+                               }
+                           </php>
+                        </ul>
+                     </div>
+                    <div class="clear10"></div>
+                 </div>
+               </div>
+<include file="../Public/_footer" />
+
+    

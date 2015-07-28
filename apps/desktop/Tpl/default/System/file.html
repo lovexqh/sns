@@ -1,0 +1,38 @@
+<!--{dzztemplate header_ajax}-->
+
+<style>
+
+#content_icos{
+	height:100%;
+	overflow:hidden;
+}
+
+</style>
+
+<script type="text/javascript" reload="1">
+
+var data=new Array();
+<!--{if $data1}--> 
+	var data1=$json_data1;
+	_config.sourcedata.icos[data1.icoid]=data1;
+	_config.sourceids.icos.push(data1.icoid);
+	
+<!--{/if}-->
+<!--{if $data}--> 
+	var data=$json;
+	for(var id in data){
+		_config.sourcedata.icos[id]=data[id];
+		_config.sourceids.icos.push(id);
+	}
+<!--{/if}-->
+<!--{if $folderdata}--> 
+	var folderdata=$json_folder;
+	for(var fid in folderdata){
+		_config.sourcedata.folder[fid]=folderdata[fid];
+	}
+<!--{/if}-->
+var obj=new _file('{$sid}',data);
+
+obj.showIcos();
+</script>
+<!--{dzztemplate footer_ajax}-->

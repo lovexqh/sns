@@ -1,0 +1,302 @@
+<include file="../Public/_header" />
+<include file="../Public/_teachheader" />
+
+<style>
+
+
+/*提示信息*/
+.html_clew_box{border:5px solid #6b6d6b;color:#1b9103;position:absolute;z-index:999;background:#f3f8fa url(images/html_clew_box.gif) no-repeat 0 0;padding:0 25px 0 68px;margin-top:1px;float:left}
+.html_load_box{border:5px solid #6b6d6b;color:#1b9103;position:absolute;z-index:999;background:#fff url(images/loading_a.gif) no-repeat 20px 13px;padding:0 25px 0 68px;margin-top:1px;float:left}
+.clew_error{background-position:0 bottom;color:#f00}
+.html_clew_box_close{clear:both;display:none}
+.html_clew_box_close a{background: url(images/pop_ico_x.gif) no-repeat 0 0;width:8px;height:8px;overflow: hidden;text-indent: 10px;display: block;float: right}
+.html_clew_box_con{font-size:14px; padding:20px 0;white-space: nowrap;font-weight: bold}
+
+.ico_waiting{background:url(images/icon_waiting.gif) no-repeat 0 0;height:32px;line-height:32px;display:inline-block;padding-left:40px}
+
+
+
+.right {
+float: right;
+}
+.N_but {
+background: url(../Public/images/N_button_BG.gif) no-repeat;
+width: 70px;
+height: 24px;
+line-height: 24px;
+text-align: center;
+color: #fff;
+font-size: 12px;
+border: none;
+}
+a.faceicon1:link, a.faceicon1:visited {
+background: url(../Public/images/ico.png) no-repeat 0 0;
+display: inline-block;
+vertical-align: middle;
+}
+ /*回复内容*/
+.alR a {
+color: #1a5fac;
+}
+ .feed_list .userPic {
+float: left;
+}
+.feed_list .alR {
+text-align: right;
+padding: 10px 0;
+}
+/*回复内容*/
+.feed_list .feed_wb{margin:7px 0px 10px 5px;position:relative;width:460px;float:right}
+.new_position{padding:6px 0 10px}
+a.faceicon1:link, a.faceicon1:visited{display:block;float:left;height:17px;margin-right:4px;margin-top:4px;width:27px;background-position:0 0}
+.new_position textarea{margin-right:5px;width:310px;}
+.position_list{border-top: 1px dashed #d8d8d8;float:left;width:100%;padding-top:10px}
+.position_list .pic{float:left;margin-right:5px}
+.position_list .list_c{ margin:0;color:#707070;margin-left:45px}
+.feedBox{overflow:hidden;*zoom:1}
+.feed_msg_new,a.feed_msg_new{height:22px;margin-top:4px;color:#BB861C;display:block;text-align:center;padding-top:5px}
+.feed_list{margin:0;}
+.feed_list input{margin:1px 0 0 0;_margin:0}
+.feedBox .feed_list{margin:0}
+.feed_list li {overflow:hidden;padding:10px 0;*zoom:1}
+.feed_list li.t{background-color:#fbfbfb;padding:5px 0;margin:5px 0;*padding:2px 0;}
+.feed_list .ck{margin:0 5px 0 0;padding:0;vertical-align:middle}
+.feed_list .feed_dpm{border:#ddd solid 2px}
+.feed_list .current{border:#0281CF solid 2px}
+.right_box .userPic img{border:solid 1px #ccc;padding:1px}
+.feed_list li .feed_c{margin-left:70px} 
+.feed_list li .feed_c img{vertical-align:top}
+.feed_list li .feed_c .msgCnt{padding-bottom:6px;word-wrap: break-word;font-size:14px;line-height:23px}
+.feed_list li .feed_c .msgCnt em{color:#999}
+.feed_list li .feed_c .hover,.feed_list li .feed_massage .hover{float:right;margin:0 0 0 5px;display:none}
+.feed_list li .feed_c:hover .hover,.feed_list li .feed_massage:hover .hover{float:right;display:block}
+.feed_list li .feed_c .message_new{background: url("./images/icon_new.gif") no-repeat scroll 0 0 transparent;display:inline-block;width:24px;height:10px;margin-left:4px}
+.feed_list li .feed_c .username{vertical-align:top}
+
+.feed_list li .feed_c h4{display:inline;vertical-align:middle}
+.feed_list li .feed_massage{padding: 10px;border: 1px solid rgb(221, 221, 221);border-radius: 3px 3px 3px 3px;margin-left: 70px;line-height:20px}
+.feed_list li .feed_massage .line_massage{padding:5px 0}
+.feed_list li .feed_massage .date{color:#999}
+.feed_list .my_reply .userPic{float:right}
+.feed_list .my_reply .arr_left{float:right;margin:10px 9px 0 0;background-position:-9px -14px}
+.feed_list .my_reply .feed_massage{margin-right:70px;background-color:#eee}
+.feed_list .reply .feed_massage{margin-right:70px}
+.feed_list .reply .arr_left{float:left;margin:10px 0 0 9px}
+.feed_list .send_msg,.feed_list .my_reply,.feed_list .reply{}
+.feed_list .send_msg .feed_massage{margin-right:70px;padding:0;border:none 0}
+.feed_list .send_msg .userPic{float:right}
+.feed_list .send_msg .arr_left{position:absolute;right:63px;top:20px;background-position:-9px 0}
+.feed_showPic{background-color:#F6F6F6;border-radius:3px;padding:0 10px 10px}
+.feed_showPic_small img{border:#ccc solid 1px;padding:1px}
+
+.feed_c_btm .right{color:#999}
+.feed_c_btm{padding-top:10px;position:relative}
+.feed_c_btm a:link,.feed_c_btm a:visited{color:#333}
+.feed_list .feed_quote{margin:7px 5px 10px 0;position:relative;*z-index:9}
+.feed_quote a:hover{text-decoration:none;}
+.feed_list .feed_quote .q_ico_arrow{background-position: -80px -4px;height:10px;width:19px;left:53px;overflow:hidden;position:absolute;top:-9px}
+.feed_list .feed_quote .q_ico_arrow2{background-position: -103px -4px;height:8px;width:15px;right:10px;overflow:hidden;position:absolute;top:-7px}
+.feed_list .feed_quote .q_tit{_height:none;height: 5px;background-position:right 0;overflow:hidden;display:none}
+.feed_list .feed_quote .q_tit_l{height: 5px;background-position:left 0;float:left}
+
+.feed_list .feed_quote .q_btm{_margin-right:3px;_margin-left:3px;height: 5px;background-position: right -7px;overflow:hidden;display:none}
+.feed_list .feed_quote .q_btm .q_btm_l{height: 5px;background-position: 0 -7px;float:left}
+.feed_list .feed_quote .q_con{line-height:1.7em;overflow:hidden;*zoom:1;padding:12px;border:solid 1px;border-color:#e4e4e4 #e4e4e4 #e4e4e4 #e4e4e4;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;background-color: #fbfbfb}
+.feed_list .feed_quote .q_con1{line-height:1.7em;overflow:hidden;*zoom:1;padding:0px 10px 5px 10px;border:solid 1px;border-color:#F6F6F6 #F6F6F6 #F6F6F6 #F6F6F6;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;background-color: #fbfbfb}
+.feed_list .feed_quote .q_con .feed_quote .q_con{line-height:1.7em;overflow:hidden;*zoom:1;border:none 0}
+.feed_list .feed_quote .q_con .feed_quote .q_ico_arrow{background:none}
+.feed_list .feed_quote .q_con .comment{display:block;padding:5px 0 0 0}
+.feed_list .feed_quote .q_con .comment span{}
+.feed_list .feed_quote .q_con .comment .vline,.feed_c_btm .vline,.feed_list .vline{margin:0 5px;color:#999;font-style:normal}
+.feed_list .feed_quote .q_con .comment a:link,.feed_list .feed_quote .q_con .comment a:visited{color:#6D84B4}
+.feed_list .hover .del{visibility:hidden;_visibility:visible}
+.feed_list .hover:hover .del{visibility:visible}
+
+/*弹出表情*/
+.talkBox{padding:0}
+.talkPop{clear:left;margin-top:20px;*margin-top:0px;*padding-top:20px;position:absolute !important;*left:0;*top:0;}
+.talkPop_arrow{background-position: -143px -4px;height:8px;width:15px;overflow:hidden}
+.talkPop_box{background-color:#F8FAFC;border:solid 1px #666;margin-bottom:5px;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius:3px;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);width:440px}
+.talkPop_box #weibo_close_handle{margin:0}
+.talkPop_box #publish_type_content{}
+.talkBox h2 {height:37px;overflow:hidden;margin-bottom:8px}
+.talkBox h2 span{font-size: 18px;line-height: 42px;float:left}
+.talkPop_box .pop_tit{background-color:#eee;padding:0 10px;border-radius:3px 3px 0 0;position:relative}
+.wordNum{float:right;font-size:12px;color:#999}
+.wordNum strong{font-family:Constantia,Georgia;font-size:30px;font-weight:normal;top:-1px;vertical-align:-2px}
+.talkBox .cntBox {overflow:hidden;*zoom:1;padding:0 0 5px 0}
+.talkBox .cntBox textarea,.talkBox .cntBox .txtShadow{padding:5px 0;margin:0;font-size:14px;overflow:hidden}
+.txtShadow {left:0;opacity:0;position:absolute;top:0;*top:1px;z-index:-1}
+#publish_type_content_before{_padding-top:8px}
+
+.talkBox .funBox{position:relative;line-height:25px;z-index:800;*zoom:1}
+.talkBox .funBox a.a52 {width:52px;display:inline-block;_display:block;_float:left;_margin-top:-9px;color:#686868;}
+
+/*微广播回复框*/
+.box_comment{padding:10px;background-color: #F3F5F8;_width:96.5%;margin-top:50px;}
+.box_comment .massage_comment{padding:0}
+.box_comment .massage_comment dt{font-size:14px;font-weight:bold;float:none}
+.box_comment .massage_comment dd{padding:10px 0 0 0;float:none}
+.box_comment .massage_comment dd .ck{margin:-3px 3px 0 0;vertical-align:middle}
+.box_comment .massage_comment dd span{line-height:23px}
+.box_comment .massage_comment dd a.faceicon1:link, a.faceicon1:visited{margin:3px 3px 0 0;background-position:5px 0}
+/* 微广播回复框 - 未登录状态 */
+.box_comment .comment_no_login{background-color:#FFFFFF;}
+ 
+.cjrs_box {
+	display: block;
+	padding: 5px;
+	width: 98%;
+	margin-top: 10px;
+	background: #d8f0fa;
+	min-height: 30px;
+}
+.cjrs_box strong {
+	float: left;
+	margin: 2px 0px;
+	color: #000;
+	display: inline-block;
+}
+.cjrs_box .rslist {
+	width: 100%;
+	display: inline-block;
+}
+.cjrs_box a, .cjrs_box span {
+	display: inline-block;
+	color: #0092db;
+	margin: 2px 5px;
+	width: 55px;
+}
+.cjrs_box .rslist span img {
+	line-height: 20px;
+ margin-top;
+3px;
+} 
+ 
+ </style>
+  <div class="main">
+    <div class="main_left">
+      <div class="info detail_box">
+        <div class="info_detail">
+
+				<table width="100%" align="center" class="classinfo">
+                <tr>
+                  <td width="90" style="padding:0;"></td>
+                  <td width="265" style="padding:0;"></td>
+                  <td width="90" style="padding:0;"></td>
+                  <td width="265" style="padding:0;"></td>
+                </tr>
+                <tr>
+                  <td colspan="4"><h3>教研名称:</h3><h4>{$teaching.meetingname}</h4></td>
+                  <!--<td colspan="2"><h3>{$teaching.readcount}人阅读</h3></td>-->
+                </tr>
+                <tr>
+                  <th>主题:</th>
+                  <td colspan="3"><p>{$teaching.subject}</p></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>创建者:</h3>{$teaching.uid|getUserName}</td>
+                  <td colspan="2"><h3>教研类型:</h3>{$teaching.teachingtype|getSelectItem}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>学段:</h3>{$teaching.phasename}</td>
+                  <td colspan="2"><h3>年级:</h3>{$teaching.meetingid|getGradeName}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>学科:</h3>{$teaching.courseid|getCourseName}</td>
+                  <td colspan="2"><h3>举行方式:</h3>{$teaching.dostyle|getSelectItem}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>所属学校:</h3>{$teaching.schoolid|getSchoolName}</td>
+                  <td colspan="2"><h3>创建人:</h3>{$teaching.uid|getUserName}</td>
+                </tr>
+            <if condition="($teaching.place neq '')">
+                <tr>
+                  <td colspan="4"><h3>地点:</h3>{$teaching.place}</h3></td>               
+                </tr>
+            </if>
+                <tr>
+                  <td colspan="2"><h3>开始时间:</h3>{:date('Y-m-d H:i:s',$teaching['starttime'])}</td>
+                  <td colspan="2"><h3>结束时间:</h3>{:date('Y-m-d H:i:s',$teaching['endtime'])}</td>
+                </tr>
+                <tr>
+                  <th>预定参加人员:</th>
+                  <td colspan="3">
+					<php>if(count($teaching['allteacher'])>0){</php>
+                 	<div class="cjrs_box">
+                    	<strong>【教师（{:count($teaching['allteacher'])}人）】</strong>
+                        <div class="rslist">
+                        	<volist name='teaching.allteacher' id='vo'>
+                            <a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a>
+                            </volist>
+                       	</div>
+                        <div class="clear"></div>
+                    </div>
+                    <php>}</php>
+
+                  </td>
+                </tr>
+                <tr>
+                  <th>实际参加人员:</th>
+                  <td colspan="3">
+                  <php>if(count($teaching['jointeacher'])>0){</php>
+                 	<div class="cjrs_box" style="background:#f8ffc9">
+                    	<strong>【教师（{:count($teaching['jointeacher'])}人）】</strong>
+                        <div class="rslist">
+                        	<volist name='teaching.jointeacher' id='vo'>
+                            <a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a>
+                            </volist>
+                       	</div>
+                        <div class="clear"></div>
+                    </div>
+                    <php>}</php>
+
+                  </td>
+                </tr>
+
+              </table>
+       {:W('Comment',array('type'=>'teaching','appid'=>$teaching['meetingid'], 'author_uid'=>$teaching['uid'], 'title'=>$teaching[meetingname], 'url'=>U('teaching/Index/showTeaching',array('meetingId'=>$teaching['meetingid'])), 'table'=>'teaching','id_field'=>'id','comment_count_field'=>'commentCount'))}
+        </div>
+      </div>
+      <div class="detail_box">
+        <div class="relation"><span class="title">猜您所需：</span> 
+          <div class="clear"></div>
+        </div>
+        <div>
+          <table border="0" cellpadding="0" cellspacing="0" class="booklist" width="100%">
+          <eq name='related' value=''>暂无相关教研</eq>
+          <volist name='related' id='vo'>
+            <tr>
+              <td><a href="{:U('square/teaching/show', array('meetingId'=>$vo['meetingId']))}">{$vo.meetingName}</a></td>
+              <td>{$vo.readcount}人阅读</td>
+            </tr>
+            </volist>
+          </table>
+          <!--<span class="booklist_more">更多与”<strong>高中化学必修知识点总结</strong>“相关的文档>></span>--> </div>
+      </div>
+    </div>
+    <div class="main_right">
+      <div class="source_right">
+        <h2 style="display:block;margin-top:10px;">相关推荐</h2>
+        <ul class="recommend">
+			<php>if($teaching[video]==null||$teaching[video][id]==null){</php>
+            暂无视频信息
+			<php>}else{</php>
+			<volist name='teaching.video' id='vo'>
+                <li>
+                    <a href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryid'],uid=>$vo['userid']))}" target="_blank"><img src="{$vo.id|get_picture_url=###,$vo}" width="155" height="125" /></a>
+                </li>
+                </volist>
+            <php>}</php>            
+<!--          <li><strong>高中语文必修1</strong>
+            <div class="score"></div>
+            <span>10页</span>
+            <div class="clear"></div>
+            </li>-->
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="../Public/_footer" />

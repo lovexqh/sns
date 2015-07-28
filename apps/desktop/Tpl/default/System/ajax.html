@@ -1,0 +1,737 @@
+<include file="../Public/_header_ajax" />
+
+<!--{if $do == 'newlink'}-->
+	<h3 class="flb"> <em id="return_$_GET[handlekey]">{lang share_web_music_flash}</em> 
+		<!--{if $_G[inajax]}--><span><a href="javascript:;" onclick="hideWindow('$_GET[handlekey]');return false;" class="flbc" title="{lang close}">{lang close}</a></span><!--{/if}--> 
+	</h3>
+	<div class="c flm">
+		<form id="shareform" name="shareform" action="{DZZSCRIPT}?mod=system&op=dzzcp" method="post" autocomplete="off" onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('newlinksubmit_btn'));">
+			<input type="hidden" name="refer" value="" />
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="newlinksubmit" value="true" />
+			<input type="hidden" name="container" value="$container" />
+			<input type="hidden" name="ukey" value="$ukey" />
+			<input type="hidden" name="uid" value="$uid" />
+			<!--{if $_G[inajax]}-->
+			<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+			<!--{/if}-->
+			
+			<p class="mtn mbm">
+				<input type="text" size="60" class="px" name="link" onchange="$E('newlinksubmit_btn').value=true"  onblur="javascript:if(''==this.value)this.value='http://';" onfocus="this.select();" id="share_link" value="http://" />
+			</p>
+			<!-- <p class="mtn mbm"><em>{lang privacy_settings}</em></p>-->
+			<p>
+				<label ><input name="friend" type="radio" value="0" <!--{if $sysconfig[friend]==0}--> checked="checked" <!--{/if}--> >{lang friend_0}</label>
+				&nbsp; &nbsp; &nbsp; &nbsp;
+				<label ><input name="friend" type="radio" value="1" <!--{if $sysconfig[friend]==1}--> checked="checked" <!--{/if}--> >{lang friend_1}</label>
+				&nbsp; &nbsp; &nbsp; &nbsp;
+				<label ><input name="friend" type="radio" value="2" <!--{if $sysconfig[friend]==2}--> checked="checked" <!--{/if}--> >{lang friend_2}</label>
+			</p>
+			<p  class="mtn mbm">
+				<button type="submit" name="newlinksubmit_btn" id="newlinksubmit_btn" value="{lang submit}" class="pn pnc"  ><strong>{lang submit}</strong></button>
+			</p>
+		</form>
+	</div>
+	
+	<script type="text/javascript" reload="1">
+		function succeedhandle_$_GET['handlekey'](url, message, values) {
+			_ico.createIco(values);
+		}
+	</script> 
+<!--{elseif $do == 'widget_delete'}-->
+	<h3 class="flb">
+		<em id="return_$_GET[handlekey]">{lang widget_delete} </em>
+		<!--{if $_G[inajax]}--><span><a href="javascript:;" onclick="hideWindow('$_GET[handlekey]');" class="flbc" title="{lang close}">{lang close}</a></span><!--{/if}-->
+	</h3>
+	<form id="deletewidgetform_{$gid}" name="deletewidgetform_{$gid}" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=widget_delete" {if $_G[inajax]}onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]');"{/if}>
+		<input type="hidden" name="referer" value="$_G[referer]" />
+		<input type="hidden" name="deletesubmit" value="true" />
+		<input type="hidden" name="gid" value="$gid" />
+		<input type="hidden" name="uid" value="$uid" />
+		<input type="hidden" name="ukey" value="$ukey" />
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+		<!--{if $_G[inajax]}--><input type="hidden" name="handlekey" value="$_GET[handlekey]" /><!--{/if}-->
+		<div class="c">{lang widget_delete_message}</div>
+		<p class="o pns">
+			<button type="submit" name="deletesubmitbtn" value="{lang delete}" class="pn pnc"><strong>{lang delete}</strong></button>
+		</p>
+	</form>
+	<script type="text/javascript" reload="1">
+		function succeedhandle_{$_GET['handlekey']}(url, message, values) {
+			_widget.Delete(values['gid']);
+			hideWindow('$_GET[handlekey]');
+		}
+	</script>
+<!--{elseif $do == 'widget'}-->	
+			<div style="position:relative;padding:0px 15px 15px 15px;">
+				<h3 class="flb"> <em id="return_$_GET[handlekey]"><!--{if $widget}-->{lang widget_edit}<!--{else}-->{lang widget_new}<!--{/if}--></em> 
+					<!--{if $_G[inajax]}--><span><a href="javascript:;" onclick="hideWindow('$_GET[handlekey]');return false;" class="flbc" title="{lang close}">{lang close}</a></span><!--{/if}--> 
+				</h3>
+					<ul class="x_tb mtm cl">
+						<li <!--{if !$widget || $widget[type]=='image'}-->class="a"<!--{/if}--> id="tab_default_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('default');"> <a >{lang widget_tab_image}</a></li>
+						<li <!--{if $widget[type]=='link'}-->class="a"<!--{/if}--> id="tab_feature_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('feature');"> <a >{lang widget_tab_link}</a></li>
+						<li <!--{if $widget[type]=='flash'}-->class="a"<!--{/if}--> id="tab_mypic_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('mypic');"> <a>{lang widget_tab_flash}</a></li>
+					</ul>
+					<div id="icos_$_GET[handlekey]" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;">
+						<div id="default_$_GET[handlekey]" style="<!--{if !$widget || $widget[type]=='image'}-->display:block<!--{else}-->display:none<!--{/if}-->"> 
+						<form id="image_form" name="widget_image" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=widget"  onsubmit="if(validate(this,'image')){ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('imagesubmit_btn'));}else{return false};">
+							<input type="hidden" name="referer" value="$refer" />
+							<input type="hidden" name="formhash" value="{FORMHASH}" />
+							<input type="hidden" name="uid" value="$uid" />
+							<input type="hidden" name="imagesubmit" value="true" />
+							<input type="hidden" name="gid" value="$gid" />
+							<input type="hidden" name="ukey" value="$ukey" />
+							<input type="hidden" name="container" value="$container" />
+							<input type="hidden" name="type" value="image" />
+							<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+							<p class="mbm"><em>{lang widget_imageurl}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" id="image_url" name="url"  value="$widget[url]" onchange="Imagesize(this.value)" />
+							</p>
+							<p class="mtn mbm"><em>{lang widget_border}:</em>
+								<select  name="classname" style="margin: 0px;">
+								  <option value="" <!--{if !$widget[classname]}-->selected="selected"<!--{/if}-->>{lang no_border}</option>
+								  <option value="simple" <!--{if $widget[classname]=='simple'}-->selected="selected"<!--{/if}-->>{lang simple_border}</option>
+								  <option value="trans_black" <!--{if $widget[classname]=='trans_black'}-->selected="selected"<!--{/if}-->>{lang trans_black}</option>
+								  <option value="tv_black" <!--{if $widget[classname]=='tv_black'}-->selected="selected"<!--{/if}-->>{lang tv_black}</option>
+								  <option value="brown_wood" <!--{if $widget[classname]=='brown_wood'}-->selected="selected"<!--{/if}-->>{lang brown_wood}</option>
+								  
+									
+								 </select>
+							</p>
+							<p class="mbm"><em>{lang widget_width_height}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="10" class="px" id="width" name="width"  value="$widget[width]" onchange="resizeWidth('width',this.value)" /> X <input type="text" size="10" class="px" id="height" name="height"  value="$widget[height]" onchange="resizeWidth('height',this.value)" /><input id="raito" name="raito" value="0" type="hidden" />
+							</p>
+							<p class="mbm"><em>{lang widget_linkurl}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" name="href"  value="$widget[href]" /> 
+							</p>
+							
+							<p class="mbm"><em>{lang method_open}:</em></p>
+							<p class="mbm">
+								<label>{lang method_open_0}<input name="open" type="radio" value="0" <!--{if $widget[open]==0}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_1}<input name="open" type="radio" value="1" <!--{if $widget[open]==1}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_2}<input name="open" type="radio" value="2" <!--{if $widget[open]==2}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_3}<input name="open" type="radio" value="3" <!--{if $widget[open]==3}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+							</p>
+							<p class=" pns" style="text-align:center;margin-top:10px;">
+								<button type="submit" id="imagesubmit_btn" name="imagesubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+							</p>
+						</form>
+						</div>
+						<div id="feature_$_GET[handlekey]" style=" <!--{if $widget[type]=='link'}-->display:block<!--{else}-->display:none<!--{/if}-->" >
+						<form id="link_form" name="widget_link" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=widget" onsubmit="if(validate(this,'link')){ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('linksubmit_btn'));}else{return false};">
+							<input type="hidden" name="referer" value="$_G[referer]" />
+							<input type="hidden" name="formhash" value="{FORMHASH}" />
+							<input type="hidden" name="uid" value="$uid" />
+							<input type="hidden" name="linksubmit" value="true" />
+							<input type="hidden" name="gid" value="$gid" />
+							<input type="hidden" name="ukey" value="$ukey" />
+							<input type="hidden" name="container" value="$container" />
+							<input type="hidden" name="type" value="link" />
+							<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+							<p class="mbm"><em>{lang widget_url}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" name="url"  value="$widget[url]" />
+							</p>
+							<p class="mtn mbm"><em>{lang widget_border}:</em>
+								<select  name="classname" style="margin: 0px;">
+								  <option value="" <!--{if !$widget[classname]}-->selected="selected"<!--{/if}-->>{lang no_border}</option>
+								  <option value="simple" <!--{if $widget[classname]=='simple'}-->selected="selected"<!--{/if}-->>{lang simple_border}</option>
+								  <option value="trans_black" <!--{if $widget[classname]=='trans_black'}-->selected="selected"<!--{/if}-->>{lang trans_black}</option>
+								  <option value="tv_black" <!--{if $widget[classname]=='tv_black'}-->selected="selected"<!--{/if}-->>{lang tv_black}</option>
+								  <option value="brown_wood" <!--{if $widget[classname]=='brown_wood'}-->selected="selected"<!--{/if}-->>{lang brown_wood}</option>
+								  
+									
+								 </select>
+							</p>
+							<p class="mbm"><em>{lang widget_width_height}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="10" class="px" name="width"  value="$widget[width]"  /> X <input type="text" size="10" class="px" name="height"  value="$widget[height]"  />
+							</p>
+							<p class="mbm"><em>{lang widget_linkurl}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" name="href"  value="$widget[href]" /> 
+							</p>
+							
+							<p class="mbm"><em>{lang method_open}:</em></p>
+							<p class="mbm">
+								<label>{lang method_open_0}<input name="open" type="radio" value="0" <!--{if $widget[open]==0}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_1}<input name="open" type="radio" value="1" <!--{if $widget[open]==1}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_2}<input name="open" type="radio" value="2" <!--{if $widget[open]==2}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_3}<input name="open" type="radio" value="3" <!--{if $widget[open]==3}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+							</p>
+							<p class=" pns" style="text-align:center;margin-top:10px;">
+								<button type="submit" id="linksubmit_btn" name="linksubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+							</p>
+						</form>
+						</div>
+						<div id="mypic_$_GET[handlekey]" style="<!--{if $widget[type]=='flash'}-->display:block<!--{else}-->display:none<!--{/if}-->">
+						<form id="flash_form" name="widget_flash" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=widget"  onsubmit="if(validate(this,'flash')){ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('flashsubmit_btn'));}else{return false};">
+							<input type="hidden" name="referer" value="$_G[referer]" />
+							<input type="hidden" name="formhash" value="{FORMHASH}" />
+							<input type="hidden" name="uid" value="$uid" />
+							<input type="hidden" name="flashsubmit" value="true" />
+							<input type="hidden" name="gid" value="$gid" />
+							<input type="hidden" name="ukey" value="$ukey" />
+							<input type="hidden" name="container" value="$container" />
+							<input type="hidden" name="type" value="flash" />
+							<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+							<p class="mbm"><em>{lang widget_flash}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" name="url"  value="$widget[url]" />
+							</p>
+							
+							<p class="mtn mbm"><em>{lang widget_border}:</em>
+								<select  name="classname" style="margin: 0px;">
+								  <option value="" <!--{if !$widget[classname]}-->selected="selected"<!--{/if}-->>{lang no_border}</option>
+								  <option value="simple" <!--{if $widget[classname]=='simple'}-->selected="selected"<!--{/if}-->>{lang simple_border}</option>
+								  <option value="trans_black" <!--{if $widget[classname]=='trans_black'}-->selected="selected"<!--{/if}-->>{lang trans_black}</option>
+								  <option value="tv_black" <!--{if $widget[classname]=='tv_black'}-->selected="selected"<!--{/if}-->>{lang tv_black}</option>
+								  <option value="brown_wood" <!--{if $widget[classname]=='brown_wood'}-->selected="selected"<!--{/if}-->>{lang brown_wood}</option>
+								  
+									
+								 </select>
+							</p>
+							<p class="mbm"><em>{lang widget_width_height}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="10" class="px" name="width"  value="$widget[width]" /> X <input type="text" size="10" class="px" name="height"  value="$widget[height]" />
+							</p>
+							<p class="mbm"><em>{lang widget_linkurl}:</em></p>
+							<p class="mtn mbm">
+								<input type="text" size="65" class="px" name="href"  value="$widget[href]" /> 
+							</p>
+							
+							<p class="mbm"><em>{lang method_open}:</em></p>
+							<p class="mbm">
+								<label>{lang method_open_0}<input name="open" type="radio" value="0" <!--{if $widget[open]==0}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_1}<input name="open" type="radio" value="1" <!--{if $widget[open]==1}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_2}<input name="open" type="radio" value="2" <!--{if $widget[open]==2}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+								<label>{lang method_open_3}<input name="open" type="radio" value="3" <!--{if $widget[open]==3}--> checked="checked" <!--{/if}-->></label> &nbsp;  &nbsp;  
+							</p>
+							<p class=" pns" style="text-align:center;margin-top:10px;">
+								<button type="submit" id="flashsubmit_btn" name="flashsubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+							</p>
+						</form>
+						</div>
+					</div>
+			</div>
+				<!--{if $_G[inajax] }--> 
+				<script type="text/javascript" reload="1">
+				if(document.getElementById('image_url').value!=''){
+					Imagesize(document.getElementById('image_url').value);
+				}
+				
+				function resizeWidth(name,value){
+					
+					var raito=(document.getElementById('raito').value);
+					if(raito>0){
+						if(name=='width'){
+							document.getElementById('height').value=Math.round(value/raito);
+						}else{
+							document.getElementById('width').value=Math.round(value*raito);
+						}
+					}
+				}
+						function Imagesize(src){
+							var loadCheck = function (obj) {
+								if(obj.complete) {
+									var imgw = image.width;
+									var imgh = image.height;
+								/*	var r = imgw / imgh;
+									var w =this.bodyWidth-20;
+									w = imgw > w ? w : imgw;
+									var h = w / r;
+									if(h > maxh) {
+										h = maxh;
+										w = h * r;
+									}*/
+									
+									if(imgw>0 && imgh>0){
+									<!--{if !$widget}-->
+										document.getElementById('width').value=imgw;
+										document.getElementById('height').value=imgh;
+									<!--{/if}-->
+										document.getElementById('raito').value=imgw/imgh;
+									}
+								} else {
+									setTimeout(function () { loadCheck(image); }, 50);
+								}
+							};
+							var image = new Image();
+							setTimeout(function () { loadCheck(image); }, 100);
+							image.src = src;
+						}
+					function succeedhandle_$_GET[handlekey](url, msg, values) {
+						_config.sourcedata.widgets[values['gid']]=values;
+						var obj=_widget.CWidget(values['gid']);
+					}
+					 function validate(form,type) {
+								var url = form.url.value;
+								var ext=url.substr(url.lastIndexOf('.')).toLowerCase();
+								if(type=='image'){
+									var imageext=['.jpg','.jpeg','.png','.gif','.bmp'];
+									if(!in_array(ext,imageext)) {
+										alert("{lang error_image_ext}");
+										return false;
+									}
+								}else if(type=='flash'){
+									var flashext=['.swf','.flv'];
+									if(!in_array(ext,flashext)){
+										 alert("{lang error_flash_ext}");
+										return false;
+									}
+								}
+								return true;
+                        }
+                      
+					function switchtab_{$_GET[handlekey]}(id){
+						if(id=='feature'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='a';
+							$E('feature_{$_GET[handlekey]}').style.display='block';
+							if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=folder&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+						}else if(id=='default'){
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_default_{$_GET[handlekey]}').className='a';
+							$E('default_{$_GET[handlekey]}').style.display='block';
+						}else if(id=='mypic'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='a';
+							$E('mypic_{$_GET[handlekey]}').style.display='block';
+							if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+						}
+						
+					}
+		
+				</script> 
+				<!--{/if}--> 		
+
+<!--{elseif $do == 'edit'}-->
+		<h3 class="flb"> <em id="return_$_GET[handlekey]">{lang edit}</em> 
+			<!--{if $_G[inajax]}--><span><a href="javascript:return false;" onclick="hideWindow('$_GET[handlekey]');return false;" class="flbc" title="{lang close}">{lang close}</a></span><!--{/if}--> 
+		</h3>
+		<!--{if $type == 'folder'}-->
+			<div style="position:relative;width:560px;padding:0px 15px 15px 15px;">
+				<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+						<tr> 
+							<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_$_GET[handlekey]"  src="$icoarr[img]" border="0"  onload="fixpng(this)" /></td>
+							
+						</tr>
+					</table>
+				</div>
+				<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=edit"  onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('editsubmit_btn'));">
+					<input type="hidden" name="referer" value="$_G[referer]" />
+					<input type="hidden" name="editsubmit" value="true" />
+					<input id="select_mypic_$_GET[handlekey]" type="hidden" name="mypic" value="0" />
+					<input type="hidden" name="formhash" value="{FORMHASH}" />
+					<input type="hidden" name="uid" value="$uid" />
+					<input type="hidden" name="ukey" value="$ukey" />
+					<input type="hidden" name="icoid" value="$icoid" />
+					<input type="hidden" name="type" value="$type" />
+					<!--{if $_G[inajax]}-->
+					<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+					<!--{/if}-->
+					<input id="img_$_GET[handlekey]" type="hidden"  name="img" value="$icoarr[img]" />
+					<p class="mtn mbm">
+						<input type="text" size="65" class="px" name="name"  id="edit_name" value="$icoarr[name]" />
+					</p>
+					<p class="mbm"><em>{lang privacy_settings}:</em></p>
+					<p class="mbm">
+					<label>{lang friend_0}<input name="friend" type="radio" value="0" <!--{if $folder[friend]==0}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+					<label>{lang friend_1}<input name="friend" type="radio" value="1"<!--{if $folder[friend]==1}--> checked="checked" <!--{/if}--> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+					<label>{lang friend_2}<input name="friend" type="radio" value="2" <!--{if $folder[friend]==2}-->checked="checked" <!--{/if}--> ></label>
+					</p>
+					<ul class="x_tb mtm cl">
+						<li class="a" id="tab_default_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('default');"> <a >{lang current_icon}</a></li>
+						<li  id="tab_feature_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('feature');"> <a >{lang sys_icon}</a></li>
+						<li id="tab_mypic_$_GET[handlekey]" onclick="switchtab_$_GET[handlekey]('mypic');"> <a>{lang my_icon}</a></li>
+					</ul>
+					<div id="icos_$_GET[handlekey]" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;overflow-y:auto;overflow-x:hidden;height:170px;width:540px;">
+						<div id="default_$_GET[handlekey]" > 
+							<img class="icon_max_64_64" src="$icoarr[img]" onclick="$E('pre_$_GET[handlekey]').src=this.src;$E('img_$_GET[handlekey]').value=this.src;" style="padding:3px;cursor:pointer" /> 
+						</div>
+						<div id="feature_$_GET[handlekey]" style="display:none" ></div>
+						<div id="mypic_$_GET[handlekey]" style="display:none"></div>
+					</div>
+					<p class=" pns" style="text-align:center;margin-top:10px;">
+						<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+					</p>
+				</form>
+			</div>
+				<!--{if $_G[inajax] && $type=='folder'}--> 
+				<script type="text/javascript" reload="1">
+					function succeedhandle_$_GET[handlekey](url, msg, values) {
+						_config.sourcedata.icos[values['icoid']]=values;
+						var obj=_ico.reCIco(values['icoid']);
+					}
+				
+					function switchtab_{$_GET[handlekey]}(id){
+						if(id=='feature'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='a';
+							$E('feature_{$_GET[handlekey]}').style.display='block';
+							if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=folder&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+						}else if(id=='default'){
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_default_{$_GET[handlekey]}').className='a';
+							$E('default_{$_GET[handlekey]}').style.display='block';
+						}else if(id=='mypic'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='a';
+							$E('mypic_{$_GET[handlekey]}').style.display='block';
+							if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+						}
+						
+					}
+		
+				</script> 
+				<!--{/if}--> 
+		<!--{elseif $type == 'link'}--> 
+			<div style="position:relative;width:560px;padding:0px 15px 15px 15px;">
+				<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+						<tr> 
+							<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_$_GET[handlekey]"  src="$icoarr[img]" border="0"  onload="fixpng(this)" /></td>
+							
+						</tr>
+					</table>
+				</div>
+				<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=edit"  onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('editsubmit_btn'));">
+					<input type="hidden" name="referer" value="$_G[referer]" />
+					<input type="hidden" name="editsubmit" value="true" />
+					<input id="select_mypic_$_GET[handlekey]" type="hidden" name="mypic" value="0" />
+					<input type="hidden" name="formhash" value="{FORMHASH}" />
+					<input type="hidden" name="uid" value="$uid" />
+					<input type="hidden" name="ukey" value="$ukey" />
+					<input type="hidden" name="icoid" value="$icoid" />
+					<input type="hidden" name="type" value="$type" />
+					<!--{if $_G[inajax]}-->
+					<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+					<!--{/if}-->
+					<input id="img_$_GET[handlekey]" type="hidden"  name="img" value="$icoarr[img]" />
+					<input id="did_$_GET[handlekey]" type="hidden"  name="did" value="$icoarr[did]" />
+					<p class="mtm">
+						<input type="text" size="65" class="px" name="name"  id="edit_name" value="$icoarr[name]"  />
+					</p>
+					 <p class="mtm"><input type="text" size="65" class="px" name="url"  id="edit_name" value="$icoarr[url]" onfocus="this.select();"  style="background:#EBEBEB" readonly />
+					 </p>
+					<p class="mtm">
+					<label>{lang friend_0}<input name="friend" type="radio" value="0" <!--{if $icoarr[friend]==0}--> checked="checked" <!--{/if}--> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+					<label>{lang friend_1}<input name="friend" type="radio" value="1"<!--{if $icoarr[friend]==1}--> checked="checked" <!--{/if}--> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+					<label>{lang friend_2}<input name="friend" type="radio" value="2" <!--{if $icoarr[friend]==2}-->checked="checked" <!--{/if}--> ></label>
+					</p>
+					<p class="mtm">
+					<label>{lang method_open_0}<input name="open" type="radio" value="0" <!--{if $icoarr[open]==0}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_1}<input name="open" type="radio" value="1" <!--{if $icoarr[open]==1}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_2}<input name="open" type="radio" value="2" <!--{if $icoarr[open]==2}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_3}<input name="open" type="radio" value="3" <!--{if $icoarr[open]==3}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					</p>
+					<p class="mtm ">
+						{lang window_width}&nbsp;<input name="width" value="$icoarr[wwidth]" size="5" class="px" />&nbsp;X&nbsp;<input name="height" value="$icoarr[wheight]" size="5" class="px" />&nbsp;{lang window_height}
+					</p>
+					<ul class="x_tb mtm cl">
+						<li class="a" id="tab_feature_$_GET[handlekey]" onclick="switchtab_{$_GET[handlekey]}('feature');"> <a >{lang feature_icon}</a></li>
+						<li id="tab_mypic_$_GET[handlekey]" onclick="switchtab_{$_GET[handlekey]}('mypic');"> <a>{lang my_icon}</a></li>
+						<li class='y'><div style="margin-left:20px;margin-right:20px;"> {lang feature_link} $host</div></li> 
+						<li class='y'><div style="margin-left:20px;margin-right:20px;"> {lang relative_feature_link} <img src="dzz/images/selected.png" onclick="if($E('relation_{$_GET[handlekey]}').value=='1'){this.src='dzz/images/select.png';$E('relation_{$_GET[handlekey]}').value='0';}else{this.src='dzz/images/selected.png';$E('relation_{$_GET[handlekey]}').value='1';}" /> <input id="relation_$_GET[handlekey]" name="relationship" type="hidden" value="1"/></div></li> 
+					</ul>
+					<div id="icos_$_GET[handlekey]" class="cl" style="border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;">
+						<div id="feature_$_GET[handlekey]">
+							<!--{loop $domainlist $value}-->
+								 <div style="margin:auto;float:left;padding:5px;width:66px;height:66px;">
+								 <table cellpadding="0" cellspacing="0"><tr><td width="66" height="66" valign="middle" align="center" style="cursor:pointer;" onclick="$E('pre_$_GET[handlekey]').src='$value[pic]';$E('img_$_GET[handlekey]').value='$value[pic]';$E('did_$_GET[handlekey]').value='$value[did]';" ><img class="icon_max_64_64" src="$value['pic']" onload="fixpng(this);"  /></td></tr></table></div>
+							 <!--{/loop}-->
+						</div>
+						<div id="mypic_$_GET[handlekey]" style="display:none"></div>
+					</div>
+					<p class=" pns" style="text-align:center;margin-top:10px;">
+						<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+					</p>
+				</form>
+			</div>
+				<!--{if $_G[inajax] && $type=='link'}--> 
+				<script type="text/javascript" reload="1">
+					function succeedhandle_$_GET[handlekey](url, msg, values) {
+						_config.sourcedata.icos[values['icoid']]=values;
+						var obj=_ico.reCIco(values['icoid']);
+						jQuery("#jstree_area").jstree('refresh',-1);
+					}
+				
+					function switchtab_{$_GET[handlekey]}(id){
+						if(id=='feature'){
+							
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='a';
+							$E('feature_{$_GET[handlekey]}').style.display='block';
+							
+						}else if(id=='mypic'){
+							
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='a';
+							$E('mypic_{$_GET[handlekey]}').style.display='block';
+							if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+						}
+						
+					}
+		
+				</script> 
+				<!--{/if}--> 
+		<!--{elseif $type == 'app'}--> 
+			<div style="position:relative;width:620px;padding:0px 15px 15px 15px;">
+				<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+						<tr> 
+							<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_$_GET[handlekey]"  src="$icoarr[img]" border="0"  onload="fixpng(this)" /></td>
+							
+						</tr>
+					</table>
+				</div>
+				<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=edit"  onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('editsubmit_btn'));">
+					<input type="hidden" name="referer" value="$_G[referer]" />
+					<input type="hidden" name="editsubmit" value="true" />
+					<input id="select_mypic_$_GET[handlekey]" type="hidden" name="mypic" value="0" />
+					<input type="hidden" name="formhash" value="{FORMHASH}" />
+					<input type="hidden" name="uid" value="$uid" />
+					<input type="hidden" name="ukey" value="$ukey" />
+					<input type="hidden" name="icoid" value="$icoid" />
+					<input type="hidden" name="type" value="$type" />
+					<input type="hidden" name="ismyapp" value="$ismyapp" />
+					<!--{if $_G[inajax]}-->
+					<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+					<!--{/if}-->
+					<input id="img_$_GET[handlekey]" type="hidden"  name="img" value="$icoarr[img]" />
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+					<tr height="35"><td width="60" >{lang appname}:&nbsp;</td><td ><input type="text" size="65" class="px" name="name"  id="edit_name" value="$icoarr[name]"  /></td></tr>
+					<tr height="35"><td width="60" >{lang appurl}:&nbsp;</td><td ><input type="text" size="65" class="px" name="url"  id="edit_name" value="$icoarr[url]" onfocus="this.select();"  <!--{if !$ismyapp}-->style="background:#EBEBEB" readonly<!--{/if}--> /></td></tr>
+				 <!--{if $ismyapp}-->
+				  <tr height="30"><td  >{lang appclass}:&nbsp;</td><td>
+					<select id="classid" name="classid" style="margin: 0px;">
+					   <!--{loop $appclass $key $value}-->
+						<option value="$key" <!--{if $app[classid]==$value[classid]}-->select="selected"<!--{/if}-->>$value[classname]</option>
+						 <!--{/loop}-->
+					 </select>
+					</td></tr>
+					<!--{/if}-->
+					 <tr height="30"><td width="60" >{lang privacy_settings}:&nbsp;</td><td >
+					<label>{lang friend_0}<input name="friend" type="radio" value="0" <!--{if $icoarr[friend]==0}--> checked="checked" <!--{/if}--> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+					<label>{lang friend_1}<input name="friend" type="radio" value="1"<!--{if $icoarr[friend]==1}--> checked="checked" <!--{/if}--> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+					<label>{lang friend_2}<input name="friend" type="radio" value="2" <!--{if $icoarr[friend]==2}-->checked="checked" <!--{/if}--> ></label>
+					</td></tr>
+					 <tr height="30"><td width="60" >{lang method_open}:&nbsp;</td><td >
+					<label>{lang method_open_0}<input name="open" type="radio" value="0" <!--{if $icoarr[open]==0}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_1}<input name="open" type="radio" value="1" <!--{if $icoarr[open]==1}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_2}<input name="open" type="radio" value="2" <!--{if $icoarr[open]==2}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					<label>{lang method_open_3}<input name="open" type="radio" value="3" <!--{if $icoarr[open]==3}--> checked="checked" <!--{/if}-->></label> &nbsp; &nbsp;  
+					</td></tr>
+					<tr height="30"><td width="60" >{lang window_size}:&nbsp;</td><td >
+						{lang window_width}&nbsp;<input name="width" value="$app[width]" size="5" class="px" />&nbsp;X&nbsp;<input name="height" value="$app[height]" size="5" class="px" />&nbsp;{lang window_height}
+					</td></tr>
+					 <!--{if $ismyapp}-->
+					 <tr height="60"><td >{lang appdesc}:&nbsp;</td><td><textarea id="appdesc" name="appdesc" style="height:60px;width:100%;border:1px solid #CCC;">$app[appdesc]</textarea></td></tr>
+					 <!--{/if}-->
+					  <tr height="110"><td >{lang appico}:&nbsp;</td><td>
+					<ul class="x_tb mtm cl">
+						<li class="a" id="tab_default_$_GET[handlekey]" onclick="switchtab_{$_GET[handlekey]}('default');"> <a >{lang current_icon}</a></li>
+						<li  id="tab_feature_$_GET[handlekey]" onclick="switchtab_{$_GET[handlekey]}('feature');"> <a >{lang sys_icon}</a></li>
+						<li id="tab_mypic_$_GET[handlekey]" onclick="switchtab_{$_GET[handlekey]}('mypic');"> <a>{lang my_icon}</a></li>
+					</ul>
+					<div id="icos_$_GET[handlekey]" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;overflow-y:auto;overflow-x:hidden;height:170px;width:540px;">
+						<div id="default_$_GET[handlekey]" > 
+							<img class="icon_max_64_64" src="$icoarr[img]" onclick="$E('pre_$_GET[handlekey]').src=this.src;$E('img_$_GET[handlekey]').value=this.src;" style="padding:3px;cursor:pointer" /> 
+						</div>
+						<div id="feature_$_GET[handlekey]" style="display:none" ></div>
+						<div id="mypic_$_GET[handlekey]" style="display:none"></div>
+					</div>
+					</td></tr></table>
+					<p class=" pns" style="text-align:center;margin-top:10px;">
+						<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+					</p>
+				</form>
+			</div>
+				<!--{if $_G[inajax] && $type=='app'}--> 
+				<script type="text/javascript" reload="1">
+					function succeedhandle_$_GET[handlekey](url, msg, values) {
+						_config.sourcedata.icos[values['icoid']]=values;
+						var obj=_ico.reCIco(values['icoid']);
+					}
+				
+					function switchtab_{$_GET[handlekey]}(id){
+						if(id=='feature'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='a';
+							$E('feature_{$_GET[handlekey]}').style.display='block';
+							if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=url&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+						}else if(id=='default'){
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='';
+							$E('mypic_{$_GET[handlekey]}').style.display='none';
+							$E('tab_default_{$_GET[handlekey]}').className='a';
+							$E('default_{$_GET[handlekey]}').style.display='block';
+						}else if(id=='mypic'){
+							$E('tab_default_{$_GET[handlekey]}').className='';
+							$E('default_{$_GET[handlekey]}').style.display='none';
+							$E('tab_feature_{$_GET[handlekey]}').className='';
+							$E('feature_{$_GET[handlekey]}').style.display='none';
+							$E('tab_mypic_{$_GET[handlekey]}').className='a';
+							$E('mypic_{$_GET[handlekey]}').style.display='block';
+							if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+						}
+						
+					}
+		
+				</script> 
+				<!--{/if}--> 
+		<!--{elseif $type == 'video' || $type=='music' || $type=='image' || $type=='attach'}--> 
+			<div style="position:relative;width:460px;padding:0px 15px 15px 15px;">
+				<div style="position:absolute;right:15px;top:-10px;width:104px;height:104px;">
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+						<tr> 
+							<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_$_GET[handlekey]"  src="$icoarr[img]" border="0"  onload="fixpng(this)" /></td>
+							
+						</tr>
+					</table>
+				</div>
+				<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{DZZSCRIPT}?mod=system&op=dzzcp&do=edit"  onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]','return_$_GET[handlekey]','',$E('editsubmit_btn'));">
+					<input type="hidden" name="referer" value="$_G[referer]" />
+					<input type="hidden" name="editsubmit" value="true" />
+					<input id="select_mypic_$_GET[handlekey]" type="hidden" name="mypic" value="0" />
+					<input type="hidden" name="formhash" value="{FORMHASH}" />
+					<input type="hidden" name="uid" value="$uid" />
+					<input type="hidden" name="ukey" value="$ukey" />
+					<input type="hidden" name="icoid" value="$icoid" />
+					<input type="hidden" name="type" value="$type" />
+					<!--{if $_G[inajax]}-->
+					<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+					<!--{/if}-->
+					<input id="img_$_GET[handlekey]" type="hidden"  name="img" value="$icoarr[img]" />
+					<p class="mtn mbm"><input type="text" size="60" class="px" name="name"  id="edit_name" value="$icoarr['name']" /></p>
+					<p class="mbm"><em>{lang privacy_settings}:</em></p>
+					<p class="mtm">
+					<label>{lang friend_0}<input name="friend" type="radio" value="0" <!--{if $icoarr[friend]==0}--> checked="checked" <!--{/if}--> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+					<label>{lang friend_1}<input name="friend" type="radio" value="1"<!--{if $icoarr[friend]==1}--> checked="checked" <!--{/if}--> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+					<label>{lang friend_2}<input name="friend" type="radio" value="2" <!--{if $icoarr[friend]==2}-->checked="checked" <!--{/if}--> ></label>
+					</p>
+				   <p class="o pns" style="text-align:center;margin-top:10px;">
+						<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{lang submit}" class="pn pnc"><strong>{lang submit}</strong></button>
+					</p>
+				</form>
+			</div>
+				<!--{if $_G[inajax]}--> 
+				<script type="text/javascript" reload="1">
+					function succeedhandle_$_GET[handlekey](url, msg, values) {
+						_config.sourcedata.icos[values['icoid']]=values;
+						var obj=_ico.reCIco(values['icoid']);
+					}
+				</script> 
+				<!--{/if}--> 
+		<!--{/if}--> 
+<!--{elseif $do == 'geticon'}--> 
+		<!--{if $count}-->
+			<div class="cl" > 
+				<!--{loop $piclist $value}-->
+				<div  style="float:left; width:66px; height:66px;cursor:pointer" >
+					<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="54" height="64">
+						<tr> 
+							<td valign="middle" align="center" onclick="$E('pre_$_GET[handlekey]').src='$value[pic]';$E('img_$_GET[handlekey]').value='$value[pic]';$E('select_mypic_$_GET[handlekey]').value='1';if($E('did_$_GET[handlekey]')){$E('did_$_GET[handlekey]').value='0';}"><img src="$value['pic']" class="icon_max_64_64" /></td>
+							 
+						</tr>
+					</table>
+				</div>
+				
+				<!--{/loop}--> 
+			</div>
+			<!--{if $multi}-->
+			<div class="pg " >$multi</div>
+			<!--{/if}--> 
+		
+		<!--{else}-->
+		<div class="emp">{lang no_related_picture}</div>
+		<!--{/if}--> 
+			
+<!--{elseif $do=='userdetail'}-->	
+	<style>
+	.userdetail a{
+		color:#004080;
+	}
+	</style>
+			<div class="userdetail space_size_title">
+				<span style="float:left"><a title="{lang spaceinfo_view}" onclick="OpenWindow('url','{DZZSCRIPT}?mod=space&do=myspace&uid={$space[uid]}','{lang spaceinfo}','','titlebutton=close|max|min,width=800,height=500');return false;" >{lang spaceinfo}</a></span><!--{if $sysconfig[spacebuy] && $space[uid]==$_G[uid]}--><a class="space_upgrade" title="{lang space_update}" onclick="OpenWindow('url','{DZZSCRIPT}?mod=space','{lang space_buy}','','titlebutton=close|max|min,width=700,height=500');return false;" ></a><!--{/if}-->
+			</div>
+			<div class="userdetail space_size_text"> {lang space_useed}: &nbsp;$space[fusesize] &nbsp;,&nbsp; {lang total}&nbsp; $space[fmaxspacesize]</div>
+			<div class="userdetail space_size_img"> 
+				<div class="space_size_back"><div class="space_size_per" style="width:{eval echo ceil(100*$space[usesize]/$space[maxspacesize]);}%"></div></div>
+			</div>
+			<div class="userdetail">{lang limit_maxattachsize}:&nbsp;&nbsp;&nbsp; $space[fmaxattachsize]</div>
+			<!--{if $space[uid]==$_G[uid]}--><div class="userdetail ">{lang my_usergroup}:&nbsp;&nbsp;&nbsp; <a title="{lang usergroup_privilege_view}" onclick="OpenWindow('url','{DZZSCRIPT}?mod=space&do=usergroup','{lang usergroup_privilege_view}','','titlebutton=close|max|min,width=700,height=500');" >$_G[group][grouptitle]</a></div>
+			<!--{else}-->
+				<div class="userdetail "><a title="{lang usergroup_privilege_view}" onclick="OpenWindow('url','{DZZSCRIPT}?mod=space&do=usergroup','{lang usergroup_privilege_view}','','titlebutton=close|max|min,width=700,height=500');" >{lang usergroup_privilege_view}</a></div>
+			<!--{/if}-->
+			<div class="hr"></div>
+			<div class="userdetail "><a href="member.php?mod=logging&action=logout&formhash={FORMHASH}"  >{lang logout}</a></div>
+			
+<!--{else}-->
+		<h3 class="flb"> <em id="return_$_GET[handlekey]">{lang share} </em> 
+			<!--{if $_G[inajax]}--><span><a href="javascript:;" onclick="hideWindow('$_GET[handlekey]');" class="flbc" title="{lang close}">{lang close}</a></span><!--{/if}--> 
+		</h3>
+		<form method="post" autocomplete="off" id="shareform_{$id}" name="shareform_{$id}" action="home.php?mod=spacecp&ac=x_share&type=$type&uid=$uid&id=$id" onsubmit="ajaxpost(this.id, 'return_$_GET[handlekey]');">
+			<input type="hidden" name="sharesubmit" value="true">
+			<input type="hidden" name="referer" value="$_G[referer]">
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<!--{if $_G[inajax]}-->
+			<input type="hidden" name="handlekey" value="$_GET[handlekey]" />
+			<!--{/if}-->
+			<div class="c">
+				<p>{lang share_description}:</p>
+				<textarea id="general_{$id}" name="general" cols="50" rows="5" class="pt mtn" style="width: 400px;" onkeydown="ctrlEnter(event, 'sharesubmit_btn')" onkeyup="showPreview(this.value, 'quote_{$id}')"></textarea>
+				<ul class="el mtm cl">
+					<!--{eval $value = $arr;}--> 
+					<!--{template home/space_share_li}-->
+				</ul>
+			</div>
+			<p class="o pns">
+				<button type="submit" name="sharesubmit_btn" id="sharesubmit_btn" class="pn pnc" value="{lang submit}"><strong>{lang determine}</strong></button>
+			</p>
+		</form>
+		<!--{if $_G[inajax]}--> 
+		<script type="text/javascript">
+	function succeedhandle_$_GET['handlekey'] (url, message, values) {
+		showCreditPrompt();
+	}
+</script> 
+		<!--{/if}--> 
+<!--{/if}--> 
+			
+<!--{if !$_G[inajax]}--> 
+		</div>
+	</div>
+	
+</div>
+<!--{/if}--> 
+<include file="../Public/_footer" />

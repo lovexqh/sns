@@ -1,0 +1,173 @@
+<include file="../Public/_header" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodes =[
+			<volist name="sqcategory" id='obj'>
+				{ id:'{$obj[id]}', pId:'{$obj[p_id]}', name:"{$obj[category_name]}",iconOpen:"../Public/images/open.png",icon:"../Public/images/close.png",url:"", target:"_self", click:"noteClick({$obj['id']})"<volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist>},				
+			</volist>
+		];
+		function noteClick(id){
+			$.post("__URL__&act=search", {id:id,cate:"video",state:<php>echo $state;</php>,from:'video'},			
+				function(data){
+					$('#list').html(data);
+						
+			});			
+			
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#navtree"), setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("navtree");
+		});
+		//-->
+	</SCRIPT>
+<style type="text/css">
+.tit_tab a{ margin:auto 5px;}
+</style>
+<div class="so_main">
+  <include file="video_tab" />
+<!--	  <div class="Toolbar_inbox">
+		<span>视频列表</span>
+	  </div>-->
+	   <div id="searchPhoto_div" style=" float:left; width:280px;">
+			<div class="page_tit">索引分类</div>
+			<UL id="navtree" class="ztree" style="overflow-x: auto; overflow-y: hidden; padding-bottom:20px;"></UL>
+	  </div>
+	  <div class="list" id="list" style=" float:right;width: 800px; margin-right:10px;">
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<th style="width:30px;">
+				<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+				<label for="checkbox"></label>
+			</th>
+			<th class="line_l">ID</th>
+			<th class="line_l">栏目名称</th>
+			<th class="line_l">视频标题</th>
+			<th class="line_l">排序</th>
+			<th class="line_l">操作</th>
+		  </tr>
+	  <volist id="vo" name="square_video.data">
+		  <tr overstyle='on' id="{$vo.id}">
+			<td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		   <td>{$vo.id}&nbsp;</td>
+			<td>{$vo.category_id|getcategory}&nbsp;</td>
+			<td>{$vo.video_id|getvideotitle}&nbsp;</td>
+			<td>
+			 <a href="javascript:void(0)" class="ico_top" onclick="move('{$vo['id']}','up');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>&nbsp;&nbsp;
+			 <a href="javascript:void(0)" class="ico_btm" onclick="move('{$vo['id']}','down');"><img src="__PUBLIC__/admin/images/zw_img.gif"></a>
+			&nbsp;
+			</td>
+			<td>
+				<a href="{:U('square/admin/videosee',array('id'=>$vo['id']))}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:void(0);" onclick="deletes('{$vo.id}')">删除</a>
+			</td>
+			
+		  </tr>
+	  </volist>
+	  </table>
+	  </div>
+	  <div class="clear"></div>
+   <div class="tit_tab">{$square_video.html}</div>
+</div>
+
+<script>
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+    
+    function deletes(ids) {
+
+        var length = 0;
+        if(ids) {	
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一条数据！');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+            $.post("{:U('square/admin/videodelete')}",{ids:ids},function(res){
+                if(res=='0') {
+                      ui.error('删除失败');
+                }else {
+					ui.success('删除成功');
+                    removeItem(ids);
+                }
+            });
+        }
+    }
+    
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+	function move(group_id, direction) {
+	var baseid  = direction == 'up' ? $('#'+group_id).prev().attr('id') : $('#'+group_id).next().attr('id');
+    if(!baseid) {
+        direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+    }else {
+        $.post("{:U('admin/Apps/doGroupAppOrder')}", {group_id:group_id, baseid:baseid}, function(res){
+
+            if(res == '1') {
+                //交换位置
+                direction == 'up' ? $('#'+group_id).insertBefore('#'+baseid) : $("#"+group_id).insertAfter('#'+baseid);
+                ui.success('保存成功');
+            }else {
+			
+                ui.error('保存失败');
+            }
+        });
+    }
+	}
+</script>
+
+<include file="../Public/_footer" />

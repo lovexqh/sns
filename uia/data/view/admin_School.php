@@ -1,0 +1,157 @@
+<?php if(!defined('UC_ROOT')) exit('Access Denied');?>
+<?php include $this->gettpl('header');?> 
+<script src="js/CommonLibs/EditForm.js" type="text/javascript"></script>
+<div style="width:100%;height:30px;padding:5px 0px;clear:both;border:0px;background:none;">
+    <div style="width:50%;float:left;text-align:left;">
+    		<a class="mini-button" iconCls="icon-add" style="text-align:center;" onclick="newRow()">增加</a>
+            <a class="mini-button" iconCls="icon-remove" style="text-align:center;" onclick="delRow()">删除</a>
+        </div>
+        <div style="width:50%;float:left;text-align:right;">
+			<input id="key" class="mini-textbox" emptyText="请输入学校名称" style="width:150px;" onenter="onKeyEnter"/>   
+            <a class="mini-button" onclick="search()">查询</a>
+		</div>            
+</div>
+<!--Layout-->
+<div id="datagrid1" class="mini-datagrid" style="width:100%;height:92%;"
+url="admin.php?m=school&a=getSchoolList" idField="id" pageSize="50" multiSelect="true" >
+	<div property="columns">
+		<div type="checkcolumn"></div>
+		<div field="xxdm" width="60" headerAlign="center">学校代码</div>
+		<div field="xxmc" width="100" headerAlign="center">学校名称</div>
+		<div field="xxdz" width="120" headerAlign="center">学校地址</div>
+		<div field="jxny" width="60" headerAlign="center">建校年月</div>
+		<div field="xzmc" width="60" headerAlign="center">校长姓名</div>
+		<div field="lxdh" width="80" headerAlign="center">联系电话</div>
+		<div field="czdh" width="80" headerAlign="center">传真电话</div>
+		<div field="dzxx" width="120" headerAlign="center">电子地址</div>
+		<div field="zydz" width="120" headerAlign="center">主页地址</div>
+		 <div name="action" width="60" headerAlign="center" align="center" renderer="onActionRenderer" cellStyle="padding:0;">编辑</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	
+    mini.parse();
+    var grid = mini.get("datagrid1");
+    grid.load();
+	
+	function search() {
+        var key = mini.get("key").getValue();
+        grid.load({ key: key });
+    }
+    function onKeyEnter(e) {
+        search();
+    }
+    function onActionRenderer(e) {
+        var grid = e.sender;
+        var record = e.record;
+        var uid = record._uid;
+        var rowIndex = e.rowIndex;
+
+        var s = '<a class="Edit_Button" href="javascript:editRow(\'' + uid + '\')">修改</a>'
+        return s;
+    }
+
+
+    function newRow() {            
+    	 mini.open({
+             url: "admin.php?m=school&a=SchoolAdd",
+             title: "添加学校信息", width: 1100, height: 425,
+             onload: function () {
+                 var iframe = this.getIFrameEl();
+                 var data = { action: "new"};
+                 iframe.contentWindow.SetData(data);
+             },
+             ondestroy: function (action) {
+
+                 grid.reload();
+             }
+         });
+	}
+    
+    function editRow(row_uid) {
+    	
+    	 var row = grid.getSelected();
+         if (row) {
+             mini.open({
+                 //url: "admin.php?m=teacher&a=getTeacher_by_identityid&schoolid=<?php echo $data['schoolid'];?>&deptid=<?php echo $data['depid'];?>&identityid=" + row.identityid,
+                 url: "admin.php?m=school&a=SchoolAdd&schoolid="+row.id,
+                 title: "编辑学校信息", width: 785, height: 425,
+                 onload: function () {
+                     var iframe = this.getIFrameEl();
+                     var data = { action: "edit", id: row.id };
+                     iframe.contentWindow.SetData(data);
+                     
+                 },
+                 ondestroy: function (action) {
+                     grid.reload();
+                     
+                 }
+             });
+             
+         } else {
+             alert("请选中一条记录");
+         }
+         
+    	
+    	
+        var row = grid.getRowByUID(row_uid);
+        if (row) {
+           
+            var form = new mini.Form("#editform");
+            form.clear();
+            form.loading();
+            $.ajax({
+                url: "admin.php?m=class&a=getClassById&classid=" + row.id,
+                success: function (text) {
+                    form.unmask();
+					var o = mini.decode(text);
+                    form.setData(o);
+                    editWindow.show();                    
+                },
+                error: function () {
+                    alert("表单加载错误");
+                    form.unmask();
+                }
+            });
+
+        }
+    }
+   
+    function cancelRow() {
+        grid.reload();
+        editWindow.hide();
+    }
+    function delRow(row_uid) {
+    	var rows = grid.getSelecteds();
+        if (rows.length > 0) {
+            if (confirm("确定删除选中记录？")) {
+                var ids = [];
+                for (var i = 0, l = rows.length; i < l; i++) {
+                    var r = rows[i];
+                    ids.push(r.id);
+                }
+                var id = ids.join(',');
+                grid.loading("操作中，请稍后......");
+                $.ajax({
+                	url: "admin.php?m=school&a=delSchool",
+                	type: 'POST',
+    				data : {
+    					schoolid : id
+    				},
+                    success: function (text) {
+                        grid.reload();
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        } else {
+            alert("请选中一条记录");
+        }
+    }
+
+</script>
+<?php include $this->gettpl('footer');?>
+

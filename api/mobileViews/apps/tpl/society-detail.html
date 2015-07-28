@@ -1,0 +1,193 @@
+<script type="text/template" id="tpl">
+    <div class="container post-info">
+        <div class="row">
+            <div class="col-xs-2"><img class="user-head" src="<%=uhead%>" /></div>
+            <div class="col-xs-10 post-title">
+                <strong><%=ttitle%></strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-primary user-name"><strong><%=uname%></strong></div>
+            <div class="col-xs-5"><small><%=ttime%></small></div>
+            <div class="col-xs-2 text-center">
+            </div>
+            <div class="col-xs-2 text-primary text-center" id="check-comment">
+                <small>
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;<span class="comments-count"><%=reply%></span>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="post-content"><%=tcontent%></div>
+</script>
+<div id="post-detail">
+    <div class="scroller">
+        <div class="post-show">
+            <div class="text-center">
+                <img src="./image/ajax-loader.gif">
+            </div>
+        </div>
+        <div id="load-comments-tpl" style="display: none" data-status="1"></div>
+    </div>
+</div>
+<div class="container" id="post-top">
+    <div class="row post-info">
+        <div class="col-xs-10 form-group">
+            <input type="text" class="form-control" id="comment-content" placeholder="写点评论吧">
+        </div>
+        <div class="col-xs-2">
+            <button type="submit" id="comment-push" class="btn btn-default">发表</button>
+        </div>
+    </div>
+</div>
+
+<span id="dir-action" data-status="down" class="glyphicon glyphicon-arrow-down"></span>
+
+<script type="text/javascript">
+    X.loadData(handleHtml);
+    function handleHtml(data){
+        if(data == 'error') return false;
+        if(data['code'] == '00001') return false;
+        var obj = $('#tpl');
+        var tpl = obj.html();
+        var html = _.template(tpl,data.data);
+        $('.post-show').html(html);
+        obj = null;
+        tpl = null;
+        $('#tpl').remove();
+        var postDetailScroll;   //滚动对象
+        var commentFlag = 1; //标志是否还有评论
+        var commentsListTpl = '';//缓存评论模版
+        var comments = {app:'societyCommentsList',arguments:{tid:data.data.tid,page:1,num:10}};//加载评论需要的参数
+        var f;
+        postDetailScroll = new iScroll('post-detail',{
+            onScrollMove    :   function(){
+                if(this.y < this.maxScrollY){
+                    f=1;
+                }
+            },
+            onScrollEnd     :   function(){
+                if(commentFlag === 1 && f===1){
+                    comments.arguments.page += 1;
+                    loadCommentsData();
+                }
+
+            }
+        });
+        X.loadTpl('_comments-show',function(commentsShow){//加载评论展示模版
+            $('#load-comments-tpl').replaceWith(commentsShow);
+            $(".comments-count").html(data.data.reply);
+            postDetailScroll.refresh();
+            loadCommentsData();//加载评论
+        });
+        //加载评论数据
+        var loadCommentsData = function(){
+            commentFlag = 0
+            X.loadData(function(commentsData){//加载评论数据
+                var noComment = '<li class="no-comment" id="comments-status">已无评论</li>';
+                var haveComment = '<li class="have-comment" id="comments-status">上拉加载</li>';
+                if(_.isNull(commentsData.data)){
+                    if($("#post-comments").children().length < 2){
+                        $("#post-comments").html('暂无评论');
+                    }
+                }else{
+                    if(!commentsListTpl){
+                        X.loadTpl('_comments-list',function(commentsList){//加载评论数据模版
+                            commentsListTpl = commentsList;
+                            var commentsHtml = _.template(commentsList,commentsData);
+                            $("#post-comments").html(commentsHtml);
+                            if(commentsData.data.length < comments.arguments.num){
+                                $("#post-comments").append(noComment);
+                            }else{
+                                $("#post-comments").append(haveComment);
+                                commentFlag = 1
+                            }
+                            postDetailScroll.refresh();
+                        });
+                    }else{
+                        var commentsHtml = _.template(commentsListTpl,commentsData);
+                        $(".have-comment").replaceWith(commentsHtml);
+                        if(commentsData.data.length < comments.arguments.num){
+                            $("#post-comments").append(noComment);
+                        }else{
+                            $("#post-comments").append(haveComment);
+                            commentFlag = 1
+                        }
+                        postDetailScroll.refresh();
+                    }
+                }
+                postDetailScroll.refresh();
+            },comments)
+        }
+        document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        $("#check-comment").tap(function(){
+//            var to = $('.post-content').height()-200
+//            postDetailScroll.scrollTo(0,-to,500)
+        })
+        $("#dir-action").tap(function(){
+            var status = $(this).data('status');
+            if(status == 'up'){
+                postDetailScroll.scrollTo(0,1,500)
+                $(this).addClass('glyphicon-arrow-down');
+                $(this).removeClass('glyphicon-arrow-up');
+                $(this).data('status','down');
+            }else if(status=='down'){
+                $(this).data('status','up');
+                var to = $('.post-content').height()-200
+                postDetailScroll.scrollTo(0,-to,500)
+                $(this).removeClass('glyphicon-arrow-down');
+                $(this).addClass('glyphicon-arrow-up');
+            }
+        });
+        //处理回复
+        var rid=0;
+        $("#post-detail").on('click','.comment-reply',function(){
+            var commentObj = $('#comment-content');
+            commentObj.focus()
+            commentObj.attr('placeholder','回复给'+$(this).data('uname')+':');
+            rid = $(this).data('rid');
+        });
+        //处理评论
+        $("#comment-push").tap(function(){
+            if(data.data.edit == 0){
+                X.popup('<span class="text-warning">此文不能评论</span>');
+                return false;
+            }
+            var content = $('#comment-content').val();
+            var re = /^\s+$/g;
+            if (content.length == 0 || re.test(content)){
+                X.popup('<span class="text-warning">内容不能为空</span>');
+                return false;
+            }
+            var reply = {app:'societyComment',arguments:{tid:data.data.tid,sid:appsConfig.getData.arguments.sid,uid:appsConfig.getData.arguments.uid,rid:'',rcontent:content}};
+            if(rid == 0){
+//                var comments = {app:'replyList',arguments:{tid:data.data.tid,page:1,num:2}};//加载评论需要的参数
+                X.loadData(function(res){
+                    if(res.status == 1){
+                        $("#post-comments").html('<li class="have-comment text-center"><img src="./image/ajax-loader.gif"></li>');
+                        comments.arguments.page = 1;
+                        f = 0;
+                        loadCommentsData();
+                        X.popup('评论成功');
+                        $('#comment-content').val('');
+                        var count =parseInt($(".comments-count").html())+1;
+                        $(".comments-count").html(count);
+                    }
+                },reply);
+            }else{
+                reply.arguments.rid = rid;
+                X.loadData(function(res){
+                    if(res.status == 1){
+                        $("#post-comments").html('<li class="have-comment text-center"><img src="./image/ajax-loader.gif"></li>');
+                        comments.arguments.page = 1;
+                        f = 0;
+                        loadCommentsData();
+                        X.popup('回复成功');
+                        $('#comment-content').val('');
+                    }
+                },reply);
+            }
+        });
+        postDetailScroll.refresh();
+    }
+</script>

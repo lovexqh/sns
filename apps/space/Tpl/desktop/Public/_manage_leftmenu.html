@@ -1,0 +1,82 @@
+<div class="trunk_left">
+  <div class="navi_title">班级管理</div>
+  <div class="navi_content">
+    <ul>
+      <if condition="$adviser eq 1">
+<li>
+<img src="__THEME__/space/images/space.gif" class="key" />
+<a href="{:U('space/Manage/ManageInfo',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageInfo')))echo 'id="onvisited"';</php>>班级基本信息</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="keyadd" />
+<a href="{:U('space/Manage/ManagePower',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManagePower')))echo 'id="onvisited"';</php>>授予权限管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="keymanager" />
+<a href="{:U('space/Manage/ManageLeader',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageLeader')))echo 'id="onvisited"';</php>>班级干部管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="keycourse" />
+<a href="{:U('space/Manage/ManageCourse',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageCourse')))echo 'id="onvisited"';</php>>课程表管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="keyseat" />
+<a href="{:U('space/Manage/ManageSeat',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageSeat')))echo 'id="onvisited"';</php>>座位管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="move_announce" />
+<a href="{:U('space/Manage/ManageAnnounce',array(classid=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageAnnounce')))echo 'id="onvisited"';</php>>公告管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="move_photos" />
+<a href="{:U('space/Manage/ManagePhoto',array(classid=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManagePhoto','album','photo','album_edit','muti_edit_photos','album_order')))echo 'id="onvisited"';</php>>相册管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="move_honor" />
+<a href="{:U('space/Manage/ManageHonor',array(classid=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageHonor')))echo 'id="onvisited"';</php>>荣誉榜管理</a>
+</li>
+<!--<li>
+<img src="__THEME__/space/images/space.gif" class="move_money" />
+<a href="{:U('space/Manage/ManageMoney',array(classid=>$classid))}" >班费管理</a>
+</li>
+<li>
+	<img src="__THEME__/space/images/space.gif" class="move_books" /><a href="{:U('space/Manage/ManageBooks',array(classid=>$classid))}" >图书角管理</a>
+</li>
+<li>
+<img src="__THEME__/space/images/space.gif" class="move_glory" />
+<a href="{:U('space/WeekStar/showByTime',array(classid=>$classid,control=>manage))}">每周之星管理</a>
+</li>-->
+<elseif condition="$adviser eq 2"/>
+<volist name="powerlist" id="vo" key="k">
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageInfo')">
+    <li><img src="__THEME__/space/images/space.gif" class="key" /><a href="{:U('space/Manage/ManageInfo',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageInfo')))echo 'id="onvisited"';</php>>班级基本信息</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManagePower')">
+    <li><img src="__THEME__/space/images/space.gif" class="keyadd" /><a href="{:U('space/Manage/ManagePower',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManagePower')))echo 'id="onvisited"';</php>>授予权限管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageLeader')">
+    <li><img src="__THEME__/space/images/space.gif" class="keymanager" /><a href="{:U('space/Manage/ManageLeader',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageLeader')))echo 'id="onvisited"';</php>>班级干部管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageCourse')">
+    <li><img src="__THEME__/space/images/space.gif" class="keycourse" /><a href="{:U('space/Manage/ManageCourse',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageCourse')))echo 'id="onvisited"';</php>>课程表管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageSeat')">
+    <li><img src="__THEME__/space/images/space.gif" class="keyseat" /><a href="{:U('space/Manage/ManageSeat',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageSeat')))echo 'id="onvisited"';</php>>座位管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageAnnounce')">
+    <li><img src="__THEME__/space/images/space.gif" class="move_announce" /><a href="{:U('space/Manage/ManageAnnounce',array(classid=>$classid))}"  <php>if(in_array((ACTION_NAME),array('ManageAnnounce')))echo 'id="onvisited"';</php>>公告管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManagePhoto')">
+    <li><img src="__THEME__/space/images/space.gif" class="move_photos" /><a href="{:U('space/Manage/ManagePhoto',array(classid=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManagePhoto','album','photo','album_edit','muti_edit_photos','album_order')))echo 'id="onvisited"';</php>>相册管理</a></li>
+  </if>
+  <if condition="($vo['module'] eq 'Manage') and ($vo['act'] eq 'ManageHonor')">
+    <li><img src="__THEME__/space/images/space.gif" class="move_honor" /><a href="{:U('space/Manage/ManageHonor',array(classid=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageHonor')))echo 'id="onvisited"';</php>>荣誉榜管理</a></li>
+  </if>
+</volist>
+<!--<li><img src="__THEME__/space/images/space.gif" class="move_money" /><a href="{:U('space/Manage/ManageMoney',array(classid=>$classid))}" >班费管理</a></li>
+<li><img src="__THEME__/space/images/space.gif" class="move_books" /><a href="{:U('space/Manage/ManageBooks',array(classid=>$classid))}" >图书角管理</a></li>
+<li><img src="__THEME__/space/images/space.gif" class="move_glory" /><a href="{:U('space/WeekStar/showByTime',array(classid=>$classid,control=>manage))}">每周之星管理</a></li>-->
+</if>
+    </ul>
+  </div>
+</div>

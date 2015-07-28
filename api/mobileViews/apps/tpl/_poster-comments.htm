@@ -1,0 +1,16 @@
+<%_.map(data,function(comment){%>
+<li data-rid="<%=comment.uid%>" data-uname="<%=comment.uname%>" data-cid="<%=comment.cid%>" class="comment-action">
+    <div class="row">
+        <div class="col-xs-7 text-primary"><img class="reply-user-head" src="<%=comment.uhead%>"/><%=comment.uname%></div>
+        <div class="col-xs-5 text-muted"><small><%=comment.time%></small></div>
+    </div>
+    <div class="row comment-content">
+        <%=comment.content%>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 comment-reply" data-rid="<%=comment.uid%>" data-uname="<%=comment.uname%>">
+            <small class="text-primary">回复</small>
+        </div>
+    </div>
+</li>
+<%});%>

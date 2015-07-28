@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <!--对可视区进行矫正，通知浏览器使用移动设备的宽度作为可视宽度-->
+    <!--对可视区进行矫正，通知浏览器使用移动设备的宽度作为可视宽度-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body>
+<script type="text/javascript" src="./libs/LABjs/LAB-debug.min.js" id="lab"></script>
+<script type="text/javascript">
+    $LAB
+            .script('./libs/zepto/zepto.min.js')
+            .script('./apps.js')
+            .wait(function(){
+                X.loadFile('css/post-detail','css');
+                X.loadFile('css/comment-list','css');
+                if(location.search != ''){
+                    appsConfig.getData = location.search;
+                    appsConfig.getData = decodeURI(appsConfig.getData.substr(1));
+                    appsConfig.getData = appsConfig.getData.replace(/\//g,'{');
+                    appsConfig.getData = appsConfig.getData.replace(/&/g,'}');
+                    appsConfig.getData = eval('('+appsConfig.getData+')');
+                    appsConfig.show = appsConfig.map[appsConfig.getData.application];
+                    if(!appsConfig.show){console.log('show error!')}
+                }
+                $(function(){
+                    $.ajax({
+                        type    :   'GET',
+                        url     :   'tpl/'+appsConfig.show.tpl+'.html',
+                        async   :   false,
+                        success :   function(res){
+                            $("#lab").before(res);
+                        }
+                    });
+                })
+            })
+            .script('./libs/zepto/touch.js')
+            .script('http://www.css88.com/doc/underscore/underscore.js')
+            .script('./libs/iscroll4/src/iscroll.js')
+</script>
+</body>
+</html>

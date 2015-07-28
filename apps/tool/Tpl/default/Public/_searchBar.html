@@ -1,0 +1,15 @@
+<div region="north" id="topBar">
+	<div id="toolbar" class="region nav_container">
+		<div class="nav_body">
+			<div id="nav" style="display:block"> <a href="javascript:void(0);" class="nav_button home" cmd="home" id="nav_home" title="{:L('index')}" hidefocus onclick="control_click(jQuery('#cat_nav-2'),'main');">{:L('index')}</a> <a href="javascript:void(0);" class="nav_button backDisable" cmd="backPage" id="nav_back" title="{:L('back')}" hidefocus>{:L('back')}</a> <a href="javascript:void(0);" class="nav_button forwardDisable" cmd="forwardPage" id="nav_forward" title="{:L('forward')}" hidefocus>{:L('forward')}</a> <a href="javascript:void(0);" class="nav_button refresh" cmd="refresh" id="nav_refresh" title="{:L('refresh')}" hidefocus onclick="nav_back_forword_click();">{:L('refresh')}</a></div>
+			<div id="searchbar">
+				<div class="searchInputContainer">
+					<input id="searchInput" value="{:L('search_key')}" onfocus="if(this.value=='{:L('search_key')}'){ this.value=''; }else{ this.select(); }" onblur="if(this.value==''){ this.value='{:L('search_key')}'; }" onkeydown="if(event.keyCode==13){ searchsubmit(); }">
+					<a id="searchBtn" href="javascript:void(0);" onclick="searchsubmit();"></a> 
+				</div>
+				<ul id="searchSuggestList" class="searchSuggestList radius3"></ul>
+			</div>
+			<div id="tips" style="display:none"></div>
+		</div>
+	</div>
+</div>

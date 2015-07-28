@@ -1,0 +1,58 @@
+<link href="{:SITE_URL}/apps/{$app_show}/Tpl/default/Public/css/video.css" rel="stylesheet" type="text/css" />
+<script src="{:SITE_URL}/apps/{$app_show}/Tpl/default/Public/js/preview.js" type="text/javascript"></script>
+<script>
+	var video_preview = '{$video_preview}';
+</script>
+
+<div class="mainbox_R">
+  <div class="box_create"><a href="{:U('video/Upload/index')}" class="btn_video_s"></a></div>
+  <div class="right_box">
+    <h2>推荐专辑</h2>
+    <ul class="list_Reccategorys">
+    <div class="tit"><a href="#" class="ico_down"></a></div>
+      <volist name="IsHotList" id="li"> 
+   	    <li>
+          <div class="categorys_img"><a href="{:U('video/Index/category',array(uid=>$li['userId'],id=>$li['id']))}" target="_blank"><img src="{$li.id|get_category_cover=###,$li,66,66}" /></a></div>
+          <div class="categorys_info">
+            <dl>
+              <dt><a href="{:U('video/Index/category',array(uid=>$li['userId'],id=>$li['id']))}" target="_blank" class="OverH">{$li.name}</a> 共{$li.videoCount}部</dt>
+              <dd>作者:<a href="{:U('home/Space/index',array(uid=>$li[userId]))}">{$li.userId|getUserName}</a></dd>
+              <dd>时间:2011-12-7</dd>
+            </dl>
+          </div>
+        </li>
+	  </volist>
+    <div class="btm"><a href="#" class="ico_up"></a></div>
+    </ul>
+  </div>
+</div>
+<div class="mainbox_C main_pad">
+<div class="tab-menu">
+	<ul>
+	<php>if('new' == $_GET['order']){</php>
+		<li><a href="{:U('home/Square/video', array_merge((array)$_GET, array('order'=>'hot')))}"><span>热门视频</span></a></li>
+        <li><a href="#" class="feed_item on"><span>最新视频</span></a></li>
+	<php>}else{</php>
+		<li><a href="#" class="feed_item on"><span>热门视频</span></a></li>
+        <li><a href="{:U('home/Square/video', array_merge((array)$_GET, array('order'=>'new')))}"><span>最新视频</span></a></li>
+	<php>}</php>
+    </ul>
+</div>
+<div class="videoBox" style="margin-top:20px;">
+  <ul class="videolist">
+    <volist name="videos.data" id="li">
+      <li style="margin:0 10px 0 20px; padding-bottom:15px;">
+        <dl>
+          <dt><a href="{:U('video/Index/video',array(id=>$li['id'],aid=>$li['categoryId'],uid=>$li['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$li.name}" ><img src="__ROOT__/thumb.php?w=160&h=130&t=f&url={$li.id|get_picture_url}" /><div></div><em></em></a>
+          </dt>
+          <dd>标题：<a href="{:U('video/Index/video',array(id=>$li['id'],aid=>$li['categoryId'],uid=>$li['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$li.name}"  >{$li.name|getShort='10'}</a></dd>
+          <if condition=" $mid neq $weibo['userId']"><dd>作者：<a href="{:U('home/Space/index',array(uid=>$weibo[userId]))}">{$li.userId|getUserName}</a></dd></if>
+		  <dd>更新：{$li.mTime|friendlyDate}</dd>
+        </dl>
+      </li>
+    </volist>
+  </ul>
+</div>
+<div class="page">{$videos['html']}</div>
+</div>
+<div class="c"></div>

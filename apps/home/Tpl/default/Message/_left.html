@@ -1,0 +1,16 @@
+  <!-- 应用左侧panel begin -->
+  <div id="panel_left" class="panel_left">
+    <ul class="nav_menu">
+      <li <if condition="in_array(ACTION_NAME, array('index', 'detail'))">class="sele"</if>><a href="{:U('home/Message/index')}">我的私信</a></li>
+      <li <eq name="ACTION_NAME" value="notify">class="sele"</eq>><a href="{:U('home/Message/notify')}">系统通知</a></li>
+      <li <eq name="ACTION_NAME" value="appmessage">class="sele"</eq>><a href="{:U('home/Message/appmessage')}">应用消息</a></li>
+    </ul>
+    
+    <!-- 垂直条 begin -->
+    <div class="panel_slide"></div>
+    <!-- 垂直条 begin --> 
+    <!-- 应用左侧底部占位块 begin -->
+    <div class="bottom_block"></div>
+    <!-- 应用左侧底部占位块 end --> 
+  </div>
+  <!-- 应用左侧panel end --> 

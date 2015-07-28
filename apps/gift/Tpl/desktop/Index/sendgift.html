@@ -1,0 +1,163 @@
+<include file="__THEME__/desktop/_header" />
+<style type="text/css">
+.ui-fs{
+	display: block;
+	color: #555555;
+	vertical-align: middle;
+	-webkit-border-radius: 4px;
+	 -moz-border-radius: 4px;
+		  border-radius: 4px;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	 -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+	 -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+	   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+		  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+.ui-fs-input{
+	overflow:hidden;
+}
+.ui-fs-input input{
+	border:0;
+	transition:none;
+	box-shadow:none;
+}
+</style>
+<div class="panel-cmain" style="padding:15px;">
+    <DIV id=gift_info>
+		<IMG src="../Public/gift/{$gift.img}">
+		<BR>{$gift.name}<BR>限量：{$gift.num}个<BR>{$gift.price}点积分
+	</DIV>
+	<form action="__URL__&act=send" method='post' onsubmit='return check(this)'>
+	<input type="hidden" name="ajax" value="1" />
+        <input type='hidden' name='giftId' value='{$giftId}' id='gift_id'></input>
+		<div style="margin-top:20px;">
+			<h2 class="f14px fB lh30">
+				我目前拥有的 {$money.alias} 是： {$money.credit}
+			</h2>
+		</div>
+		<div style="margin-top:30px;">
+			<h2 class="f14px fB lh30">
+				选择接收人：
+			</h2>
+			<div style="width:360px;">
+				{:W('SelectFriends',array('uid'=>$_GET['uid']))}
+			</div>
+			<div style="margin-top:20px;">
+				<h2 class="f14px fB lh30">
+					附加消息：
+				</h2>
+				<p style="margin:0; padding:0;">
+					不能超过200个字符
+				</p>
+				<textarea cols="50" rows="6" class="Text20" name='sendInfo' id='sendInfo'></textarea>
+			</div>
+			<div>
+				<div class="lh30 fB f14px">
+					选择赠送的方式：
+				</div>
+				<div>
+					<div class="left">
+						<input checked="checked" value="1" id="public" name="sendWay" type="radio"/>
+					</div>
+					<div style="margin:0 0 20px 20px;" class="lh18">
+						<label for="public">
+							<strong>
+								公开赠送
+							</strong>
+							<br />
+							<span class="cGray2">
+								所有人都能看见你的名字、赠送的礼物和附加消息。
+								<br />
+								这个礼物将显示在接收人的礼物盒，并可发布动态到微广播。
+							</span>
+						</label>
+					</div>
+					<div class="left">
+						<input value="2" id="private" name="sendWay" type="radio" />
+					</div>
+					<div style="margin-left:20px;" class="lh18">
+						<label for="private">
+							<strong>
+								私下赠送
+							</strong>
+							<br />
+							<span class="cGray2">
+								只有接收礼物的人能看见你的名字和附加消息。
+								<br />
+								这个礼物将只出现在接收人的礼物盒，且其他人无法知道发送人是谁。
+							</span>
+						</label>
+					</div>
+					<br />
+					<div class="left">
+						<input value="3" id="anonymous" name="sendWay" type="radio" />
+					</div>
+					<div style="margin:0 0 20px 20px;" class="lh18">
+						<label for="anonymous">
+							<strong>
+								匿名赠送
+							</strong>
+							<br />
+							<span class="cGray2">
+								接收礼物的人只能看见你的附加消息，不显示你的名字。
+								<br />
+								这个礼物将只出现在接收人的礼物盒，且其他人无法知道发送人是谁。
+							</span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="mt10">
+				<a type="submit" class="easyui-linkbutton medium-primary" style="margin-right:5px;">赠送礼物</a>
+
+			</div>
+		</div>
+	</form>
+
+    <!-- 画布 end -->
+    <div class="c"></div>
+</div>
+<script>
+function check(form){
+	$(form).form('submit', {
+		url: $(form).attr('action'),
+		onSubmit: function () {
+			var isValid = $(this).form('validate');
+			if (isValid) {
+				//检测内容
+				$(form).find(".easyui-combobox[required='true']").each(function(){
+					var val = $(this).parent().find(".combo-value").val();
+					if (isValid && (val == '' || val == 0)) {
+						$(this).parent().find(".combo").focus();
+						isValid = false;
+					}
+				});
+			}
+			if(isValid) {
+				//如果各种验证都通过了，则启用遮罩层
+				parent.mask.show();
+			}
+			return isValid; // return false will stop the form submission
+		},
+		success: function (data) {
+			//alert(data);
+			data = data ? data.substring(data.indexOf("{")) : '';
+			var data = eval('(' + data + ')'); // change the JSON string to javascript object
+			//判断返回的data值(将在action中控制ajax提交时将返回执行成功时的状态值)
+			parent.mask.hide();
+			if (data.status > 0) {
+				parent.tabs.redirect('我送出的礼物',U('gift/Index/sendbox'));
+			} else {
+				parent.$.messager.alert('提示', data.info, 'error');
+			}
+		}
+	});
+	return false;
+}
+</script>
+<!-- 内容 end -->
+<include file="__THEME__/desktop/_footer" /> 

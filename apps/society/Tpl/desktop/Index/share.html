@@ -1,0 +1,194 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="../Public/swfupload/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="../Public/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="../Public/swfupload/js/handlers.js"></script>
+<script type="text/javascript">
+	var swfu;
+	window.onload = function() {
+		var settings = {
+//			flash_url : "{$con['server']}swfupload/swfupload.swf",
+			flash_url : "{$con['server']}swfupload/swfupload.swf",
+			upload_url : "{$con['server']}manage.aspx",
+			post_params : {
+				"PHPSESSID" : "<?php echo session_id(); ?>"
+			},
+			file_size_limit : "100 MB",
+			file_types : "*.jpg;*.png;*.gif;*.bmp;*.zip;*.rar;*.doc;*.xls;*.ppt;*.docx;*.xlsx;*.pptx;*.pdf;",
+			file_types_description : "All Files",
+			file_upload_limit : 1,
+			file_queue_limit : 0,
+			custom_settings : {
+				progressTarget : "fsUploadProgress",
+				cancelButtonId : "btnCancel"
+			},
+			debug : false,
+			file_post_name : "file",
+			use_query_string : true, //传递参数否则无法使用
+			post_params : { //传递给应用的参数
+				"action" : "add",
+				"app" : "resource", //请求的应用 
+				"convertAble": "0"
+			},
+			// Button settings
+			button_image_url : "apps/society/Tpl/desktop/Public/images/upload.jpg",
+			button_width : "118",
+			button_height : "34",
+			button_placeholder_id : "spanButtonPlaceHolder",
+			//button_text: '<span class="theFont">Hello</span>',
+			button_text_style : ".theFont { font-size: 16; }",
+			button_text_left_padding : 12,
+			button_text_top_padding : 3,
+			// The event handler functions are defined in handlers.js
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess,
+			upload_complete_handler : uploadComplete,
+			queue_complete_handler : queueComplete
+		// Queue plugin event
+		};
+		swfu = new SWFUpload(settings);
+	};
+</script>
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+	<!-- 左侧begin -->
+	<div class="main_left" style="text-align: left;">
+		<php>if((checkMember($societyInfo['id']))==1){</php>
+			<div id="content">
+				<input type="hidden" name="societyId" value="{$societyInfo.id}">
+				<form id="form1" action="index.php" method="post" enctype="multipart/form-data">
+					<div style="padding: 5px 2px 0 10px;">
+						<span id="spanButtonPlaceHolder"><param name="wmode" value="opaque" /></span> 
+						<input id="btnCancel" type="button" value="取消上传" onclick="swfu.cancelQueue();" disabled="disabled">
+					</div>
+					<div class="fieldset flash" id="fsUploadProgress">
+					<!-- 
+						<span class="legend">等待上传队列...</span>
+						<span id="divStatus">0 文件已上传</span>
+					 -->
+					</div>
+				</form>
+			</div>
+		<php>}</php>
+		<!-- 共享内容Begin -->
+		<div style="margin-top: 5px;">
+			<div class="share_culomn">
+				<span style="margin-left: 28px;">文件名</span>
+				<span style="margin-left: 264px;">文件大小</span>
+				<span style="margin-left: 21px;">上传者</span>
+				<span style="margin-left: 26px;">上传时间</span>
+				<span style="margin-left: 21px;">下载次数</span>
+				<span style="margin-left: 14px;">操作</span>
+			</div>
+			<div style="border: 1px solid #f4f4f4;max-height: 600px;overflow: hidden;">
+			<input type="hidden" name="server" value="{$con['server']}" />
+			<input type="hidden" name="username" value="<php>echo getUserName(getMid())</php>" />
+				<ul id="list">
+				<volist name="shareList" id="vo">
+					<li id="{$vo.id}">
+						<ul class="share_list">
+							<li style="width: 310px;text-align: left;margin-left: 10px; line-height: 30px;overflow: hidden;"><em class="{$vo.format}" ></em>{$vo.shareName|getShort_S=###,20}</li>
+							<li style="width: 74px;">{$vo.size}KB</li>
+							<li style="width: 69px;">
+								<a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a>
+                            </li>
+							<li style="width: 80px;">{$vo.cTime|date="m-d H:i",###}</li>
+							<li style="width: 67px;" class="s_downCount_{$vo.id}">{$vo.download}</li>
+							<php>if($societyInfo['downloadable']==1||$myInfo){</php>
+							<li style="width: 56px;"><a href="javascript:;" onclick="downLoad({$vo.id});"><em class="download"></em></a>
+							<php>}</php>
+							<php>if( $uid==$vo['uid'] | $isManage ==1){</php>
+							<a href="javascript:;" onclick="deleteShare({$vo.id},{$vo.societyId});">
+							<em class="delete" ></em></a>
+							<php>}</php>
+							</li>
+						</ul>
+					</li>
+				</volist>
+					<li style="display: none;"></li>
+				</ul>
+			<div style="clear: both;"></div>
+			</div>
+			<div class="page">{$html}</div>
+		</div>
+		<!-- 共享内容End -->
+		
+		
+	</div>
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<!-- 左侧end -->
+
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#list>li").addClass('clear_both');
+		$("#list>li:odd").addClass('odd');
+		$(".progressWrapper:odd").addClass('clear_background');
+	});
+	//单图上传回调函数,返回上传完成文件的信息
+	function ts_upload_success(serverData) {
+		//var societyId = $('input[name=societyId]').val();
+		var data = eval('(' + serverData + ')');
+		if (data.status == 1) {
+			$.ajax({
+				url : "{:U('society/Index/addShare')}",
+				type : "POST",
+				dataType : "json",
+				data : {
+					societyId : {$societyInfo.id},
+					shareName : data.name,
+					size : data.size,
+					ext : data.ext,
+					path : "{$con['server']}" + data.webpath + data.savename
+				},
+				success : function(ajaxData) {
+					if (ajaxData.status == 0) {
+			//			var server = $("input[name=server]").val();
+			//			var username = $("input[name=username]").val();
+			//			var myDate=new Date();
+			//			var html ="";
+			//			var uid = ajaxData.msg.split('_');
+			//			html +=	"<li id="+uid[0]+">";
+			//			html +=	"<ul class='share_list'>";
+			//			html +=	"	<li style='width: 310px;text-align: left;margin-left: 10px;line-height: 30px;overflow: hidden;'><em class='"+data.ext.replace('.','')+"' ></em>"+getLen(data.name,34)+"</li>";
+			//			html +=	"	<li style='width: 74px;'>"+Math.ceil((data.size)/1024)+"KB</li>";
+			//			html +=	"	<li style='width: 69px;'><a title='"+username+"的个人主页' class='username' uid='"+uid[1]+"' rel='face' href='javascript:void(0);'>"+username+"</a></li>";
+			//			html +=	"	<li style='width: 80px;'>"+(myDate.getMonth()+1)+"-"+myDate.getDate()+" "+myDate.getHours()+":"+myDate.getMinutes()+"</li>"
+			//			html +=	"	<li style='width: 67px;' class='s_downCount_"+uid[0]+"'>"+0+"</li>";
+			//			html +=	"	<li style='width: 56px;'><a href='javascript:;' onclick='downLoad("+uid[0]+");'><em class='download'></em></a>";
+			//			html +=	"	<a href='javascript:;' onclick='deleteShare("+uid[0]+");'><em class='delete'></em></a></li>";
+			//			html +=	"</ul>";
+			//			html +=	"</li>";
+			//			$("#list>li:first").before(html);
+			//			$("#list>li").removeClass('odd');
+			//			$("#list>li").addClass('clear_both');
+			//			$("#list>li:odd").addClass('clear_both odd');
+					} else {
+						ui.error(ajaxData.msg);
+						return false;
+					}
+				},
+				error : function(ajaxData) {
+					ui.error(ajaxData.msg);
+					return false;
+				}
+			});
+			return true;
+		} else {
+			return false;
+		}
+	}
+</script>
+<include file="../Public/_footer" />

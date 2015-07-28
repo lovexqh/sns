@@ -1,0 +1,45 @@
+<if condition="$visitor_list">
+<div class="clear"></div>
+<style type="text/css">
+.visitor_person li{
+	padding:0;
+	margin:5px 0;
+	width:49%;
+	float:left;
+}
+.visitor_person li a.userface{
+	float:left;
+	display:inline-block;
+}
+.visitor_person li a.fn{
+	display:block;
+	margin-left:60px;
+	line-height:22px;
+}
+.visitor_person li .userPic span{
+	display:block;
+	margin-left:60px;
+	line-height:22px;
+}
+</style>
+<div class="person_Fans app_line">
+    <h2>{$visitor_title}</h2>
+    <ul class="visitor_person">
+    	<volist name="visitor_list" id="vo">
+        <li>
+        <div class="userPic">
+            <space uid="vo.uid">{uavatar=m}</space>
+            <space uid="vo.uid" class="fn">{uname}</space>
+            <span>{$vo.cTime|date='m月d日',###}</span>
+        </div>
+        </li>
+        </volist>
+    </ul>
+    <div class="clear pb10"></div>
+    <ol>
+        <li style="line-height:20px">今日访问量：<!--<a href="#">-->{$day_count}<!--</a>--><neq name="day_count" value="0"><img src="__THEME__/member/images/new.gif" /></neq></li>
+        <!--li style="line-height:20px">历史访问量：{$all_count}</li-->
+    </ol>
+    <div class="clear"></div>
+</div>           
+</if>

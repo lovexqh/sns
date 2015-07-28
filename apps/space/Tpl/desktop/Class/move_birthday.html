@@ -1,0 +1,37 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+  <include file="../Public/_movestate_leftmenu" />
+  <div class="trunk_right_g">
+     <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_announce" /><span class="title">本月寿星</span></div>
+		<ul class="birthday">
+        	<volist name="birstlist" id="vo">
+					   <if condition="$vo['uid'] neq ''">
+                       <li><space uid="vo['uid']" class="nocard">{uavatar}</space>
+    						<div class="lf_info"> <span class="top"><strong><space uid="vo['uid']" class="co">{uname}</space></strong>在{$vo['month']}月{$vo['day']}日过生日</span> <span class="bottom"></span> </div>
+    						<!--	<ul class="gift">
+     								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+    							</ul>-->
+   				 			<div class="clear"></div>
+  						</li>
+                     <else/>
+                     	<li><img src="__THEME__/images/user_pic_bigjj.gif" class="uavatar_small"/>
+    						<div class="lf_info"> <span class="top"><strong>{$vo['xm']}</strong>在{$vo['month']}月{$vo['day']}日过生日</span> <span class="bottom"></span></div>
+    						<!--	<ul class="gift">
+     								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+      								<li><img width="75" height="70" /></li>
+    							</ul>-->
+   				 			<div class="clear"></div>
+  						</li>
+                     </if>
+            </volist>
+		</ul>
+  </div>
+<include file="../Public/_footer" />
+    

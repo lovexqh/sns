@@ -1,0 +1,89 @@
+<include file="_header" />
+<link href="__THEME__/form.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.newstext img{
+	max-width:560px;
+	myimg:expression(onload=function(){
+	this.style.width=(this.offsetWidth > 560)?"560px":"auto"}
+		   );
+	}
+</style>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <div class="main_left">
+      <div class="info detail_box">
+        <div class="info_title">
+          <h1>{$blog_content.title}</h1>
+         <!-- <span>{$blog_content.readCount}人阅读</span>-->
+          <div class="clear"></div>
+        </div>
+        <div class="info_detail" style="margin:10px;width:97%;">
+        <div style="width:720px;" class="newstext">{$blog_content.content}</div>
+		<div class="clear"></div> 
+		<div id="reply_box">
+        {:W('Comment',array('type'=>'blog','appid'=>$blog_content['id'], 'author_uid'=>$blog_content['uid'], 'title'=>$blog_content['title'], 'url'=>U('blog/Index/show',array('id'=>$blog_content['id'],'mid'=>$blog_content['uid'])), 'table'=>'blog','id_field'=>'id','comment_count_field'=>'commentCount'))}
+        </div>
+        </div>
+        <div class="clear"></div> 
+      </div>
+    </div>
+    <div class="main_right">
+      <div class="source_right">
+        <h3>文章信息:
+           {:W('Weibo',array('tpl_name'=>'blog_share_weibo','button_title'=>'分享'))}
+          <php>if($uid!=$blog_content[uid]){</php>
+           {:W('Favorite',array('type'=>'link', 'fid'=>$blog_content['id'], 'app'=>'blog', 'mod'=>'Index', 'act'=>'show'))}
+           <php>}</php>
+          <php>
+           $tpl_data = array('author'=>getUserName($blog_content['uid']),'title'=>$blog_content['title'],'url'=>U('blog/Index/show',array('id'=>$blog_content['id'])));
+           $tpl_data = urlencode(serialize($tpl_data));
+           $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布成功')));
+        </php>
+          {:showShareBtn($tpl_data, $param_data, $blog_content, 0, 'blog')}
+        </h3>
+       
+        <div class="source_count">
+          <p>
+          <strong>发布人：</strong>
+          <span> 
+          <a href="@{blog_content.uid}" target="_blank">
+              <space uid="blog_content.uid">{uname}</space>
+          </a></span>
+          </p>
+          <p><strong></strong><span>共{$count}篇文章</span></p>
+          <p><strong>创建时间：</strong><span>{$blog_content.cTime|friendlyDate}</span></p>
+          <p><strong>浏览次数：</strong><span>{$blog_content.readCount}</span></p>
+        </div>
+        <h2>相关文档推荐</h2>
+        <ul class="recommend">
+         <volist name="relation" id="vo">
+          <li>
+          	<strong>
+            <a href="{:U('/Article/context',array(id=>$vo['id']))}">{$vo.title|getshort='8'}……</a>
+            </strong>
+            <span>&nbsp;&nbsp;浏览：{$vo.readCount}</span>
+            <div class="clear"></div>
+          </li>
+          </volist>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+<include file="_footer" />
+<script language="javascript">
+$(document).ready(function(e) {
+    $('.info_detail>.newstext').find('div').removeClass();
+	$('.newstext').find('table').each(function(index, element) {
+        $(this).css('max-width','720px');
+		$(this).css('width','auto');
+		$(this).css('table-layout','fixed');
+    });
+});
+</script>
+</div>
+</body>
+</html>

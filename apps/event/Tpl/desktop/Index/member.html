@@ -1,0 +1,73 @@
+<include file="__THEME__/desktop/_header" />
+<link  href="__THEME__/menu.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="panel-cmain">
+<div class="content no_bg">
+  <!-- 内容 begin  -->
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox"> <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <!-- page_title end -->
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <li><a href="{:U('/Index/eventDetail',array('id'=>$id,'uid'=>$uid,'iframe'=>'yes'))}"><span>活动</span></a></li>
+            <li><a href="{:U('//member',array('id'=>$id,'iframe'=>'yes'))}" class="on"><span>成员</span></a></li>
+            <!-- <li><a href="__URL__/photos/id/{$id}/uid/{$uid}"><span>照片</span></a></li> -->
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="MenuSub"> <a href="{:U('//member',array('id'=>$id,'iframe'=>'yes'))}" 
+          <php> if (!in_array($_GET['action'],array('join','att','verify'))) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >全部成员</a>┊ <a href="{:U('//member',array('id'=>$id,'action'=>'join','iframe'=>'yes'))}" 
+          <php> if (isset( $_GET['action'] ) && 'join' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$joinCount}）人参加</a>┊ <a href="{:U('//member',array('id'=>$id,'action'=>'att','iframe'=>'yes'))}" 
+          <php> if (isset( $_GET['action'] ) && 'att' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$attentionCount}）人关注</a>
+          <?php if( $uid == $mid ){ ?>
+          ┊ <a href="{:U('//member',array('id'=>$id,'action'=>'verify'))}" 
+          <php> if (isset( $_GET['action'] ) && 'verify' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$verifyCount}）人待审核</a>
+          <?php }?>
+        </div>
+        <div class="flist list-tabs" style="overflow:hidden;">
+          <ul>
+            <volist name="data" id="vo">
+              <li id="event_user_{$vo['id']}" class="lineD_btm" style="overflow:hidden;_zoom:1" >
+                <div class="left" style="width: 60px;"><span class="headpic50"><a href="javascript:;" onclick="top.OpenBrowser('{:U('home/space/',array('uid'=>$vo['uid']))}','{$vo['uid']|getUserName}','width=1024,height=600,titlebutton=close|max|min')" class="tips"><img src="{$vo['uid']|getUserFace}" title="{$vo['uid']|getUserName}"/></a></span></div>
+                <div style=" margin-left:60px; height:50px;">
+                  <h3>
+                    <div class="right fn f12px">
+                      <?php if( 'admin' != $vo['action'] && $uid == $mid  ){ ?>
+                      <a href="javascript:adminDelAction( {$id},{$vo['uid']},'{$vo['action']}',{$optsId});">删除成员</a><br />
+                      <?php } ?>
+                      <?php if( isset( $verifyCount ) && $vo['status'] == 0 ){ ?>
+                      <a href="javascript:agree( {$vo['id']},{$id},{$uid});">同意申请</a>
+                      <?php }?>
+                    </div>					
+                    <a href="javascript:;" onclick="top.OpenBrowser('{:U('home/space/',array('uid'=>$vo['uid']))}','{$vo['uid']|getUserName}','width=1024,height=600,titlebutton=close|max|min')"><strong>{$vo['uid']|getUserName}</strong></a><span class="f12px fn cRed">（{$vo['role']}）</span></h3>
+                  <?php if( $uid == $mid || $vo['uid'] == $mid ){ ?>
+                  <p><span class="cGray2">联系方式：</span><?php echo $vo['contact'] ?></p>
+                  <?php } ?>
+                </div>
+              </li>
+            </volist>
+            <div class="c"></div>
+          </ul>
+          <!-- fphotolist end  -->
+          <div style="height:10px;"></div>
+          <div id="Pagination" class="pagination">{$html}</div>
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/desktop/_footer" />

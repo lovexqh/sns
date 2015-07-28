@@ -1,0 +1,268 @@
+/*topbar部分html代码，编写css代码可以参考此
+<div style="z-index: 4000; top: 0px;" id="topbar">
+	<!--背景层-->
+	<div id="topbar_back"></div>
+	<!--预留层-->
+	<div class="nav_mask nav_mask2"></div>
+	<div class="nav_mask nav_mask3"></div>
+	<!--logo层-->
+	<div class="navlogo_container" id="nav-logo"> <a href="dzz.php" class="navlogo"></a> </div>
+	<!--桌面名称层-->
+	<div class="nav_spacename"> <a title="admin!de!!desktop!" href="###" class="spacename nav_text" id="nav_spacename">温馨小窝</a> </div>
+	<!--用户信息区域-->
+	<div class="userinfo_container cl" id="nav_userinfo">
+		<div class="userinfo sys_message_container"> <a title="消息提示" onClick="return false;" href="javascript:return false;" class="userinfo sys_message" id="sys_message">&nbsp;</a> </div>
+		<strong class="user_vwmy vwmy userinfo"><a title="点击查看详细"><span class="nav_text"> admin</span></a></strong>
+		<div class="nav_mask user_avatar_mask"></div>
+		<a href="home.php?mod=space&amp;uid=1" class="userinfo  user_avatar"><img src="http://127.0.0.1/uc_server/avatar.php?uid=1&amp;size=small"></a> <a title="退出" onClick="_login.click('logout');return false;" href="javascript:return false;" class="userinfo sys_exit">&nbsp;</a>
+	</div>
+</div>
+*/
+#topbar{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:29px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:10;
+	background:#d4d0c8;
+	overflow:visible;
+	border-bottom:#404040;
+}
+#topbar a{
+	outline:none;
+}
+#topbar_back{
+	top:28px;
+	left:0px; 
+	right:0px;
+	height:1px;
+	width:100%;
+	font-size:0px;
+	position:absolute;
+	
+	z-index:1001;
+	overflow:hidden;
+	background:#808080;
+}
+#topbar a{
+   text-decoration:none;
+   display:inline-block;
+}
+#topbar .navlogo_container{
+	float:left;
+	height:28px;
+}
+#topbar .navlogo{
+	float:left;
+	width:165px;
+	height:18px;
+	margin:5px 0px 0px 5px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/logo.png', sizingMethod='scale');
+	background-image:url(logo.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+#topbar .nav_spacename{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	line-height:28px;
+	height:28px;
+	margin:0 0 0 0px;
+	font-weight:bold;
+}
+/*#topbar .nav_add{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	line-height:28px;
+	height:28px;
+	margin:0 0 0 10px;
+	font-weight:bold;
+	overflow:visible;
+}
+#nav_add_container{
+	overflow:visible;
+	position:relative;
+}
+#nav_add_container .nav_add_item{
+	width:29px;
+	height:29px;
+	overflow:hidden;
+	text-indent:999px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/menubg.png', sizingMethod='scale');
+	background-image:url(./add/menubg.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+#nav_add_container .nav_add_menu{
+	width:29px;
+	height:29px;
+	left:0px;
+	top:0px;
+	overflow:hidden;
+	text-indent:999px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/addbg.png', sizingMethod='scale');
+	background-image:url(./add/addbg.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+#nav_add_container .nav_add_menu .icon{
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/add.png', sizingMethod='scale');
+	background-image:url(./add/add.png) !important;
+	width:12px;
+	height:12px;
+	margin:7px 8px 9px 8px;
+	overflow:hidden;
+	text-indent:999px;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+#nav_add_container .nav_add_item:hover{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/addbg.png', sizingMethod='scale');
+	background-image:url(./add/addbg.png) !important;
+}
+#nav_add_container .nav_add_item_appmarket .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/1.png', sizingMethod='scale');
+	background-image:url(./add/1.png) !important;
+}
+#nav_add_container .nav_add_item_widgetmarket .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/3.png', sizingMethod='scale');
+	background-image:url(./add/3.png) !important;
+}
+#nav_add_container .nav_add_item_dzzdoc .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/2.png', sizingMethod='scale');
+	background-image:url(./add/2.png) !important;
+}
+#nav_add_container .nav_add_item_newfolder .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/4.png', sizingMethod='scale');
+	background-image:url(./add/4.png) !important;
+}
+#nav_add_container .nav_add_item_newlink .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/5.png', sizingMethod='scale');
+	background-image:url(./add/5.png) !important;
+}
+#nav_add_container .nav_add_item_upload .icon{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/window_jd/add/6.png', sizingMethod='scale');
+	background-image:url(./add/6.png) !important;
+}
+#nav_add_container .icon{
+	width:12px;
+	height:12px;
+	margin:7px 8px 9px 8px;
+	overflow:hidden;
+	text-indent:999px;
+	background-image:none;
+	background-repeat: no-repeat;
+	z-index:999;
+}*/
+
+#topbar .userinfo_container{
+	float:right;
+	height:30px;
+	padding-right:5px;
+	padding-top:5px;
+}
+#topbar .userinfo{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	display:inline-block;
+}
+
+#topbar .vwmy {
+	line-height:18px;
+     padding-right: 16px;
+	 padding-left: 5px;
+	 background-position:100% center;
+	 border:1px solid #d4d0c8;
+}
+#topbar .vwmy:hover {
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+#topbar .user_avatar_mask {
+	display:none;
+}
+#topbar .user_avatar {
+     display:none;
+}
+#topbar .sys_message_container{
+	float:left;
+	position:relative;
+}
+#topbar .sys_message {
+	display:none;
+	margin:2px 3px;
+	height:16px;width:16px;color:#000;font-family:宋体;font-size:14px;font-weight:bold;line-height:14px;text-indent:999;outline:none;
+	background:#d4d0c8 url(message.png) center;
+	border:1px solid #d4d0c8;
+}
+
+#topbar .sys_message:hover {
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+#topbar .sys_message_glint {
+	background:none;
+}
+#topbar .sys_exit {
+	
+	margin:2px 3px 2px 10px;
+	height:16px;width:16px;color:#000;font-family:宋体;font-size:14px;font-weight:bold;line-height:16px;text-indent:999;outline:none;
+	background:#d4d0c8 url(exit.png) center center;
+	border:1px solid #d4d0c8;
+}
+
+#topbar .sys_exit:hover {
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+	background:#d4d0c8 url(exit_1.png) center center;
+}
+/*#topbar .sys_config {
+  	margin:2px 3px;
+	height:14px;width:16px;color:#000;font-family:宋体;font-size:14px;font-weight:bold;line-height:14px;text-indent:999;outline:none;
+	background:#d4d0c8 url(config.png) center;
+	border:1px solid #d4d0c8;
+}
+#topbar .sys_config:hover {
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}*/
+
+
+#topbar .nav_text{
+	color:#333; 
+	text-shadow: 0px 0px 1px #FFF,0px 0px 1px #FFF;
+	
+}
+#topbar .dzzreglink{
+	float:left;
+	font-size:12px;
+	display:inline-block;
+	padding-right:5px;
+}
+#topbar .dzzlogin{
+	float:left;
+	font-size:12px;
+	display:inline-block;
+	padding-right:10px;
+}
+
+
+

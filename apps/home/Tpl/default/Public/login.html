@@ -1,0 +1,108 @@
+<include file="__THEME__/desktop/header" />
+<style>
+.containerInner{padding-top:50px;}
+</style>
+<script language="javascript" type="text/javascript">
+<!-- 
+if (top.location != self.location) top.location = self.location; 
+// -->
+</script>
+<php>$regInfo=model('Xdata')->lget('register');</php>
+<div class="registerBox publicLoginBox">
+	<h2>快速登录</h2>
+	<div class="loginForm">
+	<form id="loginForm" name="loginForm" action="{:U('home/Public/doLogin')}" method="post">
+<php>if ($invite_code) {</php>
+		<input type="hidden" name="invite_code" value="{$invite_code}">
+<php>}</php>
+		<ul class="">
+		  <li>
+			<span class="uh">帐　号：</span>
+			<input type="text" class="ipt-txt" value="{$cookie_email}" id="email" name="email" />
+		  </li>
+		  <li>
+			<span class="uh">密　码：</span>
+			<input type="password" class="ipt-txt" name="password" id="password" />
+		  </li>
+		  <eq name="login_verify_on" value="1">
+		  <li>
+			<span class="uh">验证码：</span>
+			<input type="text" class="ipt-code" id="verify" name="verify"  value="" />
+			<img src="__ROOT__/public/captcha.php?<php>echo time();</php>" id="verifyimg" alt="换一张" onclick="changeverify()" />
+			<a href="###" onclick="changeverify()">换一换</a>
+		  </li>
+		  </eq>
+		  <li>
+			<span class="uh">&nbsp;</span>
+			  <label><input name="remember" type="checkbox" value="1" class="ipt-chk" /> 记住登录状态</label>
+			   | <a class="fuc0" target="_blank" href="{:U('home/Public/sendPassword')}">忘记密码？</a>
+		  </li>
+		  <li>
+			<span class="uh">&nbsp;</span> 
+			<button type="submit" class="btn btn-sub">登录</button>
+		  </li>
+		</ul>
+	</form>
+	<!-- end .loginForm --></div>
+	<div class="rightBox">
+		<p>还未开通?赶快注册一个!</p>
+		<a href="{:U('home/Public/register')}" class="btn_reg mt10">注册新账号</a>
+	</div>
+	<include file="_footer" />
+<!-- end .registerBox --></div>
+<script type="text/javascript">
+$(document).ready(function(e) {
+	var validator = $("#loginForm").validate({
+		rules: {
+			email: {
+				required: true,
+				minlength: 2
+			},
+			password: {
+				required: true,
+				minlength: 5
+			}
+<eq name="login_verify_on" value="1">
+			,verify: {
+				required: true,
+				remote: {
+					url: "{:U('home/Public/isVerifyAvailable')}",
+					type: "post",
+					data: {
+						verify: function() {
+							return $("#verify").val();
+						}
+					}
+				}
+			}
+</eq>
+		},
+		messages: {
+			email: {
+				required: "<i class='warring'></i>请输入登录账号",
+				minlength: jQuery.format("<i class='warring'></i>您的账号长度至少要超过{0}位")
+			},
+			password: {
+				required: "<i class='warring'></i>请输入登录密码",
+				rangelength: jQuery.format("<i class='warring'></i>请输入长度最少是{0}位字符的密码")
+			}
+<eq name="login_verify_on" value="1">
+			,verify: {
+				required: "<i class='warring'></i>请输入验证码",
+				remote: jQuery.format("<i class='error'></i>{0} 验证码不正确")
+			}
+</eq>
+		},
+
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("checked");
+		},
+
+		submitHandler: function(form) {
+			form.submit();
+		}
+	});
+});
+</script>
+<include file="__THEME__/desktop/footer" />

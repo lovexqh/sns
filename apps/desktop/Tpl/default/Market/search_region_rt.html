@@ -1,0 +1,18 @@
+<include file="../Public/_header_ajax" />
+<if condition="!empty($list)">
+<div class="appPanel sidePanel radius5 rankingList simpleRanking searchRanking" style="display: block;">
+	<div class="appPanelTitleBar" id="appPanel_search_link_titleBar">{:L('searhing_keywords')}</div>
+	<div class="appPanelBody" id="appPanel_search_link_body">
+		<ul class="appListUl">
+		<volist name="list" key="key" id="value">
+			<li class="appListLi <if condition="$key eq count($list)">appListLiLast</if> " onclick="document.getElementById('searchInput').value='{$value[keyword]}';document.getElementById('searchBtn').onclick();">
+				<a title="{$value.keyword}" class="appListItem" href="javascript:void(0);"> <span class="appHot" style="display:block">{$value.sum}</span> <span class="appIndex radius3 " style="display:block">{$key}</span>  <span class="appName">{$value.keyword}</span> </a> 
+			</li>
+		</volist>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	
+</div>
+</if>
+<include file="../Public/_footer_ajax" />

@@ -1,0 +1,103 @@
+<!-- 我的消息 start -->
+<ul class="top_title">
+    <volist name="group" id="vo">
+    <li class="<if condition="$isdefault eq $key">onfocs</if>">
+    	<a href="javascript:;" sx="{$key}" title="{$vo}">{$vo}</a>
+    	<!--div class="close red_close">5</div-->
+    </li>
+    </volist>
+</ul>
+<style type="text/css">
+a.delete{display:none;}
+</style>
+<div class="clearfix"></div>
+<if condition="!empty($task) and count($task)">
+<div id="jsp_task" class="scroll_panel <if condition="$isdefault neq 'task'">hide</if>">
+    <table class="left_content" width="100%">
+        <tbody>
+            <if condition="!empty($task['start']) and count($task['start'])">
+            <volist name="task['start']" id="t">
+            <tr>
+                <td class="border-check" align="right"><i class="ico-offread"></i></td>
+                <td class="border-content">{$t.name}<a class="delete"></a></td>
+            </tr>
+            </volist>
+            </if>
+            <if condition="!empty($task['start']) and count($task['start'])">
+            <volist name="task['start']" id="t">
+            <tr>
+                <td class="border-check" align="right"><i class="ico-offread"></i></td>
+                <td class="border-content">{$t.name}<a class="delete"></a></td>
+            </tr>
+            </volist>
+            </if>
+        </tbody>
+    </table>
+</div>
+</if>
+
+<div id="jsp_message" class="scroll_panel <if condition="$isdefault neq 'message'">hide</if>">
+    <table class="left_content" width="100%">
+        <tbody>
+        <if condition="!empty($message) and count($message)">
+        <volist name="message" id="m">
+        <tr>
+            <td class="border-check" align="right"><i class="ico-offread"></i></td>
+            <td class="border-content">
+            <space uid="m.from_uid" class="uname" target="_blank">{uname}</space>对我说：{$m['content']|htmlspecialchars_decode|formatComment=###,true|formatUrl}
+            <a class="delete"></a></td>
+        </tr>
+        </volist>
+        <else />
+        	<tr>
+                <td class="border-content">暂无相关信息</td>
+            </tr>
+        </if>
+        </tbody>
+    </table>
+</div>
+
+<div id="jsp_notify" class="scroll_panel <if condition="$isdefault neq 'notify'">hide</if>">
+    <table class="left_content" width="100%">
+        <tbody>
+        <if condition="!empty($notify) and count($notify)">
+        <volist name="notify" id="n">
+        <tr>
+            <td class="border-check" align="right"><i class="ico-offread"></i></td>
+            <td class="border-content">{$n.title}<a class="delete"></a></td>
+        </tr>
+        </volist>
+        <else />
+        	<tr>
+                <td class="border-content">暂无相关信息</td>
+            </tr>
+        </if>
+        </tbody>
+    </table>
+</div>
+
+<div id="jsp_appmsg" class="scroll_panel <if condition="$isdefault neq 'appmsg'">hide</if>">
+    <table class="left_content" width="100%">
+        <tbody>
+        <if condition="!empty($appmsg) and count($appmsg)">
+        <volist name="appmsg" id="a">
+        <tr>
+            <td class="border-check" align="right"><i class="ico-offread"></i></td>
+            <td class="border-content">{$a.name}<a class="delete"></a></td>
+        </tr>
+        </volist>
+        <else />
+        	<tr>
+                <td class="border-content">暂无相关信息</td>
+            </tr>
+        </if>
+        </tbody>
+    </table>
+</div>
+</if>
+<div class="clearfix"></div>
+</div>
+<!-- 我的消息 end -->
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.border-content');</script>

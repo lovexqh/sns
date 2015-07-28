@@ -1,0 +1,143 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, ul, li, form, div, input, img, table, tr, td, span, p{margin:0px;padding:0px;font-family: "微软雅黑";}
+body{ text-align:center; font-size:12px;}
+img{ border:0px;}
+a{ text-decoration:none; color: #6c6c6c;}
+ul{ list-style:none;}
+
+.divc{ width:880px; height:auto; margin:0 auto; text-align:left; background:white;padding:20px; font-size: 12px; color: #6c6c6c; }
+.contl, .contc{width:880px;height: auto;clear: both;margin-bottom: 25px;}
+.contc { width: 878px; border:1px solid #ededed; background: #ffffff;}
+
+.ccl{ width: 656px; float: left; margin-right: 14px; overflow: hidden; }
+
+
+.ccr{ width: 202px; float: left;}
+.ccrtop{ width: 202px; height: 23px; clear: both; border-bottom: 2px solid #63a826; margin-bottom: 5px;}
+.ccrtop div{ line-height: 23px; width: 102px; font-size: 13px; text-align: center; background:#63a826; color: white; margin:0px; padding: 0px;}
+.crrlist{ width: 202px; height: auto;}
+.crrlist li{ height: 15px; line-height: 15px; border-bottom: 1px dashed #dcdcdc; clear: both; padding: 10px 0;}
+.crrlist li span{ display: block; float: left; height: 15px;}
+.sp1{ width: 17px;margin-right: 8px; text-align: center; color: #0072c6;}
+.sp1h{ background: url("../images/crrh.jpg") no-repeat; color: #ffffff;}
+.sp2{ width: 140px; overflow: hidden; text-align: left;}
+.sp3{ width: 35px; text-align: center;}
+.sp2 a, .sp3{ color: #000000;}
+
+.sder{border: 1px solid #f0f0f0;}
+.c{width: 100%;height: 1px; overflow: hidden; clear: both;}
+.cb{ width: 100%; height: 7px; overflow: hidden; clear: both; background: url("../images/cb.jpg") repeat-x; margin-bottom: -4px;margin-top: 17px;}
+
+
+.coltop{height:37px;padding-left: 17px; background: url("../images/coltop.jpg") no-repeat #0072c6; font-size: 16px; color: white; text-align: left; line-height: 37px; position: relative; margin-bottom: 5px;margin-left:-1px;}
+.coltop span{ color: #8cb4d2; font-size: 12px;}
+.coltop a{ display: block; position: absolute; right: 10px; top: 10px; padding: 0px 10px; color: #b1dbfb; font-size: 12px; line-height: 20px;}
+
+.coltop2{height:37px;padding-left: 17px; background: url("../images/coltop2.jpg") no-repeat 0 -4px; font-size: 16px; color: #333333; text-align: left; line-height: 37px; position: relative; margin-bottom: 10px; border-bottom: 1px solid #ededed;}
+
+
+.cff7800{ color: #ff7800;}
+.c63a826{ color: #63a826;}
+.c000000{ color: #000000;}
+.cff0000{ color: #ff0000;}
+.c0072c6{ color: #0072c6;}
+.bold{ font-weight: bold;}
+.bf7f7f7{ background: #f7f7f7;}
+
+
+/*----社区统计-----*/
+.cotnum{width: 221px; height: 238px;float: left; margin-right: 15px;}
+.cninfo{width: 195px;height: 76px;margin:7px 12px 0 12px; line-height: 22px; border-bottom: 1px dashed #949494;clear: both;}
+.cntable{ width: 195px; height: 100px; clear: both;margin:5px 12px 0 12px; }
+
+
+/*-----社区公告----*/
+.notice{width: 416px; height: 238px; float: left;margin-right: 12px;}
+.ntlist{ width: 416px; height: auto; padding-top:4px; clear: both;}
+.ntlist li{padding:0 17px; height: 30px; line-height: 30px; clear: both; border-bottom: 1px dashed #e2e2e2; position: relative;}
+.ntlist li .info{ position: absolute; left: 15px; width: 418px; top: 30px; height: auto; display:none;z-index: 1000; line-height: 20px;}
+.ntlist li .infocnt{ width: 352px;margin-top: -8px; height: auto; border: 1px solid #cccccc;padding:15px; line-height: 20px; background: white;}
+
+.newmember{width: 197px; height: 238px; background: #f7f7f7; float: left; border-radius: 6px; padding:0px 7px;}
+.nmlist{ width: 197px; height: auto; clear: both;}
+.nmlist li{padding:5px 7px; line-height: 20px;}
+
+/*-----视频列表----*/
+.vlist{background: #f8f8f8;height: auto;padding-top:9px;}
+.vlist li{padding:7px; height: 145px; float: left; width: 150px; height: 146px;}
+.vlist li img{ width: 150px; height: 91px; margin-bottom: 5px;}
+.vlist li p{ line-height: 25px; text-align: center; margin:0px; padding: 0px;}
+.valist li p a{ color: #000000;}
+
+/*-----社团列表----*/
+.cublist{height: auto;padding-top:9px; width: 660px;}
+.cublist li{width: 185px; height: 114px; padding: 11px 13px; background: #f8f8f8; float: left; margin:0px 9px 10px 0px;}
+.cublist li img{ width: 50px; height: 50px; margin-right: 10px; float: left;}
+.cublist li span{ float: left;}
+.cublist li p{ line-height: 25px; text-align: center; margin:0px; padding: 0px;}
+.asty1{ color: #035a95; font-weight: bold;}
+
+/*-----图片列表----*/
+.phlist{ width: 898px; height: auto;}
+.phlist li{ padding: 12px; float: left;}
+.phlist li img{  width: 195px; height: 130px; display: block;}
+
+/*-----资源列表----*/
+.relist{background: #f8f8f8;height: auto;padding-top:9px;}
+.relist li{ height: 38px; border-bottom: 1px dashed #e4e4e4; clear: both; line-height: 38px;}
+.relist li div{ float: left;}
+.red1{ width: 536px; padding: 0px 14px; text-align: left; color: #000000;}
+.red1 a{ color: #0072c6; }
+.red2{ width: 85px; border-left: 1px solid #e4e4e4; text-align: center; color: #b0b0b0;}
+
+
+/*-----博客列表----*/
+.bloglist{background: #f8f8f8;height: auto;width: 636px; padding: 10px;}
+.bloglist li{ height: auto;padding-bottom: 15px;}
+.bl1{width: 50px; height: 50px; float: left; margin-right: 10px;}
+.bl2{ width: 570px; height: auto;min-height: 100px; float: left;}
+.bl2top{ width: 570px; height: 20px; clear: both; margin-bottom: 7px;}
+.bl2top a{color: #0072c6; }
+.bl2top span{ color: #b1b1b1;}
+
+.bl2cnt{ width: 544px; height: auto; border:1px solid #e8e8e8; padding: 14px 12px;background:#ffffff; position: relative; line-height: 22px; color: #000000;}
+.jt1{ width: 12px; height: 8px; background:  url("../images/jt1.jpg") no-repeat; position: absolute; top: -7px; left: 60px;}
+
+/*-----微博列表----*/
+.wblist{ width: 547px; height: auto; float: left; border: 1px solid #ededed;margin-right: 15px;}
+.wbcnt{ width: 517px; height: auto;padding:0px 15px;}
+.wbcnt li{height: 32px; border-bottom: 1px dashed #ededed; line-height: 32px; clear: both;padding:0 10px; overflow: hidden;}
+.wbcnt li a{color: #0072c6; }
+
+/*-----工具列表----*/
+.tolist{ width: 313px; height: auto; float: left; border: 1px solid #ededed;}
+.tocnt{ width: 280px; height: auto; padding: 0px 16px; clear: both;}
+.tocnt li{height: 63px; padding-top:10px; clear: both; border-bottom: 1px dashed #ededed; position: relative;}
+.tocnt img{float:left;margin-right: 8px; height: 63px; width: 63px;}
+.tocnt p{ line-height: 25px;}
+.tocnt p a{ color: #000000;}
+.tocnt .xp{ position: absolute; right: 0px; top: 15px;}
+.tocnt .xp a{ color: #63a826;}
+
+/*-----贡献列表----*/
+.memcnt{width: 878px; height: auto;}
+
+.meminfo{width:202px;padding:0px 8px; float: left; height: auto;}
+.memtop{height:23px; border-bottom: 2px solid #ff7800;}
+.memtop div{ line-height: 23px; width: 102px; font-size: 13px; text-align: center; background:#ff7800; color: white; margin:0px; padding: 0px;}
+.memlist{ width: 202px; height: auto;}
+.memlist li{ height: 36px; border-bottom: 1px dashed #ededed;padding-top:5px;}
+.memlist li span, .memlist li a{ display: block; float: left; height: 15px;}
+.memlist li .sp1{margin-top:8px;}
+.memlist li .img{width:30px; height: 30px;margin-right: 8px;}
+.memlist li .name{width: 80px; height: 30px; line-height: 30px; color: #000000; text-align: left;}
+.memlist li .num{ width: 56px; height: 30px; line-height: 30px; text-align: center; color: #b0b0b0;}
+
+
+
+
+
+
+
+

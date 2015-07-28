@@ -1,0 +1,68 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<div class="divcenter">
+
+    <ul class="topnav bk">
+        <li <php>if($order == 'new'){echo ' class="hover"';}</php>><a href="{:U('photo/Index/all_albums',array('order'=>'new'))}"> <img src="../Public/images/new<php>if($type == 'new'){echo 'h';}</php>.jpg">最新 </a></li>
+        <li <php>if($order == 'hot'){echo ' class="hover"';}</php>><a href="{:U('photo/Index/all_albums',array('order'=>'hot'))}"> <img src="../Public/images/hot<php>if($type == 'hot'){echo 'h';}</php>.jpg">热门 </a></li>
+    </ul>
+
+    <div class="divcenter">
+        <ul id="container" class="piclist">
+            <volist name="data.data" id="li">
+            <li class="item">
+                <p><a href="{:U('photo/Index/album',array(id=>$li['id']))}" target="_blank" title="{$li.name}"><img src="{$li.id|get_album_cover=###,$li}" width="228" alt="{$li.name}" /></a></p>
+                <p class="t"><a href="{:U('photo/Index/album',array(id=>$li['id']))}" target="_blank" title="{$li.name}">专辑：{$li.name} </a></p>
+                <p class="t"><a href="{:U('photo/Index/photos',array('uid'=>$li['userId']))}" target="_blank" >作者：{$li.userId|getUserName}</a></p>
+                <p class="t">时间：{$li.mTime|friendlyDate}</p>
+            </li>
+            </volist>
+        </ul>
+        <php>if((int)$data['nowPage'] < (int)$data['totalPages']){</php>
+        <php>$nextPage = (int)$data['nowPage'] + 1;</php>
+        <php>$url = U('photo/Index/all_albums',array('p'=>$nextPage,'order'=>$order));</php>
+        <php>}else{</php>
+        <php>$url = '';}</php>
+        <div id="page-nav" style="display:none;"><a href="{$url}"></a></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $container = $('#container');
+    $(document).ready(function(){
+
+        $container.imagesLoaded( function(){
+            $container.masonry({
+                columnWidth: 40, //每两列之间的间隙为5像素
+                itemSelector: '.item'
+                //stamp : '.stamp'
+            });
+        });
+
+        $container.infinitescroll({
+                    navSelector  : '#page-nav',    // 选择的分页导航
+                    nextSelector : '#page-nav a',  // 选择的下一个链接到（第2页）
+                    itemSelector : '.item',     // 选择检索所有项目
+                    loading: {
+                        finishedMsg: '没有更多的页面加载。'
+                    }
+                },function(newElements){
+
+                    // 隐藏新的项目，而他们正在加载
+                    var newElems = $( newElements ).css({ opacity: 0 });
+
+                    // 确保的图像装载增加砖石布局
+                    newElems.imagesLoaded(function(){
+
+                        // 元素展示准备
+                        newElems.animate({opacity:1});
+                        $container.masonry( 'appended', newElems, true );
+
+                    });
+
+                }
+        );
+    });
+</script>
+<include file="Public:_footer" />
+
+

@@ -1,0 +1,35 @@
+<script type="text/javascript">
+	$('html').css('height', '100%');
+	$('html').css('width', '100%');
+	$('html').css('overflow', 'hidden');
+	$('.close').click(function() {
+		$('html').css('height', '100%');
+		$('html').css('width', '100%');
+		$('html').css('overflow', 'auto');
+	});
+	function join_I(){
+		$.post(U('society/Index/doJoinSociety'),{societyId:$('.tuichu_xuanxiang span').attr('sid'),enter:1},function(data){
+            var data = eval('(' + data + ')');
+            if(data.status==1){
+            	ui.success(data.msg);
+                $('.close').click();
+            }else if(data.status==2){
+            	ui.success(data.msg);
+                $('.close').click();
+            }else{
+            	ui.error(data.msg);
+                $('.close').click();
+            }
+        });
+	}
+</script>
+<div style="width: 650px;overflow-Y: scroll;background-color: #F9F9F9;" class="tuichu">
+	<!-- 普通成员  -->
+	<div class="tuichu_xuanxiang">
+		<p style="font-size: 15px;">确认申请加入<span id="societyName" sid="{$societyInfo.id}"> {$societyName} </span>？</p>
+	</div>
+	<div
+		style="clear: both; margin-top: 15px; text-align: center; margin-bottom: 30px;">
+		<a class="queren" onclick="join_I();"></a>
+	</div>
+</div>

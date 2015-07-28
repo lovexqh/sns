@@ -1,0 +1,92 @@
+<include file="../Public/_header" />
+
+<script type="text/javascript">
+//选择备课节点时给隐藏域相应输入框赋值
+function zTreeOnClick(event, treeId, treeNode) {
+	var url = '';
+	
+	if(typeof(treeNode.section)!='undefined'){
+		url += "&section="+treeNode.section;
+	}
+	if(typeof(treeNode.Grade)!='undefined'){
+		url += "&Grade="+treeNode.Grade;
+	}
+	if(typeof(treeNode.Subject)!='undefined'){
+		url += "&Subject="+treeNode.Subject;
+	}
+	if(typeof(treeNode.Publisher)!='undefined'){
+		url += "&Publisher="+treeNode.Publisher;
+	}
+	if(typeof(treeNode.Volume)!='undefined'){
+		url += "&Volume="+treeNode.Volume;
+	}
+	if(typeof(treeNode.Cell)!='undefined'){
+		url += "&Cell="+treeNode.Cell;
+	}
+	
+	document.location.href = "{:U('square/Airclass/lists')}"+url;
+};
+</script>
+<include file="__THEME__/desktop/_KnowledgeTree" />
+
+<script type="text/javascript">
+$(function() {
+	$(".course").mouseenter(function(){
+		$(this).find("ul").css("display","");
+	}).mouseleave(function(){
+		$(this).find("ul").css("display","none");
+	});
+	
+	$(".search input[name='keyword']").focus(function(){
+		if($(this).val()=='请输入您要搜索的课堂关键词，例小学语文') $(this).val('');
+	}).blur(function(){
+		if($(this).val()=='') $(this).val('请输入您要搜索的课堂关键词，例小学语文');
+	});
+});
+
+function setSearchType(name, val, text) {
+	$("#form_search input[name='category']").val(val);
+	$("#form_search span.category").text(text);
+	$(".course ul").css("display","none");
+}
+</script>
+
+<div class="wrapper">
+  <img width="960" height="113" src="../Public/images/banner_airclass.jpg" style="margin:auto; display:block;" />
+  <div class="nav_wrapper">
+    <ul class="nav">
+      <li><a href="{:U('square/Airclass/index')}"{:getMenuState('index')}>首页</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/Airclass/classes')}"{:getMenuState('classes')}>课堂纪实</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/Airclass/resource')}"{:getMenuState('resource')}>课堂资源</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/Airclass/toplist')}"{:getMenuState('toplist')}>排行榜</a></li>
+    </ul>
+  </div>
+  <div class="searchBar"> <strong>快速搜索您需要的课堂</strong>
+    <div class="search">
+      <form id="form_search" action="{:U('square/Airclass/search')}" enctype="multipart/form-data">
+        <input name="app" type="hidden" value="square" />
+        <input name="mod" type="hidden" value="Airclass" />
+        <input name="act" type="hidden" value="search" />
+        <input name="category" type="hidden" value="" />
+        <div class="navigation"><div class="course"><span class="category">全部</span><img src="../Public/images/arrows.gif" width="23" height="13" style="float:right; margin:11px 5px 0 0;" />
+          <ul style="display:none;">
+            <volist name="categoryList" id='vo'>
+            <li><a onclick="setSearchType('category','{$vo.id}','{$vo.title}')">{$vo.title}</a></li>
+            </volist>
+          </ul>
+          </div>
+          <input type="text" class="input" name="keyword" value="<php>echo $keyword ? $keyword : '请输入您要搜索的课堂关键词，例小学语文';</php>" />
+        </div>
+        <input type="submit" class="btn" value="快乐易搜" />
+      </form>
+    </div>
+  </div>

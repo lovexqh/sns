@@ -1,0 +1,27 @@
+<!-- 视频中心 -->
+<if condition="($num neq 0)">
+<div class="contc">
+    <div class="coltop">视频中心 <span>截止目前为止：社区共有视频{$num}条</span> <a href="{:U('video/Index/index')}" title="视频广场">>> 点击进入</a> </div>
+    <ul class="ccl vlist">
+        <volist name="newlist" id="li">
+        <li>
+            <a href="{:U('video/Index/video',array(id=>$li['id']))}" target="_blank" title="{$li.name}">
+                <img  title={$li['name']} src="{$li.id|get_picture_url}"/>
+            </a>
+            <p><a href="{:U('video/Index/video',array(id=>$li['id']))}" target="_blank" title="{$li.name}">{$li.name|getShort=###,10}</a></p>
+            <p>{$li.mTime|friendlyDate}</p>
+        </li>
+        </volist>
+    </ul>
+    <div class="ccr">
+        <div class="ccrtop"><div>视频点击榜</div></div>
+        <ul class="crrlist">
+            <volist name="hotlist" id="li" key="i">
+            <li><span class="sp1 <php>if($i <=3){echo 'sp1h';}</php>">{$i}</span><span class="sp2"><a href="{:U('video/Index/video',array(id=>$li['id']))}" target="_blank" title="{$li.name}">{$li.name|getShort=###,10}</a></span><span class="sp3">{$li.readCount}</span> </li>
+            </volist>
+        </ul>
+    </div>
+    <div class="c"></div>
+    <div class="cb"></div>
+</div>
+</if>

@@ -1,0 +1,85 @@
+<style type="text/css">
+.selects{ background:#1874B7;}
+</style>
+<div>
+  <img width="960" height="113" src="__THEME__/square/images/tool_banner.jpg" style="margin:auto; display:block;" />
+            <volist name="tabs" id="li">
+            	<a href="{:U('square/Tool/index',array(id=>$li['id']))}">{$li.category_name}</a>&nbsp;&nbsp;
+             </volist>
+ </div>
+ 
+  <div class="nav_wrapper">
+ 
+    <ul class="nav">
+      <li class="selects"><a href="{:U('square/Tool/index')}">首页</a></li>
+   <!--    <volist name="count.type" id='vo'>
+
+            <li>
+               <div class="line"></div>
+            </li>
+            <li><a href="{:U('square/Tool/getList1',array(class_name=>urlencode($vo['class_name'])))}">{$vo['class_name']}</a></li>
+
+      </volist> -->
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/Tool/chart')}">排行榜</a></li> 
+    </ul>
+  </div>
+  <div class="searchBar"> <strong>快速搜索您需要的工具</strong>
+    <div class="search">
+      <form id="form_search" action="{:U('square/Tool/doSearch')}" method="get">
+        <input name="app" type="hidden" value="square" />
+        <input name="mod" type="hidden" value="tool" />
+        <input name="act" type="hidden" value="doSearch" />
+        <input name="type" type="hidden" value="" />
+         <div class="navigation">
+         <div class="course">
+         <span class="category">全部</span>
+         <img src="../Public/images/arrows.gif" width="23" height="13" style="float:right; margin:11px 5px 0 0;" />
+          <ul style="display:none;">
+            <volist name="ResourceType.all" id='vo'>
+            <li><a onclick="setSearchType('type','{$vo.DataCode}','{$vo.DataName}')">{$vo['DataName']}</a></li>
+            </volist>
+          </ul>
+          </div> <input type="text" name="tags" id="tags" class="input" value="<php>echo $keyword ? $keyword : '请输入您要搜索的资源关键词，例浏览器';</php>"/>
+          </div> 
+         
+        <input type="submit" class="btn" value="快乐易搜" />
+       <!-- <a href="#">高级搜索</a>-->
+      </form>
+    </div>
+  </div>
+    <script language="javascript" type="text/javascript">
+$(function() {
+	$(".course").mouseenter(function(){
+		$(this).find("ul").css("display","");
+	}).mouseleave(function(){
+		$(this).find("ul").css("display","none");
+	});
+	
+	$(".search input[name='tags']").focus(function(){
+		if($(this).val()=='请输入您要搜索的资源关键词，例浏览器') $(this).val('');
+	}).blur(function(){
+		if($(this).val()=='') $(this).val('请输入您要搜索的资源关键词，例浏览器');
+	});
+});
+function setSearchType(name, val, text) {
+	$("#form_search input[name='type']").val(val);
+	$("#form_search span.category").text(text);
+	$(".course ul").css("display","none");
+}
+</script>
+   <div class="navigate_info"> 
+   	<div>
+       <strong>您当前的位置：</strong>
+        <span><a href="{:U('square/Tool/index')}">工具中心首页</a></span>
+           <volist name="path" id="vo">
+           	 <span>&gt;&gt;<a href="{:U('square/Tool/getList',array(cateid=>$vo['id']))}">{$vo.cname}</a></span>
+           </volist>
+       <php>if($path['title']){</php>
+       		&gt;&gt;<a href="{:U('square/Tool/show',array(id=>$path['title']['id']))}">{$path['title']['cname']}</a>
+       <php>}</php>
+    </div>
+    <div class="clear"></div>
+   </div>

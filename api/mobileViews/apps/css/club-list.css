@@ -1,0 +1,23 @@
+#content{
+    width: 98%;
+}
+div{
+    /*border: 1px solid gray;*/
+}
+.list{
+    border: 1px solid red;
+    border-radius: 2px;
+}
+.list div{
+    height: 100px;
+}
+.site{
+    border: 1px solid gray;
+}
+.site-left{
+    overflow: hidden;
+    padding: 0;
+}
+.site-left img{
+    max-width: 100%;
+}

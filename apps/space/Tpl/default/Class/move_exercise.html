@@ -1,0 +1,29 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+  <include file="../Public/_movestate_leftmenu" />
+  <div class="trunk_right_g">
+     <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_honor" /><span class="title">班级作业</span></div>
+     <div class="clear10"></div>
+     <div class="trunk_right_inner">
+        <table width="690" border="0" cellpadding="0" cellspacing="0" class="exe_table" align="center">
+            <tr>
+                <th width="65" align="center" height="28">科目</th>
+                <th align="center">标题</th>
+                <th width="80" align="center">作业类型</th>
+                <th width="80" align="center">发布时间</th>
+            </tr>
+            <volist name="data" id="vo" key="k">
+                <tr>
+                <td width="65" align="center" height="28">{$vo['courseid']|get_Datacodename}</td>
+                <td align="left" class="exe_tdleft"><a href="{:U('space/Class/showExercise',array(hid=>$vo['id'],classid=>$classid))}">{$vo['title']}</a></td>
+                <td width="80" align="center">{$vo['typeid']|get_tnamebyid}</td>
+                <td width="80" align="center">{$vo['mtime']|date='Y/m/d',###}</td>
+            </tr>
+            </volist>
+        </table>
+       <div class="page">{$html}</div>  
+     </div>
+     <div class="clear10"></div>
+   </div>
+<include file="../Public/_footer" />          
+   

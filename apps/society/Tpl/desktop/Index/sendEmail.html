@@ -1,0 +1,29 @@
+<div class="sendPasswordBox statusBox" style="background-color: #F9F9F9;">
+	<div class="statusTopBorder"></div>
+	<h2>邀请注册</h2>
+	<div class="statusContent">
+		<form method="post" action="{:U('society/Index/doSendEmail')}">
+			<p>请输入您要邀请成员所使用的Email,我们会将注册链接发送到此邮箱！</p>
+			<p>
+				<input type="hidden" name="societyId" value="{$societyInfo.id}">
+				<input type="hidden" name="userName" value="{$name}">
+				<label>E-Mail：</label> <input type="text" class="text" name="email">
+				<button type="submit" class="btn sub-btn">邀请注册</button>
+			</p>
+		</form>
+	</div>
+</div>
+<style type="text/css">
+.sendPasswordBox {text-align: left;display: block;height: 210px;left: 50%;overflow: hidden;top: 40%;width: 550px;}
+.statusTopBorder {background-color: #0C76BC;height: 0px;}
+.statusBox {background: none repeat scroll 0 0 #EDEDED;border-radius: 8px;}
+.statusContent {margin: 0 30px;}
+.sendPasswordBox p {padding-bottom: 10px;}
+.statusContent p {color: #7D7D7D;font-size: 14px;padding: 5px 0;}
+.statusBox h2 {color: #0D7DC9;font-family: 微软雅黑;font-size: 20px;margin: 15px 30px 5px;}
+.sendPasswordBox p label {vertical-align: middle;}
+.sendPasswordBox p .text {font-size: 16px;margin: 0;padding: 9px;width: 260px;}
+.statusContent input {background-color: #FFFFFF;border: 1px solid #CCCCCC;border-radius: 4px;color: #333333;font-family: 微软雅黑;font-size: 14px;padding: 6px;vertical-align: middle;}
+.sendPasswordBox p .sub-btn {background-position: 0 -123px;margin-left: 2px;}
+.sendPasswordBox p .btn {vertical-align: middle;}
+</style>

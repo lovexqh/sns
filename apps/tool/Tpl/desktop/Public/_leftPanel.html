@@ -1,0 +1,30 @@
+	<!-- 左侧收起按钮 start -->
+	<div class="panel-tool">
+		<a class="layout-button-left" href="javascript:void(0)" onclick="panel.collapse('nv_dsk','west');"></a>
+	</div>
+	<!-- 左侧收起按钮 end -->
+	<!-- 左侧列表推荐 start -->
+	<div class="panel-list-box bottom-line">
+		<h2 style="cursor: pointer;" onclick="window.parent.OpenSpaceWin('{:U('square/Tool/index', array('uid' => $uid))}','工具中心');return false;"><i class="icon-teach-activities"></i>工具中心<img src='__THEME__/images/hot.gif'></h2>
+	</div>
+	<div class="panel-list-box bottom-line">
+		<h2><i class="icon-sun-resource"></i>应用工具</h2>
+		<ul class="list">
+			<li><a href="javascript:;" onclick="tabs.toIframe('我上传的工具','{:U('tool/Index/my',array('iframe'=>'yes'))}');">我上传的工具</a></li>
+            <li><a href="javascript:;" onclick="tabs.iframe('我下载的工具','{:U('tool/Index/down',array(iframe=>'yes'))}');">我下载的工具</a></li>
+            <li><a href="javascript:;" onclick="tabs.iframe('我收藏的工具','{:U('tool/Index/favorite',array(iframe=>'yes'))}');">我收藏的工具</a></li>
+             <li><a href="javascript:;" onclick="tabs.iframe('系统推荐工具','{:U('tool/Index/hostlist',array('iframe'=>'yes'))}');">系统推荐工具</a></li>
+        <ul>    
+	</div>
+	<!-- 左侧列表推荐 end -->
+
+    <!-- 左侧内容统计 start -->
+	<div class="panel-list-box">
+		<h2><i class="icon-resource"></i>数据统计</h2>
+		<ul class="list">
+            <li>我上传的工具共：<em>{$count.upload}</em>个</li>
+            <li>我下载的工具共：<em>{$count.down}</em>个</li>
+		</ul>
+	</div>
+	<!-- 左侧内容统计 end -->
+   

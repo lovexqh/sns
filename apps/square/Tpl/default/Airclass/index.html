@@ -1,0 +1,209 @@
+<include file="_header" />
+
+<script type="text/javascript">
+$(function() {
+	$(".category li").click(function(){
+		$(this).parents("ul").find("li").removeClass('on');
+		$(this).addClass('on');
+		$(this).parents(".box").find(".source_list").css("display","none");
+		$(this).parents(".box").find(".source_list").eq($(this).parents("ul").find("li").index($(this))).css("display","");
+	});
+
+	$(".star li").click(function(){
+		$(this).parents("ul").find("li").removeClass('on');
+		$(this).addClass('on');
+		$(this).parents(".rank").find("table").css("display","none");
+		$(this).parents(".rank").find("table").eq($(this).parents("ul").find("li").index($(this))).css("display","");
+	});
+});
+</script>
+
+  <div class="main">
+    <div class="sidebar">
+      <include file="_left" />
+      <div class="clear"></div>
+    </div>
+    <div class="content">
+      <div class="so_left"> 
+        <!--课堂纪实-->
+        <div class="box" style="height:240px;">
+          <div class="title">
+            <h2>课堂纪实</h2>
+            <a href="{:U('square/Airclass/classes',array('category'=>''))}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          <ul class="category">
+            <li class="on"><a>正在进行</a></li>
+            <li><a>即将开始</a></li>
+            <li><a>已经完成</a></li>
+            <div class="clear"></div>
+          </ul>
+          <ul class="source_list">
+              <php>if($onList){</php>
+              <volist name="onList" id='vo'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}">{$vo[name]|msubstr=0,20} </a><span>开课时间：{$vo.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+          <ul class="source_list" style="display:none;">
+              <php>if($readyList){</php>
+              <volist name="readyList" id='vo'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}">{$vo[name]|msubstr=0,20} </a><span>开课时间：{$vo.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+          <ul class="source_list" style="display:none;">
+              <php>if($finishedList){</php>
+              <volist name="finishedList" id='vo'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}">{$vo[name]|msubstr=0,20} </a><span>开课时间：{$vo.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+        </div>
+        <volist name="classList" id='vo'>
+        <!--随堂纪实-->
+        <div class="box" style="height:240px;">
+          <div class="title">
+            <h2>{$vo.title}</h2>
+            <a href="{:U('square/Airclass/classes',array('category'=>$vo['id']))}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          <ul class="category">
+            <li class="on"><a>全部</a></li>
+            <li><a>小学</a></li>
+            <li><a>初中</a></li>
+            <li><a>高中</a></li>
+            <div class="clear"></div>
+          </ul>
+          <ul class="source_list">
+              <php>if($vo['class']){</php>
+              <volist name="vo.class" id='vo2'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo2[classid]))}" title="{$vo2[name]}">{$vo2[name]|msubstr=0,20} </a><span>开课时间：{$vo2.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo2.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+          <ul class="source_list" style="display:none;">
+              <php>if($vo['class_1']){</php>
+              <volist name="vo.class_1" id='vo2'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo2[classid]))}" title="{$vo2[name]}">{$vo2[name]|msubstr=0,20} </a><span>开课时间：{$vo2.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo2.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+          <ul class="source_list" style="display:none;">
+              <php>if($vo['class_2']){</php>
+              <volist name="vo.class_2" id='vo2'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo2[classid]))}" title="{$vo2[name]}">{$vo2[name]|msubstr=0,20} </a><span>开课时间：{$vo2.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo2.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+          <ul class="source_list" style="display:none;">
+              <php>if($vo['class_3']){</php>
+              <volist name="vo.class_3" id='vo2'>
+              <li><a href="{:U('square/Airclass/detail',array('classId'=>$vo2[classid]))}" title="{$vo2[name]}">{$vo2[name]|msubstr=0,20} </a><span>开课时间：{$vo2.stime|date="Y-m-d H:i",###}</span><span style="margin:1px 10px 0 0;">创建者：{$vo2.uid|getUserSpace}</span></li>
+              </volist>
+              <php>}else{</php>
+              <li class="tip">暂无课堂</li>
+              <php>}</php>
+          </ul>
+        </div>
+        </volist>
+      </div>
+      <div class="so_right">
+        <div class="statistics">
+          <h3>课堂统计：</h3>
+          <div class="source_count">
+            <p><strong>课堂共计：</strong><span class="number">{$onClassCount+$readyClassCount+$finishedClassCount} 节</span></p>
+            <p><strong>正在进行：</strong><span>{$onClassCount} 节</span></p>
+            <p><strong>即将开始：</strong><span>{$readyClassCount} 节</span></p>
+            <p><strong>已经完成：</strong><span>{$finishedClassCount} 节</span></p>
+          </div></div>
+        <div class="rank">
+          <h4>优秀榜</h4>
+          <ul class="star">
+            <li class="on">优秀课堂</li>
+            <li>优秀资源</li>
+            <div class="clear"></div>
+          </ul>
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th scope="col" class="num">&nbsp;</th>
+              <th scope="col">课堂名</th>
+              <th scope="col">浏览</th>
+            </tr>
+            <volist name="classes_hot" id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td align="left" class="title"><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}">{$vo[name]|msubstr=0,20} </a></td>
+              <td style="text-align:center;">{$vo.viewcount}</td>
+            </tr>
+            </volist>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" style="display:none">
+            <tr>
+              <th scope="col" class="num">&nbsp;</th>
+              <th scope="col">资源名</th>
+              <th scope="col">下载</th>
+            </tr>
+            <volist name="resources_hot" id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td align="left" class="title"><a href="{:U('airclass/Index/downResource',array('id'=>$vo['id']))}" target="_blank">{$vo['name']}</a></td>
+              <td style="text-align:center;">{$vo.downcount}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+        <div class="rank">
+          <h4>排行榜</h4>
+          <ul class="star">
+            <li class="on">活跃人物</li>
+            <li>活跃学校</li>
+            <div class="clear"></div>
+          </ul>
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th scope="col" class="num">&nbsp;</th>
+              <th scope="col">姓名</th>
+              <th scope="col">数量</th>
+            </tr>
+            <volist name="teacher" id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td align="left" class="title">{$vo.uid|getUserSpace}</td>
+              <td style="text-align:center;">{$vo.count}</td>
+            </tr>
+            </volist>
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" style="display:none">
+            <tr>
+              <th scope="col" class="num">&nbsp;</th>
+              <th scope="col">学校</th>
+              <th scope="col">数量</th>
+            </tr>
+            <volist name="school" id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td align="left" class="title">{$vo.schoolname}</td>
+              <td style="text-align:center;">{$vo.count}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+
+<include file="../Public/_footer" />

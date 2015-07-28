@@ -1,0 +1,33 @@
+<script type="text/javascript">
+<!--其他视频分类的树-->
+	var settingother = {
+		data: {
+			simpleData: {
+				enable: true
+			}
+		}
+	};
+
+	var zNodesother =[
+		<volist name="sqcategory" id='obj'>
+			{ id:'{$obj[id]}', pId:'{$obj[p_id]}', name:"{$obj[category_name]}",url:"", target:"_self", click:"noteClick({$obj['id']})"<php>if($path){</php><volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist><php>}elseif($i<=10){</php>,open:"true"<php>}</php>},				
+		</volist>
+	];
+	function noteClick(id){
+		document.location.href = "{:U('square/Article/myblog')}&id="+id;		
+		
+	}
+	$(document).ready(function(){
+		$.fn.zTree.init($("#navtreeother"), settingother, zNodesother);
+	});
+</script>
+<include file="__THEME__/desktop/_KnowledgeTree" />
+<div class="sidebar">
+  <div class="sidebar_box">
+    <h4>分类索引</h4>
+    <div>
+    <UL id="navtreeother" class="ztree" style="overflow-x: auto; overflow-y: hidden; padding-bottom:20px;"></UL>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>

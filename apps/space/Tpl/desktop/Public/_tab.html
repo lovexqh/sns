@@ -1,0 +1,44 @@
+<link href="__THEME__/space/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/main.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/space.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/jquery-webox.css" rel="stylesheet" type="text/css" />
+
+<div class="containerOuter">
+  <div class="head">
+    <div class="pic" style="background:url(__THEME__/space/images/topbg.gif) no-repeat;">
+	    <div class="pics"><img src="{$classinfo['sns_class']['logo']|getAName}"/></div>
+	    <div class="cla">
+		 	<h2>{$classinfo['uc_class']['bj']}</h2><br>
+       		<div class="cx">
+        	<dl>
+            	<dt>班级口号:</dt>
+                <dd>{$classinfo['sns_class']['logan']}</dd>
+            </dl>
+        </div>
+        </div> 
+    </div> 
+  </div>
+  <div class="container">
+        <div class="containerInner">
+		  <div class="header_navi">
+              <ul>
+                <li><a href="{:U('space/Class/index',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('index')))echo 'class="nav_visit"';</php>>首&nbsp;&nbsp;页 </a></li>
+      			<if condition="$adviser eq 1">
+          			<li><a href="{:U('space/Manage/ManageInfo',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageInfo','ManagePower','ManageLeader','ManageCourse','ManageSeat','ManageAnnounce','ManagePhoto','ManageHonor','album','photo','album_edit','muti_edit_photos','album_order')))echo 'class="nav_visit"';</php>>班级管理</a></li>
+      			<elseif condition="$adviser eq 2"/>
+          			<volist name="powerlist" id="vo" offset="0" length='1'>
+          			<php>$act="space/Manage/".getMagageType($vo['mid']);</php>
+             			<li><a href="{:U($act,array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageInfo','ManagePower','ManageLeader','ManageCourse','ManageSeat','ManageAnnounce','ManagePhoto','ManageHonor','album','photo','album_edit','muti_edit_photos','album_order')))echo 'class="nav_visit"';</php>>班级管理</a></li>
+          			</volist>      	
+       			</if>
+      			<li><a href="{:U('space/Class/StudentMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('StudentMember','TeacherMember','LeaderMember','SeatMember')))echo 'class="nav_visit"';</php>>班级成员</a></li>
+      			<li><a href="{:U('space/Class/MoveAnnounce',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('MoveExercise','MoveState','MoveAnnounce','MoveCourse','MoveHonor','MovePhoto','MoveBirthday','albums','photos','showAnnounce','showExercise','showHonor')))echo 'class="nav_visit"';</php>>班级动态</a></li>
+      		</ul>
+          </div>
+          <div class="clear10"></div>
+		   <div class="trunkOut_dyn">
+            <div class="trunkInner">
+
+
+

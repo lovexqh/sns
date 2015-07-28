@@ -1,0 +1,99 @@
+<style type="text/css">
+/*form*/
+ /*--/按钮*/
+.text { border:1px solid #BDC7D8; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px;}
+
+.live_form{ width:450px;}
+.live_form ul { float: left; width: 100%}
+.live_form li { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; margin-bottom: 10px}
+.live_form li .c1 { width: 85px; float: left; line-height: 20px; padding-right: 5px; }
+.live_form li .c2 { margin-left:80px;}
+.live_form li .c2 .rank {  }
+</style>
+<form method="post" action="{:U('/Admin/'.$do)}" name="do_live" enctype="multipart/form-data" onsubmit="return checkLive(this);">
+<php>if($do=='do_edit_live'){</php>
+<input type="hidden" name="id" value="{$live[id]}" />
+<php>}</php>
+<div class="live_form">
+<ul style="width:90%">
+<li>
+    <div class="c1">直播名称：</div>
+    <div class="c2">
+        <input type="text" id="livename" name="name" value="{$live[name]}" class="text" style="width:200px">
+    </div>
+</li>
+<li>
+    <div class="c1">直播缩略图：</div>
+    <div class="c2">
+        <input name="cover" type="file" value="{$live[thumb]}" />
+    </div>
+</li>
+
+<li>
+    <div class="c1">直播流名称：</div>
+    <div class="c2">
+        <input type="text" name="file" class="text" value="{$live[file]}" style="width:200px">
+    </div>
+</li>
+<li>
+    <div class="c1">直播流地址：</div>
+    <div class="c2">
+        <input type="text" name="streamer" class="text" value="<php>echo empty($live[streamer])?$config['live_server']:$live[streamer]</php>" style="width:200px">
+    </div>
+</li>
+<li>
+    <div class="c1">{$ts['app']['app_alias']}简介：</div>
+    <div class="c2">
+        <textarea name="info" class="text" style="width:300px; height:90px;">{$live[info]}</textarea>
+    </div>
+</li>
+<li>
+    <div class="c1">访问权限：</div>
+    <div class="c2">
+        <select name="privacy" id="privacy" onchange="javascript:changePrivacy(this);">
+            <option value="1">所有人可见</option>
+            <option value="2">我的关注可见</option>
+            <option value="3">仅自己可见</option>
+            <option value="4">凭密码访问</option>
+        </select>
+    </div>
+</li>       
+<li id="need_password" style="display:none;">
+    <div class="c1">设置密码：</div>
+    <div class="c2">
+        <input name="privacy_data" type="text" class="TextH20" id="textfield3" style="width:200px;" onblur="this.className='TextH20'" onfocus="this.className='Text2'" />
+    </div>
+</li>    
+<li>
+    <div class="c1">&nbsp;</div>
+    <div class="c2">
+        <input type="submit" class="btn_b" value=" 提 交 " readonly="true" />
+    </div>
+</li>
+</ul>
+</div>
+</form>
+<script language="javascript" type="text/javascript">
+//执行加入收藏操作
+function checkLive(obj){
+	if(obj.name.value==''){
+		ui.error('请输入直播频道的名称!');
+		obj.name.focus();
+		return false;
+	}
+	if(obj.file.value==''){
+		ui.error('请输入直播流的名称!');
+		obj.file.focus();
+		return false;
+	}
+
+	return true;
+}
+function changePrivacy(obj){
+	if(obj.value==4){
+		$('#need_password').show();
+	}else{
+		$('#need_password').hide();
+	}
+}
+</script>

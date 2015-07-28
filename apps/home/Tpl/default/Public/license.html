@@ -1,0 +1,15 @@
+<include file="__THEME__/desktop/header" />
+<script language="javascript" type="text/javascript">
+<!-- 
+if (top.location != self.location) top.location = self.location; 
+// -->
+</script>
+<div class="error500Box statusBox">
+	<div class="statusTopBorder"></div>
+	<div class="statusContent">
+		<h3>License</h3>
+		<p><strong><php>echo ($_GET['msg']) ? urldecode($_GET['msg']) : 'License不存在或错误';</php></strong></p>
+		<p>服务器License错误了，管理员尽快处理，现在只能去<a href="{:U('desktop')}">首页</a>看看吧！</p>
+	</div>
+<!-- end .registerBox --></div>
+<include file="__THEME__/desktop/footer" />

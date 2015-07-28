@@ -1,0 +1,46 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_manage_leftmenu" />
+   <div class="trunk_right_p">
+     <div class="navi_rtitle"><span class="title">班级相册</span></div>
+     <div class="clear10"></div>
+      <div class="mainbox_appC">
+        <div class="lineS_btm lh30"><span class="photo_tit"><strong>{$album.name}</strong></span><a href="{:U('/Upload/album_edit',array(id=>$album['id'],classid=>$classid))}" class="ml5">[编辑]</a>  (共<span class="cRed">{$album.photoCount}</span>张)<span class="buildtime">{$album.mTime|friendlyDate}创建</span></div>
+        <div class="photoBox">
+          <div class="order"><input type="button" onClick="serialize({$classid});return false;" class="btn_b right" value="保存" />提示：用鼠标拖动图片，然后点击“保存”按钮即可。</div>
+          <ul id="sortable" class="orderlist">
+            <volist name="photos" id="li">
+              <li id="{$li.id}"> <a href="{:U('/Index/photo')}&id={$li.id}&aid={$album.id}&uid={$li.userId}" class="preview" rel="__ROOT__/thumb.php?w=400&h=400&t=f&url={$li.savepath|get_photo_url}" title="{$li.name}"><img src="__ROOT__/thumb.php?w=160&h=160&t=f&url={$li.savepath|get_photo_url}" /><br />
+                <span class="username">{$li.name|getShort='10'}</span></a></li>
+            </volist>
+          </ul>
+          <!-- photoBox end  -->
+        </div>
+      </div>
+   </div>
+<include file="../Public/_footer" />
+<script type="text/javascript" src="../Public/js/ui.core.js"></script>
+<script type="text/javascript" src="../Public/js/ui.sortable.js"></script>
+<script type="text/javascript">
+    var aid = '{$aid}';
+$(document).ready(
+    function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    }
+);
+
+function serialize(classid)
+{
+    var serial = $('#sortable').sortable("toArray");
+    var order = serial.join(',');
+	var url="{:U('/Upload/save_order')}";
+    $.post(url,{order:order,id:aid,classid:classid},function(result){
+        if(result == 1){
+            ui.success('保存成功');
+        }else{
+            ui.error('顺序无变化');
+        }
+    });
+};
+</script>

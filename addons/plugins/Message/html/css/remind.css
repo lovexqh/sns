@@ -1,0 +1,355 @@
+/**
+**该文件是控制大桌面提醒小窗口
+**/
+.dock_right_remind{
+	top:50px;
+	right:50px;
+	z-index: 2019;
+	width:53px;
+	height:103px;
+}
+.dock_right_remind .contains{
+	position:relative;
+	width:53px;
+	background:#00C;
+}
+
+/** 左侧面板开始**/
+.dock_right_remind .left{
+	position:absolute;
+	right:80px;
+	top:10px;	
+}
+/**   提醒事件start     **/
+.dock_right_remind .remind_panel{
+
+}
+.dock_right_remind .scroll_panel a{
+	color:#676566;
+}
+.remind_panel .ico-onread{
+	display:block;
+	background:url(../images/readed.png) no-repeat;
+	width:18px;
+	height:18px;
+}
+.remind_panel .ico-offread{
+	display:block;
+	background:url(../images/unread.png) no-repeat;
+	width:18px;
+	height:18px;
+}
+.dock_right_remind  .left_contains{
+	margin:10px;
+	width:400px;
+	height:300px;
+	border-radius:5px;
+	background:#F7F3F2;
+}
+.dock_right_remind .left_contains .top_title{
+	width:100%;
+	height:28px;
+	background:#EDECEA;
+	border-top:#C6C2C1 1px solid;
+	border-bottom:#C6C2C1 1px solid;
+	border-radius:5px 5px 0 0;
+	box-sizing:border-box;
+}
+.dock_right_remind .left_contains .top_title li{
+	position:relative;
+	float:left;
+	display:block;
+	padding:0 20px;
+	height:27px;
+	line-height:27px;
+	color:#676566;
+	text-align:center;
+	border-right:#C6C2C1 1px solid;
+	border-left:#FFF 1px solid;
+	box-sizing:border-box;border-radius:5px 0 0 0;
+}
+.dock_right_remind .left_contains .top_title li a:hover{
+	text-decoration:none;
+	color:#333;
+}
+.dock_right_remind .onfocs{
+	box-sizing:border-box;
+	line-height:29px;
+	background:#F7F3F2;
+}
+.dock_right_remind .left_contains li a{
+}
+.dock_right_remind .left_contains li span.time{
+	position:absolute;
+	right:5px;
+	top:5px;
+}
+.dock_right_remind .left_content td{
+	padding:8px 0px 8px 10px;
+	word-break:break-all;
+	word-wrap:break-word;
+}
+.dock_right_remind .hide{
+	display:none;
+}
+.dock_right_remind .left_content a{
+	margin:0 5px;
+}
+.dock_right_remind .left_content tr:nth-child(odd){
+	background:#F7F3F2;
+}
+.dock_right_remind .left_content tr:nth-child(even){
+	background:#EFEBEA;
+}
+.dock_right_remind .left_content .border-space{
+	width:2px;
+	border-width:0 1px 0 1px;
+	border-style:solid;
+	border-color:#F2E3DE;
+}
+.dock_right_remind .left_content .border-check{
+	width:20px;
+}
+.dock_right_remind .left_content .border-content{
+	position:relative;
+	padding-right:30px;
+}
+.dock_right_remind .left_content .delete{
+	position:absolute;
+	top:10px;
+	right:15px;
+	width:14px;
+	height:15px;
+	background:url(../images/delete.png);
+	cursor:pointer;
+}
+.dock_right_remind .left_next{
+	clear:both;
+	height:30px;
+}
+.dock_right_remind .arwup,.dock_right_remind .arwdown{
+	margin:5px 3px;
+	float:right;
+	width:24px;
+	height:24px;
+	cursor:pointer;
+}
+.dock_right_remind .arwup{
+	background:url(../images/arwup.png) no-repeat center;
+}
+.dock_right_remind .arwdown{
+	background:url(../images/arwdown.png) no-repeat center;
+}
+.dock_right_remind .close{
+	position:absolute;
+	top:-7px;
+	right:3px;
+	text-align:center;
+	line-height:16px;
+	width:16px;
+	height:16px;
+	border:none;
+	background:#EDECEA;
+	border-radius:8px;
+	font-size:6px;
+	color:#FFF;
+}
+.dock_right_remind  .red_close{
+	background:#F78093;
+}
+.dock_right_remind  .yellow_close{
+	background:#FFCC61;
+}
+.dock_right_remind  .blue_close{
+	background:#92D9F7;
+}
+
+.dock_right_remind .bg{
+	position:absolute;
+	box-sizing:border-box;
+	top:0;
+	left:0;
+	width:420px;
+	height:320px;
+	background:#999;
+	filter: alpha(opacity:45);
+	opacity:0.45;
+	border:#FFF 1px solid;
+	border-radius:5px;
+	z-index:-2;
+}
+.dock_right_remind .left_close{
+	position:absolute;
+	top:-12px;
+	right:-12px;
+	text-align:center;
+	line-height:24px;
+	width:24px;
+	height:24px;
+	border:none;
+	background:#EDECEA;
+	filter: alpha(opacity:70);
+	opacity:0.7;
+	border-radius:12px;
+	cursor:pointer;
+	text-decoration:none;
+}
+/**   提醒事件end     **/
+/**   资源start     **/
+.dock_right_remind .resource_height_out{
+	height:320px;
+	width:350px;
+}
+.dock_right_remind .resource_height_in{
+	height:300px;
+}
+.dock_right_remind .border-letter li{
+	display:block;
+	line-height:20px;
+	text-align:left;
+	padding:5px 10px;
+	position:relative;
+}
+.dock_right_remind .border-letter li a{
+	margin-left:25px;
+	display:inline-block;
+}
+.dock_right_remind .border-letter li:nth-child(odd){
+	background:#F7F3F2;
+}
+.dock_right_remind .border-letter li:nth-child(even){
+	background:#EFEBEA;
+}
+.readed{
+	position:absolute;
+	top:8px;
+	left:10px;
+	width:18px;
+	height:18px;
+	vertical-align:middle;
+	background:url(../images/readed.png) no-repeat;
+}
+.unread{
+	position:absolute;
+	top:8px;
+	left:10px;
+	width:18px;
+	height:18px;
+	background:url(../images/unread.png) no-repeat;
+}
+/**   资源end    **/
+
+/**   课程start    **/
+.dock_right_remind .course_height_out{
+	height:400px;
+	width:400px;
+}
+.dock_right_remind .course_height_in{
+	height:380px;
+}
+.dock_right_remind .left_course{
+	padding:0;
+	margin: 5px auto;
+	width:98%;
+	background:#FFF;
+	border-collapse:separate;
+	border-spacing:1px;
+}
+.dock_right_remind .left_course th,.dock_right_remind .left_course td{
+	width:16%;
+	text-align:center;
+	height:28px;
+}
+.dock_right_remind .left_course th{
+	font-weight:normal;
+	background:#EDEBEC;	
+}
+.dock_right_remind .left_course td{
+	background:#F7F3F2;	
+}
+/**   课程end    **/
+/** 左侧面板结束**/
+
+/** 右侧面板开始**/
+
+.dock_right_remind .right{
+	float:right;
+	margin:10px 0 0 0;
+	width:55px;
+	height:150px;
+	position:relative;
+	
+}
+.dock_right_remind  .right_contains{
+	margin:10px auto 4px;
+}
+.dock_right_remind .right li{
+	position:relative;
+	height:20px;
+	padding:5px 0;
+	cursor:pointer;
+}
+.dock_right_remind .right li a{
+	display:block;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	background-image:url(../images/remindpic.png);
+	background-repeat:no-repeat;
+}
+
+.dock_right_remind .right .icon_message{
+	background-position:0px 0px;
+}
+.dock_right_remind .right .icon_exercise{
+	background-position:0 -20px;
+}
+
+.dock_right_remind .right .icon_schedule{
+	background-position:0 -40px;
+}
+
+.dock_right_remind .right .icon_message.focus{
+	background-position:-20px 0px;
+}
+.dock_right_remind .right .icon_exercise.focus{
+	background-position:-20px -20px;
+}
+
+.dock_right_remind .right .icon_schedule.focus{
+	background-position:-20px -40px;
+}
+
+.dock_right_remind .right .notice_remind{
+	margin-top:-4px;
+	height:40px;
+	line-height:40px;
+	color:#FFF;
+	text-align:center;
+	border-radius:5px;
+	background:url(../images/remind.png) no-repeat center;
+}
+.dock_right_remind .right .arrow{
+	position:absolute;
+	top:10px;
+	left:-3px;
+	width:4px;
+	height:11px;
+	background:url(../images/arrow.png) no-repeat;
+}
+	
+.dock_right_remind .right .right_background{
+	position:absolute;
+	box-sizing:border-box;
+	top:0;
+	left:0;
+	width:55px;
+	height:110px;
+	background:#999;
+	filter: alpha(opacity:45);
+	opacity:0.45;
+	border:#FFF 1px solid;
+	border-radius:5px 5px 0 0;
+	z-index:-2;
+}
+

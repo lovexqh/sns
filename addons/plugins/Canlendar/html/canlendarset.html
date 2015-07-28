@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="__PUBLIC__/js/jquery-ui.css" />
+<script src="__PUBLIC__/js/jquery-1.9.1.js"></script>
+<script src="__PUBLIC__/js/jquery-ui.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#firstdate").datepicker(
+		{
+		  changeMonth: true,
+		  changeYear: true,
+		  dateFormat:"yy-mm-dd",
+		}
+	);
+    $("#firstdate" ).datepicker( "option", "defaultDate", +0 );
+	$("#btnsubmit").click(function(){
+		if($('#firstdate').val() == ''){
+			alert('请先设置要提交的时间');
+		}else{
+			$('#form1').submit();
+		}
+	});
+	//$("#setdate").datepicker.formatDate('yy-mm-dd', new Date().getTime());
+  });
+  </script>
+<!-------- 搜索分类 -------->
+
+<div id="searchClassinfo_div">
+  <div class="page_tit">课程表第一周日期设置</div>
+  <div class="form2">
+    <form id="form1" name="form1" method="post" action="{:Addons::adminUrl('upCanlendar')}">
+      设置第一周日期：
+      <input type="text" name="firstdate" id="firstdate" maxlength="10" value="{$firstdate}" />
+      <input type="button" name="button" id="btnsubmit" value="提交" />
+    </form>
+  </div>
+</div>
+<include file="../Public/_footer" />

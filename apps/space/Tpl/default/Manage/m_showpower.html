@@ -1,0 +1,46 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="re">
+			  <tr>
+				 <td width="10%" class="line_border" align="center">教师</td>
+				 <td width="90%" class="line_border" style="clear:both;">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+					  <tr>
+						 <th width="15%" height="25" align="center">姓名</th>
+						 <th width="85%"  align="center">权限</th>
+					  </tr>
+					  <volist name="tea_pos" id="vo">
+					  <tr>
+						 <td width="15%" height="25"  align="center">{$vo.identityid|get_namebyidentityid=###,2}</td>
+						 <td style="padding-left:10px;">
+						 	<volist name="vo['mid']" id="v" key="k">
+								<php>if($k!=1){</php>、<php>}</php>{$v.mid|get_powername}
+							</volist>
+						 </td>
+					  </tr>
+					  </volist>
+					</table>
+				 </td>
+			  </tr>
+			  <tr>
+				 <td class="line_border"  align="center">学生</td>
+				 <td class="line_border">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+					  <tr>
+						 <th width="15%" height="25" align="center">姓名</th>
+						 <th width="85%"  align="center">权限</th>
+					  </tr>
+					   <volist name="stu_pos" id="vo">
+					  <tr>
+						 <td width="15%" height="25"  align="center">{$vo.identityid|get_namebyidentityid=###,3}</td>
+						 <td style="padding-left:10px;">
+						 	<volist name="vo['mid']" id="v">
+								<php>if($i!=1){</php>、<php>}</php>{$v.mid|get_powername}
+							</volist>
+						 </td>
+					  </tr>
+					  </volist>
+					</table>
+				 </td>
+			  </tr>
+			</table>
+<div class="clear"></div>
+		

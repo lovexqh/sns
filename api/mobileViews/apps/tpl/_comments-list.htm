@@ -1,0 +1,39 @@
+<%_.map(data,function(comment){%>
+<li>
+    <div class="row">
+        <div class="col-xs-7 text-primary"><img class="reply-user-head" src="<%=comment.uhead%>"/><%=comment.uname%></div>
+        <div class="col-xs-5 text-muted"><small><%=comment.rdate%></small></div>
+    </div>
+    <div class="row comment-content">
+        <%=comment.rcontext%>
+    </div>
+    <%if(!_.isUndefined(comment.rrlist)){%>
+    <div class="row">
+        <%if(!_.isUndefined(comment.uid)){%>
+            <div class="col-xs-2 comment-reply" data-ruid="<%=comment.uid%>" data-rid="<%=comment.rid%>" data-uname="<%=comment.uname%>">
+        <%}else{%>
+            <div class="col-xs-2 comment-reply" data-rid="<%=comment.rid%>" data-uname="<%=comment.uname%>">
+        <%}%>
+        <%if(_.isNull(comment.rrlist)){%>
+            <small class="text-primary">回复(0)</small>
+        <%}else{%>
+            <small class="text-primary">回复(<%=comment.rrlist.length%>)</small>
+        <%}%>
+        </div>
+    </div>
+    <%if(_.isObject(comment.rrlist)){%>
+        <%_.map(comment.rrlist,function(reply){%>
+        <div class="row reply">
+            <div class="row">
+                <div class="col-xs-7 text-primary"><img class="reply-user-head" src="<%=reply.uhead%>" /><%=reply.uname%></div>
+                <div class="col-xs-5 text-muted"><small><%=reply.rrdate%></small></div>
+            </div>
+            <div class="row comment-content">
+                <div class="col-xs-12"><%=reply.rrcontext%></div>
+            </div>
+        </div>
+        <%});%>
+    <%}%>
+    <%}%>
+</li>
+<%});%>

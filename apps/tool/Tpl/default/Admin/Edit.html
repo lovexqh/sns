@@ -1,0 +1,277 @@
+<include file="_header" />
+<style type="text/css">
+/*form*/
+ /*--/按钮*/
+.text { border:1px solid #BDC7D8; font-size:12px; font-family: Arial, Helvetica, sans-serif; padding:4px 5px;}
+
+.area_form{ width:480px;}
+.area_form ul { float: left; width: 100%}
+.area_form li { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; margin-bottom: 10px}
+.area_form li .c1 { width: 85px; float: left; line-height: 20px; padding-right: 5px; }
+.area_form li .c2 { margin-left:80px;}
+.area_form li .c2 .rank {  }
+</style>
+<form id="form" method="post" action="{:U('tool/Admin/doEdit')}" name="do_area" enctype="multipart/form-data" onsubmit="return checkArea(this);">
+<input name="id" type="hidden" value="{$edit['id']}" />
+<div class="area_form">
+<ul style="width:90%">
+<li>
+    <div class="c1">名称：</div>
+    <div class="c2">
+        <input type="text" id="title" name="title" value="{$edit[title]}" class="text" style="width:200px">
+    </div>
+</li>
+<li>
+    <div class="c1">关键字：</div>
+    <div class="c2">
+	    <input type="text" name="tags" id="tags" class="text" style=" width:200px;" value="{$edit[tags]}" />
+    </div>
+</li>
+<li>
+    <div class="c1">分类信息：</div>
+    <div class="c2" id="check">
+    <volist name="classes" id="vo" key="k">
+<span>
+<input type="radio" name="rclass" value="{$vo['DataCode']}"  <php>if($edit['class']==$vo['DataCode']){</php>checked="checked"<php>}</php>/>{$vo['DataName']}
+</span>
+    </volist>
+    </div>
+</li>
+<div id="classbody">
+</div>
+<li>
+    <div class="c1">&nbsp;</div>
+    <div class="c2">
+        <input type="submit" class="btn_b" value=" 提 交 " readonly="true" />
+    </div>
+</li>
+</ul>
+</div>
+</form>
+<div id="rclass1" style=" display:none">
+  <li>
+      <div class="c1">版本：</div>
+      <div class="c2">
+          <input type="text" disabled name="edition" value="{$edit['edition']|getDictionary}" />
+          <a href="javascript:void(0);" onclick="Getdata(1);" class="select1">更改</a>
+          <select name="select1" id="select1" style=" display:none" onchange="GetSelect(form,1);">
+            <option value="">请选择</option>
+            <volist name="edition" id="vo">
+               <option value="{$vo.DataCode}">{$vo.DataName}</option>
+            </volist>
+          </select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">科目：</div>
+      <div class="c2"><input type="text" disabled name="subject" value="{$edit['subject']|getDictionary}" />
+                      <select name="select2" id="select2" style=" display:none" onchange="GetSelect(form,2);"></select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">年级：</div>
+      <div class="c2">
+           <input type="text" disabled name="grade" value="{$edit['grade']|getDictionary}" />
+           <select name="select3" id="select3" style=" display:none" onchange="GetSelect(form,3);"></select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">章节：</div>
+      <div class="c2">
+            <input type="text" disabled name="chapters" value="{$edit['chapters']|getCourse}" />
+            <select name="select4" id="select4" style=" display:none"></select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">类型：</div>
+      <div class="c2">
+           <select name="type" style=" width:150px; height:22px; line-height:22px;">
+              <volist name="type" id='vo'>
+                <option value="{$vo.DataCode}" <php>if($vo[DataCode]==$edit[type]){</php> selected="selected"<php>}</php>>{$vo.DataName}</option>
+              </volist>
+          </select>
+      </div>
+  </li>
+</div>
+<div id="rclass2"  style=" display:none">
+  <li>
+      <div class="c1">版本：</div>
+      <div class="c2">
+          <input type="text" disabled name="edition" value="{$edit['edition']|getDictionary}" />
+          <a href="javascript:void(0);" onclick="Getdata(5);" class="select5">更改</a>
+          <select name="select5" id="select5" style=" display:none">
+            <volist name="edition" id="vo">
+               <option value="{$vo.DataCode}">{$vo.DataName}</option>
+            </volist>
+          </select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">专题属性：</div>
+      <div class="c2">
+          <input type="text" disabled name="attribute" value="{$edit['attribute']|getDictionary}" />
+          <a href="javascript:void(0);" onclick="Getdata(6);" class="select6">更改</a>
+          <select name="select6" id="select6" style=" display:none">
+            <volist name="sattribute" id="vo">
+               <option value="{$vo.DataCode}">{$vo.DataName}</option>
+            </volist>
+          </select>
+      </div>
+  </li>
+  <li>
+      <div class="c1">类型：</div>
+      <div class="c2">
+           <select name="type" style=" width:150px; height:22px; line-height:22px;">
+              <volist name="stype" id='vo'>
+                <option value="{$vo.DataCode}" <php>if($vo[DataCode]==$edit[type]){echo 'selected';}</php>>{$vo.DataName}</option>
+              </volist>
+          </select>
+      </div>
+  </li>
+</div>
+<div id="rclass3"  style=" display:none">
+
+</div>
+<script type="text/javascript">
+ $(document).ready(function(e) {
+	 var classes= $('input:radio[name="rclass"]:checked').val();
+		 if(classes=='ElementaryEDU')
+		 {
+			  var rclass1=$("#rclass1").html();
+			 $("#classbody").html(rclass1);
+		 }
+		 else if(classes=='SpecialEDU')
+		 {
+			 var rclass2=$("#rclass2").html();
+		     $("#classbody").html(rclass2);
+		 }
+		 else if(classes=='OtherEDU')
+		 {
+			  var rclass3=$("#rclass3").html();
+		      $("#classbody").html(rclass3);
+		 }
+ });
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+   $("#check input").click(function(){
+      var rcfied=$(this).val();
+	  if(rcfied=='ElementaryEDU')
+	  { 
+	     var rclass1=$("#rclass1").html();
+		 $("#classbody").html(rclass1);
+	  }
+	  else if(rcfied=='SpecialEDU')
+	  { var rclass2=$("#rclass2").html();
+	  $("#classbody").html(rclass2);}
+	  else if(rcfied=='OtherEDU')
+	  {
+	   var rclass3=$("#rclass3").html();
+	   $("#classbody").html(rclass3);
+	   }
+   });
+});
+</script>
+<script language="javascript" type="text/javascript">
+function Getdata(key){
+  
+   var child='select'+key;
+   $('.'+child).hide();
+   $('#'+child).show();
+  
+};
+</script>
+<script language="javascript" type="text/javascript">
+function GetSelect(form,key){
+   var edition=form.select1.value;
+   var subject=form.select2.value;
+   var grade=form.select3.value;
+   if(key==1)
+   {
+      $("#select2").find('option').remove();
+	  $("#select2").append("<option value=''>请选择</option>");
+	  $("#select3").find('option').remove();
+	  $("#select3").append("<option value=''>请选择</option>");
+	  $("#select4").find('option').remove();
+	  $("#select4").append("<option value=''>请选择</option>");
+	  var child='select2';
+	  $(".select2").hide();
+   }
+   if(key==2)
+   {
+	  $("#select3").find('option').remove();
+	  $("#select3").append("<option value=''>请选择</option>");
+	  $("#select4").find('option').remove();
+	  $("#select4").append("<option value=''>请选择</option>");
+	  var child='select3';
+	  $(".select3").hide();
+   }
+   if(key==3)
+   {
+	  $("#select4").find('option').remove();
+	  $("#select4").append("<option value=''>请选择</option>");
+	  var child='select4';
+	  $(".select4").hide();
+   }
+   $('#'+child).show();
+   $.post("{:U('resource/Admin/doGetSelect');}",{key:key,edition:edition,grade:grade,subject:subject},function(text){
+		var json = eval(text);
+		if(json==null){return;}
+		for(var i=0; i<json.length; i++)
+		{
+			$('#'+child).append("<option value='"+json[i].cloumn+"'>"+json[i].text+"</option>");
+		}
+	});
+};
+</script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+ function checkArea(){
+	 
+    var title=form.title;
+	var tags=form.tags;
+	var classes= $('input:radio[name="rclass"]:checked').val(); 
+	var select1=form.select1;
+	var select2=form.select2;
+	var select3=form.select3;
+	var select4=form.select4;
+	var select5=form.select5;
+	var select6=form.select6;
+	if( !title.value || getLength(title.value.replace(/\s+/g,"")) == 0){
+		ui.error("标题不能为空");
+		$(title).focus();
+		return false;
+	}else if(getLength(title.value) > 50){
+		ui.error("标题不得大于50个中文字符");
+		$(title).focus();
+		return false;
+	}
+	else if(!tags.value)
+	{
+	  ui.error("请填写关键字");
+	  $(tags).focus();
+	  return false;
+	}
+	else if(classes=='ElementaryEDU')
+	{
+		if(select1.value)
+		{
+			if(!select2.value || !select3.value || !select4.value)
+			{ui.error("请将科目、年级、章节填写完整");return false;}
+		}
+		
+	}
+	else if(classes=='SpecialEDU')
+	{
+		if(!select5.value)
+		{
+		  ui.error("请选择版本");return false;
+		}
+		if(!select6.value)
+		{
+		  ui.error("请选择专题属性");return false;
+		}
+	}
+	return true;
+ }
+</script>
+<include file="_footer" />

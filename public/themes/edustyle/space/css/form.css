@@ -1,0 +1,71 @@
+@charset "utf-8";
+/*-----------网站表单和按钮样式-------------------------------------------
+ 说明:
+------------------------------------------------------------ */
+.buttonObj,.so_btn{
+	background: url(../images/btn.png) no-repeat left top;display: inline-block
+}
+.btn_b,.btn_w,.btn_big,.btn_big:hover,.add_atn,.btn_relation,.btn_relation2,.add_atn_small,.btn_relation_small,.btn_relation span,.btn_relation2 span,.btn_b_disable,.btn_green,.ip-serach,.btn_green_w121,.btn_reg,.btn_group,.btn_create,.btn_download,.btn_search_big,.btn_upload_file{background: url(../images/btn.gif) no-repeat left top;display: inline-block}
+.btn_b,a.btn_b:link,a.btn_b:visited{font-size: 12px;height: 27px;width:60px;border:0 none;line-height: 27px;text-align:center;padding:0;text-decoration:none;color:#fff;_height:27px;}
+.btn_w,a.btn_w{font-size: 12px;height: 27px;width:60px;border:0 none;line-height: 27px;text-align:center;padding:0;text-decoration:none;color:#333}
+.btn_w {color:#333;background-position:0 -27px;cursor:pointer;vertical-align:middle;padding-bottom:5px;}
+
+.so_btn{background-position:-98px -55px;*background-position:-98px -55px;border:0 none;height:24px;width:24px;background-color:#fff;position:absolute;right:0;top:0}
+.so_btn:hover{background-color:#F0F4F7}
+
+.btn_big_publish{ background-repeat:no-repeat; background-position:0px 0px;height:40px; width:43px;border:0;font-size:12px;color:#fff;vertical-align:middle; float:right}
+
+.btn_b {color: #fff;background: url(../images/btn.gif) no-repeat left top;width:60px;height:27px;display: inline-block;cursor:pointer;vertical-align:middle;}
+.btn_b:hover{color: #fff;background: url(../images/btn.gif) no-repeat left top;display: inline-block;width:60px;height:27px;line-height:27px;cursor:pointer;vertical-align:middle;_height:27px;}
+.btn_b_disable{color:#7d7d7e;background-position:-61px 0;font-size: 12px;height: 26px;width:60px;border:0 none;line-height: 26px;text-align:center;cursor:pointer}
+
+/*输入框样式*/
+.contentObj{vertical-align:middle; display:inline;}
+
+/*首页登录框*/
+.idx_login_form input{
+	vertical-align:middle;
+}
+
+.idx_login_form .frow .text{
+	height:20px;
+	line-height:20px;
+	padding-left:4px;
+	border:#e0e0e0 solid 1px;
+}
+.idx_login_form .frow .alB{
+	width:160px;
+}
+
+.idx_login_form .frow span{
+	float:left;
+	display:inline-block;
+	width:55px;
+	height:22px;
+	line-height:22px;
+	text-align:right;
+}
+.idx_login_form .frow label{
+	position:absolute;
+	display:block;
+	left:75px;
+	top:12px;
+	height:20px;
+	line-height:20px;
+	color:#ccc;
+}
+.idx_login_form .logbtn{
+	background-image:url(../images/btn.png);
+	background-position:-45px 0px;
+	background-repeat:no-repeat;
+	border:0px;
+	width:60px;
+	height:26px;
+	color:#fff;
+	white-space:nowrap;
+	line-height:26px;
+	
+}
+.idx_login_form .hand{
+	cursor:pointer;
+}

@@ -1,0 +1,358 @@
+<style type="text/css">
+.userList>ul>li img{cursor: pointer;}
+</style>
+<script type="text/javascript">
+	var memberList = {$memberList};
+	count();
+	$('html').css('height', '100%');
+	$('html').css('width', '100%');
+	$('html').css('overflow', 'hidden');
+	$('.close').click(function() {
+		$('html').css('height', '100%');
+		$('html').css('width', '100%');
+		$('html').css('overflow', 'auto');
+	});
+	function count(){
+		var uidList = $('.user_selected>a[name]');
+		var count = uidList.length;
+		$('#count').html(count);
+	}
+	function quanxuan(){
+		var list = $('.userList li');
+		if($('input[name=quanxuan]').attr('checked')){
+			for( var a =0;a<list.size();a++){
+				var uid = $(list[a]).attr('name');
+				if(!$(list[a]).attr('class')){
+					var uidList = $('.user_selected>a[name]');
+					if(uidList.length>=100){
+						ui.error('每次邀请用户最多选择100人。');
+						count();
+						return false;
+					}
+					var f = true;
+					for(var j =0 ;j<$(memberList).size();j++){
+						if(memberList[j].uid == uid){
+							f = false;
+						}
+					}
+					if(f){
+						var username = $('li[name='+uid+'] p a').html();
+						var src = $('li[name='+uid+'] img').attr('src');
+						var html = "";
+						html +="<a name='"+uid+"' href='javascript:void(0)'> <img width='20' height='20'";
+						html +="src='"+src+"'>"+username+"<span onclick='yichu("+uid+");' title='移除该好友'></span></a>";
+						$('.user_selected>a:last').before(html);
+						$('.userList li[name='+uid+']').addClass('user_sel')
+					}
+				}
+			}
+		}else{
+			for( var a =0;a<list.size();a++){
+				$('.user_selected>a[name='+$(list[a]).attr("name")+']').remove();
+			}
+			$('.userList li').removeClass('user_sel')
+		}
+		count();
+	}
+	//邀请用户
+	function select(uid){
+		var clas = $(".userList>ul>li[name="+uid+"]").attr("class");
+		var uidList = $('.user_selected>a[name]');
+		var name;
+		var flag = true;
+		if(clas){
+			$(".userList>ul>li[name="+uid+"]").removeClass('user_sel');
+			$('.user_selected>a[name='+uid+']').remove();
+		}else{
+			if(uidList.length>=100){
+				ui.error('每次邀请用户最多选择100人。');
+				count();
+				return false;
+			}
+			for(var j =0 ;j<$(memberList).size();j++){
+				if(memberList[j].uid == uid){
+					name = $('li[name='+uid+'] p a').html();
+					flag = false;
+				}
+			}
+			if(flag){
+				var username = $('li[name='+uid+'] p a').html();
+				var src = $('li[name='+uid+'] img').attr('src');
+				var html = "";
+				html +="<a name='"+uid+"' href='javascript:void(0)'> <img width='20' height='20'";
+				html +="src='"+src+"'>"+username+"<span onclick='yichu("+uid+");' title='移除该好友'></span></a>";
+				$('.user_selected>a:last').before(html);
+				$(".userList li[name="+uid+"]").addClass('user_sel');
+			}
+		}
+		if(!flag){
+			ui.error(name+'已经是该圈子成员，不可添加！');
+		}
+		count();
+	}
+	function yichu(uid){
+		$('.user_selected>a[name='+uid+']').remove();
+		$('.userList>ul>li[name='+uid+']').removeClass('user_sel');
+		count();
+	}
+	function types(type){
+		if(type==6){
+			searchUserOfYaoQing();
+			return false;
+		}
+		$(".user_list>li").removeClass('userList_selected');
+		$(".user_list>li[type="+type+"]").addClass('userList_selected');
+		$('#yaoqing_U .page a').html('<e style="color:red;">加载中</e>');
+		$.ajax({
+			type : "POST",
+			url  : '{:U('society/Index/searchUser')}',
+			data :{
+				page : '1',
+				type : type
+		},
+			success:function(date) {
+				$('#yaoqing_U .page a').html('换一批');
+	    		var data = eval('(' + date + ')');
+	            if(data.status==1){
+	            	var html ='';
+	            	var uidList = $('.user_selected>a[name]');
+	            	for(var a=0;a<$(data.msg.list).size();a++){
+	            		var flag = true;
+	            		for(var i = 0;i<uidList.length;i++) {
+	            			if(uidList[i].name == data.msg.list[a].fid){
+			            		html += '<li class="user_sel" name="'+data.msg.list[a].fid+'">';
+			            		flag = false;
+	            			}
+	            		}
+	            		if(flag){
+	            			html += '<li name="'+data.msg.list[a].fid+'">';
+	            		}
+	            		html +=	'<div style="text-align: center;">';
+	            		html += '<img onclick="select('+data.msg.list[a].fid+');" alt="'+data.msg.list[a].userName+'" src="'+data.msg.list[a].href+'" />';
+	            		html += '<p><a title="'+data.msg.list[a].userName+'的个人主页" class="username" rel="user" uid="'+data.msg.list[a].fid+'" href="javascript:void(0);">'+data.msg.list[a].userName+'</a></p>';
+	            		html += '</div>';
+	            		html += '</li>';
+	            	}
+	            	$('.userList ul').html(html);
+	            	$(".page a").attr('onclick','next('+data.msg.page+','+null+');');
+	            	$("input[name=type]").val(data.msg.type);
+	            	$('input[name=quanxuan]').attr('checked',false);
+	            }else{
+	            	ui.error(data.msg);
+	            }
+    		}
+    	});
+		count();
+	}
+		//搜索好友
+	function searchUserOfYaoQing(){
+		var userName = $('input[name=userName]').val();
+		userName = rightTrim(leftTrim(userName));
+		if(userName == null || userName ==''){
+			ui.error('请输入您要查询的用户名');
+			return false;
+		}
+		$('#yaoqing_U .page a').html('<e style="color:red;">加载中</e>');
+		$.ajax({
+			type : "POST",
+			url  : '{:U('society/Index/searchUser')}',
+			data :{
+				userName : userName
+			},
+			success:function(date){
+				$('#yaoqing_U .page a').html('换一批');
+				$(".user_list>li").removeClass('userList_selected');
+				$(".user_list>li[type="+6+"]").css('display','block');
+				$(".user_list>li[type="+6+"]").addClass('userList_selected');
+	    		var data = eval('(' + date + ')');
+	            if(data.status==1){
+	            	var html ='';
+	            	var uidList = $('.user_selected>a[name]');
+	            	for(var a=0;a<$(data.msg.list).size();a++){
+	            		var flag = true;
+	            		for(var i = 0;i<uidList.length;i++) {
+	            			if(uidList[i].name == data.msg.list[a].fid){
+			            		html += '<li class="user_sel" name="'+data.msg.list[a].fid+'">';
+			            		flag = false;
+	            			}
+	            		}
+	            		if(flag){
+	            			html += '<li name="'+data.msg.list[a].fid+'">';
+	            		}
+	            		html +=	'<div style="text-align: center;">';
+	            		html += '<img onclick="select('+data.msg.list[a].fid+');" alt="'+data.msg.list[a].userName+'" src="'+data.msg.list[a].href+'" />';
+	            		html += '<p><a title="'+data.msg.list[a].userName+'的个人主页" class="username" rel="user" uid="'+data.msg.list[a].fid+'" href="javascript:void(0);">'+data.msg.list[a].userName+'</a></p>';
+	            		html += '</div>';
+	            		html += '</li>';
+	            	}
+	            	$('.userList ul').html(html);
+	            	$(".page a").attr('onclick','next('+data.msg.page+',\''+userName+'\');');
+	            	$("input[name=type]").val(data.msg.type);
+	            	$('input[name=quanxuan]').attr('checked',false);
+	            }else{
+	            	ui.error(data.msg);
+	            }
+			}
+    	});
+	}
+	function next(page,userName){
+		var name;
+		if(!userName){
+			userName = null;
+			name = null;
+		}else{
+			name = "'"+userName+"'";
+		}
+		$('#yaoqing_U .page a').html('<e style="color:red;">加载中</e>');
+		var type = $("input[name=type]").val();
+		$.ajax({
+			type : "POST",
+			url  : '{:U('society/Index/searchUser')}',
+			data :{
+				page     : page,
+				userName : userName,
+				type     : type
+			},
+			success: function(date){
+	    		$('#yaoqing_U .page a').html('换一批');
+	    		var data = eval('(' + date + ')');
+	            if(data.status==1){
+	            	var html ='';
+	            	var uidList = $('.user_selected>a[name]');
+	            	for(var a=0;a<$(data.msg.list).size();a++){
+	            		var flag = true;
+	            		for(var i = 0;i<uidList.length;i++) {
+	            			if(uidList[i].name == data.msg.list[a].fid){
+			            		html += '<li class="user_sel" name="'+data.msg.list[a].fid+'">';
+			            		flag = false;
+	            			}
+	            		}
+	            		if(flag){
+	            			html += '<li name="'+data.msg.list[a].fid+'">';
+	            		}
+	            		html +=	'<div style="text-align: center;">';
+	            		html += '<img onclick="select('+data.msg.list[a].fid+');"  alt="'+data.msg.list[a].userName+'" src="'+data.msg.list[a].href+'" />';
+	            		html += '<p><a title="'+data.msg.list[a].userName+'的个人主页" class="username" rel="user" uid="'+data.msg.list[a].fid+'" href="javascript:void(0);">'+data.msg.list[a].userName+'</a></p>';
+	            		html += '</div>';
+	            		html += '</li>';
+	            	}
+	            	$('.userList ul').html(html);
+	            	$(".page a").attr('onclick','next('+data.msg.page+','+name+');');
+	            	$("input[name=type]").val(data.msg.type);
+	            	$('input[name=quanxuan]').attr('checked',false);
+	            }else{
+	            	ui.error(data.msg);
+	            }
+			}
+    	});
+		count();
+	}
+	function check() {
+		var societyId = $("input[name=societyId]").val();
+		var member = '';
+		var uidList = $('.user_selected>a[name]');
+		if(uidList.length<1){
+			ui.error('您没有选择好友！');
+			return false;
+		}
+		for(var i=0;i<uidList.length;i++) {
+			if(i==(uidList.length-1)){
+				member += uidList[i].name;
+			}else{
+				member += uidList[i].name+',';
+			}
+		}
+		$.ajax({
+			url : "{:U('society/Index/doYaoqingMember')}",
+			type : "POST",
+			dataType : "json",
+			data : {
+				societyId : societyId,
+				member    : member
+			},
+			success : function(ajaxData) {
+				ui.success('邀请消息已发送！');
+				$('.close').click();
+			},
+			error : function(ajaxData) {
+				count();
+				return false;
+			}
+		});
+		count();
+	}
+</script>
+<input type="hidden" name="societyId" value="{$societyInfo.id}">
+<div style="margin: 0 auto; width: 800px; height: 500px; overflow-y: scroll;background-color: #F9F9F9;"class="open">
+	<div class="open_title">圈子名称：{$societyInfo.societyName}</div>
+	<div style="height: 320px;">
+		<div style="width: 180px; text-align: left; margin-left: 20px; float: left;">
+			<p style="margin-bottom: 3px;">选择用户</p>
+			<div class="search_user">
+				<form onsubmit="searchUserOfYaoQing();return false;">
+					<input name="userName" maxlength="6" onblur="addT();" />
+					<input id='u_search' type="submit" value=""/>
+					<span onclick="checkUs();" id='tip_sUser'>请输入您要查询的用户名</span>
+				</form>
+			</div>
+			<ul style="text-align: center;" class="user_list">
+				<php>if($identitytype==2){</php>
+					<li onclick="types(0);" type="0" class="userList_selected">我关注的人</li>
+					<li onclick="types(5);" type="5">同部门老师</li>
+					<li type="6" onclick="types(6);" style="display: none;">搜索结果</li>
+				<php>}else if($identitytype==3){</php>
+					<li onclick="types(0);" type="0" class="userList_selected">我关注的人</li>
+					<li onclick="types(1);" type="1">同班同学</li>
+					<li onclick="types(2);" type="2">同专业同学</li>
+					<li onclick="types(3);" type="3">同年级同学</li>
+					<li onclick="types(4);" type="4">同院系同学</li>
+					<li type="6" onclick="types(6);" style="display: none;">搜索结果</li>
+				<php>}else{</php>
+					<li onclick="types(0);" type="0" class="userList_selected">我关注的人</li>
+					<li type="6" onclick="types(6);" style="display: none;">搜索结果</li>
+				<php>}</php>
+			</ul>
+		</div>
+		<div style="margin-left: 210px; text-align: left;" id="yaoqing_U">
+			<p>
+				<input type="checkbox" name="quanxuan" onclick="quanxuan();" />全选
+			</p>
+			<div class="userList">
+				<ul style="height: 258px;">
+					<volist name="group_list.list" id="vo">
+					<li name="{$vo.fid}">
+						<div style="text-align: center;">
+							<img  onclick="select({$vo.fid});" alt="{$vo.fid|getUserName}" src="{$vo.fid|getUserFace}" />
+							<p>
+								<a title="{$vo.fid|getUserName}的个人主页" class="username" rel="user" uid="{$vo.fid}" href="javascript:void(0);">{$vo.fid|getUserName}</a>
+							</p>
+						</div>
+					</li>
+					</volist>
+				</ul>
+			</div>
+			<div style="float: left; margin-top: 15px;">
+				目前圈子成员数为 <span class="strong">{$memberCount}</span> 。
+			</div>
+			<div class="page">
+				<a href="javascript:;" onclick="next({$group_list.page});">换一批</a>
+			</div>
+			<input type="hidden" name="type" value="{$group_list.type}">
+			<input type="hidden" name="uid" value="{$myInfo.uid}">
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div style="margin-left: 20px; text-align: left; padding: 8px 0; border-top: 1px solid #D8D8D8;">
+		<p style="padding: 8px 0;">
+			已选好友：<span class="strong" id="count"></span>人。
+		</p>
+		<div class="user_selected">
+			<a style="display: none; clear: both;"></a>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div style="margin-top: 15px; text-align: center;">
+		<a class="tijiao" onclick="check();"></a>
+	</div>
+	<div style="clear: both;"></div>
+</div>

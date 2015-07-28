@@ -1,0 +1,36 @@
+<div class="footer" style="color: white;bottom:0px;">
+    <include file="__THEME__/_public_foot" />
+</div>
+<!--[if lt IE 8]>
+<script language="javascript">
+$(document).ready(function(e) {
+	$('.registerBox').height($(window).height()-$('.headerback').height());
+});
+</script>
+<![endif]-->
+<script>
+(function($){
+	$(window).load(function(){
+		$('.scrollBox').jScrollPane();
+	});
+})(jQuery);
+
+function initEvent(){
+	//设置注册页面的高度
+	if($('.registerBox').length){
+		$('.registerBox').height($(window).height()-$('.headerback').height());
+		
+		if($('.scrollBox').length){
+			//添加height的回调
+			$.addCallback("height", function(){
+				$('.scrollBox').jScrollPane('update');
+			});
+			$('.scrollBox').height(
+				$('.registerBox').height()-210
+			)
+			//移除height的回调
+			$.removeCallback('height');
+		}
+	}
+}
+</script>

@@ -1,0 +1,165 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+  <include file="../Public/_manage_leftmenu" />
+	<div class="trunk_right">
+                 <div class="navi_rtitle">授予教师权限(123456班主任具有所有权限)</div>
+                 <div class="manage_content">
+                    <form action="" method="POST" class="manage_form">
+                       <div class="teacher_set">
+                         <div class="sel_li" style=" float:left">
+                           <div class="sel_title">教师</div>
+                             <ul class=" u_list" id="teacher">
+                               <volist name='list' id='vo' key='k'>
+                               		<li><a href="javascript:void(0);" style=" display:block;" value="{$vo['uid']}">{$vo['name']}</a></li>
+                               </volist>
+                             </ul>
+                         </div>
+                         <div class="sel_li" style=" float:right">
+                           <div class="sel_title"><span class="sel_span">权限</span><span class="sel_span" style=" color:#999"><input type="checkbox" value="" id="clickall"/>全选</span></div>
+                            <ul class=" u_list" id="teacherpower">
+                             <volist name='Jurisdicte' id='vo'>
+                              <li><input name="power[]" type="checkbox"  value="{$vo['id']}" class="power"/>{$vo['typeName']}</li>
+                             </volist>
+                            </ul>
+                         </div>
+                         <div class="clear10"></div>
+                       </div>
+                       <div class="save_btn"><input name="submit" type="image" src="__THEME__/space/images/bt_bg.gif" /> </div>
+                    </form>
+                    <div class="clear"></div>
+                 </div>
+                 <div class="navi_rtitle">授予学生权限</div>
+                 	 <div class="manage_content">
+                    <form action="" method="POST" class="manage_form">
+                       <div class="student_set">
+                          <div class="sel_li" style=" float:left">
+                         <div class="sel_title">学生</div>
+                         <ul class=" u_list" id="student">
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                         <li><a href="javascript:void(0);">张红艳</a></li>
+                       </ul>
+                       </div>
+                          <div class="sel_li" style=" float:right">
+                         <div class="sel_title"><span class="sel_span">权限</span><span class="sel_span" style=" color:#999"><input type="checkbox" value="" />全选</span></div>
+                         <ul class=" u_list" id="studentpower">
+                           <volist name='Jurisdicte' id='vo'>
+                              <li><input name="power[]" type="checkbox"  value="{$vo['id']}"/>{$vo['typeName']}</li>
+                             </volist>
+                         </ul>
+                       </div>
+                          <div class="clear10"></div>
+                       </div>
+                       <div class="save_btn"><input name="submit" type="image" src="__THEME__/space/images/bt_bg.gif" /> </div>
+                    </form>
+                    <div class="clear"></div>
+                 </div>
+                	 <div class="navi_rtitle">权限显示</div>
+                     <div class="manage_table">
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="re">
+                      <tr>
+                         <td width="10%" class="line_border" align="center">教师</td>
+                         <td width="90%" class="line_border" style="clear:both;">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+                              <tr>
+                                 <th width="15%" height="25" align="center">姓名</th>
+                                 <th width="85%"  align="center">权限</th>
+                              </tr>
+                              <tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td><span>发布作业</span><span>发布作业</span><span>发布作业</span><span>发布作业</span><span>发布作业</span></td>
+                              </tr>
+                              <tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr><tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr><tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr>
+                            </table>
+                         </td>
+                      </tr>
+                      <tr>
+                         <td class="line_border"  align="center">学生</td>
+                         <td class="line_border">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+                              <tr>
+                                 <th width="15%" height="25" align="center">姓名</th>
+                                 <th width="85%"  align="center">权限</th>
+                              </tr>
+                              <tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr>
+                              <tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr><tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr><tr>
+                                 <td width="15%" height="25"  align="center">张爱玲</td>
+                                 <td></td>
+                              </tr>
+                            </table>
+                         </td>
+                      </tr>
+                    </table>
+                    <div class="clear"></div>
+                 </div>
+               </div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+	var o=document.getElementById("teacher");
+	if(o){
+	 var gs=o.childNodes;
+	 for(i=0;i<gs.length;i++){
+	  gs[i].className=i%2==0 ? "cc1" : "cc2" ;
+	 }
+	}
+	var o=document.getElementById("teacherpower");
+	if(o){
+	 var gs=o.childNodes;
+	 for(i=0;i<gs.length;i++){
+	  gs[i].className=i%2==0 ? "cc1" : "cc2" ;
+	 }
+	}
+	var o=document.getElementById("studentpower");
+	if(o){
+	 var gs=o.childNodes;
+	 for(i=0;i<gs.length;i++){
+	  gs[i].className=i%2==0 ? "cc1" : "cc2" ;
+	 }
+	}
+	var o=document.getElementById("student");
+	if(o){
+	 var gs=o.childNodes;
+	 for(i=0;i<gs.length;i++){
+	  gs[i].className=i%2==0 ? "cc1" : "cc2" ;
+	 }
+	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+	$("#teacher,#teacherpower,#student,#studentpower").find('li').each(function(index, element) {
+         $(element).css('background',index%2==0 ? "#f0f0f0" : "#fff");
+    });
+    $('#teacher a,#student a').click(function(e) {
+        $(this).css({background:"#3DA4EC"});
+		alert($(this).attr('value'));
+    });
+	$('#clickall').click(function(e) {
+		  $('.power').attr('checked',this.checked);
+    });
+});
+</script>
+
+    

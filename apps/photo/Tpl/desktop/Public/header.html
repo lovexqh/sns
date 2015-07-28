@@ -1,0 +1,26 @@
+<div class="divcenter header_top">
+</div>
+<div class="divcenter headernav">
+    <ul class="hdnavl">
+        <li <php>if(ACTION_NAME == 'index'){echo ' class="hover"';}</php> style="padding-left: 30px;"><a href="{:U('photo/Index/index')}">首页</a> </li>
+        <li <php>if(ACTION_NAME == 'all_albums' || ACTION_NAME == 'photo'){echo ' class="hover"';}</php>><a href="{:U('photo/Index/all_albums')}">专辑</a> </li>
+        <li <php>if(ACTION_NAME == 'photos' || ACTION_NAME == 'album'){echo ' class="hover"';}</php>><a href="{:U('photo/Index/photos')}">个人中心</a> </li>
+    </ul>
+    <form class="search" method="get" name="searchForm" id="searchForm" action="{:U('photo/Index/search')}" onsubmit="javascript:checkSearch();return false;">
+        <input type="text" class="searchkey" name="keyword" id="keyword" value="{$keyword}">
+        <input type="button" class="searchbtn" name="btnsearch" style="cursor: pointer;" id="btnsearch" onclick="javascript:checkSearch();">
+    </form>
+    <a href="{:U('photo/Upload/flash')}" target="_blank" style="display: block; float: right;margin:5px 10px 0 0;"><img src="../Public/images/uppic.jpg"></a>
+</div>
+<script language="javaScript">
+    function checkSearch(){
+        var keyword = $('#keyword').val();
+        if(keyword == ''){
+            alert('请输入要搜索的关键字！');
+            $('#keyword').focus();
+            return false;
+        }else{
+            document.location.href = U('photo/Index/search',['keyword='+keyword]);
+        }
+    }
+</script>

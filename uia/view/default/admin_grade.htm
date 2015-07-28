@@ -1,0 +1,111 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+});  
+</script> 
+
+
+
+	<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+		function switchbtn(btn) {
+			_GET('srchuserdiv').style.display = btn == 'srch' ? '' : 'none';
+			_GET('srchuserdiv').className = btn == 'srch' ? 'tabcontentcur' : '' ;
+			_GET('srchuserbtn').className = btn == 'srch' ? 'tabcurrent' : '';
+			
+			_GET('adduserdiv').style.display = btn == 'add' ? '' : 'none';
+			_GET('adduserdiv').className = btn == 'add' ? 'tabcontentcur' : '';
+			_GET('adduserbtn').className = btn == 'add' ? 'tabcurrent' : '';
+		}
+	</script>
+
+	<div class="container">
+
+		<div class="hastabmenu">
+			<ul class="tabmenu">
+				<li id="srchuserbtn" class="tabcurrent"><a href="#" onclick="switchbtn('srch')">查询级部信息</a></li>
+			</ul>
+			<div id="srchuserdiv" class="tabcontentcur">
+				<form action="admin.php?m=grade&a=Search" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table width="100%">
+					<tr>
+						
+                        <!--{if $isManager}-->
+                        <td>学校名称:</td>
+						<td><input type="text" name="xxmc" value="$xxmc" class="txt" /></td>
+                        <!--{/if}-->
+						<td>{lang grade_nj}:</td>
+						<td><input type="text" name="nj" value="$nj" class="txt" /></td>
+						<td>{lang grade_njmc}:</td>
+						<td><input type="text" name="njmc" value="$njmc" class="txt" /></td>
+						<td><input type="submit" value="{lang submit}"  class="btn" /></td>
+					</tr>
+					
+				</table>
+				</form>
+			</div>
+		</div>
+
+		<h3>{lang grade_list}
+        <a href="admin.php?m=grade&a=Add">添加级部</a>
+        </h3>
+		<div class="mainbox">
+			<!--{if $gradelist}-->
+				<form action="admin.php?m=grade&a=Delete" onsubmit="return confirm('{lang grade_delete_confirm}');" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall"/><label for="chkall">全选</label></th>
+						<th>学校名称</th>
+                        <th>学段</th>
+						<th>{lang grade_nj}</th>
+						<th>{lang grade_njmc}</th>
+						<th>{lang edit}</th>
+					</tr>
+					<!--{loop $gradelist $gradelist}-->
+						<tr>
+							<td class="option"><input type="checkbox" name="delete[]" value="$gradelist[id]" class="checkbox" /></td>
+							<td>$gradelist[xxmc]</td>
+                            
+                            <!--{if $gradelist[jd] == 31}-->
+                            <td>初中</td>
+                            <!--{elseif $gradelist[jd] == 34}-->
+                            <td>高中</td>
+                            <!--{elseif $gradelist[jd] == 21}-->
+                            <td>小学</td>
+                            <!--{else}-->
+                            <td>未定义</td>
+                            <!--{/if}-->
+                            
+                            
+							<td>$gradelist[nj]</td>
+							<td>$gradelist[njmc]</td>
+							<td><a href="admin.php?m=grade&a=edit&ID=$gradelist[id]">{lang edit}</a></td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td><input type="submit" value="删除选中" class="btn" /></td>
+						<td class="tdpage" colspan="7">$multipage</td>
+					</tr>
+				</table>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+	</div>
+
+{template footer}

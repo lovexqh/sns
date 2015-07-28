@@ -1,0 +1,106 @@
+<include file="../Public/_header_ajax" />
+<div class="appPanel appAllList">
+	<div id="appTab_search_list_orderbyContainer" class="orderbyContainer">
+		<div class="orderByBtns">{:L('total_searched')}<span class="height_light1">{$data['data']|count}</span>{:L('pice_result')}</div>
+		<div class="pageControlPanel"> <a href="javascript:void(0);" hidefocus="">
+			<div cmd="prev" id="search_list_controlPrev" class="controlPrev"></div>
+			</a> <a href="javascript:void(0);" hidefocus="">
+			<div cmd="next" id="search_list_controlNext" class="controlNext"></div>
+			</a> 
+		</div>
+	</div>
+	<div id="appPanel_search_list_body" class="appSheetContainer">
+		<ul class="appListUl appDetailList">
+		
+		<if condition="!$data['count']">
+			<div class="bm_c cl">
+				{:L('no_result')}
+			</div>
+		<else />
+			<volist name="data.data" key="key" id="value">
+			<li class="appListLi <if condition="$key eq 1">appListLiFirst</if> <if condition="($key eq count($data['data'])) AND (!$data['html'])">appListLiLast</if>  <if condition="$value['isnew']">appListLiNew</if> " cat="{$value['group_id']|streq}" appid="{$value.app_id}" cmd="introduce">
+				<div class="column1">
+					<img class="appIcon" cat="{$value['group_id']|streq}" appid="{$value.app_id}" cmd="introduce" src="{$value.icon_url}" width="32" height="32" onload="fixpng(this)">
+					
+				</div>
+				<div class="column2">
+					<div class="appName"> <a title="{$value.app_alias}" href="javascript:void(0);" appid="{$value.app_id}" cat="{$value['group_id']|streq}" cmd="introduce">{$value.sappname}</a> </div>
+					<div class="appBrief" title="{$value.description}" appid="{$value.app_id}" cat="{$value['group_id']|streq}"  cmd="introduce">{$value.description}</div>
+				</div>
+				<div class="column3">
+					<div class="appStars" title="{$value['score'][star]}{:L('fen')}">
+						<div class="appStar" style="width: {$value['score']['corestyle']}%"></div>
+					</div>
+					<div class="appAddedCount" title="{$value[setupnum]|intval}{:L('person')}{:L('added')}">{$value[setupnum]|intval}{:L('person')}{:L('added')}</div>
+				</div>
+				<div class="column4">
+				<if condition="empty($myapps)">
+					<a class="appOpenBtn" href="javascript:void(0);" appid="{$value[app_id]}"  cmd="add" hidefocus="" onclick="top.OpenWindow('',encodeURI('{$value[appurl]}'),'{$value[appname]}');return false;">{:L('added')}</a>
+				<elseif condition="$myapps[$value[app_id]] gt 0" />
+					<a class="appOpenBtn" href="javascript:void(0);" appid="{$value[app_id]}"  cmd="add" hidefocus="" onclick="top._ico.Open('{$myicos[$value[appid]]}');return false;">{:L('added')}</a>
+				<else />
+					<a class="appAddBtn appAddBtn_{$value[app_id]}" href="javascript:void(0);" appid="{$value['app_id']}" cmd="add" hidefocus="" onclick="addapp('appAddBtn_{$value[app_id]}','{$value[app_id]}');return false;">{:L('added')}</a>
+				</if>
+				</div>
+			</li>
+			</volist>
+		</if>
+		</ul>
+		<div class="appSheetBottom">
+			<div style="display: block;" id="appPanel_all_list_pageBar" class="appPanelPagebar">{$data.html}</div>
+		</div>
+	</div>
+<script type="text/javascript" reload="1">
+	jQuery('#search_region_l .appIcon,#search_region_l .appName>a').bind('click',function(){
+		var cat=parseInt(jQuery(this).attr('cat'));
+		var appid=parseInt(jQuery(this).attr('appid'));
+		var cmd=jQuery(this).attr('cmd');
+		control_click(jQuery(this),cmd,cat,0,appid);
+		return false;
+	});
+	jQuery('#appPanel_search_list_pageBar a').bind('click',function(){
+		var url=jQuery(this).attr('href');
+		var cansu=[];
+		arr=url.split('&');
+		for(var i=0;i<arr.length;i++){
+			arr1=arr[i].split('=');
+			if(arr1[0]) cansu[arr1[0]]=arr1[1];
+		}
+		var keyword=cansu['keyword'];
+		var page=cansu['page']||1;
+		control_click(null,'search',null,null,0,page,null,keyword);
+		this.href='javascript:void(0)';
+		return false;
+	});
+</script>
+<script type="text/javascript" reload="1">
+if({$data.page}==1) {
+	jQuery('#search_list_controlPrev').addClass('controlPrevDisable');
+	jQuery('#search_list_controlPrev').unbind();
+}else {
+	jQuery('#search_list_controlPrev').unbind();
+	jQuery('#search_list_controlPrev').removeClass('controlPrevDisable');
+	jQuery('#search_list_controlPrev').bind('click',function(){
+		control_click(jQuery('#cat_nav{$cid}'),'all','{$cid}','{$sort}',0,'<php>echo $data[page]-1;</php>','{$sid}')
+	});
+}
+if({$data.page}=={$data.realpages}){
+	jQuery('#search_list_controlNext').addClass('controlNextDisable');
+	jQuery('#search_list_controlNext').unbind();
+}else{
+	jQuery('#search_list_controlNext').unbind();
+	jQuery('#search_list_controlNext').removeClass('controlNextDisable');
+	jQuery('#search_list_controlNext').bind('click',function(){
+		control_click(jQuery('#cat_nav{$cid}'),'all','{$cid}','{$sort}',0,'<php>echo $data[page]+1;</php>','{$sid}')
+	});
+}
+if({$data.count}==0){
+	jQuery('#search_list_controlNext').addClass('controlNextDisable');
+	jQuery('#search_list_controlNext').unbind();
+	jQuery('#search_list_controlPrev').addClass('controlPrevDisable');
+	jQuery('#search_list_controlPrev').unbind();
+}
+if(document.documentElement.scrollTop) jQuery(document.documentElement).animate({ scrollTop: 0 }, { duration: 500 });
+if(document.body.scrollTop) jQuery(document.body).animate({ scrollTop: 0 }, { duration: 500 });
+</script>
+<include file="../Public/_footer_ajax" />

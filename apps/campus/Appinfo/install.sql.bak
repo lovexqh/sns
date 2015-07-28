@@ -1,0 +1,104 @@
+DROP TABLE IF EXISTS `ts_resource`;
+CREATE TABLE `ts_resource` (
+  `id` int(11) NOT NULL auto_increment,
+  `uid` int(11) default NULL COMMENT '上传者',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `schoolid` varchar(11) NOT NULL COMMENT '学校id',
+  `tags` varchar(255) default NULL COMMENT '标签',
+  `class` varchar(50) NOT NULL default '0' COMMENT '分类信息',
+  `price` int(5) NOT NULL default '0' COMMENT '积分',
+  `section` varchar(2) default NULL COMMENT '学段',
+  `publisher` varchar(50) default NULL COMMENT '版本',
+  `grade` varchar(50) default NULL COMMENT '年级',
+  `subject` varchar(50) default NULL COMMENT '科目',
+  `volume` varchar(50) default NULL COMMENT '分册',
+  `cell` varchar(50) default NULL COMMENT '单元',
+  `courseid` varchar(100) default NULL COMMENT '单元',
+  `format` varchar(50) default NULL COMMENT '格式',
+  `type` varchar(50) default NULL COMMENT '资源类型',
+  `attribute` varchar(100) default NULL COMMENT '专题类型',
+  `info` text NOT NULL COMMENT '资源描述',
+  `readCount` int(11) default '0' COMMENT '阅读记录',
+  `downCount` int(11) NOT NULL default '0',
+  `time` int(11) NOT NULL COMMENT '上传时间',
+  `original` tinyint(2) default '0' NULL COMMENT '是否是原创',
+  `state` int(2) NOT NULL default '0' COMMENT '审核状态',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ts_resource_file`;
+CREATE TABLE `ts_resource_file` (
+  `f_id` int(5) NOT NULL auto_increment,
+  `id` int(5) NOT NULL,
+  `uid` int(11) default NULL,
+  `saveaddress` varchar(255) default NULL,
+  `savepath` varchar(50) default NULL,
+  `savename` varchar(50) default NULL,
+  `savetype` varchar(255) default NULL,
+  `status` varchar(2) default '0',
+  `filecode` varchar(30) default NULL,
+  `pagecount` varchar(10) default NULL,
+  `thumb` varchar(255) NOT NULL,
+  `resourcesize` varchar(255) default NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY  (`f_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ts_resource_down`;
+CREATE TABLE `ts_resource_down` (
+  `d_id` int(5) NOT NULL auto_increment,
+  `id` int(5) NOT NULL,
+  `uid` int(11) default NULL,
+  `dTime` int(11) NOT NULL,
+  PRIMARY KEY  (`d_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ts_resource_score`;
+CREATE TABLE IF NOT EXISTS `ts_resource_score` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `score` int(11) NOT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ts_resource_storage`;
+CREATE TABLE IF NOT EXISTS `ts_resource_storage` (
+   `id` int(5) NOT NULL auto_increment,
+   `address` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ts_resource_type`;
+CREATE TABLE IF NOT EXISTS `ts_resource_type` (
+   `id` int(5) NOT NULL auto_increment,
+   `exttype` varchar(255) NOT NULL,
+   `remark` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+INSERT INTO `ts_resource_type` VALUES (1, 'jpg', '图片');
+INSERT INTO `ts_resource_type` VALUES (2, 'gif', '图片');
+INSERT INTO `ts_resource_type` VALUES (3, 'png', '图片');
+INSERT INTO `ts_resource_type` VALUES (4, 'doc', '文档');
+INSERT INTO `ts_resource_type` VALUES (5, 'docx', '文档');
+INSERT INTO `ts_resource_type` VALUES (6, 'xls', '表单');
+INSERT INTO `ts_resource_type` VALUES (7, 'xlsx', '表单');
+INSERT INTO `ts_resource_type` VALUES (8, 'ppt', '电子文档');
+INSERT INTO `ts_resource_type` VALUES (9, 'pptx', '电子文档');
+INSERT INTO `ts_resource_type` VALUES (10, 'flv', '视频');
+INSERT INTO `ts_resource_type` VALUES (11, 'swf', '视频');
+INSERT INTO `ts_resource_type` VALUES (12, 'rmvb', '视频');
+
+REPLACE INTO `ts_system_data` (`uid`,`list`,`key`,`value`,`mtime`)
+VALUES
+    (0, 'resource', 'version_number', 's:5:"36263";', '2012-11-07 01:56:31'),
+    (0, 'resource', 'server', 's:31:"http://resource.ruijie-grid.com";', '2012-11-20 18:52:56'),
+	(0, 'resource', 'credit', 's:5:\"score\";', '2010-12-24 11:22:17'),
+    (0, 'resource', 'limitpage', 's:2:"10";', '2012-11-07 19:23:37');
+
+#模板数据
+DELETE FROM `ts_template` WHERE `name` = 'resource_create_weibo' OR `name` = 'resource_share_weibo';
+INSERT INTO `ts_template` (`name`, `alias`, `title`, `body`, `lang`, `type`, `type2`, `is_cache`, `ctime`) 
+VALUES
+('42', 'resource_create_weibo', '上传资源', '', '我上传了一个资源:【{title}】 {url}', 'zh', 'resource', 'weibo', '0', '1372315210'),
+('43', 'resource_share_weibo', '分享资源', '', '分享@{author} 的资源:【{title}】 {url}', 'zh', 'resource', 'weibo', '0', '1372315277');

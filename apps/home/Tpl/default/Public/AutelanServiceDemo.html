@@ -1,0 +1,45 @@
+<include file="__THEME__/desktop/header" />
+<div class="registerPicBg">
+	<img src="__THEME__/desktop/images/register/backgroup.gif" width="1026" />
+</div>
+<div class="registerBox">
+	<h2 style="padding-bottom:0">傲天定位测试功能</h2>
+	<div class="progressBar" style="height:30px">
+		<div class="clear"></div>
+	</div>
+	<div class="scrollBox">
+		<div class="formBox">
+		<br/><br/>
+			<form action="{:U('home/Public/updateAutelanConfig')}" method="post">
+				<input type="hidden" name="type" value="1"/>
+				<volist name="Autelanconfig" id="vo">
+				<input type="button" value="启动定位" onclick="start();"/><br/>
+				<input type="button" value="停止定位" onclick="stop();"/><br/>
+				<input type="text" name="positionTimeInterval" value="{$vo['positiontimeinterval']}"/>每隔多少分钟定位一次<br/>
+				<input type="text" name="delBeforeTime" value="{$vo['delbeforetime']}"/>删除多少天前的定位信息<br/>
+				<if condition="$vo['isopen'] eq 1">
+					<input id="positionOpen" type="radio" name="isopen" value="1" checked="true" readonly="true"/>启动<br/>
+					<input id="positionClose" type="radio" name="isopen" value="0" readonly="true"/>关闭<br/>					
+				<else/>
+					<input id="positionOpen" type="radio" name="isopen" value="1" readonly="true"/>启动<br/>
+					<input id="positionClose" type="radio" name="isopen" value="0" checked="true" readonly="true"/>关闭<br/>		
+				</if>
+				<input type="submit" value="保存"/>
+				</volist>
+			</form>
+		</div>
+	</div>
+</div>
+<script language="javascript">
+function start(){
+	$.post(U('home/Public/updateAutelanConfig'),
+			{isopen:1,type:0},
+			function(){
+				$.post(U('home/Public/startPosition'));
+			});
+}
+function stop(){
+	$.post(U('home/Public/updateAutelanConfig'),
+			{isopen:0,type:0});
+}
+</script>

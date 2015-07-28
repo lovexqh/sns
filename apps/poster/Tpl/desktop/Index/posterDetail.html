@@ -1,0 +1,125 @@
+<include file="__THEME__/desktop/_header" />
+<link rel="stylesheet" href="../Public/poster.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="../Public/poster.js" ></script>
+<div class="content_holder" style="min-height:1000px;">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox" style="margin-top:6px;">
+      <div class="mainbox_appR">
+        <div class="right_box box_create"><a href="{:U('poster/Index/addPosterSort')}" class="btn_poster_c"></a></div>
+      </div>
+      <div class="mainbox_appC">
+        <div class="page_title"> <!-- page_title begin -->
+          <span class="right fn f12px"><php>if($admin){</php>
+            <a href="#"> 
+            	<!--<a href="{:U('//editPoster',array('id'=>$poster['id'],'typeId'=>$poster['pid'],'iframe'=>'yes'))}">修改</a> ┊ <a href="javascript:deletePoster({$poster.id})">删除</a>-->
+            	<a href="{:U('//editPoster',array('id'=>$poster['id'],'typeId'=>$poster['pid'],'iframe'=>'yes'))}" class="link-act"><i class="icon-edit"></i>编辑</a>
+            	<a href="javascript:deletePoster({$poster.id})" class="link-act"><i class="icon-delete"></i>删除</a>
+            <php>}</php>
+            {:W('Weibo',array('tpl_name'=>$_SESSION['new_poster'] == 1?'poster_create_weibo':'poster_share_weibo','button_title'=>'分享'))}
+            <php> $tpl_data = urlencode(serialize(array(
+              'author'=>getUserName($poster['uid']),
+              'title'=>$poster['title'],
+              'url'=>U('poster/Index/posterDetail',array('id'=>$poster['id'])),
+              )));
+              $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布招贴成功'))); </php>
+            <php>if($_SESSION['new_poster'] == 1){</php>
+          
+            <php>unset($_SESSION['new_poster']);}</php>
+            <a href="javascript:;" onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$id}"><i class="icon-share"></i>分享</a>
+            <php>if($poster['uid'] != $loginUid){</php>
+            {:W('Favorite',array('type'=>'detail', 'fid'=>$poster['id']))}
+            <php>}</php>
+            </span>
+            <!-- <img src="../Public/images/ico/{$type.ico}" class="alM mr5" style="width:24px; height:24px;"><strong style="color:#999">{$poster.posterType} </strong>&nbsp;<a style="color:#06F;" href="{:U('poster/index/index',array('pid'=>$poster['pid'],'iframe'=>'yes'))}">相关招贴</a> -->
+         <div style="font-weight:bold;font-size:15px;margin:30px 20px 10px;">{$poster.title}</div>
+        </div>
+        <!-- page_title end -->
+        <div class="groupBox">
+          <div class="boxL">
+            <div class="box1 mLR15">
+              <div class="info btmlineD">
+                <div class="list">
+                  <div class="img">
+                  <center>
+                    <php>if(!empty($poster['cover'])){</php>
+                    <img src="{:SITE_URL}/thumb.php?url={$poster.cover}&w=158&h=158" />
+                    <php>}else{</php>
+                      <img src="../Public/images/default_post.gif" width="158" height="158" />
+                    <php>}</php>
+                    </center>
+                  </div>
+                  <div class="detail">
+                  <ul>
+                    <li>
+                      <div class="c1">发&nbsp;布&nbsp;人：</div>
+                      <div class="c2" ><a style="color:#1A5FAC;" href="javascript:void(0);" onclick="top.OpenBrowser('{:U('home/space/index',array('uid'=>$poster['uid']))}','{$poster.name}');">{$poster.name}</a> &nbsp;&nbsp;<a href="javascript:void(0);" onclick="parent.tabs.iframe('{$poster.name}-发布的所有信息','{:U('//personal',array('uid'=>$poster['uid']))}')" style="color:#1A5FAC;">发布的所有信息</a></div>
+                    </li>
+                    <li>
+                      <div class="c1"> 有效时间：</div>
+                      <div class="c2" >
+                        <php>echo date('Y年n月j日',$poster['cTime']);</php>
+                        -
+                        <php> if($poster['deadline']){ </php>
+                        <php>echo date('Y年n月j日',$poster['deadline']);}else{ echo '不限制';}</php>
+                      </div>
+                    </li>
+                    <php>if(!empty($poster['posterSmallType'])){</php>
+                    <li>
+                      <div class="c1"> {$type.type}：</div>
+                      <div class="c2">{$poster.posterSmallType}</div>
+                    </li>
+                    <php>}</php>
+                    <li>
+                      <div class="c1"> 地&nbsp;&nbsp;区：</div>
+                      <div class="c2">{$poster.address}</div>
+                    </li>
+                    <li>
+                      <div class="c1"> 联系方式：</div>
+                      <div class="c2">{$poster.contact}</div>
+                    </li>
+                   <if condition="$poster['extra1'] eq 1">赠送 <elseif condition="$poster['extra1'] eq 2"/>借用 <elseif condition="$poster['extra1'] eq 3"/>交换<else/>
+                    <volist name="extraField" k="key" id="vo">
+                      <php>if(!empty($poster[$vo])){</php>
+                      <li>
+                        <div class="c1"> {$key}：</div>
+                        <div class="c2">
+                        {$poster[$vo]}
+                        </div>
+                      </li>
+                      <php>}</php>
+                    </volist>
+                   </if>
+                    </div>
+                    <div>
+                     <?php if( $poster['deadline'] && $poster['deadline']<=time()){ ?>
+                  <!--   <li> <span class="cGreen lh35">此{$poster.posterType}已经超过有效期</span> </li> -->
+                  <img src="../Public/images/postdate.png" style="opacity:0.6;width:120px;height:70px;"/>
+                    <?php } ?>
+                    
+                    
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div style="font-weight:bold;font-size:15px;">相关简介</div>
+            <div class="detail_border"></div>
+             <div id="poster" class="lineS_top"> {$poster.content|htmlspecialchars_decode|stripslashes} </div>
+           	  </div>
+           	  
+          <!-- end  --> 
+        </div>
+        
+      </div>
+      <!-- 画布 end  -->
+      <div class="c"></div>
+       
+    </div>
+  </div>
+</div>
+ {:W('Comment',array('type'=>'poster','appid'=>$poster['id'],'author_uid'=>$poster['uid'],'title'=>$poster['title'],'url'=>U('poster/Index/posterDetail',array('id'=>$poster['id'])),'table'=>'poster','id_field'=>'id','comment_count_field'=>'commentCount'))}
+        
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/desktop/_footer" /> 

@@ -1,0 +1,52 @@
+﻿[name]cloud[/name] 	
+	主题名称；
+[folder]cloud[/folder]
+	主题文件目录名
+[btype]0[/btype]  	
+	 0:为html背景（必须定义[url]标签）; 1:拉伸；2：平铺；3：适应；4：居中；
+[url]./dzz/styles/thame/cloud/index.html[/url] 		
+	当btype为0时必须设定此值
+[dock]dock6[/dock]	
+	dock风格目录名
+[window]dzz[/window]	
+	窗体风格目录名
+[browser]mac[/browser]	
+	浏览器风格目录名
+[topbar]dzz[/topbar]	
+	顶部风格目录名
+[navbar]dzz[/navbar]
+	导航风格目录名
+[filemanage]dzz[/filemanage]	
+	目录窗体风格目录名
+
+[icoblock]default[/icoblock]	
+	图标样式目录名
+
+[userpanel]default[/userpanel]	
+	用户面板样式目录名
+
+[dim]default[/dim]		
+	dim样式目录名
+
+[menu]default[/menu]		
+	右键菜单样式目录名
+
+[openfile]window_jd[/openfile]	
+	打开选择文件样式目录名
+
+[system]default[/system]	
+	系统样式目录名
+
+[minicard]default[/minicard]	
+	用户卡片样式目录名
+
+[announce]default[/announce]	
+	公告样式目录名
+
+[space_detail]default[/space_detail]	
+	用户空间信息样式目录名
+
+[message_box]default[/message_box]	
+	消息盒子样式目录名
+[imgareaselect]default[/imgareaselect]
+	网页剪切样式目录名

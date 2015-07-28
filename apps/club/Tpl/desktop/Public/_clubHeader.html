@@ -1,0 +1,342 @@
+<div>
+	<!-- 内容 begin  -->
+		<php>
+			$clubInfo['banner'] = $clubInfo['banner'] ? $clubInfo['banner'] : '1';
+		</php>
+		<div class="main_banner" style="background-image: url('../Public/bgimg/{$clubInfo['banner']}.jpg');">
+			<php>if($member['type']==1 || $member['type']==2){</php>
+			<div class="club_main_banner" 
+				onmouseout="$(this).css('background-image','url(\'../Public/images/chg_bg.png\')');" 
+				onmouseover="$(this).css('background-image','url(\'../Public/images/chg_bg_hover.png\')');"
+				onclick="showBanner();">
+			</div>
+			<php>}</php>
+			<div class="club_main_title_content" title="{$clubInfo['title']}">
+				{$clubInfo['title1']}
+				<if condition="$clubInfo.type eq 1"><span class="club_school_icon icon_position"></span></if>
+				<if condition="$clubInfo.type eq 2"><span class="club_academy_icon icon_position"></span></if>
+				<if condition="$clubInfo.type eq 3"><span class="club_student_icon icon_position"></span></if>
+			</div>
+			<div id="club_desc" class="club_desc">{$clubInfo['description']}</div>
+			<php>if(strlen($clubInfo['description'])>12){</php>
+			<div id="down_arrow" class="down_arrow"></div>
+			<php>}</php>
+			<div class="club_main_title_count">成员 <span style="color: #FFE505;">{$clubInfo['membercount']}</span> 人</div>
+			<div class="club_main_notice" style="z-index: 1;background-color: black;"></div>
+			<div class="club_main_notice" style="z-index: 2;opacity:1;border: none;">
+				<p class="club_main_notice_title">&nbsp;&nbsp;&nbsp;最新公告</p>
+				<php>if(count($notice)>4){</php>
+				<div id="clubScrollNews" style="height:110px;position:relative;overflow:hidden;">
+					<ul>
+						<volist name="notice" id="vo">
+						<li><a style="color:#FFFFFF;" href="{:U('club/Notice/index', array('id'=>$vo['clubid'],'nid'=>$vo['id']))}">{$vo.content}</a></li>
+						</volist>
+					</ul>
+				</div>
+				<php>}else{</php>
+				<ul>
+					<volist name="notice" id="vo">
+					<li><a style="color:#FFFFFF;" href="{:U('club/Notice/index', array('id'=>$vo['clubid'],'nid'=>$vo['id']))}">{$vo.content}</a></li>
+					</volist>
+				</ul>
+				<php>}</php>
+			</div>
+		</div>
+		<php>if($member['type']==1 || $member['type']==2){</php>
+		<div class="show_banner" style="display: none;">
+			<div class="banner_show_btn_l" onclick="nextBanner('left');"></div>
+			<div class="banner_content">
+				<div class="banner_content_sum" style="margin-top: 0px;">
+				<php>
+					$array = array();
+					for($i=1;$i<=22;$i++){
+						$array[$i] = $i;
+					}
+				</php>
+				<volist name='array' id='vo'>
+					<div class="banner_content_per" banner_name="{$vo}">
+					<php>if($clubInfo['banner']==$vo){</php>
+						<div banner="{$vo}" class="banner_content_select" style="display: block;"></div>
+					<php>}else{</php>
+						<div banner="{$vo}" style="display: none;"></div>
+					<php>}</php>
+						<img onclick="banner_select({$vo});" src="../Public/bgimg/{$vo}.jpg" style="height: 80px;" />
+					</div>
+				</volist>
+				</div>
+			</div>
+			<div class="banner_show_btn_r" onclick="nextBanner('right');"></div>
+			<div class="banner_opera">
+				<div class="banner_opera_queren" onclick="banner_opera_queren({$clubInfo['id']});"></div>
+				<div class="banner_opera_quxiao" cancelbanner="{$clubInfo['banner']}" onclick="banner_opera_quxiao();"></div>
+			</div>
+		</div>
+		<php>}</php>
+<!--
+	<div class="club_header">
+		<php>if($member['type']==1 || $member['type']==2){</php>
+		<a class="chg_bg"></a>
+		<php>}</php>
+		<span class="board_title_name">{$clubInfo.title}</span>
+		<div class="header_mem"><span style="color:#FFFFFF;">成员:</span><span style="color:#E9CE0C;">{$clubInfo.membercount}</span></div>
+	</div>
+-->
+
+	<div class="position_show">
+		<img class="allClub_img" src="../Public/images/all_club.png">
+		<span>当前位置:</span>
+		<span><a href="{:U('club/Index/index')}">社团首页</a> ></span>
+		<span><a href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">{$clubInfo.title}</a></span>
+	</div>
+	<!--
+	<div class="group_pic">
+		<a href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">
+			<img src="__ROOT__/thumb.php?w=45&h=45&t=f&url={$clubInfo['logo']|get_photo_url}">
+		</a>
+	</div>
+	<div style="margin-left: 62px">
+		<div class="club_header_info">
+			<div class="board_title">
+				<a class="board_title_name" href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}"  title="{$clubInfo.title}">{$clubInfo.showtitle}</a>
+				<php>if($member['type']==1 || $member['type']==2){</php>
+				[<a style="cursor:pointer;" onclick="editClubInfo({$clubInfo.id});">编辑</a>]
+				<php>}</php>
+				<php>if($clubInfo['type']==1){</php>
+				<span class="icon club_school_icon"></span>
+				<php>}else if($clubInfo['type']==2){</php>
+				<span class="icon club_academy_icon"></span>
+				<php>}else if($clubInfo['type']==3){</php>
+				<span class="icon club_student_icon"></span>
+				<php>}</php>
+				<span>
+					<span class="num_label">成员：{$clubInfo.membercount}</span>
+					<php>if($member['type']==1 || $member['type']==2){</php>
+					<span>等待审核：</span><a class="label_num" style="color:#FF6633;font-size:14px;" href="{:U('club/Member/auditMember', array('id'=>$clubInfo['id']))}">{$applyMemberCount}</a><span>人</span>
+					<php>}else if($member['type']==3){</php>
+					<span class="mem_joined_club"></span>
+					<php>}else if($member['type']!=null && $member['type']==0){</php>
+					<span style="color:#FF0000;font-size:14px;">审核中...</span>
+					<php>}else if(empty($member) || $member['type']==4 || $member['type']==5 || $member['type']==6 || $member['type']==null){</php>
+					<a class="join_club_btn" onclick="applyJoinClub({$clubInfo.id});"></a>
+					<php>}</php>
+				</span>
+			</div>
+			<p class="board_desc">{$clubInfo['description']}</p>
+		</div>
+		<div class="club_header_notice">
+			<php>if( count($notice)==1 ){</php>
+			<p style="margin-left:106px;width:448px;height:20px;line-height:25px;overflow:hidden;margin-top:12px;"><a href="{:U('club/Notice/index', array('id'=>$clubInfo['id']))} #notice_one_{$vo.id}">{$notice[0]['content']}</a></p>
+			<php>}else{</php>
+			<div class="notice_show_div" id="notice_show_div">
+				<volist name="notice" id="vo">
+				<p style="margin-left:106px;"><a href="{:U('club/Notice/index', array('id'=>$clubInfo['id'],'nid'=>$vo['id']))}">{$vo.content}</a></p>
+				</volist>
+			</div>
+			<php>}</php>
+		</div>
+		<div class="c"></div>
+	</div>
+	-->
+	<div class="left">
+		<div class="club_info">
+			<div class="club_img">
+				<img src="{$clubInfo['logo']|get_photo_url}">
+				<php>if($member['type']==1 || $member['type']==2){</php>
+				<a class="edit_club" onclick="editClubInfo({$clubInfo.id});"></a>
+				<php>}</php>
+			</div>
+			<div class="manage_part">
+				<php>if($member['type']==1 || $member['type']==2){</php>
+				<div class="manage_line">
+					<div class="manage_item">待审核:</div>
+					<div class="manage_num" title="{$applyMemberCount}">{$applyMemberCount}</div>
+					<a class="btn_normal" href="{:U('club/Member/auditMember', array('id'=>$clubInfo['id']))}">审核成员</a>
+					<div class="c"></div>
+				</div>
+				<div class="manage_line">
+					<div class="manage_item">已发帖:</div>
+					<div class="manage_num" title="{$clubInfo.topicNum}">{$clubInfo.topicNum}</div>
+					<a class="btn_normal" href="{:U('club/Event/index', array('id'=>$clubInfo['id']))}">发表风采</a>
+					<div class="c"></div>
+				</div>
+				<div class="manage_line">
+					<div class="manage_item">余&nbsp;&nbsp;额:</div>
+					<div class="manage_num" title="{$clubInfo.balance}">{$clubInfo.balance}</div>
+					<a class="btn_normal" href="{:U('club/Account/index', array('id'=>$clubInfo['id']))}">发布财务</a>
+					<div class="c"></div>
+				</div>
+				<div class="manage_line">
+					<div class="manage_item">成&nbsp;&nbsp;员:</div>
+					<div class="manage_num" title="{$clubInfo.membercount}">{$clubInfo.membercount}</div>
+					<a class="btn_normal" href="{:U('club/Member/index', array('id'=>$clubInfo['id']))}">成员管理</a>
+					<div class="c"></div>
+				</div>
+				<div class="manage_line">
+					<div class="manage_item">公&nbsp;&nbsp;告:</div>
+					<div class="manage_num" title="{$clubInfo.noticeNum}">{$clubInfo.noticeNum}</div>
+					<a class="btn_normal" href="{:U('club/Notice/index', array('id'=>$clubInfo['id']))}">公告管理</a>
+					<div class="c"></div>
+				</div>
+				<php>}else if($member['type']==3){</php>
+				<div class="mem_joined_club">已加入</div>
+				<php>}else if($member['type']!=null && $member['type']==0){</php>
+				<div style="color:#FF0000;font-size:14px;margin-top:18px;">审核中...</div>
+				<php>}else if(empty($member) || $member['type']==4 || $member['type']==5 || $member['type']==6 || $member['type']==null){</php>
+				<div class="join_club_btn" onclick="applyJoinClub({$clubInfo.id});">加&nbsp;&nbsp;入</div>
+				<php>}</php>
+			</div>
+		</div>
+		<div class="tb_nav">
+			<ul class="nav_list">
+				<li class="nav_topic">
+					<div class="tb_under_line">
+						<span class="topic_icon"></span>
+						<a class="nav_icon" href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">首&nbsp;&nbsp;&nbsp;页</a>
+					</div>
+				</li>
+				<li class="nav_event">
+					<div class="tb_under_line">
+						<span class="event_icon"></span>
+						<a class="nav_icon" href="{:U('club/Event/index', array('id'=>$clubInfo['id']))}">风&nbsp;&nbsp;&nbsp;采</a>
+					</div>
+				</li>
+				<php>if( in_array($member['type'], array(1,2,3)) ){</php>
+				<li class="nav_document">
+					<div class="tb_under_line">
+						<span class="document_icon"></span>
+						<a class="nav_icon" href="{:U('club/Document/index', array('id'=>$clubInfo['id']))}">文&nbsp;&nbsp;&nbsp;档</a>
+					</div>
+				</li>
+				<php>}</php>
+				<li class="nav_member">
+					<div class="tb_under_line">
+						<span class="member_icon"></span>
+						<a class="nav_icon" href="{:U('club/Member/index', array('id'=>$clubInfo['id']))}">成&nbsp;&nbsp;&nbsp;员</a>
+					</div>
+				</li>
+				<php>if( in_array($member['type'], array(1,2,3)) ){</php>
+				<li class="nav_account">
+					<div class="tb_under_line">
+						<span class="account_icon"></span>
+						<a class="nav_icon" href="{:U('club/Account/index', array('id'=>$clubInfo['id']))}">财&nbsp;&nbsp;&nbsp;务</a>
+					</div>
+				</li>
+				<php>}</php>
+				<li class="nav_notice">
+					<div class="tb_under_line">
+						<span class="notice_icon"></span>
+						<a class="nav_icon" href="{:U('club/Notice/index', array('id'=>$clubInfo['id']))}">公&nbsp;&nbsp;&nbsp;告</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<!--
+		<div class="topic_bottom">
+			<ul class="nav_list_bottom_topic">
+				<li><a class="nav_icon_bottom nav_topic_all" href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">全部</a></li>
+				<li>|</li>
+				<li><a class="nav_icon_bottom nav_topic_tjian" href="{:U('club/Topic/tjian', array('id'=>$clubInfo['id']))}">推荐</a></li>
+				<li>|</li>
+				<li><a class="nav_icon_bottom nav_topic_mine" href="{:U('club/Topic/mine', array('id'=>$clubInfo['id']))}">我的帖子</a></li>
+			</ul>
+			<div class="tb_search">
+				<form action="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}" method="post" onsubmit="return chkSearch(this);">
+					<input class="search_input" type="text" id="topicKey" name="topicKey" value="帖子搜索" style="color:#555555;" onfocus="topicSearchFocuc();" onblur="topicSearchBlur();" />
+					<input class="search_btn" type="submit" />
+				</form>
+			</div>
+		</div>
+		<div class="member_bottom">
+			<ul class="nav_list_bottom_member">
+				<li><a class="nav_icon_bottom nav_member_now" href="{:U('club/Member/index', array('id'=>$clubInfo['id']))}">现成员</a></li>
+				<li>|</li>
+				<php>if($member['type']==1 || $member['type']==2){</php>
+				<li><a class="nav_icon_bottom nav_member_audit" href="{:U('club/Member/auditMember', array('id'=>$clubInfo['id']))}">待审核成员</a></li>
+				<li>|</li>
+				<li><a class="nav_icon_bottom nav_member_noclass" href="{:U('club/Member/noclassMember', array('id'=>$clubInfo['id']))}">没课成员</a></li>
+				<li>|</li>
+				<php>}</php>
+				<li><a class="nav_icon_bottom nav_member_cancel" href="{:U('club/Member/cancelMember', array('id'=>$clubInfo['id']))}">已退出成员</a></li>
+			</ul>
+			<div class="tb_search">
+				<form action="{:U('club/Member/index', array('id'=>$clubInfo['id']))}" method="post" enctype="multipart/form-data" onsubmit="return chkMemberSearch(this);">
+					<input class="search_input" type="text" id="memberKey" name="memberKey" value="成员搜索" style="color:#555555;" onfocus="memberSearchFocuc();" onblur="memberSearchBlur();" />
+					<input class="search_btn" type="submit" />
+				</form>
+			</div>
+		</div>
+		<div class="c"></div>
+		-->
+	</div>
+	<php>if($eventShow){</php>
+	<div class="clubEvent_show_area">
+		<div style="margin-right:10px;" id="clubEventLeftBtn" class="clubEvent_show_btn_l" onclick="showHotTopic1('right');"></div>
+		<div class="clubEvent_show_part">
+			<div class="clubEvent_show_window_inner1">
+				<!-- 记录风采总数量 -->
+				<input id="eventCLubCount1" type="hidden" value="{$eventCount}">
+				<volist name="eventShow" id="vo">
+				<div class="clubEvent_show_info1">
+					<table>
+						<tr>
+							<td class="clubEvent_show_info_clubname">
+								<a class="clubIndex_a" href="{:U('club/Event/index',array('id'=>$vo['clubid']))}" title="{$vo.clubname}">{$vo.clubname|text|mStr=6}</a>
+								<span>&nbsp;&nbsp;第{$vo.issue}期</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="clubEvent_show_info_title">
+								<a class="clubIndex_a" href="{:U('club/Event/eventDetail', array('id'=>$vo['clubid'], 'topicid'=>$vo['id']))}">{$vo.title}</a>
+								<span>{$vo.ctime|date="m-d H:i",###}</span>
+							</td>
+						</tr>
+						<tr style="display:block; height:120px;">
+							<if condition="$vo.topicpic eq null">
+							<td class="clubEvent_show_info_content_text">{$vo.content|text|mStr=76}</td>
+							<else />
+							<td style="text-align: center;overflow: hidden;" class="clubEvent_show_info_content">
+								<img src="{$vo['topicpic']}" style="max-height: 112px;max-width: 196px;"/></td>
+							</if>
+						</tr>
+					</table>
+				</div>
+				</volist>
+				<div class="c"></div>
+			</div>
+		</div>
+		<div style="margin-left:10px;" id="clubEventRightBtn" class="clubEvent_show_btn_r" onclick="showHotTopic1('left');"></div>
+		<div class="c"></div>
+	</div>
+	<php>}</php>
+</div>
+<script>
+	window.onload=startClock1;
+	window.onunload=stopClock1;
+	
+	$("#club_desc").hover(function() {
+		$('#down_arrow').hide();
+		$('#club_desc').stop().animate({height : "110"} , 200 );
+	},function() {
+		$('#club_desc').stop().animate({height : "14"} , 200 );
+		$('#down_arrow').show();
+	});
+	
+	var scrollTimer1 = null; 
+	var delay1 = 3000; 
+	$('#clubScrollNews').hover(function () { 
+		clearInterval(scrollTimer1); 
+	}, function () { 
+		scrollTimer1 = setInterval(function () { 
+			scrollNews1(); 
+		}, delay1); 
+	}).triggerHandler('mouseout'); 
+
+	function scrollNews1() { 
+		var $news = $('#clubScrollNews>ul'); 
+		var $lineHeight = $news.find('li:first').height(); 
+		$news.animate({ 'marginTop': -$lineHeight + 'px' }, 600, function () { 
+		$news.css({ margin: 0 }).find('li:first').appendTo($news); 
+		}); 
+	}
+</script>

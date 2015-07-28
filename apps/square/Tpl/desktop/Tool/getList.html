@@ -1,0 +1,127 @@
+<include file="_header" />
+<link  rel="stylesheet" href="../Public/css/tool.css" type="text/css" media="screen" charset="utf-8"/>
+<!-- <script type="text/javascript" charset="utf-8">
+    var ctr = function(){}
+       ctr.prototype = 
+	   {
+		down:function{
+	 		ui.box.load('__URL__&act=downdetil&id='+id,{title:"下载提示"});
+ 			},
+		  detil:function(id)
+		  {
+			ui.box.load('__URL__&act=detil&id='+id,{title:"信息详情"});  
+		  }
+  		}
+    var l = null;
+</script> -->
+<script>
+ function down(id){
+	 ui.box.load('__URL__&act=downdetil&id='+id,{title:"下载提示"});
+ }
+</script>
+<style type="text/css">
+.blockCp .dlBtn{background:url(__THEME__/square/images/downed.gif) no-repeat 0px 0px;display:block;height:26px;margin:5px auto 0;width:92px;overflow:hidden;}
+.blockCp .dlBtn:hover{background:url(__THEME__/square/images/downed.gif) no-repeat 0px 0px;}
+
+</style> 
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <include file="_left" />
+    <div class="content">
+      <div id="resourcelist" style="width:100%">
+        <ul class="course_category">
+          <php>if($get['classified']=='SpecialEDU'){</php>
+              <li <php>if($get['type']==''){</php>class="on"<php>}</php>>
+                <a href="{:U('square/Tool/getList')}">全部</a>
+              </li>
+          	  <volist name="Specialtype" id="obj" key="k">
+                 <li <php>if($get['type']==$obj['DataCode']){</php>class="on"<php>}</php>>
+                     <a href="{:U('square/Tool/getList',URLformat(array('type'=>$obj['DataCode'],'classified'=>'SpecialEDU','subject'=>$get['subject'],'publisher'=>$get['publisher'],'attribute'=>$get['attribute'])))}" 
+                         <php>if($get['type']==$obj['DataCode']){</php>id="format"<php>}</php>>
+                         {$obj['DataName']}
+                     </a>
+                 </li>
+              </volist> 
+          <php>}elseif($tags!=''){</php>    
+               <li class="on">
+               		<a>搜索结果</a>
+               </li>  
+          <php>}else{</php>
+          	   <li <php>if($get['type']==''){</php>class="on"<php>}</php>>
+               		<a href="{:U('square/Tool/getList',array('stage'=>$get['stage'],'subject'=>$get['subject'],'publisher'=>$get['publisher'],'grade'=>$get['grade'],'volume'=>$get['volume'],'cell'=>$get['cell'],'course'=>$get['course'],'attribute'=>$get['attribute']))}">全部</a>
+               </li>
+         <php>}</php>
+          <div class="clear"></div>
+        </ul>
+        
+          
+        <ul class="blockCp">
+       <php>if(empty($data['data'])){</php><tr style="border:none;"><td>暂无信息。</td></tr><php>}</php>
+        <volist name="data.data" id="vo">
+        
+          <li>
+             <div class="pic">
+               <img src="{$vo['thumb']|logo_path_to_url}" width="48" height="48" title="{$vo['title']}">
+             </div>
+             <div class="meg">
+               <div class="name">
+                 <div class="mark"><a href="{:U('square/Tool/show',array('id'=>$vo['id']))}"  title="{$obj['title']}"><strong>{$vo['title']}</strong></a></div>
+                 <div class="subMark">
+                   <span>
+                     <i>文档评分&nbsp;&nbsp;</i> 
+                       <php>for($i=1;$i<=5;$i++){</php>
+                                 <php>if($i<=getAVG($vo['id'])){</php>
+                                 <img src="__THEME__/square/images/star_full.png">
+                                 <php>}else{</php>
+                                 <img src="__THEME__/square/images/star_empty.png">
+                                 <php>}</php> 
+                               <php>}</php>                                    
+                   </span>
+                 </div>
+               </div>
+               <div class="des">
+                 <div class="fLeft">
+                   <p class="tips">
+                     <i class="tit">贡献者：</i>{$vo['uid']|getUserName=###}
+                     |
+                     <i class="tit">文件大小：</i>{$vo['toolsize']|getsize} 
+                     |
+                     <i class="tit">更新时间：</i>{$vo['time']|date="Y-m-d H:i",###} 
+                     |
+                     <i class="tit">分类：</i>{$vo['category']}
+                   </p>
+                   <p>
+                      内容简介:{$vo['content']|strip_tags|getShort='50'}
+					</p>
+					<p>
+                    <a href="{:U('square/Tool/show',array('id'=>$vo['id']))}" title="{$vo['title']}">详细介绍&gt;&gt;</a>
+                   </p>
+                 </div>
+                 <div class="fRight">
+                   <i><a href="javascript:void(0);" class="dlBtn" onclick="down({$vo['id']})"  title="下载"></a></i>
+                   <i>下载量({$vo['downCount']})</i>
+                  
+                </div>
+               </div>
+             </div>
+             <div class="clear"></div> 
+           </li>
+             
+</volist>
+</ul>
+		<div style="width:100%;height:1px;overflow:hidden;clear:both;"></div>
+		<center>
+        <div class="page">{$data['html']}</div>
+		</center>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />
+</div>
+</body>
+<!-- <script type="text/javascript">
+l = new ctr();
+</script> -->
+</html>

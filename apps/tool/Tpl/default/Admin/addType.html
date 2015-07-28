@@ -1,0 +1,33 @@
+<style>
+.checkform{ width:300px; float:left; margin-top:20px; margin-bottom:20px;}
+.checkform li{ line-height:30px; height:30px;}
+.c1{  float:left;width:80px;}
+.c2{  float:left;width:200px;}
+.ad_i{ width:150px;}
+.blank0px{ clear:both; background:none; height:10px; overflow:hidden;}
+</style>
+<form method="post" action="{:U('tool/Admin/doaddType')}" name="do_check" enctype="multipart/form-data">
+ <input name="id" value="{$res['id']}" type="hidden"/>
+<div class="checkform">
+  <ul>
+   <li>
+    <div class="c1">文件扩展名：</div>
+    <div class="c2">
+        <input name="exttype" value="{$res['exttype']}" type="text" class="ad_i"/>
+    </div>
+   </li>
+   <li>
+    <div class="c1">注释：</div>
+    <div class="c2">
+        <input name="remark" value="{$res['remark']}" type="text" class="ad_i"/>
+    </div>
+   </li>
+   <li>
+    <div class="c1">&nbsp;</div>
+    <div class="c2">
+        <input type="submit" class="btn_b" value=" 提 交 " readonly="true" />
+    </div>
+</li>
+  </ul>
+</div>
+</form>

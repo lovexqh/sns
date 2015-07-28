@@ -1,0 +1,818 @@
+
+.dzz_filemanage{
+	border:1px solid #9D9D9D;
+	font-size: 0px;	
+}
+
+.dzz_filemanage .file-icoitem{
+	float:left;
+	margin:5px 10px;
+	border:1px solid #FFF;
+	cursor:pointer;
+	position:relative;
+}
+.dzz_filemanage .icosContainer{
+	width:100%;
+	min-height:100%;
+}
+.dzz_filemanage .filemanage-ltdrager{
+	left:180px;top:0px;
+	position:absolute;
+	overflow:hidden;
+	cursor:e-resize;
+	width:5px;
+	height:100%;
+	border-left:1px solid #9d9d9d;
+}
+
+.dzz_filemanage .filemanage-left{
+	left:0px;top:0px;padding:0px;height:100%; width:180px;overflow:auto;position:absolute;
+}
+.dzz_filemanage .filemanage-right{
+	left:0px;top:0px;padding:0px;height:100%; position:relative;overflow:hidden;
+	margin-left:180px;
+}
+
+.dzz_filemanage .detail_header_tr{
+	background:url(images/header.gif) repeat-x;
+}
+.dzz_filemanage .detail_header{
+	border-left:1px solid #eee;
+	border-right:1px solid #d0d0d0;
+	overflow:visible;
+}
+.dzz_filemanage .detail_header_asc{
+	display: inline-block;
+	vertical-align:middle;
+	height: 4px;
+	width: 13px;
+	margin-left: 3px;
+	background-repeat:no-repeat;
+	_margin-top:10px;
+}
+.dzz_filemanage .detail_header_asc_0{
+	background:url(images/sort_desc.gif) no-repeat;
+}
+.dzz_filemanage .detail_header_asc_1{
+	background:url(images/sort_asc.gif) no-repeat;
+}
+.dzz_filemanage .detail_header:hover,.dzz_filemanage .detail_header_hover{
+	background:url(images/header-over.gif) 0 2px repeat-x;
+	border-left:1px solid #aaccf6;
+	border-right:1px solid #aaccf6;
+}
+.dzz_filemanage .detail_header_td_div{
+	overflow:hidden;
+	line-height:22px;
+	height:22px;
+	margin:0 0px 0 8px;
+	overflow:visible;
+	position:relative;
+}
+.dzz_filemanage .detail_header_drag{
+	position:absolute;
+	width:10px;
+	height:22px;
+	top:0px ;
+	right:-5px;
+	z-index:10;
+}
+.dzz_filemanage .detail_item_name_icon,.DragCopy .detail_item_name_icon{
+	width:16px;
+	height:16px;
+	display:inline;
+	vertical-align:middle;
+}
+.dzz_filemanage .detail_item_name_text,.DragCopy .detail_item_name_text{
+	margin-left:5px;
+	cursor:pointer;
+}
+.dzz_filemanage .detail_text{
+	color:#000;
+	
+}
+.dzz_filemanage .detail_tr{
+	height:24px;
+}
+.dzz_filemanage .detail_tr_hover{
+	background:url(images/row-over.gif) repeat-x;
+}
+
+.dzz_filemanage .detail_item_td_div,.DragCopy .detail_item_td_div{
+	
+	white-space:nowrap;
+	overflow:hidden;
+	height:22px;
+	margin:0 8px;
+	overflow:hidden;
+}
+.dzz_filemanage .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	height: 0;
+	
+}
+
+.dzz_filemanage .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 60px;
+	background-image:url(images/top.jpg);
+	background-repeat: repeat-x;
+/*	-moz-border-radius: 5px 5px 0 0;-webkit-border-radius: 5px 5px 0 0;border-radius:5px 5px 0 0;
+	box-shadow:0px 0px 15px #000;	*/
+}
+
+
+.dzz_filemanage .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	height: 0;
+}
+
+.dzz_filemanage .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	
+}
+.dzz_filemanage .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	height: 0px;
+	
+}
+
+.dzz_filemanage .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height:0px;
+	
+}
+
+.dzz_filemanage .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0px;
+	height: 0px;
+	
+}
+
+
+.dzz_filemanage .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	
+}
+
+/* 功能区样式 */
+.dzz_filemanage .RESIZE
+{
+	width: 15px;
+	height: 15px;
+	right: -8px;
+	bottom: -8px;
+	z-index:10;
+}
+.dzz_filemanage .RESIZE-X
+{
+	width: 15px;
+	height:100%;
+	right: -8px;
+	top: -8px;
+	z-index:9;
+}
+.dzz_filemanage .RESIZE-Y
+{
+	width:100%;
+	height: 15px;
+	bottom: -8px;
+	left:0px;
+	z-index:9;
+}
+
+.dzz_filemanage .CLOSE
+{
+    width: 18px;
+    height: 18px;
+	margin:4px 2px;
+    float:right;
+   	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/CLOSE.png', sizingMethod='scale');
+	background-image:url(images/CLOSE.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.dzz_filemanage .CLOSE:hover
+{
+   
+    float:right;
+   	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/CLOSE1.png', sizingMethod='scale');
+	background-image:url(images/CLOSE1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .MIN
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 2px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/MIN.png', sizingMethod='scale');
+	background-image:url(images/MIN.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .MIN:hover
+{
+    
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/MIN1.png', sizingMethod='scale');
+	background-image:url(images/MIN1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.dzz_filemanage .MAX
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 2px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/MAX.png', sizingMethod='scale');
+	background-image:url(images/MAX.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .MAX:hover
+{
+    
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/MAX1.png', sizingMethod='scale');
+	background-image:url(images/MAX1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.dzz_filemanage .RESTORE
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 2px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/RESTORE.png', sizingMethod='scale');
+	background-image:url(images/RESTORE.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .RESTORE:hover
+{
+   
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/RESTORE1.png', sizingMethod='scale');
+	background-image:url(images/RESTORE1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+/* 目录标志*/
+.dzz_filemanage .folderimg
+{
+    width: 18px;
+    height: 18px;
+    float:left;
+	margin:4px;
+}
+.dzz_filemanage .folderimg img
+{
+    width: 18px;
+    height: 18px;
+}
+/* 逻辑区样式 */
+.dzz_filemanage .CONTENT
+{
+	/* 请不要定义padding/margin属性 */
+	/* 请定义left = -(border-left),top = -(border-top) */
+	left: 0px;
+	top: 0px;
+    background:#FFF;
+	overflow:hidden;
+	font-size:12px;
+}
+
+.dzz_filemanage .CONTENT .FORM
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 12px;
+}
+.dzz_filemanage .CONTENT .FORM_NOTITLE
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+}
+.dzz_filemanage .TITLE
+{
+	/* 请不要定义margin属性 */
+   overflow:hidden;
+   left:0px;
+   top:0px;
+   height:59px;
+}
+
+.dzz_filemanage .TITLE .titleBar{
+	margin:1px;
+	clear:both;
+	
+}
+.dzz_filemanage .TITLE .titleBar .titleButtonBar{
+	margin:0;
+	padding:0;
+}
+.dzz_filemanage .TITLE .titleBar .titleText{
+	text-align:left;
+	height:25px;font-size:12px; color:black;line-height: 25px;overflow: hidden;	
+	color:#000;
+	font-weight:bold;
+    text-shadow: 1px 1px 0px #CCC;
+	
+}
+
+/*目录头部工具栏*/
+.dzz_filemanage .TITLE .folderBar{/*工具条层*/
+	margin:0px 16px;
+	height:25px;
+	clear:both;
+}
+
+.dzz_filemanage .TITLE .folderBar .folderButtonBar{/*工具条工具层*/
+	margin:0;
+	padding:0;
+}
+
+
+.dzz_filemanage .TITLE .folderBar .BACK1
+{
+	float:left;
+	width:38px;
+	height:36px;
+	margin-top: -3px;
+	_padding-top:3px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/back.png' , sizingMethod='image');
+	background-image:url(images/back.png) !important;
+	background-position: center;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .BACK1:hover
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/back3.png' , sizingMethod='image');
+	background-image:url(images/back3.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .BACK2
+{
+	float:left;
+	width:38px;
+	height:36px;
+	margin-left:-6px;
+	margin-top: -3px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/back2.png', sizingMethod='image');
+	background-image:url(images/back2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .NEXT1
+{
+	float:left;
+	width:27px;
+	height:30px;
+	margin-top: 3px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/next.png', sizingMethod='image');
+	background-image:url(images/next.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .NEXT1:hover
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/next3.png', sizingMethod='image');
+	background-image:url(images/next3.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.dzz_filemanage .TITLE .folderBar .NEXT2
+{
+	float:left;
+	width:27px;
+	height:30px;
+	margin-top: 3px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/next2.png', sizingMethod='image');
+	background-image:url(images/next2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.dzz_filemanage .TITLE .folderBar .filemanage_view0_1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:25px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu1.png', sizingMethod='image');
+	background-image:url(images/icomenu1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view0_2,.dzz_filemanage .TITLE .folderBar .filemanage_view0_1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:25px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu1_1.png', sizingMethod='image');
+	background-image:url(images/icomenu1_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view1_1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu2.png', sizingMethod='image');
+	background-image:url(images/icomenu2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view1_2,.dzz_filemanage .TITLE .folderBar .filemanage_view1_1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu2_1.png', sizingMethod='image');
+	background-image:url(images/icomenu2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view2_1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu3.png', sizingMethod='image');
+	background-image:url(images/icomenu3.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view2_2,.dzz_filemanage .TITLE .folderBar .filemanage_view2_1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu3_1.png', sizingMethod='image');
+	background-image:url(images/icomenu3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view3_1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu4.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view3_2,.dzz_filemanage .TITLE .folderBar .filemanage_view3_1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu4_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view4_1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu5.png', sizingMethod='image') ;
+	background-image:url(images/icomenu5.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_view4_2,.dzz_filemanage .TITLE .folderBar .filemanage_view4_1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu5_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu5_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_search
+{
+	float:right;
+	margin-right:-6px;
+
+	margin-top:5px;
+	
+
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_search .searchInputContainer {
+	width:151px;
+	height:23px;
+	/*_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/search.png', sizingMethod='image');*/
+	background-image:url(images/search.png);
+	
+	background-repeat: no-repeat;
+	position:relative
+}
+
+.dzz_filemanage .TITLE .folderBar .filemanage_search .searchInput {
+	background:transparent;
+	border:0;
+	outline:0;
+	color:#a0a0a0;
+	font-size:12px;
+	height:20px;
+	margin:0 0 0 7px;
+	_margin-top:-2px;
+	line-height:2;
+	width:115px;
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_search  .searchBtn {
+	border:0;
+	display:block;
+	position:absolute;
+	top:3px;
+	right:5px;
+	height:20px;
+	width:20px;
+	cursor:pointer;
+	outline:0;
+	
+	background-image:url(images/search_1.png);
+
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_search  .searchBtn:hover {
+	
+	background-image:url(images/search_2.png);
+	
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/paixu.png', sizingMethod='image');
+	background-image:url(images/paixu.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp2,.dzz_filemanage .TITLE .folderBar .filemanage_disp1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/paixu_1.png', sizingMethod='image');
+	background-image:url(images/paixu_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+
+
+/*.dzz_filemanage .TITLE .folderBar .filemanage_disp1_1
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu2.png', sizingMethod='image');
+	background-image:url(images/icomenu2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp1_2
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu2_1.png', sizingMethod='image');
+	background-image:url(images/icomenu2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp2_1
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu3.png', sizingMethod='image');
+	background-image:url(images/icomenu3.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp2_2
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu3_1.png', sizingMethod='image');
+	background-image:url(images/icomenu3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp3_1
+{
+	float:right;
+	width:27px;
+	height:23px;
+	margin-right:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu4.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_disp3_2
+{
+	float:right;
+	width:27px;
+	height:23px;
+	margin-right:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/icomenu4_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}*/
+.dzz_filemanage .TITLE .folderBar .UPLOAD
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/upload.png', sizingMethod='scale');
+	background-image:url(images/upload.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .UPLOAD_disable,.dzz_filemanage .TITLE .folderBar .UPLOAD:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/upload_1.png', sizingMethod='scale');
+	background-image:url(images/upload_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .NEWFOLDER
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/newfolder.png', sizingMethod='scale');
+	background-image:url(images/newfolder.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .NEWFOLDER_disable ,.dzz_filemanage .TITLE .folderBar .NEWFOLDER:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/newfolder_1.png', sizingMethod='scale');
+	background-image:url(images/newfolder_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_other1
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/other.png', sizingMethod='scale');
+	background-image:url(images/other.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .filemanage_other2,.dzz_filemanage .TITLE .folderBar .filemanage_other1:hover
+{
+	float:left;
+	width:41px;
+	height:31px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/other_1.png', sizingMethod='scale');
+	background-image:url(images/other_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+/*.dzz_filemanage .TITLE .folderBar .NEWDOC
+{
+	float:left;
+	width:44px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/newdoc.png', sizingMethod='scale');
+	background-image:url(images/newdoc.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.dzz_filemanage .TITLE .folderBar .NEWDOC_disable
+{
+	float:left;
+	width:44px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/newdoc.png', sizingMethod='scale');
+	background-image:url(images/newdoc.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}*/
+.dzz_filemanage .BUTTON
+{
+	/* 请不要定义margin属性 (暂不支持:width:100%;bottom:0px;) */
+	padding: 0px 20px 25px 0px;
+	text-align:right;
+}
+.dzz_filemanage .BUTTON button
+{
+	width:87px;
+	height:28px;
+	border:0px;
+	padding:0px;
+	margin:0px 7px 0px 7px;
+	background-color: transparent;
+	background-repeat:no-repeat;
+}
+.dzz_filemanage .BUTTON .DISABLED
+{
+	_filter:alpha(opacity=36);
+	opacity:0.36;
+}
+
+/* 各种按钮样式 */
+.dzz_filemanage .BUTTON .OK
+{
+	background-image:url(images/OK.gif);
+}
+.dzz_filemanage .BUTTON .CANCEL
+{
+	background-image:url(images/CANCEL.gif);
+}
+/* 窗口最大化时隐藏的阴影 */
+.dzz_filemanage .SHADOW_TOP
+{
+	height:0
+}
+.dzz_filemanage .SHADOW_LEFT
+{
+	width:0
+}
+.dzz_filemanage .SHADOW_RIGHT
+{
+	width:0
+}
+.dzz_filemanage .SHADOW_BOTTOM
+{
+	height:0
+}
+/* ---- X 样式 ---- */

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="__PUBLIC__/admin/ui/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/admin/ui/js/operamasks-ui.min.js"></script>
+    <link href="__PUBLIC__/admin/ui/css/default/om-default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="demo" style="margin-left:30px;margin-top:20px">
+        <input type="button" id="add" value="新增"/>
+        <input type="button" id="del" value="删除"/>
+        <input type="button" id="save" value="保存修改"/>
+        <table id="grid"></table>
+    </div>
+
+    <div id="dialog-modal">
+        <!--<form mothod="post" action="<php>echo U('admin/Mobile/apkUpload');</php>" enctype="multipart/form-data" >-->
+            <!--<input type="file"  name="apk">-->
+            <!--<input type="text" name="a"/>-->
+            <!--<input type="submit" value="保存">-->
+        <!--</form>-->
+        <form action="<php>echo U('admin/Mobile/apkUpload');</php>" method="post" enctype="multipart/form-data">
+            <input type="file"  name="apk">
+            <input type="hidden" name="id" id="id"/>
+            <input type="submit" value="上传"/>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        var getListUrl = "<php>echo U('admin/Mobile/getList');</php>";
+        var updateUrl = "<php>echo U('admin/Mobile/update');</php>";
+        var deleteUrl = "<php>echo U('admin/Mobile/deleteInfo');</php>";
+        var swfUrl = " __PUBLIC__/admin/ui/swf/om-fileupload.swf";
+        var apkUploadUrl = "<php>echo U('admin/Mobile/apkUpload');</php>";
+        var publicUrl = "__PUBLIC__";
+        $(document).ready(function() {
+
+            $('#file_upload').omFileUpload({
+                method:'GET',
+                action : apkUploadUrl,
+                swf : swfUrl,
+                sizeLimit : 102400,
+                fileExt:"*.apk",
+                fileDesc:'APK文件'
+            });
+
+            var genderOptions = {
+                dataSource : [{text:"请选择",value:""},{text:"女生" , value:"female"},{text:"男生",value:"male"},{text:"未知",value:"unknowned"}],
+                editable: false
+            };
+
+            $('#grid').omGrid({
+                limit:10,
+                title : 'Android版本管理',
+                width:1040,
+                height : 465,
+                singleSelect : false,
+                colModel : [
+                    {header : '版本号', name : 'ver', width : 60, align : 'left',editor:{}},
+                    {header : '名字', name : 'name', width : 100, align : 'left',editor:{}},
+                    {header : '别名', name : 'nickname', width : 110, align : 'left',editor:{}},
+                    {header : '下载地址', name : 'downloadurl', width : 280, align : 'left',editor:{}},
+                    {header : '更新信息', name : 'updateinfo', width : 200, align : 'left',editor:{}},
+                    {header : '软件包', name : 'apkname', width : 100, align : 'left',renderer:function(colValue,rowData){
+                        if(colValue){
+                            return '<a href="#" title="重新上传apk" onclick="uploadApk(this)"  id='+rowData.id+'>'+colValue+'</a>';
+                        }else{
+                            return '<a href="#" title="上传apk" onclick="uploadApk(this)" id='+rowData.id+'>上传</a>';
+                        }
+                    }},
+                    {header : '状态', name : 'status', align : 'left', width : 'autoExpand',editor:{}},
+                    {header : '备注', name : 'remark', width : 280, align : 'left',editor:{}}
+                ],
+                dataSource : getListUrl,
+                //详情
+                rowDetailsProvider:function(rowData , rowIndex){
+                    return '<p>下载地址：<b>'+rowData.downloadurl+"</b></p><p>更新信息：<b>"+rowData.updateinfo+'</b><p/><p>备注：<b>'+rowData.remark+'</b></p>';
+                },
+
+                onBeforeEdit : function(){
+                    $('#demo >:button').attr("disabled",true);
+                },
+                onAfterEdit : function(){
+                    $('#demo >:button').removeAttr("disabled");
+                },
+                onCancelEdit : function(){
+                    $('#demo >:button').removeAttr("disabled");
+                }
+            });
+
+            $( "#dialog-modal").omDialog({
+                autoOpen: false,
+                height: 200,
+                width:300,
+                modal: true
+            });
+
+
+            function genderRenderer(value){
+                if("1" === value){
+                    return "<span style='color:blue'>开启</span>";
+                }else if("0" === value){
+                    return "<span style='color:orange'>关闭</span>";
+                }else{
+                    return "";
+                }
+            }
+
+            $('#add').click(function(){
+                $('#grid').omGrid('insertRow',0,{status:1});
+            });
+
+            $('#del').click(function(){
+                var dels = $('#grid').omGrid('getSelections',true);
+                var l = dels.length;
+                if(l <= 0 ){
+                    alert('请选择删除的记录！');
+                    return;
+                }
+                if(!window.confirm('确定删除选中的 '+l+' 数据')){
+                   return;
+                }
+                var id = '';
+                for(var i=0; i< l; i++){
+                    id +=  dels[i]['id']+',';
+                }
+                id = id.substr(0,id.length-1);
+                $.get(deleteUrl,{id:id},function(r){
+                    if(!r)r = 0;
+                    alert('成功删除了'+r+'数据');
+                });
+                $('#grid').omGrid('reload');
+            });
+
+            $('#save').click(function(){
+                var data = $('#grid').omGrid('getChanges');
+                /*****此处传递data到后台并处理*******/
+                $.post(updateUrl,data,function(r){
+                    if(!r)r = 0;
+                    alert('成功修改了'+r+'数据');
+                });
+                /*****保存成功之后执行如下操作********/
+                $('#grid').omGrid('saveChanges');
+                /******或者执行$('#grid').omGrid('reload');***/
+
+            });
+        });
+        function uploadApk(obj){
+            $( "#dialog-modal").omDialog('open');
+            $("#id").val(obj.id);
+        }
+    </script>
+
+
+</body>
+</html>

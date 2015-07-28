@@ -1,0 +1,202 @@
+<include file="__THEME__/desktop/_header" />
+<include file="__THEME__/desktop/_editor" />
+<link rel="stylesheet" href="../Public/css/tool.css" type="text/css" media="screen" charset="utf-8" />
+
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<style type="text/css">
+.ztree li ul{
+	padding:0 0 0 8px;
+}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript">
+<!--单节点展开开始-->
+var curExpandNode = null;
+function beforeExpand(treeId, treeNode) {
+	var pNode = curExpandNode ? curExpandNode.getParentNode():null;
+	var treeNodeP = treeNode.parentTId ? treeNode.getParentNode():null;
+	var zTree = $.fn.zTree.getZTreeObj("navtreeothers");
+	for(var i=0, l=!treeNodeP ? 0:treeNodeP.children.length; i<l; i++ ) {
+		if (treeNode !== treeNodeP.children[i]) {
+			zTree.expandNode(treeNodeP.children[i], false);
+		}
+	}
+	while (pNode) {
+		if (pNode === treeNode) {
+			break;
+		}
+		pNode = pNode.getParentNode();
+	}
+	if (!pNode) {
+		singlePath(treeNode);
+	}
+
+}
+function singlePath(newNode) {
+	if (newNode === curExpandNode) return;
+	if (curExpandNode && curExpandNode.open==true) {
+		var zTree = $.fn.zTree.getZTreeObj("navtreeothers");
+		if (newNode.parentTId === curExpandNode.parentTId) {
+			zTree.expandNode(curExpandNode, false);
+		} else {
+			var newParents = [];
+			while (newNode) {
+				newNode = newNode.getParentNode();
+				if (newNode === curExpandNode) {
+					newParents = null;
+					break;
+				} else if (newNode) {
+					newParents.push(newNode);
+				}
+			}
+			if (newParents!=null) {
+				var oldNode = curExpandNode;
+				var oldParents = [];
+				while (oldNode) {
+					oldNode = oldNode.getParentNode();
+					if (oldNode) {
+						oldParents.push(oldNode);
+					}
+				}
+				if (newParents.length>0) {
+					zTree.expandNode(oldParents[Math.abs(oldParents.length-newParents.length)-1], false);
+				} else {
+					zTree.expandNode(oldParents[oldParents.length-1], false);
+				}
+			}
+		}
+	}
+	curExpandNode = newNode;
+}
+function onExpand(event, treeId, treeNode) {
+	curExpandNode = treeNode;
+}
+<!--单节点展开结束-->
+function filter(treeId, parentNode, childNodes) {
+	if (!childNodes) return null;
+	for (var i=0, l=childNodes.length; i<l; i++) {
+		childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+	}
+	return childNodes;
+}
+
+
+
+<!--其他视频分类的树-->
+var settingother = {
+	data: {
+		simpleData: {
+			enable:true,
+			idKey: "id",
+			pIdKey: "pId",
+		}
+	},
+	callback: {
+		//onClick: noteClick,
+		beforeExpand: beforeExpand,
+		onExpand: onExpand
+	}
+};
+
+var zNodesother =[<volist name="sqcategory" id="vo" key="k">
+		<php>if($k!=1){</php>,<php>}</php>
+		{ id:"{$vo['id']}", pId:"{$vo['p_id']}", name:"{$vo['category_name']}", click:"noteClick('{$vo['id']}')"}
+	</volist>];
+function noteClick(id){
+	if(typeof(id)!='undefined'){
+		$("input[name='section']").val(id);
+		
+	}
+}
+$(document).ready(function(){
+	$.fn.zTree.init($("#navtreeothers"), settingother, zNodesother);
+});
+</script>
+<script type="text/javascript" src="../Public/js/Verification.js"></script>
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false" style="padding-bottom:30px;">
+  <!-- 右侧主要内容 start -->
+  <div class="panel-cmain">
+    <div class="clearfix"></div>
+    <!-- 主要内容 start -->
+     <form name="upload" id="upload_resource" action="__URL__&act=doedit" method="post" enctype="multichapters/form-data" onsubmit="return checkedit(this);">
+        <input type="hidden" name="ajax" value="yes" />
+        <input type="hidden" name="id" value="{$result['id']}" />
+        <table border="0" cellpadding="0" cellspacing="0" width="95%" align="left">
+            <tbody>
+                <tr>
+                   <th width="100" height="50"><em>*</em>标&nbsp;&nbsp;&nbsp;题&nbsp;:</th>
+                   <td width="100%">
+                   <input name="title" type="text" value="{$result['title']}" class="easyui-validatebox" hideFocus maxlength="25" style="width:65%" missingMessage="请先填写资源标题！" data-options="required:true"/>
+                   </td>
+                </tr>
+                
+                <tr>
+                   <th height="40"><em>*</em>关&nbsp;键&nbsp;字:</th>
+                   <td>
+                    <input name="tags" type="text" value="{$result['tags']}" class="easyui-validatebox" hideFocus style="width:65%" missingMessage="请填写关键字！" data-options="required:true"/>
+                   </td>
+                </tr>
+                 <tr>
+                   <th height="40"><em>*</em>版&nbsp;&nbsp;&nbsp;&nbsp;本:</th>
+                   <td>
+                    <input name="version" type="text" value="{$result['version']}" class="easyui-validatebox" hideFocus style="width:30%" missingMessage="请填写版本号！" data-options="required:true"/>
+                   </td>
+                </tr>
+               
+                <tr>
+                   <th height="40"><em>*</em>积&nbsp;&nbsp;&nbsp;分&nbsp;:</th>
+                   <td>
+                       <select class="easyui-combobox"  style=" width:100px;height:29px;" name="price">
+                           <option value="0" <if condition="$result[price] eq 0">selected="selected"</if>>免积分</option>
+                           <option value="1" <if condition="$result[price] eq 1">selected="selected"</if>>1</option>
+                           <option value="2" <if condition="$result[price] eq 2">selected="selected"</if>>2</option>
+                           <option value="3" <if condition="$result[price] eq 3">selected="selected"</if>>3</option>
+                           <option value="4" <if condition="$result[price] eq 4">selected="selected"</if>>4</option>
+                           <option value="5" <if condition="$result[price] eq 5">selected="selected"</if>>5</option>
+                           <option value="6" <if condition="$result[price] eq 6">selected="selected"</if>>6</option>
+                           <option value="7" <if condition="$result[price] eq 7">selected="selected"</if>>7</option>
+                           <option value="8" <if condition="$result[price] eq 8">selected="selected"</if>>8</option>
+                           <option value="9" <if condition="$result[price] eq 9">selected="selected"</if>>9</option>
+                           <option value="10" <if condition="$result[price] eq 10">selected="selected"</if>>10</option>
+                       </select>
+                   </td>
+                </tr>
+                <tr>
+                   <th style=" vertical-align:top; padding-top:20px;"><em>*</em>工具介绍:</th>
+                  <td>
+                    <textarea name="content" id="content"  style=" width:65%; height:150px;" missingMessage="请先填写工具介绍！" required="true">{$result['content']}</textarea>
+                   </td>
+                </tr>
+           </tbody>
+           
+           
+           <tbody id="rclass3" >
+                <tr>
+                    <th style=" vertical-align:top; padding-top:5px;">选择分类:</th>
+                    <td>  
+                        <UL id="navtreeothers" class="ztree"  style=" width:65%; height:150px; overflow-y:scroll;"></UL>
+                        <input type="hidden" name="section" value="{$result['section']}"/><!-- 学段 -->
+                    </td>
+                </tr>
+                
+            </tbody>
+            <tbody>
+            <tr>
+            	 <th>&nbsp;</th>
+                 <td>
+                     <a class="easyui-linkbutton medium-primary" type="button" style="margin-right:300px;" onclick="$('#upload_resource').submit();"> 修  改 </a>
+                 </td>
+            </tr>
+           </tbody>
+        </table>
+   </form>
+           <div class="clearfix"></div>
+    <!-- /右侧主要内容 end -->
+  </div>
+</div>
+<!-- 右侧主要内容栏 end -->
+<include file="__THEME__/desktop/_footer" />
+<script type="text/javascript">
+	loadEditor("content");
+</script>

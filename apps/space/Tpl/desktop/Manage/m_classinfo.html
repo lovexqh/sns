@@ -1,0 +1,139 @@
+<include file="../Public/_header" />
+<script type="text/javascript">
+var ctrl = function(){
+}
+ctrl.prototype = {
+	add:function(){
+		ui.box.load('__URL__&act=AddSubject&classid='+<php>echo $classid;</php>,{title:"增加课程"});
+	}
+}
+function checkclassinfo(){
+	var logan = $("#logan").val();
+	var message = $("#message").val();
+	var info = $("#info").val();
+	if( !logan || getLength(logan.replace(/\s+/g,"")) == 0){
+		ui.error("班级口号不能为空");
+		$("#logan").focus();
+		return false;
+	}else if(getLength($("#logan").val()) > 50){
+		ui.error("班级口号不得大于50个中文字符");
+		$("#logan").focus();
+		return false;
+	}else if(getLength($("#message").val()) > 50){
+		ui.error("班主任寄语不得大于50个中文字符");
+		$("#message").focus();
+		return false;
+	}else if(getLength($("#info").val()) > 60){
+		ui.error("班级简介不得大于60个中文字符");
+		$("#message").focus();
+		return false;
+	}
+	
+	// 过滤html，字串检测长度
+	function checkPostContent(content)
+	{
+		content = content.replace(/&nbsp;/g, "");
+		content = content.replace(/<br>/g, "");
+		content = content.replace(/<p>/g, "");
+		content = content.replace(/<\/p>/g, "");
+		return getLength(content);
+	}
+	
+}
+function deletesubject(id) {
+	var length = 0;
+	if(id=='') {
+		ui.error('请先选择一条数据！');
+		return ;
+	}
+	if(confirm('删除该科目后班级空间内相关科目信息将不可使用,确认删除该科目吗？')) {
+		$.post("{:U('space/Manage/doDeleteSubject')}",{id:id,classid:<php>echo $classid;</php>},function(res){
+			if(res=='1') {
+				ui.success('删除成功');
+				$('#subject_'+id).remove();
+			}else {
+				ui.error('删除失败');
+			}
+		});
+	}
+}
+</script>
+<include file="../Public/_tab" />
+   <include file="../Public/_manage_leftmenu" />
+   <div class="trunk_right">
+	 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="key" />班级基本信息</div>
+	 <div class="right_content">
+	  <form action="__URL__&act=doManageInfo" method="POST" onsubmit="return checkclassinfo();" enctype="multipart/form-data">
+	   <table border="0" cellpadding="0" cellspacing="0" class="con_table">
+		 <tr>
+			<th class="con_label" height="30">班级名称：</th>
+			<td class="con_input">{$classinfo['uc_class']['bj']}</td>
+		 </tr>
+		 <tr>
+			<th class="con_label" height="30">所属学校：</th>
+			<td class="con_input">{$classinfo['uc_class']['xxmc']}</td>
+		 </tr>
+		 <tr>
+			<th class="con_label" valign="top">班级科目：</th>
+			<td class="con_input">
+			  <div class="text_border">
+				 <div class="text_notice">提示"请慎重修改。为保证数据正确，修改后请调整课程表、成员管理内信息"。</div>
+				 <div class="subbg">
+					<ul>
+					 <volist name="subject" id="vo">
+					   <li id="subject_{$vo['id']}"><span>{$vo.subjectid|get_Datacodename}</span><a href="javascript:void(0);" onclick="deletesubject('{$vo['id']}')"><img class="m_close" /></a></li>
+					 </volist>
+					</ul>
+					
+				 </div>
+				 <div class="clear10"></div>
+				 <div class="sub_add"><a href="javascript:void(0);" onclick="c.add()">
+				 <img src="__THEME__/space/images/add.gif"></a></div>
+				 <div class="clear10"></div>
+			  </div>
+			</td>
+		 </tr>
+		  <tr>
+			<th class="con_label" height="30">班级LOGO：</th>
+			<td class="con_input">
+            	<input type="file" name="fileField" value="" style=" width:200px; height:22px; line-height:19px;"/><span class="explain">logo最佳尺寸&nbsp; 宽=100px,高=80px,支持jpeg,jpg,gif,png格式</span>
+			</td>
+		 </tr>
+		 <tr>
+			<th class="con_label" height="30">班级口号：</th>
+			<td class="con_input">
+				<input name="logan" id="logan"type="text" class="text_input" value="{$classinfo['sns_class']['logan']}">
+			</td>
+		 </tr>
+		 <tr>
+			<th class="con_label" height="30">班主任寄语：</th>
+			<td class="con_input">
+				<input name="message" id="message" type="text" class="text_input" value="{$classinfo['sns_class']['message']}">
+			</td>
+		 </tr>
+		 <tr>
+			<th class="con_label" valign="top">班级简介：</th>
+			<td class="con_input">
+			  <textarea name="info" id="info" class="text_input" style="overflow-y:hidden;height:80px; font:14px;">{$classinfo['sns_class']['info']}</textarea>
+			</td>
+		 </tr>
+		 <tr>
+			<td height="5">&nbsp;</td>
+			<td>&nbsp;</td>
+		 </tr>
+		 <tr>
+			<td>&nbsp;</td>
+				<input type="hidden" name="classid" value="{$classid}" />
+			<td>
+				<input type="submit" value="" class="sub_save">
+			</td>
+		 </tr>
+	   </table>
+	  </form>
+	 </div>
+   </div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+var c = new ctrl();
+</script>
+    

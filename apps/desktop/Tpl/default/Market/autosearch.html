@@ -1,0 +1,7 @@
+<include file="../Public/_header_ajax" />
+<volist name="list" id="value">
+	<li class="searchSuggestItem" title="{$value['app_alias']}" onclick="document.getElementById('searchInput').value=this.title;document.getElementById('searchSuggestList').style.display='none';document.getElementById('searchBtn').onclick();">
+    	<a title="{$value['app_alias']}" href="javascript:void(0);" class="searchSuggestItemLink">{$value['sappname']}</a>
+    </li> 
+</volist>
+<include file="../Public/_footer_ajax" />

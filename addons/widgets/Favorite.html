@@ -1,0 +1,59 @@
+<switch name="type" >
+<case value="detail">
+<if condition="$id">
+<a href="javascript:;" class="link-act" onclick="remove_Favorite('{$id}',this);" title="取消收藏"><i class="icon-favorite"></i>已收藏{$title}<if condition="$count">
+(<span favnums="{$num|Intval}">{$num|Intval}</span>)
+</if> 
+</a>
+<else />
+<a href="javascript:;" class="link-act" onclick="add_Favorite('{$app}','{$mod}','{$act}','{$fid}','{$appconfig}',this);" title="加入收藏"><i class="icon-favorite"></i>收藏{$title}</a>
+</if>
+
+</case>
+<case value="link">
+<if condition="($myuid neq $mid) or (!$myuid)">
+    <if condition="$id">
+    <a href="javascript:;" onclick="remove_Favorite('{$id}',this);" title="取消收藏">已收藏
+	<if condition="$count">
+	(<span favnums="{$num|Intval}">{$num|Intval}</span>)
+	</if> 
+	</a>
+    <else />
+    <a href="javascript:;" onclick="add_Favorite('{$app}','{$mod}','{$act}','{$fid}','{$appconfig}',this);" title="加入收藏">收藏</a>
+    </if>
+<else/>
+	<font color="#1a5fac">被收藏</font>
+</if>
+
+</case>
+<case value="picture">
+<if condition="($myuid neq $mid) or (!$myuid)">
+     <if condition="$id">
+    <a href="javascript:;" onclick="remove_Favorite('{$id}',this);" class="btn addfav-content" title="取消收藏">已收藏<if condition="$count">
+({$num|Intval})
+</if></a>
+    <else />
+    <a href="javascript:;" onclick="add_Favorite('{$app}','{$mod}','{$act}','{$fid}','{$appconfig}',this);" class="btn addfav-content" title="加入收藏">收藏<if condition="$count">
+({$num|Intval})
+</if></a>
+    </if>
+<else/>
+	<font color="#1a5fac">被收藏</font>
+</if>
+</case>
+<default  />
+<if condition="$id">
+<input type="button" value="已收藏" class="BtnShare" onclick="remove_Favorite('{$id}',this);"/>
+<else />
+<input type="button" value="收藏" class="BtnShare" onclick="add_Favorite('{$app}','{$mod}','{$act}','{$fid}','{$appconfig}',this);" />
+</if>
+<!-- 为之后方便修改样式 现将收藏数放在每个条件中 start-->
+<if condition="$count">
+(<span favnums="{$num|Intval}">{$num|Intval}</span>)
+</if> 
+<!--为之后方便修改样式 现将收藏数放在每个条件中  end -->
+</switch>
+<!-- <if condition="$count">
+(<div favnums="{$num|Intval}">{$num|Intval}</div>)
+</if> -->
+

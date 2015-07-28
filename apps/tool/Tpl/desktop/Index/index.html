@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>资源中心</title>
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/tool.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="../Public/js/switching.js"></script>
+<script type="text/javascript">
+function basicsswitch(num){
+  for(var id = 1;id<=4;id++)
+  {
+	if(id==num)
+	 {
+	   document.getElementById("bswitc_"+id).className="specia_visited";
+	   document.getElementById("bswitch_"+id).style.display="block";
+	 }
+    else
+	  {
+	    document.getElementById("bswitc_"+id).className="";
+	   document.getElementById("bswitch_"+id).style.display="none";
+	  }
+	}
+}
+function specialswich(num){
+  for(var id = 1;id<=4;id++)
+  {
+	if(id==num)
+	 {
+	   document.getElementById("sswitc_"+id).className="specia_visited";
+	   document.getElementById("sswitch_"+id).style.display="block";
+	 }
+    else
+	  {
+	    document.getElementById("sswitc_"+id).className="";
+	   document.getElementById("sswitch_"+id).style.display="none";
+	  }
+	}
+}
+</script>
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+<div class="containerOuter">
+    <div class="container">
+       <div class="containerInner">
+          <header>
+           <div class="header_link">
+             <div class="header_link left"><span>教师平台</span>|<span>互动社区</span>|<span>资源中心</span></div>
+             <div class="header_link right"><span>登录</span>|<span>注册</span>|<span>帮助</span>|<span>留言</span></div>
+           </div>
+           <div class="header_banner">
+             <div class="header banner_time"><p>2012年12月20日</p></div>
+             <div class="header banner">
+               <div class="banner_left">芝罘区教育局<span class="bgred">资源</span><span class="bgnone">网站</span></div>
+             </div>
+             <div class=""></div>
+           </div>
+           <div class="header_nav">
+              <ul class="nav">
+                <li><a href="">首页</a></li>
+                <li><a href="{:U('resource/Index/getList',array('stage'=>'small'))}">小学</a></li>
+                <li><a href="{:U('resource/Index/getList',array('stage'=>'middle'))}">初中</a></li>
+                <li id="bgnone"><a href="{:U('resource/Index/getList',array('stage'=>'high'))}">高中</a></li>
+              </ul>
+           </div>
+          </header>
+          <div class="trunkOut">
+            <div class="trunkInner">
+              <div class="trunk_left">
+                <article>
+                <!--网站公告开始-->
+                 <section>
+                  <div class="notice">
+                    <div class="notice_title"><h2>资源公告</h2></div>
+                    <div class="notice_content">
+                      <ul>
+                         <li>欢迎使用教育资源中心</li>
+                         <li>教育资源中心V1.0上线了</li>
+                      </ul>
+                    </div>
+                  </div>
+                 </section>
+                <!-- 网站公告结束-->
+                 <div class="clear10"></div>
+                <!-- 科目分类开始-->
+                 <section>
+                  <div class="class">
+                     <div class="class_title"><h2>科目分类</h2></div>
+                     <div class="class_content">
+                      <!--小学课程开始-->
+                       <section>
+                        <div class="content_list">
+                          <div class="list_class"><span>小学</span></div>
+                          <div class="list_list">
+                            <aside>
+                              <ul>
+                                <volist name="small" id="obj">
+                                 <li><a href="{:U('resource/Index/getList',array('stage'=>'small','subject'=>$obj['cloumn']))}">{$obj.text}</a></li>
+                                </volist>
+                              </ul>
+                            </aside>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                       </section>
+                      <!--小学课程结束-->
+                      <!--初中课程开始-->
+                       <section>
+                        <div class="content_list">
+                          <div class="list_class"><span>初中</span></div>
+                          <div class="list_list">
+                            <aside>
+                              <ul>
+                                <volist name="middle" id="obj">
+                                <li><a href="{:U('resource/Index/getList',array('stage'=>'middle','subject'=>$obj['cloumn']))}">{$obj.text}</a></li>
+                                </volist>
+                              </ul>
+                            </aside>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                       </section>
+                      <!-- 初中课程结束-->
+                      <!-- 高中课程开始-->
+                       <section>
+                        <div class="content_list">
+                          <div class="list_class"><span>高中</span></div>
+                          <div class="list_list">
+                            <aside>
+                              <ul>
+                                <volist name="high" id="obj">
+                                <li><a href="{:U('resource/Index/getList',array('stage'=>'high','subject'=>$obj['cloumn']))}">{$obj.text}</a></li>
+                                </volist>
+                              </ul>
+                            </aside>
+                            <div class="clear"></div>
+                          </div>
+                        </div>
+                       </section>
+                       <!--高中课程结束-->
+                     </div>
+                  </div>
+                 </section>
+                 <!--科目分类结束-->
+                 <div class="clear10"></div>
+                 <!--专题分类开始-->
+                 <section>
+                   <div class="special">
+                      <aside>
+                              <ul class="list_list">
+                                <volist name="speciallist" id="obj">
+                                 <li><a href="{:U('resource/Index/getList',array('classified'=>special,'attribute'=>$obj['DataCode']))}">{$obj['DataName']}</a></li>
+                                </volist>
+                              </ul>
+                            </aside>
+                   </div>
+                 </section>
+                 <!--专题分类结束-->
+                </article>
+              </div>
+              <div class="trunk_middle">
+                 <article>
+                   <section>
+                     <div class="image">
+                     </div>
+                   </section>
+                   <div class="clear10"></div>
+                   <section>
+                     <div class="trunk_specia">
+                        <div class="trunk_specia title">
+                          <div class="specia_title">基础资源</div>
+                          <div class="more"><a href=""><img src="__THEME__/square/images/more.png"></a></div>
+                        </div>
+                        <div class="specia_nav">
+                          <ul>
+                              <li><a href="javascript:void(0);" onClick="basicsswitch(1)" class="specia_visited" id="bswitc_1">全部</a></li>
+                              <li><a href="javascript:void(0);" onClick="basicsswitch(2)" id="bswitc_2">小学</a></li>
+                              <li><a href="javascript:void(0);" onClick="basicsswitch(3)" id="bswitc_3">初中</a></li>
+                              <li><a href="javascript:void(0);" onClick="basicsswitch(4)" id="bswitc_4">高中</a></li>
+                          </ul>
+                          <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="specia_list">
+                          <ul  id="bswitch_1" style=" display:block">
+                           <volist name="basics" id="obj">
+                            <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.grade|getDictionary}] [{$obj.subject|getDictionary}] {$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul  id="bswitch_2" style=" display:none">
+                           <volist name="sbasics" id="obj">
+                            <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.grade|getDictionary}] [{$obj.subject|getDictionary}] {$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul  id="bswitch_3" style=" display:none">
+                           <volist name="mbasics" id="obj">
+                            <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.grade|getDictionary}] [{$obj.subject|getDictionary}] {$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul  id="bswitch_4" style=" display:none">
+                           <volist name="hbasics" id="obj">
+                            <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.grade|getDictionary}] [{$obj.subject|getDictionary}] {$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                        </div>
+                     </div>
+                   </section>
+                   <div class="clear10"></div>
+                   <section>
+                     <div class="trunk_specia">
+                        <div class="trunk_specia title">
+                          <div class="specia_title">专题资源</div>
+                          <div class="more"><a href=""><img src="__THEME__/square/images/more.png"></a></div>
+                        </div>
+                        <div class="specia_nav">
+                          <ul>
+                              <li><a href="javascript:void(0);" onClick="specialswich(1)" class="specia_visited" id="sswitc_1">全部</a></li>
+                              <li><a href="javascript:void(0);" onClick="specialswich(2)" id="sswitc_2">小升初</a></li>
+                              <li><a href="javascript:void(0);" onClick="specialswich(3)" id="sswitc_3">中考</a></li>
+                              <li><a href="javascript:void(0);" onClick="specialswich(4)" id="sswitc_4">高考</a></li>
+                          </ul>
+                        </div>
+                        <div class="specia_list" >
+                          <ul id="sswitch_1" style="display:block">
+                            <volist name="special" id="obj">
+                              <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.edition|getDictionary}] [{$obj.attribute|getDictionary}]{$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul id="sswitch_2" style="display:none">
+                            <volist name="sspecial" id="obj">
+                              <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.edition|getDictionary}] [{$obj.attribute|getDictionary}]{$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul id="sswitch_3" style="display:none">
+                            <volist name="mspecial" id="obj">
+                              <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.edition|getDictionary}] [{$obj.attribute|getDictionary}]{$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                          <ul id="sswitch_4" style="display:none">
+                            <volist name="hspecial" id="obj">
+                              <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}">[{$obj.edition|getDictionary}] [{$obj.attribute|getDictionary}]{$obj.title}</a><span>{$obj.time|date="Y-m-d",###}</span></li>
+                           </volist>
+                          </ul>
+                        </div>
+                     </div>
+                   </section>
+                 </article>
+              </div>
+              <div class="trunk_right">
+                <article>
+                <!-- 最新资源推荐开始-->
+                 <section>
+                  <div class="class">
+                     <div class="recom_title">
+                          <h2>最新资源推荐</h2>
+                          <div class="more"><a href=""><img src="__THEME__/square/images/more.png"></a></div>
+                     </div>
+                     <div class="recommen-list">
+                       <ul>
+                        <volist name="recommend" id="vo" key="k">
+                           <li <php>if($k==5){</php> style=" border-bottom:none"<php>}</php>>
+                           <dl>
+                             <dt class="userpic"><space uid="vo.uid">{uavatar=m}</space></dt>
+                             <dd class="resource_detil">
+                               <ul>
+                                 <li><space uid="vo.uid" class="co">{uname}</space>({$vo.time|friendlyDate})<span><a href="{$vo.saveaddress}{$vo.savepath}{$vo.savename}" class="co">下载</a></span></li>
+                                 <li><a href="#">{$vo.title}</a></li>
+                               </ul>
+                             </dd>
+                           </dl>
+                         </li>
+                        </volist>
+                       </ul>
+                     </div>
+                  </div>
+                 </section>
+                 <!--最新资源推荐结束-->
+                 <div class="clear10"></div>
+                 <!-- 右侧切换卡开始-->
+                 <section>
+                  <div class="class">
+                     <div class="switch_title">
+                         <ul>
+                            <li class="switch_hover"><a href="#">WEB</a></li>
+                            <li class="switch_none"><a href="#">文库</a></li>
+                            <li class="switch_none"><a href="#">视频</a></li>
+                         </ul>
+                     </div>
+                     <div class="clear5"></div>
+                     <div class="switch_list">
+                        <ul>
+                          <!--<li><a href="" class="colorred">教育资源网站测试文档</a><span class="switch_news"><img src="__THEME__/square/images/new.gif"></span></li>-->
+                          
+                         <volist name="basics" id="obj" key="k">
+                          <li><a href="{:U('resource/Index/show',array('id'=>$obj['id']))}" <php>if($k==1){</php>class="colorred"<php>}else if($k==2){</php>class="colorpink"<php>}else if($k==3){</php>"colorblue"<php>}</php>>{$obj.title}</a></li>
+                         </volist>
+                        </ul>
+                     </div>
+                  </div>
+                 </section>
+                 <!--右侧切换卡结束-->
+                 <div class="clear10"></div>
+                 <!--用户贡献开始-->
+                 <section>
+                  <div class="class">
+                     <div class="recom_title">
+                          <h2>用户贡献榜</h2>
+                          <div class="more"><a href=""><img src="__THEME__/square/images/more.png"></a></div>
+                     </div>
+                     <div class="contribute">
+                       <table border="0" cellpadding="0" cellspacing="0" class="con_list">
+                         <tr>
+                           <th height="25" width="30">&nbsp;</th>
+                           <th width="70">用户名</th>
+                           <th width="70">数量</th>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">张穆</td>
+                           <td width="70">235</td>
+                         </tr>
+                         <tr>
+                           <td colspan="3" height="75"><img src="__THEME__/square/images/zhangmu.png"></td>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">小朱</td>
+                           <td width="70">120</td>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">小波</td>
+                           <td width="70">102</td>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">小伟</td>
+                           <td width="70">90</td>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">管理员</td>
+                           <td width="70">76</td>
+                         </tr>
+                         <tr>
+                           <td height="24" width="30">&nbsp;</td>
+                           <td width="70">梁军</td>
+                           <td width="70">5</td>
+                         </tr>
+                        
+                       </table>
+                     </div>
+                  </div>
+                 </section>
+                 <!--用户贡献结束-->
+                </article>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+       </div>
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+</body>
+</html>

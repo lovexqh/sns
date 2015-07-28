@@ -1,0 +1,342 @@
+<include file="__THEME__/header" />
+<link href="../Public/login.css" rel="stylesheet" type="text/css" />
+<!--表单验证-->
+<script type="text/javascript" src="../Public/js/jquery.validator.reg.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.corners.min.js"></script>
+<script type="text/javascript" src="../Public/js/register.js" ></script>
+<php>$regInfo=model('Xdata')->lget('register');</php>
+<php>if($invite_info){</php>  	  
+<!-- 邀请加入显示邀请人的信息 -->
+    <div class="invite_userInfo">
+		<div class="left mt10 ml10" style="width:100px;">
+			<a href="{:U('home/Space/index', array('uid'=>$invite_info['uid']))}" target="_blank">
+               <img style="width:80px; height:80px;" src="{$invite_info.uid|getUserFace='big'}" />
+            </a>
+		</div>
+		<div class="left mt10 ml10">
+			<div class="info">
+	  		    <div class="f14px lh30 mb10"><strong>hi, 我是{$invite_info.uid|getUserName}</strong></div>
+                <div class="f14px lh20">这里貌似挺给力的，快来注册一个吧！</div>
+    		</div>
+		</div>
+    </div>	
+<php>}</php> 
+<!-- 邀请加入显示邀请人的信息结束 -->
+<div class="content_holder">
+ <div class="content">
+  <!-- 内容 begin  -->
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+      <div class="mainbox_appR">
+      	<div class="reg_process">
+            <div class="reg_process_<php>echo empty($identity)?'on':'def';</php>"><div>1.选择角色</div></div>
+            <div class="reg_process_<php>echo empty($identity)?'def':'on';</php>"><div>2.填写基本信息</div></div>
+            <div class="reg_process_def"><div>3.验证基本信息</div></div>
+            <div class="reg_process_def"><div>4.看看推荐的人</div></div>
+            <div class="reg_process_def"><div>5.完成，进入我的首页</div></div>
+        </div>
+        <div style="padding:10px; display:none">
+          <p class="pb10">已有帐号？请直接登录</p>
+          <p class="pb10"><a href="{:U('home/Public/login')}" class="btn_b">登录</a></p>
+          <div class="login_other_mode">{:Addons::hook('login_input_footer',array('regInfo'=>$regInfo))}</div>
+		</div>
+      </div>
+      <div class="mainbox_appC boxspace_L">
+        <div class="reg_box">
+        <div class="left" style="width:100%;">
+          <h2 class="cBlue"><strong>快速注册</strong></h2>
+          </div>
+          <php>if(empty($identity)){</php>
+          <div class="select_identity" style="">
+          <form name="identity_form" id="identity_form" action="{:U('home/Public/register')}" method="post">
+          <input type="hidden" name="identity" value="0" />
+            <table width="668" height="258" border="0" cellspacing="0" cellpadding="0" align="center" background="__THEME__/member/images/regrolebg.png">
+              <tr>
+                <td align="center"><a href="javascript:;" onclick="sub_change(3);"><img src="__THEME__/member/images/student.png" /></a></td>
+                <td align="center"><a href="javascript:;" onclick="sub_change(2);"><img src="__THEME__/member/images/teacher.png" /></a></td>
+                <td align="center"><a href="javascript:;" onclick="sub_change(4);"><img src="__THEME__/member/images/garden.png" /></a></td>
+              </tr>
+            </table>
+          </form>
+          <script language="javascript" type="text/javascript">
+		  function sub_change(id){
+			  var form = $('#identity_form');
+			  $(form).find('input[name="identity"]').val(id);
+			  $(form).submit();
+		  }
+		  </script>
+          </div>
+          <php>}else{</php>
+          <form action="{:U('home/Public/doRegister')}" method="post" id="regform" name="reg">
+          	<input type="hidden" name="usertype" value="{$identity}" />
+            <php>if ($invite_code) {</php>
+                <input type="hidden" name="invite_code" value="{$invite_code}">
+            <php>}</php>            
+            <ul class="form_list">
+              <li class="form_li">
+                <div class="reg_li_1">我的角色：</div>
+                <div class="reg_li_2">
+                  <if condition="UC_SYNC">
+                    <switch name="identity" >
+                    <case value="3">学生</case>
+                	<case value="2">老师</case>
+                    <case value="4">家长</case>
+                    <default />不详
+                    </switch>
+                  </if>
+                </div>
+                <div class="reg_li_3">
+                  
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">登录邮箱：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" name="email" require="true" datatype="email|ajax" url="{:U('home/Public/isEmailAvailable')}" msg="请填有效邮箱地址，以完成注册|邮箱已被占用"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_email" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_email" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_email"></span> </div>
+                </div>
+              </li>
+              <php>if(!UC_SYNC){</php>
+              <li class="form_li">
+                <div class="reg_li_1">站内昵称：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" name="nickname" min="3" max="10" maxLength="10" require="true" datatype="require|ajax" url="{:U('home/Public/isValidNickName')}"  msg="重要！请填写用户名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_nickname" style="display:none;"><span class="ico_cue_ok"></span></div>
+                  <div class="error_nickname" style="position: relative;display:none;"><span class="ico_cue_no"></span><span id="error_nickname"></span></div>
+                </div>
+              </li>
+              <php>}</php>
+              <li class="form_li">
+                <div class="reg_li_1">登录密码：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="password" class="text35" style="width:250px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" maxlength="16" msg="密码由6-16个字符组成"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_password"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_password" style="position: relative;display:none;"><span class="ico_cue_no"></span><span id="error_password"></span> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">确认密码：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="password" class="text35" style="width:250px;" name="repassword" require="true" value="" datatype="repeat|limit"  min="6" max="16" maxlength="16" to="password" msg="两次输入的密码须一样|密码由6-16个字符组成"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_repassword"  style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="r error_repassword" style="position: relative;display:none;"><span class="ico_cue_no"></span><span id="error_repassword"></span> </div>
+                </div>
+              </li>
+              <if condition="UC_SYNC">
+                <switch name="identity" >
+                <case value="3">
+              <script language="javascript" type="text/javascript">
+				var userAgent = navigator.userAgent.toLowerCase();
+				var is_opera = userAgent.indexOf('opera') != -1 && opera.version();
+				var is_moz = (navigator.product == 'Gecko') && userAgent.substr(userAgent.indexOf('firefox') + 8, 3);
+				var is_ie = (userAgent.indexOf('msie') != -1 && !is_opera) && userAgent.substr(userAgent.indexOf('msie') + 5, 3);
+				
+				function LoadDialogWindow(URL, parent, loc_x, loc_y, width, height)
+				{
+				  if(is_ie)//window.open(URL);
+					 return window.showModalDialog(URL,parent,"edge:raised;scroll:1;status:0;help:0;resizable:1;dialogWidth:"+width+"px;dialogHeight:"+height+"px;dialogTop:"+loc_y+"px;dialogLeft:"+loc_x+"px",true);
+				  else
+					 window.open(URL,parent,"height="+height+",width="+width+",status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+loc_y+",left="+loc_x+",resizable=yes,modal=yes,dependent=yes,dialog=yes,minimizable=no",true);
+				}
+				function SelectUser()
+				{
+					URL=U('home/public/selectStuInfo');
+					// screen.availWidth 获得屏幕宽度
+					// screen.availHeight 获得屏幕高度
+					// 居中的算法是：
+					   // 左右居中： (屏幕宽度-窗口宽度)/2
+					// 上下居中： (屏幕高度-窗口高度)/2
+					
+					//窗口宽度,需要设置
+					var awidth=340;
+					//窗口高度,需要设置 
+					var aheight=180;
+					//窗口顶部位置,一般不需要改
+					var atop=(screen.availHeight - aheight)/2;
+					//窗口放中央,一般不需要改
+					var aleft=(screen.availWidth - awidth)/2;
+
+					var sarr=LoadDialogWindow(URL,self,aleft, atop, awidth, aheight);//这里设置了选人窗口的宽度和高度
+					alert(sarr);
+				
+				}
+			  </script>
+              <!--
+              <li class="form_li">
+                <div class="reg_li_1"><em>*</em></div>
+                <div class="reg_li_2">
+                  <a href="javascript:;" onclick="SelectUser();">我不知道学号怎么办？</a>
+                </div>
+                <div class="reg_li_3"></div>
+              </li>
+              
+              <li class="form_li">
+                <div class="reg_li_1">我的学号：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="userno" name="userno" require="true" datatype="require|ajax" url="{:U('home/Public/isValidUserNO')}" msg="请填有效的真实学号，以完成注册"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_userno" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_userno" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_userno"></span> </div>
+                </div>
+              </li>
+              -->
+              <!--
+              <li class="form_li">
+                <div class="reg_li_1">真实姓名：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="studentname" name="studentname" require="true" datatype="require|ajax" url="{:U('home/Public/isValidStudentName')}" msg="请按先后顺序先填学号，后填姓名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_studentname" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_studentname" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_studentname"></span> </div>
+                </div>
+              </li>
+              
+              <li class="form_li">
+                <div class="reg_li_1">监护人：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="guardername" name="guardername" require="true" datatype="require|ajax" url="{:U('home/Public/isValidGuarderName')}" msg="请按先后顺序先填学号，后填监护人姓名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_guardername" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_guardername" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_guardername"></span> </div>
+                </div>
+              </li>
+              -->
+              <li class="form_li">
+                <div class="reg_li_1">真实姓名：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="studentname" name="studentname" />
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_studentname" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_studentname" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_studentname"></span> </div>
+                </div>
+              </li>
+              
+              <li class="form_li">
+                <div class="reg_li_1">监护人：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="guardername" name="guardername" />
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_guardername" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_guardername" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_guardername"></span> </div>
+                </div>
+              </li>
+          
+              <li class="form_li">
+                  <div class="reg_li_1">&nbsp;<em>*</em></div>
+                  <div class="reg_li_2">（注：监护人为父亲或母亲的真实姓名！）<br/>
+                  <font color="red">如果监护人姓名始终不正确，请邮件至：<a href="mailto:sns@gridinfo.com.cn">sns@gridinfo.com.cn</a><br/>我们会在第一时间做出处理！</font></div>
+              </li>
+                </case>
+                <case value="2">
+              <li class="form_li">
+                <div class="reg_li_1">身份证号：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="teacherno" name="teacherno" require="true" datatype="require|ajax" url="{:U('home/Public/isValidTeacherNO')}" msg="请填有效的身份证号，以完成注册"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_teacherno" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_teacherno" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_teacherno"></span> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">真实姓名：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="teachername" name="teachername" require="true" datatype="require|ajax" url="{:U('home/Public/isValidTeacherName')}" msg="请按先后顺序先填身份证号，后填真实姓名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_teachername" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_teachername" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_teachername"></span> </div>
+                </div>
+              </li>
+                </case>
+                <case value="4">
+              <li class="form_li">
+                <div class="reg_li_1">孩子学号：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="sonno" name="sonno" require="true" datatype="require|ajax" url="{:U('home/Public/isValidSonNO')}" msg="请填写孩子学号，以完成注册"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_sonno" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_sonno" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_sonno"></span> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">孩子姓名：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="sonnickname" name="sonnickname" require="true" datatype="require|ajax" url="{:U('home/Public/isValidSonName')}" msg="请按先后顺序先填孩子学号，后填孩子姓名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_sonnickname" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_sonnickname" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_sonnickname"></span> </div>
+                </div>
+              </li>
+              <li class="form_li">
+                <div class="reg_li_1">我的姓名：<em>*</em></div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:250px;" value="" id="guardernickname" name="guardernickname" require="true" datatype="require|ajax" url="{:U('home/Public/isValidGuarderNickName')}" msg="请按先后顺序先填孩子学号，后填我的姓名"/>
+                </div>
+                <div class="reg_li_3">
+                  <div id="success_guardernickname" style="display:none;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="error_guardernickname" style="position: relative;display:none;"> <span class="ico_cue_no"></span><span id="error_guardernickname"></span> </div>
+                </div>
+              </li>
+
+                <li class="form_li">
+                	<div class="reg_li_1">&nbsp;<em>*</em></div>
+                    <div class="reg_li_2">（注：《我的姓名》为父亲或母亲的真实姓名！）</div>
+                </li>
+                
+                </case>
+                <default  />默认情况
+                </switch>
+              </if>
+              <eq name="register_verify_on" value="1">
+              <li class="form_li" style="position:relative">
+                <div class="reg_li_1">验证码：</div>
+                <div class="reg_li_2">
+                  <input type="text" class="text35" style="width:100px;vertical-align:middle;" name="verify" require="true" value="" datatype="require|ajax"  msg="验证码不能为空" url="{:U('home/Public/isVerifyAvailable')}" />
+                  <img src="__ROOT__/public/captcha.php" id="verifyimg" alt="换一张" style="cursor: pointer;vertical-align:middle;" onclick="changeverify()" /> </div>
+                <div class="reg_li_3">
+                  &nbsp;&nbsp;
+                  <a href="###" onclick="changeverify()">换一换</a>
+                  <div id="success_verify" style="position:absolute;left:350px;display:none;top:18px;_top:5px;"> <span class="ico_cue_ok"></span> </div>
+                  <div class="r error_verify" style="position:absolute;left:350px;top:8px;width:200px;display:none;"> <span class="ico_cue_no"></span> <span id="error_verify"></span> </div>
+                </div>
+              </li>
+              </eq>
+              <li class="form_li">
+                <div class="reg_li_1">&nbsp;</div>
+                <div class="reg_li_2"> 
+                <if condition="$_SERVER['HTTP_REFERER']">
+                    <input type="hidden" name="HTTP_REFERER" value="{$_SERVER['HTTP_REFERER']}">
+                </if>
+				<input type="submit" class="btn_green_w121" value="创建帐号">
+                <a href="{:U('home/Public/register')}" class="f12 ml10">返回重新选择角色</a>
+                </div>
+              </li>
+            </ul>
+          </form>
+          <php>}</php>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/footer" /> 

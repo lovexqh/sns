@@ -1,0 +1,144 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script type="text/javascript">
+	function replyPer(reply){
+		$("."+reply).hide('quick');
+		$("#"+reply+'_hide').css('display','none');
+		$("#"+reply+'_show').css('display','inline');
+	}
+	function replyPerShow(reply){
+		$("."+reply).show('quick');
+		$("#"+reply+'_hide').css('display','inline');
+		$("#"+reply+'_show').css('display','none');
+	}
+</script>
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+
+	<!-- 左侧begin -->
+	<div class="main_left">
+		<div class="message_t">{$messResult['title']}</div>
+		<div class="message_topB">
+            <if condition="$page gt 1">
+                <else/>
+			<div class="message_comment floor_1">
+				<div class="message_comment_floor">1楼</div>
+				<div class="message_comment_author">
+                    <img src="{$messResult.uid|getUserFace}" alt="{$messResult.uid|getUserName}">
+                    <p><a title="{$messResult.uid|getUserName}的个人主页" class="username" uid="{$messResult.uid}" rel="face" href="javascript:void(0);">{$messResult.uid|getUserName}</a></p>
+				</div>
+				<div class="message_comment_per">{$messResult.content|stripslashes|this_tags_html}</div>
+				<div class="message_comment_rep">
+					<span>发表于</span> <span style="color: #858585;">{$messResult.cTime|date='m-d H:i',###}</span>
+					<a class="topic_reply" onclick="messView_topic_reply();" href="javascript:;">回复({$commentResult.count})</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+            </if>
+            <volist name="commentResult['data']" id="vo" mod="10" key="per">
+			<div class="message_comment floor_2">
+				<div class="message_comment_floor">{$floor+$per}楼</div>
+				<div class="message_comment_author">
+                    <img src="{$vo.uid|getUserFace}" alt="{$vo.uid|getUserName}">
+                    <p><a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}</a></p>
+				</div>
+				<div class="message_comment_per">{$vo.content|stripslashes|this_tags_html}</div>
+				<div class="message_comment_rep">
+					<span>发表于</span> <span style="color: #858585;">{$vo.cTime|date='m-d H:i',###}</span>
+					<a href="javascript:;" class="topic_reply_per" id="floorReply_{$vo.id}_hide" onclick="replyPer('floorReply_{$vo.id}');" style="display: none;">收起回复</a>
+					<a href="javascript:;" class="topic_reply_per" id="floorReply_{$vo.id}_show" onclick="replyPerShow('floorReply_{$vo.id}');" style="display: inline;">回复({:count($vo['son']['data'])})</a>
+				</div>
+				<div class="floorReply_{$vo.id}"
+					style="background-color: #F8F8F9; float: right; margin-bottom: 8px; margin-right: 12px; padding: 0 12px 8px; width: 440px;display: none;">
+                    <volist name="vo['son']['data']" id="son">
+                    <div class="reply1_one">
+						<img src="{$son.uid|getUserFace}">
+						<div class="reply1_detail">
+							<div class="reply1_content">
+                    <a title="{$son.uid|getUserName}的个人主页" class="username" uid="{$son.uid}" rel="face" href="javascript:void(0);">{$son.uid|getUserName}</a>:{$son.content}
+							</div>
+							<div class="reply1_info">
+								<span class="reply1_time">{$son.cTime|date='m-d H:i',###} </span>
+                                <if condition="($uid eq $son['uid']) or (in_array($uid,$result_manager) or ($uid eq 1))"><div style="cursor: pointer; float: right;" class="delete_son" onclick="messView_delete_son({$son.id});" sonid="{$son.id}">删除</div><else/></if>
+								<!--<a class="reply1_reply">回复</a>-->
+							</div>
+						</div>
+						<div class="c"></div>
+					</div>
+                    </volist>
+
+					<div class="reply1_editarea">
+						<div id="reply1_edit_{$vo.id}" class="reply1_edit" contenteditable="true"
+							style="height: 40px;"></div>
+						<div class="reply1_area">
+							<span class="reply1_pub_btn" onclick="messView_reply1_pub_btn({$vo.id});" topicid="16" replyid="{$vo.id}" toid="{$vo.uid}"></span>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			</volist>
+		</div>
+
+<div class="page">{$commentResult['html']}</div>
+		<div style="text-align: left;margin-top:30px; width: 620px;" id="add_form">
+            <form onsubmit="return false;" method="post" id="reply_form" enctype="multipart/form-data">
+                <input type="hidden" name="societyid" id="societyid" value="{$societyInfo.id}">
+                <input type="hidden" name="messageid" id="messageid" value="{$messid}" />
+                <input type="hidden" name="uid" id="uid" value="{$uid}" />
+                <input type="hidden" name="toid" id="toid" value="0">
+                <input type="hidden" name="touid" id="touid" value="0">
+                <table>
+                    <tr>
+                        <td width="100%"><span>内容</span>
+							<textarea id="messView_content" name="content" style="height: 250px; width: 650px;" missingMessage="帖子内容不能为空" required="true">
+                            </textarea>
+                    	</td>
+                    </tr>
+                    <tr>
+                        <td><a type="submit"  onclick="messView_commentbutton();" class="commentbutton"></a></td>
+                    </tr>
+
+                </table>
+
+            </form>
+		</div>
+		<script type="text/javascript">
+			loadEditor("messView_content");
+		</script>
+	</div>
+	<!-- 左侧end -->
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<script type="text/javascript">
+if(typeof top.OpenBrowser == "function"){
+	$('.message_comment_per a').each(function(i, e) {
+		if(typeof($(this).attr('onclick'))!='undefined'){
+			$(this).attr('href','javascript:;');
+		}
+		//判断是不是click
+		if(typeof($(this).attr('href'))!='undefined' && $(this).attr('href').indexOf('javascript:')==-1){
+			
+			//分页时
+			if(typeof($(this).parent().attr('class'))!='undefined' && $(this).parent().attr('class').indexOf('page')!=-1){
+
+			}else{
+				var url = $(this).attr('href');
+				var title = $.trim($(this).attr('title'))!='' ? $.trim($(this).attr('title')) : $.trim($(this).text());
+				if(title=='') title = $(document)[0].title;
+				$(this).remove('target');
+				$(this).attr('onclick',"top.OpenBrowser ('"+url+"','"+title+"', 'width=1024,height=600,titlebutton=close|max|min');return false;");
+				$(this).attr('href','javascript:;');
+			}
+			
+		}
+	});
+}
+</script>
+<include file="../Public/_footer" />

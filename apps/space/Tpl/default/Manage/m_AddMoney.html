@@ -1,0 +1,33 @@
+<div style="width:400px; height:270px;">
+  <form action="{:U('space/Manage/doaddMoney')}" method="post" class="mon_search" style="border:0 none;">
+    <table width="700">
+      <tr height="35">
+        <td width="60">类&nbsp;&nbsp;&nbsp;&nbsp;型:</td>
+        <td><select name="type">
+            <option>----请选择----</option>
+            <option  value="1" <php> if($type==1) { </php> selected="true" <php> } </php>>----收&nbsp;入----</option>
+            <option  value="2" <php> if($type==2) { </php> selected="true" <php> } </php>>----支&nbsp;出----</option>
+          </select></td>
+      </tr>
+      <tr height="35">
+        <td>金额:</td>
+        <td><input name="amount" type="text" value="{$amount}"/></td>
+      </tr>
+      <tr height="35">
+        <td>经&nbsp;手&nbsp;人:</td>
+        <td><input name="handle" type="text" value="{$handle}"/></td>
+      </tr>
+      <tr height="35">
+        <td>事由:</td>
+        <td><textarea name="remark" style="width:200px; height:85px;">{$remark}</textarea></td>
+      </tr>
+      <tr height="35">
+        <td colspan="2"><input name="" style=" margin:0 10px 0 60px;" type="submit" class="btn" value="确定" />
+          <input name="" type="reset" class="btn" value="取消" /></td>
+          <input type="hidden" name="id" value="{$id}" />
+          <input type="hidden" name="classid" value="{$classid}" />
+          <input type="hidden" name="uid" value="{$mid}" />
+      </tr>
+    </table>
+  </form>
+</div>

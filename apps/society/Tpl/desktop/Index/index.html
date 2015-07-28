@@ -1,0 +1,121 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<style type="text/css">
+.pic_click_right{cursor: url('../Public/images/point_right.cur'), auto;height: 100%;position: absolute;right: 0;top: 0;width: 180px;z-index: 9999;}
+.pic_click_left{cursor: url('../Public/images/point_left.cur'), auto;height: 100%;left: 0;position: absolute;top: 0;width: 180px;z-index: 9999;}
+</style>
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+	<!-- 左侧begin -->
+	<div class="main_left">
+		<div class="addPost">
+		<php>if((checkMember($societyInfo['id']))==1){</php>
+			<a href="javascript:;" class="fabiao" onclick="index_fabiao();"></a>
+		<php>}</php>
+			<div class="total_left"></div>
+			<div class="total_center">
+				帖子总数：<span>{$messageCount['all']}</span> | 我的帖子：<span>{$messageCount['self']}</span>
+			</div>
+			<div class="total_right"></div>
+		</div>
+		<div class="column">
+			<span>回复数</span>
+			<span style="padding: 0 154px;">标题</span>
+			<span style="padding: 0 48px;">作者</span>
+			<span style="padding: 0 35px;">最后回复</span>
+		</div>
+		<div class="content_s">
+			<ul>
+			<php>if(empty($messageList['data'])){echo '暂无新鲜事可查看！';}</php>
+				<volist name="messageList['data']" id="vo">
+				<li class="content_li" id="topic_{$vo.id}">
+					<div class="left call_back">{$vo.commentNum}</div>
+					<div class="left message_con">
+						<span class="text_title">
+							<a href="{:U('society/Index/messView', array('id'=>$vo['id'],'societyId'=>$societyInfo['id']))}">{$vo['title']}</a>
+						</span><br />
+					</div>
+					<div class="left publisher">
+						<em class="publish"></em>
+						<a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a>
+						<br>
+						<em	class="time"></em>{$vo.mTime|date="m-d H:i",###}
+					</div>
+					<div class="left replier">
+						<em class="reply"></em>
+						<a title="{$vo.commentUid|getUserName}的个人主页" class="username" uid="{$vo.commentUid}" rel="face" href="javascript:void(0);">{$vo.commentUid|getUserName}&nbsp;</a>
+						<br> <em
+							class="time"></em>
+						<if condition="$vo.commentTime == ''">
+						<else />{$vo.commentTime|date="m-d H:i",###}</if>
+					</div>
+					<php>if($isManage==1 || $uid==$vo['uid']){</php>
+					<div topicid="{$vo.id}" class="manager_operate_top">
+						<ul id="operate_menu_top_{$vo.id}" class="manager_operate_menu" style="display: none;">
+							<li><a onclick="delTopic({$vo.id},{$vo.societyId},{$vo.uid},{$vo|getMid});">删除</a></li>
+						</ul>
+					</div>
+					<php>}</php>
+					<div style="line-height:20px;clear:both;margin-top: 45px;width: 600px;text-align: left;margin-left: 70px;word-break: break-all;">
+						<div class="text_content">{$vo.content|mStr=###,290}</div>
+					</div>
+					<div class="clear"></div>
+					<php>if(!empty($vo['imglist'])){</php>
+					<div class="topic_pic">
+						<volist name="vo.imglist" id="img">
+						<img class="topic_pic_img" src="{$img.url}" id="smallpic_{$vo.id}_{$img.num}" topicid="{$vo.id}" imgnum="{$img.num}" >
+						<div class="big_pic_area" id="bigpic_{$vo.id}_{$img.num}">
+							<a class="big_pic_fold" topicid="{$vo.id}" imgnum="{$img.num}">收起</a>
+							<div class="c"></div>
+							<div class="big_pic_show">
+								<img src="{$img.url}" style="max-height: 340px;">
+								<php>if($img['num']==2 || $img['num']==3){</php>
+								<div  class="pic_click_left" topicid="{$vo.id}"
+									imgnum="{$img.num}"></div>
+								<php>}</php>
+								<php>if(($img['num']==1 && $vo['imgcount']>1)||($img['num']==2&&$vo['imgcount']>2)){</php>
+								<div class="pic_click_right" topicid="{$vo.id}"
+									imgnum="{$img.num}"></div>
+								<php>}</php>
+							</div>
+						</div>
+						</volist>
+					</div>
+					<php>}</php>
+				</li>
+				</volist>
+			</ul>
+			<div class="page">{$messageList.html}</div>
+		</div>
+		<php>if((checkMember($societyInfo['id']))==1){</php>
+		<div style="text-align: left; width: 620px;margin-top: 40px;">
+			<form id="form" enctype="multipart/form-data">
+				<input type="hidden" id="societyid" value="{$societyInfo.id}">
+				<table>
+					<tr>
+						<td><span>标题</span><input type="text" id="title" name="title"style="width: 640px;"></td>
+					</tr>
+					<tr>
+						<td width="100%"><span>内容</span>
+							<textarea id="index_content"name="content" style="height: 250px; width: 650px;"missingMessage="帖子内容不能为空" required="true">
+							</textarea>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<a class="linkbuttons" onclick="index_linkbuttons();" style="margin-left: 15px;"></a>
+		</div>
+		<script type="text/javascript">
+			loadEditor("index_content");
+		</script>
+		<php>}</php>
+	</div>
+	<!-- 左侧end -->
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<include file="../Public/_footer" />

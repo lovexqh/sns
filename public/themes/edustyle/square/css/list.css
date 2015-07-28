@@ -1,0 +1,124 @@
+@charset "utf-8";
+/* CSS Document */
+.width {
+	width: 100%;
+}
+/*tab选项卡*/
+.class_sign {
+	border-bottom: 1px solid #e6e6e6;
+}
+.class_sign li {
+	float: left;
+	margin: 0 0 -3px -1px;
+}
+.class_sign li a {
+	background: none repeat scroll 0 0 #fff;
+	border: 1px solid #e6e6e6;
+	display: block;
+	float: left;
+	padding: 12px;
+	font-weight: bold;
+}
+.class_sign a:link, .guide a:hover, .guide a:active, .guide a:visited {
+	text-decoration: none;
+}
+.class_sign li.on a {
+	background: none repeat scroll 0 0 #fff9d9;
+	border-top: 3px solid #386f96;
+	border-bottom: 1px solid #fff9d9;
+	font-weight: bold;
+}
+/*分页*/
+.page {
+	margin:35px auto 32px;
+}
+.page li {
+	display: inline;
+	line-height: 30px;
+}
+.page li span.next {
+	color: rgb(204, 204, 204);
+}
+.page li a, .page li .next {
+	background: none repeat scroll 0 0 rgb(255, 255, 255);
+	border: 1px solid rgb(221, 221, 221);
+	color: rgb(0, 0, 0);
+	margin-right: 0;
+	padding: 2px 5px;
+}
+.page li span, .page li strong {
+	padding: 2px 5px;
+}
+.page li span.current {
+	color: rgb(0, 0, 0);
+	font-weight: bold;
+	padding: 3px 5px;
+}
+/*课本名称*/
+.course_name {
+	background: #fff9d9;
+	padding-bottom:8px;
+}
+.course_name strong {
+	display: block;
+	clear: both;
+	padding:10px 0 5px 15px;
+	font-weight: bold;
+}
+.course_list {
+}
+.course_list li {
+	float: left;
+	padding: 2px 15px;
+}
+/*课本分类*/
+.course_category {
+	border-bottom: 1px solid #e6e6e6;
+}
+.course_category li {
+	float: left;
+	margin: 0 0 -1px -1px;
+}
+.course_category li.on{
+	background:#FFF;}
+.course_category li span {
+	font-weight:normal;
+	color:rgb(51,51,51);
+}
+.course_category li a {
+	background: none repeat scroll 0 0 #fff;
+	border: 1px solid #e6e6e6;
+	display: block;
+	float: left;
+	padding: 10px 15px;
+	font-weight: bold;
+}
+.course_category li.on a {
+	background: none repeat scroll 0 0 #fff9d9;
+	border-top: 1px solid #386f96;
+	border-bottom: 1px solid #fff9d9;
+	font-weight: bold;
+}
+/*课程列表*/
+.category_list {
+	margin: 15px;
+}
+.category_list tr {
+	border-bottom: 1px dashed #ccc;
+}
+.category_list .name {
+	font-weight:bold;
+}
+.small_table {
+	margin:10px 0; 
+}
+.small_table tr {
+	border: 0 none;
+}
+.small_table td {
+	padding:0 5px;
+}
+.last_table {
+	border-left:1px solid #e6e6e6; padding:10px; font-weight:bold;
+	color:#676767;
+}

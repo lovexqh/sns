@@ -1,0 +1,126 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="../Public/tool.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_resource_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_boxL">
+        <include file="../Public/_mytab" />
+		 <div class="r_left">
+		      <div class="r_left2">
+			      <div class="r_title"><span class="t_title">基本信息</span></div>
+				  <div class="c"></div>
+				  <ul class="r_state">
+					   <li><span class="r_s1">上传资源</span><span class="r_s2">3</span></li>
+					   <li><span class="r_s1">收藏资源</span><span class="r_s2">1</span></li>
+					   <li><span class="r_s1">被收藏资源</span><span class="r_s2">55</span></li>
+					   <li><span class="r_s1">下载资源</span><span class="r_s2">1</span></li>
+					   <li><span class="r_s1">被下载资源</span><span class="r_s2">33</span></li>
+				  </ul>
+			  </div>
+			  <div class="r_1">
+				  <table border="0" cellpadding="0" cellspacing="0" width="100%" class="r_table">
+				    <tr>
+                      <th width="5%">编号</th>
+					  <th>标题</th>
+					  <th width="10%">分类信息</th>
+                      <th width="10%">版本信息</th>
+					  <th width="10%">资源类型</th>
+					  <th width="15%">收藏时间</th>
+					</tr>
+				  <volist name="data" id='vo' key="k">
+					<tr>
+                      <td width="5%">{$k}</td>
+					  <td>{$vo.title}</td>
+					  <td width="10%">{$vo['class']|getDictionary}</td>
+                      <td width="10%">{$vo['edition']|getDictionary}</td>
+					  <td width="10%">{$vo['type']|getDictionary}</td>
+					  <td width="15%">{$vo.time|date="Y-m-d",###}</td>
+					</tr>
+				  </volist>
+				  </table>
+				  <div class="page right">{$html}</div>
+			  </div>
+		 </div>
+		 <div class="r_right">
+			  <div class="r_1">
+				  <div class="r_title"><span class="t_title">热门资源</span><span id="t_more"><a href="#">更多</a></span></div>
+				  <div class="c" style=" height:10px;"></div>
+				  <ul class="f_r_ul">
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <li>
+					   <div class="f_right_d">
+							<span><a href="">教科版九年级物理5[1....ppt</a></span>
+							<span>同步资源</span>
+					   </div>
+					 </li>
+					 <div class="c" style=" height:10px;"></div>
+				  </ul>
+				   <div class="c"></div>
+			  </div>
+		 </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<include file="../Public/_footer" />

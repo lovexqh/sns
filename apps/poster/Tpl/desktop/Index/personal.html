@@ -1,0 +1,55 @@
+<include file="__THEME__/desktop/_header" />
+<link rel="stylesheet" href="../Public/poster.css" type="text/css" media="screen" charset="utf-8" />
+      <div class="mainbox_appR">
+        <include file="../Public/_isHotList" /> </div>
+      <div style="height:1350px;">
+          <volist name="data" id="vo">
+            <div class="post">
+            <div class="post_name"> <a href="javascript:;" onclick="parent.tabs.iframe('{$vo.title}','{:U('//posterDetail',array('id'=>$vo['id']))}');">{$vo.title|mStr=###,10}</a>
+           <php>if($vo['pid']==4){</php>
+           <span style="color:#FF6C00;">【拼车】</span>
+           <php>}else{</php>
+            <span style="color:#FF6C00;">【{$vo.type}】</span>
+            <php>}</php>
+            </div>
+            <div class="border"></div>
+            <div style="height:167px;">
+            <div class="post_content">{$vo.content|mStr=###,35}</div>
+            	<div class="post_img" >
+            	<a href="javascript:;" onclick="parent.tabs.iframe('{$vo.title}','{:U('//posterDetail',array('id'=>$vo['id']))}');">
+	                <php>if(!empty($vo['deadline']) && $vo['deadline']<=time()){</php>
+	                	<php>if(!empty($vo['cover'])){</php>
+	                	  <img src="{:SITE_URL}/thumb.php?url={$vo['cover']}&w=175&h=95" />
+	                	<php>}else{</php>
+	                	 <img src="../Public/images/default_post.gif" style="width:175px;height:95px;"/>
+	                	<php>}</php>
+	                		<div style=" margin-left: 30px; margin-top: -92px;">
+		            			<img src="../Public/images/postdate.png"/>
+		          			 </div>
+	                 <php>}else{</php>
+		                 <php>if(!empty($vo['cover'])){</php>
+		                	  <img src="{:SITE_URL}/thumb.php?url={$vo['cover']}&w=175&h=95" />
+		                	<php>}else{</php>
+		                	 <img src="../Public/images/default_post.gif" style="width:175px;height:95px;"/>
+		                	<php>}</php>
+	                 <php>}</php>
+	             </a>
+              </div>
+              </div>
+             <div class="border"></div>
+             
+             <div class="userinfo">
+	             <div>
+	                <space uid="vo.uid">{uavatar}</space>
+	              </div>
+	             <div style="margin: -48px 20px 20px 60px;"> <a href="javascript:void(0);" onclick="top.OpenBrowser('{:U('home/space/index',array('uid'=>$uid))}','{$vo['uid']|getUserName}');">{$vo['uid']|getUserName}</a></div> 
+	              <div style="margin: -18px 0px 20px 61px;">发布时间：{$vo.cTime|friendlyDate} </div>
+             </div>
+            </div>
+          </volist>
+          <div class="page" style="clear:both;">{$html}</div>
+      </div>
+      <!-- 右侧内容 end  -->
+      <div class="c"></div>
+  <!-- 内容 end --> 
+<include file="__THEME__/desktop/_footer" />

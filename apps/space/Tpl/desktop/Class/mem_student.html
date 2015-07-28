@@ -1,0 +1,60 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_member_leftmenu" />
+   <div class="trunk_right_m">
+	 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="mem_fam" /><span class="title">学生</span></div>
+	 <div class="clear10"></div>
+	 <table width="98%" border="0" cellspacing="0" cellpadding="0" class="memberlist">
+		<tr>
+		<volist name='memberlist' id='vo' key='k'>
+		  
+			<td width="120" align="center" height="145">
+			  <table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+				<td height="80" colspan="2" valign="top">
+					<if condition="($vo['uid'] eq '')">
+						<img src="__THEME__/images/user_pic_bigjj.gif"/>
+					<else />
+						<space uid="vo.uid" class="head_pic">{uavatar=b}</space>
+					</if>
+				</td>
+				</tr>
+				<tr>
+                	
+					<td height="40"><if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)"><a href="javascript:ui.sendclassmessage({$vo[uid]})" class="priv">发私信</a><else/>&nbsp;</if></td>
+					
+                </tr>
+			  </table>
+			</td>
+			<td width="120" align="left" valign="top">
+			  <table border="0" cellpadding="0" cellspacing="0" align="left">
+				<tr><td height="25">学生姓名：{$vo['xm']}</td></tr>
+				<tr>
+					<td>学生职位：
+						<php>if(!$vo['leader']){</php>暂无职位<php>}</php>
+						<volist name="vo['leader']" id="v">
+							<php>if($i!=1){</php>、<php>}</php>{$v.positionid|get_positionname}
+						</volist>
+					
+					</td>
+				</tr>
+                <if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)"> 
+				<tr><td>
+                	
+					<div id="follow_list_{$vo.uid}" class="follow_{$vo.uid}">
+						<script>document.write(followStateClass('{:getFollowState($mid, $vo[uid])}','dolistfollowClass',{$vo.uid}))</script>
+					</div>
+                    
+				</td></tr>
+                </if>
+			  </table>
+			</td>
+			<php>if($k%3==0){</php>
+					</tr><tr>
+			<php>}</php>
+		</volist>
+		</tr>
+		</table>
+	 <div class="clear10"></div>
+   </div>
+<include file="../Public/_footer" />

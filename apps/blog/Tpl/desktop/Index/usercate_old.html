@@ -1,0 +1,201 @@
+﻿<include file="_header" />
+<style>
+/*   对菜单的操作   Start By Snail */
+.tophover{background-color: #CDE2F4;}
+.tophover a{ color:#505050;}
+.catetop.seaBar{background-color:#1071A6;float:left;padding:6px 8px 0;margin-left:5px; border-radius: 4px 4px 0 0;}
+.catetop.seaBar a{color:#fff;}
+.header_navs .navs{display:none;}
+.navs.seaBar{display:block;}
+.header_drop.seaBar{display:none;}
+.btn_relation{background:none;height:22px; width: 96px;background:url(../Public/images/kk.jpg) no-repeat;padding-left: 26px;line-height:22px;}
+.btn_relation span{display:block;float:left;margin:0px;padding:0px;margin-right:10px;background:none;}
+.btn_relation a{display:block;color:#0e6ec0;float:left;margin:0px;padding:0px;}
+
+/*   对菜单的操作   End */
+</style>
+<!-- recommend start-->
+<div class="index">
+<!-- mainpart start -->
+		<div class="mainpart">
+		<!-- mp_right start-->
+			<div class="usercate_left">
+		   <div class="vuserinfo">
+		   		<div class="vuserimg <php>if($userinfo['xb'] == 0){echo 'u0';}</php>" style="text-align:center;">
+		   		    <div class="uname ">{$userinfo['uid']|getUserName}</div>
+		   			<a href="{:U('home/Space/index',array('uid'=>$userinfo['uid']))}" title="{$userinfo['uid']|getUserName}" ><img alt="{$userinfo['uid']|getUserName}" src="{$userinfo['uid']|getUserFace=###,'b'}" width="150"></a>
+		   		</div>
+		   		<php>if($thisuid != $userinfo['uid']){</php>
+		   		<div class="vusername" id="follow_state" style="text-align:center; padding:10px 0;">
+						<script>document.write(followState('{$followstate}'))</script> 
+				</div>
+				<php>}</php>
+		   		<ul class="ucateinfo">
+		   		    <li>关注数：{$userinfo['data']['count']['following']}</li>
+		   		    <li>粉丝数：{$userinfo['data']['count']['follower']}</li>
+		   		    <li>视频数：{$userinfo['data']['count']['video']}</li>
+		   		    <li>专辑数：{$userinfo['data']['count']['video_category']}</li>
+		   		    <li>视频播放数：{$userinfo['data']['count']['readCount']}</li>
+		   		</ul>
+		   		<ul class="ucatelist">
+		   			<volist name="userinfo['data']['usercate']" id="uc">
+		   				<li <php>if($uc['id'] == $cid){echo 'class="hover"';}</php>><a class="cate_{$uc['id']}" href="{:U('square/Video/usercate',array('cid'=>$uc['id']))}" target="_self" >{$uc['name']}</a><span onclick="del_category({$uc['id']})"></span></span></li>
+		   			</volist>
+		   		</ul>
+		   </div>
+				
+				
+			</div>
+<!-- mp_right end-->
+<!-- mp_left start-->
+			<div class="usercate_right">
+				<div class="livevideo">
+					<div class="newtopline">
+						<div class="liveintro_left cate_{$cid}" id="cTitle" style="float:left" data-back="{$title}" data-categoryId="{$cid}">{$title}</div>
+						<php>if( $cid > 0 && $thisuid == $userinfo['uid']){</php>
+						<div class="useroper">
+							<a class="oper-ico" href="javascript:void(0);" onclick="javascript:editCategory('{$cid}');return false;"><img src="../Public/images/viedit.png"/>修改</a>
+							<a href="javascript:;" onclick="del_category({$cid})" class="oper-ico" ><img src="../Public/images/viclose.png"/>删除</a>
+						</div>
+						<php>}</php>
+						<div class="lvm_top">
+							<div class="left">
+								共 {$videoList['count']} 个视频
+							</div>
+						</div>
+						<div style="width:100%;height:10px;overflow:hidden;clear:both;"></div>
+					</div>
+					<div class="lv_main">
+						<div id="con-menu_new" class="lvm_ul" >
+							<volist name="videoList['data']" id="li" mod="4">
+								<div class="List_ <eq name='mod' value='0'>last</eq>" >
+									<div class="video_img">
+										<a href="{:U('/Video/show',array(id=>$li['id']))}" title="{$li.name}">
+											<img  title="{$li['name']}" src="{$li.id|get_picture_url}"/>
+										</a>
+									</div>
+									<li class="video_other">
+										<a class="videoTitle" data-id="{$li['id']}" href="{:U('/Video/show',array(id=>$li['id']))}" title="{$li.name}">{$li.name|getshort='10'}</a>
+									</li>
+									<php>if(empty($cid)){</php>
+									<li class="video_other">
+										<php>if($li['catename'] != ''){</php>
+										<a href="{:U('/Video/usercate',array(cid=>$li['cid']))}" title="{$li.name}">专辑：{$li.catename|getshort='10'}</a>
+										<php>}else{</php>
+										专辑：未分类
+										<php>}</php>
+									</li>
+									<php>}</php>
+									<li class="info">
+										<span>点击：{$li.readCount}</span>
+										<span>评论：{$li.commentCount}</span>
+									</li>
+									<php>if($thisuid == $userinfo['uid'] ){</php>
+									<li class="video_other" style="padding-top:5px;">
+										<a class="oper-ico" href="{:U('square/Video/edit',array('id'=>$li['id']))}" target="_self"><img src="../Public/images/viedit.png"/>修改</a>
+										<a href="javascript:;" onclick="delvideo({$li['id']},{$li['categoryId']})" target="_self" class="oper-ico" ><img src="../Public/images/viclose.png"/>删除</a>
+									</li>
+									<php>}</php>
+								</div>
+								
+							</volist>
+							<div style="width:100%;height:1px;overflow:hidden;clear:both;"></div>
+							
+						</div>
+						<div class="page" style="float: right;margin-top: 10px;float:right;"> {$videoList['html']} </div>
+					</div>
+				</div>
+
+			 <div class="clear10"></div>
+			</div>
+<!-- mp_left end-->
+
+		</div>
+<!-- mainpart end -->
+ <div class="clear10"></div>
+</div>
+<script type="text/javascript">
+/*标签切换函数*/
+function two_show(obj){
+	var id = obj.id;
+	$(obj).parent().find('a').removeClass('on');
+	$('.top_lvm_ul').hide();
+	$(obj).addClass('on');
+	$("#con-"+id).show();	
+}
+
+//删除个视频
+function delvideo(video_id,category_id){
+	if(confirm('你确定要删除这部视频吗？')){
+
+		$.post(U('video/Manage/delete_video'),{id:video_id,categoryId:category_id},function(data){
+			if(data==1){
+				alert('删除成功！');
+				window.location.reload(); 
+			}else{
+				alert('删除失败！');
+			}
+		});
+	}
+}
+//删除专辑
+function del_category(cid){
+	if(cid !='' && cid != 0){
+		if(confirm('删除该专辑的同时，将删除其所有视频点播，确定删除？')){
+			$.post(U('video/Manage/delete_category'),{id:cid,ajax:1,time:new Date().getTime()},function(data){
+						var obj = eval('('+data+')');
+						if(obj.status == 1){
+							alert(obj.info);
+							window.location.href=U('square/Video/usercate'); 
+						}else{
+							alert(obj.info);
+						}
+					});
+		}
+	}
+}
+
+function editCategory(cid){
+	ui.box.load(U('square/Video/editcategory',['cid='+cid]),{title:'修改专辑'});
+}
+/*
+$(function(){
+	var temp = '';
+	$('#cOper').click(function(){
+		$('#cTitle').attr("contenteditable","true").css({"border":"1px #ccc solid","line-height":"22px"});
+		temp = $('#cTitle').html();
+	})
+	$('#cTitle').dblclick(function(){
+		$('#cTitle').attr("contenteditable","true").css({"border":"1px #ccc solid","line-height":"22px"});
+		temp = $('#cTitle').html();
+	})
+	
+	
+	$('#cTitle').blur(function(){
+		var this_DOM=$(this);
+		var categoryId=this_DOM.attr("data-categoryId");
+		var category_name=$.trim(this_DOM.html());
+		if(category_name=="" || categoryId==""){
+			this_DOM.html(this_DOM.attr("data-back"));
+			return false;
+		}
+		if(temp != $(this).html()){
+			$.post(U('video/Manage/do_update_category'),{categoryId:categoryId,category_name:category_name},function(data){
+				var data = eval('(' + data + ')'); 
+				if(data.status>0){
+					this_DOM.attr("data-back",this_DOM.html());
+					this_DOM.attr("contenteditable","false").css("border","0px");
+				}else{
+					this_DOM.html(this_DOM.attr("data-back"));
+					alert(data.info);
+				}
+			});
+		}
+		
+		
+		
+	})
+})
+*/
+</script>
+<include file="../Public/_footer" />

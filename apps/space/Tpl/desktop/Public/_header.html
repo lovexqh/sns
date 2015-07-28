@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/member/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/menu.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<link media="all" rel="stylesheet" type="text/css" href="__PUBLIC__/js/colorbox/colorbox.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorbox.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+<script src="__PUBLIC__/js/jquery.isotope.min.js"></script>
+</head>
+<body>
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/Js/switching.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>

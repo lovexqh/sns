@@ -1,0 +1,102 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+       <include file="../Public/_manage_leftmenu" />
+       <div class="trunk_right_p">
+         <div class="navi_rtitle"><span class="title">班级相册</span></div>
+         <div class="clear10"></div>
+           <div class="photoBox">
+               <form method="post" action="{:U('space/Upload/save_upload_photos',array(classid=>$classid))}" name="save_upload_photos" onsubmit="return check_form()" enctype="application/x-www-form-urlencoded">
+                 <div class="msg" style="margin-top:30px; margin-bottom:30px;">
+                 <strong style="font-size:14px;">
+                 <img src="../Public/images/fzcg_dh[1].gif" width="17" height="13" /> 图片上传成功！</strong>
+                 </div>
+                 <div class="msg">
+                    <div>
+                     <strong>
+                      <input name="publish_weibo" type="radio" value="1" checked='checked' />发布微广播通知大家
+                      <input name="publish_weibo" type="radio" value="0" />不发布微广播
+                     </strong>
+                    </div>        
+                    <div id="photos_content">
+                        <p>{$uid|getUserName}上传了{$upnum}张新图片至<a href="{:U('/Index/album',array('id'=>$album['id']))}">{$album.name}</a></p>
+                        <div class="left mr5">
+                         <div class="edit_list" id="edit_photos">
+                          <ul>
+                            <volist name="photos" id="li">
+                            <li class="bg04">
+                                <div class="box">
+                                    <div class="c1">
+                        <!--div class="linebox"><a href=javascript:; onclick="rotate(this,'l');">左旋转</a><a href=javascript:; onclick="rotate(this,'r');">左旋转</a></div-->
+                        <div class="photo100"><a href="#"><img src="__ROOT__/thumb.php?w=150&h=150&t=f&url={$li.savepath|get_photo_url=###,'m'}" alt="{$li.name}" /></a></div>
+                    </div>
+                                    <div class="c2">
+                                        <dl>
+                                            <dt>
+                                            <input value="{$li.name}" name="name[{$li.id}]" type="text" class="text" id="attach_{$li.id}" style="width:146px;" />
+                                            </dt>
+                                            <dd><label><input name="album_cover" type="radio" value="{$li.id}" <if condition=" $li['id'] eq $album['coverImageId']">checked='checked'</if> /> 设为该相册封面</label></dd>
+                                            <dd>转移到：
+                                                <select name="move_to[{$li.id}]" onchange="change_flag=true;">
+                                                    <volist name="albumlist" id="al">
+                                                        <option value="{$al.id}" <if condition=" $al['id'] eq $album['id']">selected='selected'</if>>{$al.name|getShort=###,13}</option>
+                                                    </volist>
+                                                </select>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <dl>
+                                      <div style="clear:both"></div>
+                                    </dl>
+                                    <div class="clear"></div>
+                                </div>
+                            </li>
+                            </volist>
+                         </ul>
+                        </div>
+                      </div>
+                      <div class="ml10">
+                        <input type="hidden" name="albumId" value="{$album.id}" />
+                        <input type="hidden" name="upnum" value="{$upnum}" />
+                        <input type="hidden" name="classid" value="{$classid}" />
+                      </div>
+                      <div class="clear"></div>
+                    </div>
+                    <input type="submit" class="btn_b" value="完成上传" />
+                 </div>
+               </form>
+           </div>
+         <div class="clear10"></div>
+         
+       </div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+
+var pb_strConfirmCloseMessage;
+var pb_blnCloseWindow = false;
+pb_strConfirmCloseMessage ="你的图片还没有保存，如果离开本页，上传的图片会丢失！";
+ShowConfirmClose(true);
+
+function ConfirmClose() {
+	window.event.returnValue = pb_strConfirmCloseMessage;
+	pb_blnCloseWindow = true;
+}
+
+function ShowConfirmClose(blnValue) {
+	if(blnValue) {
+		document.body.onbeforeunload = ConfirmClose;
+	} else {
+		document.body.onbeforeunload = null;
+	}
+}
+
+function check_form(){
+	ShowConfirmClose(false);
+	return true;
+}
+
+function rotate(obj,cur){
+	ShowConfirmClose(false);
+	//图片旋转功能
+}
+
+</script>

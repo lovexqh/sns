@@ -1,0 +1,37 @@
+<div class="trunk_left">
+  <div class="navi_title">班级动态</div>
+  <div class="navi_content">
+    <ul>
+      <li><img src="__THEME__/space/images/space.gif" class="move_announce" /><a href="{:U('space/Class/MoveAnnounce',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveAnnounce','showAnnounce')))echo 'id="onvisited"';</php>
+        >班级公告</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_course" /><a href="{:U('space/Class/MoveCourse',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveCourse')))echo 'id="onvisited"';</php>
+        >课程表</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_course" /><a href="{:U('space/Class/MoveExercise',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveExercise','showExercise')))echo 'id="onvisited"';</php>
+        >班级作业</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_honor" /><a href="{:U('space/Class/MoveHonor',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveHonor','showHonor')))echo 'id="onvisited"';</php>
+        >荣誉榜</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_photos" /><a href="{:U('space/Class/MovePhoto',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MovePhoto','albums','photos')))echo 'id="onvisited"';</php>
+        >班级相册</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_state" /><a href="{:U('space/Class/MoveState',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveState')))echo 'id="onvisited"';</php>
+        >同学动态</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_birthday" /><a href="{:U('space/Class/MoveBirthday',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveBirthday')))echo 'id="birthday"';</php>
+        >本月寿星</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_money" /><a href="{:U('space/Class/MoveMoney',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveMoney')))echo 'id="money"';</php>
+        >储钱罐</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_books" /><a href="{:U('space/Class/MoveBooks',array(classid=>$classid))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveBooks')))echo 'id="books"';</php>
+        >图书角</a></li>
+      <li><img src="__THEME__/space/images/space.gif" class="move_glory" /><a href="{:U('space/WeekStar/showByTime',array(classid=>$classid,control=>view))}" 
+        <php>if(in_array((ACTION_NAME),array('MoveGlory')))echo 'id="glory"';</php>
+        >每周之星</a></li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="clearfix"></div>
+  <php>if($uid&&$uid!=$mid){</php>
+	<div style="font-size:16px;font-weight:bold;color:#666;margin-top:10px;">已选定获赠者： <img src="{:SITE_URL}/thumb.php?w=30&h=30&url={$uid|getUserFace}" /> {$uid|getUserName}</div>
+  <php>}</php>
+  <div class="giftblock summary-list" id="gifts{$catid}" style="min-height:450px;border:0; overflow:hidden;" >
+	<ul>
+		<volist name="giftlist['gifts']" id='gift'>
+		<li class="gifts hand" title="点击选择" id="gift{$gift['id']}">
+		<a href="{:U('gift/Index/sendgift',array('gid'=>$gift['id']))}" title="发送礼物"><img src="{$gift['img']|realityImageURL}" /></a>
+		<div> <a href="{:U('gift/Index/sendgift',array('gid'=>$gift['id']))}" title="发送礼物">{$gift['name']}</a><br />
+		 	 限量：{$gift['num']}个<br />
+		  {$gift['price']}点{$money.alias} </div>
+		</li>
+		</volist>
+	<div class="page">{$html}</div>
+	</ul>
+	<div class="clearfix"></div>
+  </div>

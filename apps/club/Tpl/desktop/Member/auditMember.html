@@ -1,0 +1,38 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_audit_member">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_memberHeader" />
+			<div class="member_page">
+				<table class="member_tb">
+					<tr class="member_tb_header">
+						<td class="audit_tb_name mem_tb_border">姓名</td>
+						<td class="audit_tb_reason mem_tb_border">申请理由</td>
+						<td class="audit_tb_operate">操作</td>
+					</tr>
+					<php>if( empty($auditMember['data']) ){</php>
+					<tr><td colspan="3" style="font-size:14px;line-height:30px;padding-left:10px;">暂无待审核成员!</td></tr>
+					<php>}</php>
+					<volist name="auditMember.data" id="member">
+					<tr class="member_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$member['uid']))}', '{$member['uid']|getUserName}的个人主页');" href="javascript:;">{$member.uid|getUserName}</a></td>
+						<td>{$member.reason}</td>
+						<td>
+							<a class="audit_pass" <php>if(!empty($deptList)){</php>onclick="chgMemberDept({$clubInfo.id},'0',{$member.id});"<php>}else{</php>onclick="noDeptAuditPass({$member.id});"<php>}</php>>同意</a>
+							<a class="audit_reject" onclick="auditReject({$member.id});">拒绝</a>
+						</td>
+					</tr>
+					</volist>
+				</table>
+				<div class="page" style="text-align: right;">{$memberList.html}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,220 @@
+<include file="../Public/_header" />
+<include file="../Public/_teachheader" />
+<SCRIPT type="text/javascript">
+		
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			}
+		};
+		
+		var zNodes =[				
+				<volist name="treeNode" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick('{$obj[id]}')"}
+								
+				</volist>
+		];
+		var treeNoSchool =[				
+				<volist name="treeNoSchool" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick2('{$obj[id]}')"}
+								
+				</volist>
+		];
+		
+		function noteClick(id){
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学校_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				schoolid	=	'';
+			}else{				
+				schoolid	=	'&schoolid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[3];
+			}
+			if(typeof(newarr[4])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[4];
+			}
+			window.location.href="__URL__&act=teachList"+phaseid+schoolid+courseid+gradeid;
+		}
+		function noteClick2(id){
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[3];
+			}
+			window.location.href="__URL__&act=teachList"+phaseid+courseid+gradeid;
+		}
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}		
+		$(document).ready(function(e) {
+            $.fn.zTree.init($("#dept_tree"), setting, zNodes);
+			$.fn.zTree.init($("#noschool_tree"), setting, treeNoSchool);
+        });
+		
+function rank(obj){
+	if(obj=='uprank'){
+		$('#downrank').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='downrank'){
+		$('#uprank').hide();	
+		$('#'+obj).show();		
+	}
+	if(obj=='person'){
+		$('#school').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='school'){
+		$('#person').hide();	
+		$('#'+obj).show();		
+	}
+	if(obj=='dept_tree'){
+		$('#noschool_tree').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='noschool_tree'){
+		$('#dept_tree').hide();	
+		$('#'+obj).show();		
+	}
+}
+		
+</SCRIPT>
+<!--  <div class="navigate_info"> <strong>您当前的位置：</strong><span>资源中心首页></span><span>小学></span><span>语文></span><span>五年级></span><span>人教版></span><span>五年级下册</span> </div>
+-->  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar_box">
+        <h4>导航树</h4>
+        <ul class="star">
+            <li><a href="javascript:void(0)" onclick="rank('dept_tree')">按本校</a></li>
+            <li><a href="javascript:void(0)" onclick="rank('noschool_tree')">按科目</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div>
+          <ul id="dept_tree" class="ztree">
+          </ul>
+          <ul id="noschool_tree" class="ztree" style="display:none">
+          </ul>
+        </div>
+      </div>
+        
+      <div class="clear"></div>
+    </div>
+    <div class="content">
+      
+      <div class="box width">
+        <ul class="course_category">
+          <li><a href="<php>
+          $brr	=	explode('&teach',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$brr[0];
+          </php>">全部<span></span></a></li>
+        <volist name='types' id='vo' offset="0" length='8'>
+          <li><a href="<php>
+          $arr	=	explode('&teach',$_SERVER['QUERY_STRING']);
+          echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$arr[0];
+          </php>&teachingtype={$vo.id}">{$vo.datacode}</a></li>
+		</volist>
+          <div class="clear"></div>
+        </ul>
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+        <eq name='teachList' value=''><div>暂时没有搜到您想要的结果</div></eq>
+        <volist name='teachList' id='vo'>
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="2" width="70"> <img src="{$vo.meetingId|getPicUrl}" width="59" height="59" /></td>
+                  <td width="150">{$vo.phaseid|getPhaseName}&nbsp;{$vo.courseid|getCourseName}&nbsp;{$vo.meetingId|getGradeName=###,$vo.schoolid,$vo.phaseid}</td>
+                  <td width="380"><a href="{:U('square/teaching/show', array('meetingId'=>$vo['meetingId']))}">{$vo.meetingName}</a></td>
+                  <td class="last_table">{$vo.readcount}人已阅读</td>
+                </tr>
+                <tr>
+                  <td>创建于：{:date('Y-m-d',$vo['startTime'])}</td>
+                  <td>创建者：{$vo.uid|getUserName}</td>
+                  <td style="border-left:1px solid #e6e6e6;">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+          <volist name='resList' id='vo'>
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="2" width="70"> <img src="{$vo.meetingId|getPicUrl}" width="59" height="59" /></td>
+                  <td width="150">{$vo.phaseid|getPhaseName}&nbsp;{$vo.courseid|getCourseName}&nbsp;{$vo.meetingId|getGradeName}</td>
+                  <td width="380">{$vo.name}</td>
+                  <td class="last_table">{$vo.downcount}人已下载</td>
+                </tr>
+                <tr>
+                  <td>上传于：{:date('Y-m-d',$vo['startTime'])}</td>
+                  <td>贡献者：{$vo.uid|getUserName}</td>
+                  <td style="border-left:1px solid #e6e6e6;">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+          <volist name='groupList' id='vo'>
+          <tr>
+            <td><table class="small_table">
+                <tr>
+                  <td rowspan="2" width="70"> <img src="{$vo.meetingId|getPicUrl}" width="59" height="59" /></td>
+                  <td width="150">{$vo.phaseid|getPhaseName}&nbsp;{$vo.courseid|getCourseName}&nbsp;{$vo.id|getGradeName=###,1}</td>
+                  <td width="380">{$vo.name}</td>
+                  <td class="last_table">成员{$vo.id|getNum}人</td>
+                </tr>
+                <tr>
+                  <td>创建于：{:date('Y-m-d',$vo[ctime'])}</td>
+                  <td>创始人：{$vo.uid|getUserName}</td>
+                  <td style="border-left:1px solid #e6e6e6;">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          </volist>
+        </table>
+<!--        <ul class="page">
+		  {$teachList.html} 
+        </ul>-->
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="../Public/_footer" />

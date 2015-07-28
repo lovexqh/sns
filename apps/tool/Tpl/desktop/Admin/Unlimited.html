@@ -1,0 +1,192 @@
+<include file="_header" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.4.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.excheck-3.4.js"></script>
+<style type="text/css">
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f5f5f5;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}
+
+.ztree li span.floder_ico_open{
+	margin-right:2px; background-position:-110px -16px; vertical-align:top; *vertical-align:middle
+}
+.ztree li span.floder_ico_close,.ztree li span.floder_ico_docu{
+	margin-right:2px; background-position:-110px 0; vertical-align:top; *vertical-align:middle
+}
+
+</style>
+<SCRIPT type="text/javascript">
+<!--
+var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				
+				onClick: onClick
+			}
+		};
+var zNodes =[
+		<php>
+		$s='';
+		foreach($list as $obj){
+		$u='';
+		  foreach($list as $obje){
+		   if($obj[c_id]==$obje[f_id])
+		   $u=",open:true";
+		  }
+		  echo $s."{ id:$obj[c_id], pId:$obj[f_id], name:'$obj[DataName]'".$u."}";
+		  $s=',';
+		}
+		</php>
+		];
+$(document).ready(function(){
+			$.fn.zTree.init($("#parentTree"), setting, zNodes);
+			$("#f_idSel").attr('value','资源库');
+		});
+function onClick(e, treeId, treeNode) {
+	$("#f_id").val(treeNode.id);
+	var cityObj = $("#f_idSel");
+	cityObj.attr("value", treeNode.name);
+	$('#DataName').val('');
+}
+
+function showMenu() {
+	var cityObj = $("#f_idSel");
+	var cityOffset = $("#f_idSel").offset();
+	$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).show();
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+	$("#menuContent").fadeOut();
+	$("#nameContent").fadeOut();
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if(event.target.id=='parentTree'){
+		return;
+	}
+	if(event.target.id.indexOf('switch')>0){
+		return;
+	}
+	hideMenu();
+}
+function showData() {
+    var Dname=$("#f_idSel").val();
+	
+	$('#nameTree').find('li').remove();
+	$.post("{:U('tool/Admin/Dictionary')}",{DataName:Dname},function(text){
+	  var result=eval(text);
+	  if(result==null){return false;}
+	  var obj='';
+		for(var i =0;i<result.length;i++){
+			var jsonobj = result[i];
+			obj+="<li><a href='javascript:void(0);' onclick='checked(this)'  name='"+jsonobj['ID']+"' value='"+jsonobj['DataName']+"'>"+jsonobj['DataName']+"</a><input type='hidden' value='"+jsonobj['ID']+"'></li>";
+		 }
+		$('#nameTree').html(obj);
+	});	
+	var cityObj = $("#DataName");
+	var cityOffset = $("#DataName").offset();
+	$("#nameContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).show();
+	$("body").bind("mousedown", onBodyDown);
+}
+//-->
+</SCRIPT>
+<div id="container" class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />    
+   <form method="post" action="{:U('tool/Admin/doUnlimited')}" onsubmit="return modifyClassinfo(this);">
+  <div class="form2">
+    
+    <dl class="lineD">
+      <dt>上级分类：<span class="cRed pr5">*</span></dt>
+      <dd id="parentval">
+      	<input type="hidden" id="f_id" name="f_id" value="1" />
+        <input id="f_idSel" name="f_name" type="text" readonly value="" style="width:120px;" onClick="showMenu();" value="资源库" />
+        <button type="button" onClick="showMenu();" class="btn_w">选择</button>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>分类名称(中文)：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input type="text" name="DataName" id="DataName" style="width:180px" value="" onClick="showData();" onchange="change(this)"/>
+		<input type="hidden" name="DataID" id="DataID" style="width:100px" value="" />
+      </dd>
+    </dl>
+	<dl class="lineD">
+      <dt>分类名称(英文)：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input type="text" name="DataCode" id="DataCode" style="width:180px" value=""/>若中文名为新添加项，此项必填;若中文名是选择项，则此项忽略不填
+      </dd>
+    </dl>
+    <div class="page_btm">
+     
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </div>
+  </form>
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="parentTree" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+</div>
+<div id="nameContent" class="menuContent" style="display:none; position: absolute;">
+	<ul id="nameTree" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+</div>
+<include file="_footer" />  
+<script>
+function checked(o)
+{
+    $('#DataName').val(o.value);
+	$('#DataID').val(o.name);
+}
+function change(o)
+{   
+    $('#DataID').val("");
+    var value=o.value;
+    $('#nameTree li').each(function(i){
+	  if(value==$(this).find('a').val())
+	  {var ivalue=$(this).find('input').val();$('#DataID').val(ivalue);}
+	});
+}
+function modifyClassinfo(o)
+{
+	if (o.f_idSel.value=='') {
+		ui.error('请选择上级分类');
+		o.f_idSel.focus();
+		return false;
+	}else if (o.DataName.value=='') {
+		ui.error('请选择或输入中文分类名称');
+		o.DataName.focus();
+		return false;
+	}else if (o.DataID.value=='' && o.DataCode.value=='') {
+		ui.error('请输入英文分类名称');
+		o.DataCode.focus();
+		return false;
+	}else if (check(o.DataCode.value)) {
+		ui.error('英文分类名称只能为大小写字母');
+		o.DataCode.focus();
+		return false;
+	}
+}
+function check(str)
+{
+ var strSource = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ var ch;
+ var i;
+ var temp;
+ for (i = 0;i<=(str.length-1);i++)
+ {
+  ch = str.charAt(i);
+  temp = strSource.indexOf(ch);
+  if (temp == -1)
+  {
+   return 1;
+  }
+ }
+ return 0;
+}
+</script>

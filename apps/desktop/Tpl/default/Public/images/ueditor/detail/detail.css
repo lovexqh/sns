@@ -1,0 +1,416 @@
+body {
+	display:block;
+	background:#bfdbeb;
+	font:12px/1.5 tahoma, helvetica, clean, sans-serif
+}
+.pg{ margin:5px;}
+a {
+	color:#45649e
+}
+a:hover {
+	text-decoration:none
+}
+a:focus {
+	outline-style:none
+}
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden
+}
+.clearfix {
+	zoom:1
+}
+.radius3 {
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px
+}
+.radius5 {
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px
+}
+.appIntroduce .introduce-item {
+	margin:0px 10px;
+}
+.appIntroduce {
+	border:1px solid #CCC;
+	color:#5c5b5b;
+	width:600px;
+	margin:10px auto;
+	background:#FFF;
+}
+.appIntroduce .appBigIconBg {
+	position:relative;
+	width:76px;
+	height:79px;
+	margin:0 auto;
+	position:relative;
+	background:url("iconbg_1.png") no-repeat scroll 0 0 transparent
+}
+.appIntroduce .appAuth {
+	position:absolute;
+	width:19px;
+	height:19px;
+	bottom:5px;
+	right:3px;
+	background:url("sprite.png?t=20110421001") no-repeat -81px -36px
+}
+.ie6 .appIntroduce .appAuth {
+	background-image:url("sprite.gif?t=20110421001")
+}
+.appIntroduce .appBigIcon {
+	width:64px;
+	height:64px;
+	margin:7px 0 0 6px;
+	float:left;
+	position:absolute;
+	background:none no-repeat scroll center center transparent
+}
+.appIntroduce .appSmallIcon {
+	top:22px;
+	left:24px;
+	position:absolute;
+	background:none no-repeat scroll center center transparent
+}
+.appIntroduce .appActionBtn {
+	display:block;
+	width:76px;
+	height:31px;
+	text-align:center;
+	text-decoration:none;
+	line-height:32px;
+	font-weight:bold;
+	font-size:14px;
+	margin:10px auto 0;
+	color:#fff
+}
+.appIntroduce .appActionBtn_add {
+	background:url("down.gif") no-repeat ;
+}
+a:hover .appActionBtn_add {
+	background:url("down.gif") no-repeat -76px 0;
+}
+.appIntroduce .column1 {
+	margin:20px 10px 0 0;
+	width:100px;
+	float:left
+}
+.appIntroduce .column2 {
+	float:left;
+	line-height:1.8;
+	width:460px;
+	margin-top:10px;
+}
+.appIntroduce .column3 {
+	float:left;
+	display:inline;
+	line-height:1.8;
+	margin-top:20px;
+	margin-left:20px;
+	padding-top:10px;
+	width:540px;
+	border-top:1px solid #d7d7d7
+}
+.introduceValue {
+	color:#969696;
+	overflow:hidden
+}
+.black_bold {
+	color:#585858;
+	font-weight:600
+}
+.appIntroduce .appTitle {
+	margin:3px 0 10px 0
+}
+.appIntroduce .appName {
+	color:#585858;
+	font-weight:bold;
+	font-size:14px;
+	margin-right:10px
+}
+.appIntroduce .cateLinkBtn {
+	text-decoration:none
+}
+.appIntroduce .introduceKey {
+	float:left
+}
+.appIntroduce .appStars {
+	width:80px;
+	float:left;
+	margin-top:2px
+}
+.appIntroduce .appStarBtn {
+	width:16px;
+	height:16px;
+	float:left;
+	display:block;
+	cursor:pointer;
+	font-size:0;
+	line-height:0
+}
+.appIntroduce .appStarTip {
+	display:none;
+	background:#fffae9;
+	color:#f37d05;
+	float:left;
+	margin-left:10px;
+	padding:0 3px;
+	margin-top:-3px
+}
+.appIntroduce .myVote {
+	float:left;
+	font-weight:normal;
+	margin-left:5px
+}
+.appIntroduce .myAppVote {
+	height:20px;
+	margin:2px 0 0;
+	
+}
+.appIntroduce .appUrlLink {
+	text-decoration:none
+}
+.appIntroduce .appDesc {
+	text-decoration:none;
+	position:relative;
+	padding:10px;
+	text-indent:28px;
+	line-height:1.5;
+	color:#969696;
+	width:525px
+}
+.appIntroduce .share {
+	text-decoration:none;
+	position:relative;
+	padding-left:0;
+	line-height:1.5;
+	color:#969696;
+	width:540px
+}
+.appIntroduce .appDescText {
+	word-wrap:break-word;
+	overflow:hidden;
+	padding:10px;
+	text-indent:20px;
+}
+.appIntroduce .pointUp {
+	position:absolute;
+	display:none;
+	width:13px;
+	height:7px;
+	top:-7px;
+	left:15px;
+	background:url("sprite.png?t=20110421001") repeat-x -123px -40px
+}
+.ie6 .appIntroduce .pointUp {
+	background-image:url("sprite.gif?t=20110421001")
+}
+.appIntroduce .appThumbs {
+	margin:15px 0 10px
+}
+.appIntroduce .appThumbList {
+	height:28px
+}
+.appIntroduce .appThumbBtn {
+	float:left;
+	margin:3px 8px 0 0;
+	cursor:pointer;
+	text-decoration:none
+}
+.appIntroduce .appThumb {
+	width:391px;
+	height:236px;
+	background:no-repeat;
+	margin:auto
+}
+.appIntroduce .appAvgVote {
+	width:168px;
+	height:109px;
+	margin-top:10px;
+	background:url("vote_bg.gif?20110705001") no-repeat 0 0;
+	float:right;
+	position:relative
+}
+.ie6 .appIntroduce .appAvgVote {
+	right:-13px
+}
+.appIntroduce .appBigStars {
+	width:100px;
+	height:20px;
+	float:right;
+	margin:8px 5px 0 0;
+	display:inline;
+	background:url("stars.gif") repeat-x left bottom
+}
+.appIntroduce .appBigStar {
+	width:0;
+	height:100%;
+	background:url("stars.gif") repeat-x left top
+}
+.appIntroduce .height_light2 {
+	float:left;
+	font-weight:normal;
+	font-size:30px;
+	margin:0 0 0 15px;
+	line-height:1.5;
+	display:inline
+}
+.appIntroduce .appVoteCount {
+	clear:left;
+	float:left;
+	display:inline;
+	width:110px;
+	line-height:24px;
+	margin-left:15px
+}
+.appIntroduce .appVoteCount_bold {
+	font-weight:bold;
+	margin-left:5px;
+	margin-right:5px
+}
+.appIntroduce .appDiy {
+	color:#fff;
+	text-align:center;
+	background:url("sprite.png?t=20110421001") no-repeat -340px -60px;
+	line-height:14px;
+	width:24px;
+	height:14px;
+	text-indent:-999em;
+	margin-left:10px;
+	display:inline-block
+}
+.ie6 .appIntroduce .appDiy {
+	background-image:url("sprite.gif?t=20110421001")
+}
+.appStars {
+	display:block;
+	width:78px;
+	height:16px;
+	text-align:left;
+	float:left;
+	background:url("sprite.png?t=20110421001") no-repeat -280px -2px
+}
+.ie6 .appStars {
+	background-image:url("sprite.gif?t=20110421001")
+}
+
+.appStar {
+	width:100%;
+	height:100%;
+	background:url("sprite.png?t=20110421001") no-repeat -280px -20px
+}
+.ie6 .appStar {
+	background-image:url("sprite.gif?t=20110421001")
+}
+.appStar0 {
+	background-position:1000px 1000px
+}
+.appStar1 {
+	background-position:-344px -20px
+}
+.appStar2 {
+	background-position:-328px -20px
+}
+.appStar3 {
+	background-position:-312px -20px
+}
+.appStar4 {
+	background-position:-296px -20px
+}
+.appStar5 {
+	background-position:-280px -20px
+}
+ .pic_mlp img { max-width: 440px; max-height: 290px; }
+* html .pic_mlp img { width: expression(this.width > 440 && this.width>=this.height ? 440 : true); height: expression(this.height > 290 && this.width<=this.height ? 290 : true); }
+.appIntroduce .pre {
+				background:url(pre.gif) left 50% no-repeat ;
+				cursor: default;
+				left: -23px;
+				cursor: pointer;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				width: 250px;
+			}
+.appIntroduce .next {
+				background:url(next.gif) right 50% no-repeat ;
+				right: -23px;
+				cursor: pointer;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				width: 250px;
+			}
+.appIntroduce .pagenation li{
+	display: block;
+	width: 12px;
+	height: 12px;
+	background-image: url(pagination.png);
+	background-position: 0 0;
+	background-repeat:no-repeat;
+	float: left;
+	padding:0 2px;
+	overflow: hidden;
+}
+.appIntroduce .pagenation .current{
+	background-position: 0 -12px;
+}
+
+/*评论相关*/
+.reply_comment_div {
+		background: none repeat scroll 0 0 #F7F7F7;
+		border: 1px solid #E1E1E1;
+		padding: 10px 10px 4px;
+		text-align: left;
+	}
+	.arrow_up_reply {
+		background: url("comment/arrowup.gif") no-repeat scroll 0 0 #F7F7F7;
+		height: 10px;
+		left:360px;
+		position: relative;
+		top: 1px;
+		width: 18px;
+	}
+	* html .arrow_up_reply {
+		background: url("comment/arrowup.gif") no-repeat scroll 0 0 #F7F7F7;
+		height: 10px;
+		left: 360px;
+		position: relative;
+		top: 5px;
+		width: 18px;
+	}
+	.comment_reply {
+		background: url("comment/huifu.gif") no-repeat scroll 0 0 transparent;
+		line-height: 14px;
+		padding-left: 15px;
+	}
+	.facel {
+		padding: 8px;
+		width: 240px;
+	}
+	.facel img {
+		margin: 5px;
+	}
+	.moodfm_btn button {
+		cursor: pointer;
+		height: 58px;
+		opacity: 0;
+		filter:alpha(opacity=0);
+		width: 58px;
+	}
+	.moodfm_btn {
+		background: url("comment/mood_input_btn.png") no-repeat scroll 5px 0 transparent;
+		padding-left: 5px;
+	}
+	.moodfm_input {
+		height: 58px;
+		width: 470px;
+	}
+	.moodfm_input textarea{
+		border:none;width:99%;border:1px solid #CCC;height:58px;
+	}
+	

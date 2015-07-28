@@ -1,0 +1,100 @@
+<include file="../Public/_header" /><include file="../Public/_tab" /><include file="../Public/_manage_leftmenu" />
+<script language="javascript" type="text/javascript" src="http://localhost/TASK/apps/space/Tpl/default/Public/js/datepicker/WdatePicker.js"></script>
+
+<div class="trunk_right_g">
+  <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_money" /><span class="title">班费收支情况一览表</span><span class="add"><a href="javascript:void(0);" onclick="addMoney({$vo.id})">[添加]</a></span></div>
+  <form action="{:U('space/Manage/search')}" method="post" class="mon_search" >
+    <input type="hidden" name="classid" value="{$classid}" />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr height="35">
+        <td width="60" align="right">类&nbsp;&nbsp;&nbsp;&nbsp;型:</td>
+        <td><select name="type" class='mon_boder mon_sel'>
+            <option  value="1" 
+            <php> if($type==1) { </php>
+             selected="true"
+            <php> } </php>
+            >----收&nbsp;入----
+            </option>
+            <option  value="2" 
+            <php> if($type==2) { </php>
+             selected="true"
+            <php> } </php>
+            >----支&nbsp;出----
+            </option>
+          </select></td>
+      </tr>
+      <tr height="35">
+        <td align="right">金额范围:</td>
+        <td><input name="m_from" type="text" class='mon_boder input_height'/>
+          <span>—</span>
+          <input name="m_to" type="text" class='mon_boder input_height'/></td>
+      </tr>
+      <tr height="35">
+        <td align="right">经&nbsp;手&nbsp;人:</td>
+        <td><input name="handle" type="text" class='mon_boder input_height' /></td>
+      </tr>
+      <tr height="35">
+        <td align="right">时间范围:</td>
+        <td><input name="t_from" type="text" onfocus="WdatePicker({startDate:'%y-%M-01 00:00',dateFmt:'yyyy-MM-dd HH:mm',alwaysUseStartDate:true})" class='mon_boder input_height' />
+          <span>—</span>
+          <input name="t_to" type="text" onfocus="WdatePicker({startDate:'%y-%M-01 00:00',dateFmt:'yyyy-MM-dd HH:mm',alwaysUseStartDate:true})" class='mon_boder input_height' /></td>
+      </tr>
+      <tr height="35">
+        <td colspan="2"><input name="" style=" margin:20px 10px 0 70px;" type="submit" class="conform" value="" />
+          <input name="" type="reset" class="cancel" value="" /></td>
+      </tr>
+    </table>
+  </form>
+  <div class="mon_total"><strong class="total">班费统计：</strong><strong>总收入：</strong><span>{$sr['shouru']}元</span><strong>总支出：</strong><span>{$zc['zhichu']}元</span><strong>合计余额：</strong><span>{$sr['shouru']-$zc['zhichu']}元</span></div>
+  <div class="mon_detail" style="width:614px;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left">
+      <tbody>
+        <tr>
+          <th width="90" height="35">类型</th>
+          <th width="90">金额</th>
+          <th width="90">经手人</th>
+          <th width="110">发生时间</th>
+          <th style="border-right:0 none;">详细信息</th>
+        </tr>
+      </tbody>
+    </table>
+    <div class="clear"></div>
+    <div style=" height:500px; overflow-y:scroll; overflow-x:hidden">
+      <table border="0" cellpadding="0" cellspacing="0" class="mon_table" align="left">
+        <tbody>
+          <volist name="data" id="vo">
+            <tr id="{$vo.type}">
+              <td  width="90" height="35"><if condition="$vo.type eq 1">收入
+                  <elseif condition="$vo.type eq 2" />
+                  支出
+                  <else/>
+                  全部</if></td>
+              <td width="90">{$vo.amount}</td>
+              <td width="90">{$vo.handle}</td>
+              <td width="110">{:date("Y-m-d",$vo['ctime'])}</td>
+              <td style="border-right:0 none;"><a href="javascript:void(0);" class="a_sel" onclick="selMoney({$vo.id})"/>查看</a> <a href="javascript:void(0);" class="a_edit" onclick="editMoney({$vo.id})" />编辑</a> <a href="javascript:if(confirm('确认删除吗?'))" class="a_del" onclick="delMoney({$vo.id},{$classid})" />删除</a></td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<include file="../Public/_footer" /> 
+<script type="text/javascript">
+	function addMoney(id){
+		ui.box.load('__URL__&act=addMoney&classid='+<php>echo $classid;</php>+'&id='+id,{title:"增加班费"});
+	}
+	function selMoney(id){
+		ui.box.load('__URL__&act=selMoney&classid='+<php>echo $classid;</php>+'&id='+id,{title:"查看班费信息"});
+	}
+	function editMoney(id){
+		ui.box.load('__URL__&act=editMoney&classid='+<php>echo $classid;</php>+'&id='+id,{title:"修改班费信息"});
+	}
+	function delMoney(id,classid){
+	       if(confirm("确实要删除吗?")){
+	    	   window.location = "__URL__&act=delMoney&classid=<php>echo $classid;</php>&id="+id ;
+	       }
+	       
+	    }
+</script>

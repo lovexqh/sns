@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>cloud</title>
+<style type="text/css">
+html,body{
+	overflow:hidden; 
+	height:100%; 
+	width:100%;
+	margin:0; 
+	padding:0;
+	position:relative;
+	z-index:-18;
+}
+.clouds {
+	position:relative;
+	background: url(images/cloud1.png) no-repeat; 
+	width:580px; 
+	height:250px; 
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/cloud1.png');
+	z-index:-19;
+}
+</style>
+</head>
+<body>
+<div style="position:absolute;width:100%; height:100%; z-index:-20;"><img height="100%" width="100%" src="images/cloud.jpg" /></div>
+<div id="clouds" style="overflow: hidden; height: 250px; width: 100%;"> 
+<table align="left" cellpadding="0" cellspace="0" border="0" height="250" width="200%"> 
+  <tr> 
+	<td id="clouds1" valign="top"> 
+		<div class="clouds">&nbsp;</div>
+	</td> 
+	<td id="clouds2" valign="top"></td> 
+  </tr> 
+</table> 
+</div> 
+<script>
+var cloudsMar = 'cloudsMar';
+//删除cookies为了使clouds主题背景云层正常滚动
+function _setCookie(name,value)
+{
+	var Days = 1;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+var speed=100;/*速度数值越大速度越慢*/ 
+document.getElementById('clouds2').innerHTML=document.getElementById('clouds1').innerHTML; 
+/*两个层来回交替出现*/ 
+function Marquee(){		
+	if(document.getElementById('clouds').scrollLeft<=0){
+		document.getElementById('clouds').scrollLeft+=document.getElementById('clouds1').offsetWidth; 
+    }
+	document.getElementById('clouds').scrollLeft--; 
+}
+
+var MyMar=setInterval(function(){
+	//判断cookies是否有值
+	var arr;
+	if(arr=document.cookie.match(new RegExp("(^| )cloudsMar=([^;]*)(;|$)"))){
+		if((arr[2]=='true' || arr[2]==true)){
+			return;
+		}else{
+			Marquee();
+		}
+	}else{
+		Marquee();
+	}
+},speed);
+
+</script>
+</body>
+</html>

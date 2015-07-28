@@ -1,0 +1,183 @@
+<include file="../Public/_header" />
+<div class="content_holder">
+	<div class="content">
+		<!-- 内容 begin  -->
+		<div class="main">
+			<div class="mainbox">
+				<div class="mainbox_W">
+					<php> $num = rand(1,10); </php>
+					<div class="main_banner"
+						style="background-image: url('../Public/bgimg/{$num}.jpg');">
+						<!-- 
+			<div class="club_main_banner" 
+				onmouseout="$(this).css('background-image','url(\'../Public/images/chg_bg.png\')');" 
+				onmouseover="$(this).css('background-image','url(\'../Public/images/chg_bg_hover.png\')');"
+				onclick="showBanner();">
+			</div>
+		 -->
+						<div class="club_main_title"></div>
+						<div class="club_main_count">
+							共入驻 <span style="color: #FFE505;">{$num|getClubCount}</span> 社团
+							&nbsp;&nbsp;&nbsp;&nbsp;共入驻 <span style="color: #FFE505;">{$num|getMemberCount}</span>
+							人
+						</div>
+						<div class="club_main_notice"
+							style="z-index: 1; background-color: black;"></div>
+						<div class="club_main_notice"
+							style="z-index: 2; opacity: 1; border: none;">
+							<p class="club_main_notice_title">&nbsp;&nbsp;&nbsp;最新公告</p>
+							<php>if(count($noticeList)>4){</php>
+							<div id="scrollNews"
+								style="height: 110px; position: relative; overflow: hidden;">
+								<ul>
+									<volist name="noticeList" id="notice">
+									<li><a style="color: #FFFFFF;"
+										href="{:U('club/Notice/index', array('id'=>$notice['clubid'],'nid'=>$notice['id']))}">{$notice.name}:{$notice.content}</a></li>
+									</volist>
+								</ul>
+							</div>
+							<php>}else{</php>
+							<ul>
+								<volist name="noticeList" id="notice">
+								<li><a style="color: #FFFFFF;"
+									href="{:U('club/Notice/index', array('id'=>$notice['clubid'],'nid'=>$notice['id']))}">{$notice.name}:{$notice.content}</a></li>
+								</volist>
+							</ul>
+							<php>}</php>
+						</div>
+					</div>
+					<div class="position_show">
+						<img class="allClub_img" src="../Public/images/all_club.png"/>
+						<a class="allClub_text" href="{:U('club/Index/index')}">社团首页</a>
+						<p class="allClub_text">&nbsp;&gt;&nbsp;</p>
+						<p class="allClub_text">查找社团</p>
+					</div>
+					<div id="allClub_content" class="allClub_content_info">
+						<php>if(count($ClubList) == 0){</php>
+						<div style="height: 20px; text-align: center; font-size: 20px;">
+							<span>您搜索的社团不存在，您可以点击<a href="{:U('club/Index/allClub')}">查看所有社团</a></span>
+						</div>
+						<php>}</php>
+						<volist name="ClubList" id="vo" mod="4"> <eq name="mod"
+							value="1">
+						<div class="allClub_content_single">
+							<table style="width: 200px;" class="allClub_table">
+								<tr>
+									<td rowspan="3" class="allClub_table_td"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"><img
+											style="width: 60px; height: 60px;" src="{$vo['logo']}"></a></td>
+									<td colspan="2" style="height: 25px;"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"
+										title="{$vo.title}"> <span class="allClub_title">{$vo.title|text|mStr=4}
+										</span>
+									</a> <if condition="$vo.type eq 1">
+										<span class="icon club_school_icon"></span></if> <if
+											condition="$vo.type eq 2">
+										<span class="icon club_academy_icon"></span></if> <if
+											condition="$vo.type eq 3">
+										<span class="icon club_student_icon"></span></if></td>
+								</tr>
+								<tr>
+									<td>成&nbsp;&nbsp;&nbsp;&nbsp;员</td>
+									<td>：{$vo.membercount}人</td>
+								</tr>
+								<tr>
+									<td>创建时间</td>
+									<td>：{$vo.ctime}</td>
+								</tr>
+							</table>
+						</div>
+						</eq> <eq name="mod" value="2">
+						<div class="allClub_content_single">
+							<table style="width: 200px;" class="allClub_table">
+								<tr>
+									<td rowspan="3" class="allClub_table_td"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"><img
+											style="width: 60px; height: 60px;" src="{$vo['logo']}"></a></td>
+									<td colspan="2" style="height: 25px;"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"
+										title="{$vo.title}"> <span class="allClub_title">{$vo.title|text|mStr=4}
+										</span>
+									</a> <if condition="$vo.type eq 1">
+										<span class="icon club_school_icon"></span></if> <if
+											condition="$vo.type eq 2">
+										<span class="icon club_academy_icon"></span></if> <if
+											condition="$vo.type eq 3">
+										<span class="icon club_student_icon"></span></if></td>
+								</tr>
+								<tr>
+									<td>成&nbsp;&nbsp;&nbsp;&nbsp;员</td>
+									<td>：{$vo.membercount}人</td>
+								</tr>
+								<tr>
+									<td>创建时间</td>
+									<td>：{$vo.ctime}</td>
+								</tr>
+							</table>
+						</div>
+						</eq> <eq name="mod" value="3">
+						<div class="allClub_content_single">
+							<table style="width: 200px;" class="allClub_table">
+								<tr>
+									<td rowspan="3" class="allClub_table_td"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"><img
+											style="width: 60px; height: 60px;" src="{$vo['logo']}"></a></td>
+									<td colspan="2" style="height: 25px;"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"
+										title="{$vo.title}"> <span class="allClub_title">{$vo.title|text|mStr=4}
+										</span>
+									</a> <if condition="$vo.type eq 1">
+										<span class="icon club_school_icon"></span></if> <if
+											condition="$vo.type eq 2">
+										<span class="icon club_academy_icon"></span></if> <if
+											condition="$vo.type eq 3">
+										<span class="icon club_student_icon"></span></if></td>
+								</tr>
+								<tr>
+									<td>成&nbsp;&nbsp;&nbsp;&nbsp;员</td>
+									<td>：{$vo.membercount}人</td>
+								</tr>
+								<tr>
+									<td>创建时间</td>
+									<td>：{$vo.ctime}</td>
+								</tr>
+							</table>
+						</div>
+						</eq> <eq name="mod" value="0">
+						<div class="allClub_content_single">
+							<table style="width: 200px;" class="allClub_table">
+								<tr>
+									<td rowspan="3" class="allClub_table_td"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"><img
+											style="width: 60px; height: 60px;" src="{$vo['logo']}"></a></td>
+									<td colspan="2" style="height: 25px;"><a
+										href="{:U('club/Topic/index',array('id'=>$vo['id']))}"
+										title="{$vo.title}"> <span class="allClub_title">{$vo.title|text|mStr=4}
+										</span>
+									</a> <if condition="$vo.type eq 1">
+										<span class="icon club_school_icon"></span></if> <if
+											condition="$vo.type eq 2">
+										<span class="icon club_academy_icon"></span></if> <if
+											condition="$vo.type eq 3">
+										<span class="icon club_student_icon"></span></if></td>
+								</tr>
+								<tr>
+									<td>成&nbsp;&nbsp;&nbsp;&nbsp;员</td>
+									<td>：{$vo.membercount}人</td>
+								</tr>
+								<tr>
+									<td>创建时间</td>
+									<td>：{$vo.ctime}</td>
+								</tr>
+							</table>
+						</div>
+						</eq> </volist>
+						<div class="c"></div>
+					</div>
+					<div class="c"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="../Public/_footer" />

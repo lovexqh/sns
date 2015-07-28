@@ -1,0 +1,31 @@
+            <ul>
+              <if condition="empty($data)">
+                <li style="line-height:80px;">还没有上传资源</li>
+              </if>
+              <volist name="data" id='vo'>
+                <li>
+                  <div class="mid">
+                    <strong>资源标题：<a href="{:U('resource/Index/showresource',array('id'=>$vo['id'],iframe=>'yes'))}" target="_blank">{$vo.title|getShort=11}</a></strong>
+                    <span>分类信息：{$vo['class']|getDictionary} 资源类型：{$vo['type']|getDictionary}</span>
+                    <span>审核：<php>if($vo[state]==0){</php>待审核<php>}else if($vo[state]==1){</php>审核通过<php>}else{</php><font style="color:#F00;">驳回</font><php>}</php>
+                      
+                      上传时间：{$vo.time|date="Y-m-d",###}
+                    </span>
+                  </div>
+                  <div class="rt">
+                  	<a href="{:U('resource/Index/showresource',array('id'=>$vo['id'],iframe=>'yes'))}" target="_blank">查看详情</a><i class="vline">|</i> 
+                        
+                    {:W('Weibo',array('tpl_name'=>'resource_share_weibo','button_title'=>'分享'))}
+                    <php>
+                    $tpl_data = array('author'=>getUserName($vo[uid]),'title'=>$vo['title'],'url'=>U('resource/Index/showresource',array('id'=>$vo['id'])),'type'=>0);
+                    $tpl_data = urlencode(serialize($tpl_data));
+                    </php>
+                    <a href="javascript:void(0)" onclick="_widget_weibo_start('', '{$tpl_data}');"  class="link-act">分享</a>
+                    <php>if($vo['uid']!=$mid){ </php>
+                    <i class="vline">|</i>
+                    {:W('Favorite',array('fid'=>$vo['id'],'app'=>'resource','mod'=>'Index','act'=>'showresource','type'=>'link','count'=>1))}  
+                    <php>}</php>
+                  </div>
+                </li>
+              </volist>
+            </ul>

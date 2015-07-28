@@ -1,0 +1,88 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/miniblog.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_C no_r boxMessage">
+        <div class="tab-menu">
+        	<a href="javascript:void(0)" onclick="ui.sendmessage();" class="btn_b right">发私信</a>
+			<include file="_tab" />
+        </div>
+        <div style=" overflow: hidden; width: 100%;">
+          <ul class="feed_list">
+          	<volist id="vo" name="data">
+            <li class="lineD_btm" id="approved_{$vo.approved_id}">
+                <div class="left" style="padding: 16px 5px 0px 6px;"><input class="ck" onclick="checkon(this);" type="checkbox" value="41"></div>
+                <div class="userPic"><space uid="vo['from_id']" target="_blank">{uavatar=m}</space></div>
+                <div class="feed_c" style="margin-left: 90px;">
+                    <a style="margin-top: 2px" class="hover del" onclick="ui.confirm(this,'确定要删除该私信?')" href="javascript:void(0);" callback="deleteApproved({$vo.approved_id})" title="删除"></a>
+                    <div class="msgCnt">
+                      <div class="message_two" style="padding: 0px 0px 10px;">
+                      	{$vo.content}
+                      </div>
+                    </div>
+                    <div>
+                    <span class="right button_box">
+                    <php>if(empty($vo['audit_uid'])&&empty($vo['dismissed_uid'])){</php>
+                    <a href="javascript:void(0);" onclick="ui.confirm(this,'确定要将该请求通过审核吗？')" callback="doAudit('{$vo.approved_id}','{$vo.audit_url}')" class="btn_b">通过</a> 
+                    <a href="javascript:void(0)" onclick="ui.sendmessage();" class="btn_w">驳回</a>
+                    <php>}else if(!empty($vo['audit_uid'])){</php>
+                    	<font color="#009900">该信息已由 <space uid="vo.audit_uid" target="_blank">{uname}</space> 通过审核</font>
+                    <php>}else{</php>
+                    	<font color="#009900">该信息已被 <space uid="vo.dismissed_uid" target="_blank">{uname}</space> 驳回</font>
+                    <php>}</php>
+                    </span>
+                    <span style="color: rgb(153, 153, 153);">{$vo.ctime|friendlyDate}</span>
+                    </div>
+                </div>
+            </li>
+			</volist>
+          </ul>
+        </div>
+        <div class="c"></div>
+        <div class="page">{$html}</div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+//删除审核信息
+function deleteApproved(id){
+	$.post( U('home/Message/delApproved'),{id:id},function(txt){
+		if(txt){
+			$("#approved_"+id).slideUp("fast",function(){
+				$(this).remove();
+			}); 
+		}else{
+			alert('删除失败');
+		}
+	});
+}
+//通过审核方法
+function doAudit(id,data){
+	if(id){
+		$.post(data,{},function(result){
+			if(result>0){
+				$.post( U('home/Message/auditApproved'),{id:id},function(data){
+					if(data){
+						ui.success('审核操作成功！');
+						$("#approved_"+id).find(".button_box").html('<font color="#009900">该信息已通过审核</font>'); 
+					}else{
+						ui.error('审核操作失败！');
+					}
+				});
+			}else{
+				ui.error('审核操作失败！该信息可能已通过审核。');	
+			}
+		});	
+	}
+}
+//驳回申请方法
+
+</script>	
+<include file="__THEME__/footer" /> 

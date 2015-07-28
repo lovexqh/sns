@@ -1,0 +1,37 @@
+<include file="header" />
+
+<script type="text/javascript">
+var is_relink=true;
+$(document).ready(function(e) {
+    replace_link('.task_list');
+});
+</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+
+  <div class="content">
+    <div>
+      <div class="c_left">
+        <div class="weibo_menu_tabs">
+          <ul>
+              <li><a id="feed_colleague_item" rel="colleague" style="width:65px; text-align:center; color:#333" class="on" href="{:U('home/Space/resource', array('uid'=>$_GET['uid'], 'type'=>$key))}" ><span>资源</span></a></li>
+          </ul>
+        </div>
+		<div class="clear"></div>
+		<div class="summary-list task_list">
+        	<include file="_resource" />
+            <!-- 分页样式start -->
+            <div class="page">{$html}</div>
+            <!-- 分页样式end -->
+            <div class="clear"></div>
+        </div>
+      </div>
+      <include file="right" />
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 页面主体内容end -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

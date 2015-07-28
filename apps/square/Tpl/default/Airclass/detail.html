@@ -1,0 +1,224 @@
+<include file="_header" />
+
+<script type="text/javascript" charset="utf-8">
+var ctrl = function(){
+}
+ctrl.prototype = {
+	edit:function(meetingId){
+	    ui.box.load(U('airclass/Index/alertRecordMeeting')+'&meetingId='+meetingId,{title:"录制的课堂"});
+	}
+}
+var c = null;
+</script>
+
+  <div class="navigate_info">
+    <strong>您当前的位置：</strong>
+    <php>$where = array();</php>
+    <span><a href="{:U('square/Airclass/index')}">课堂中心首页</a> > </span>
+    <php>$where['section'] = $classinfo['xueduan'];</php>
+    <span><a href="{:U('square/Airclass/lists',$where)}">{$classinfo['xueduan']|getXueduan}</a> > </span>
+    <php>$where['Subject'] = $classinfo['course'];</php>
+    <span><a href="{:U('square/Airclass/lists',$where)}">{$classinfo['course']|getCourseName}</a> > </span>
+    <php>$where['Grade'] = $classinfo['grade'];</php>
+    <span><a href="{:U('square/Airclass/lists',$where)}">{$classinfo['grade']|getDataName}</a> > </span>
+    <php>$where['Publisher'] = $classinfo['edition'];</php>
+    <span><a href="{:U('square/Airclass/lists',$where)}">{$classinfo['edition']|getDataName}</a> > </span>
+    <php>$where['Volume'] = $classinfo['fence'];</php>
+    <span><a href="{:U('square/Airclass/lists',$where)}">{$classinfo['fence']|getDataName}</a></span> 
+  </div>
+  <div class="main">
+    <div class="main_left">
+      <div class="info detail_box info_detail" style="height:auto; padding-bottom:8px;">
+              <table align="center" class="classinfo">
+                <tr>
+                  <td width="130" style="padding:0;"></td>
+                  <td width="165" style="padding:0;"></td>
+                  <td width="100" style="padding:0;"></td>
+                  <td width="165" style="padding:0;"></td>
+                  <td width="100" style="padding:0;"></td>
+                  <td width="165" style="padding:0;"></td>
+                </tr>
+                <tr>
+                  <td colspan="6"><h3>课堂名称:</h3><h4>《{$classinfo['name']}》</h4></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>分类:</h3>{$classinfo['category']|getCategoryName}</td>
+                  <td colspan="2"><h3>学校:</h3>{$classinfo['schoolid']|getSchoolName}</td>
+                  <td colspan="2"><h3>学段:</h3>{$classinfo['xueduan']|getXueduan}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>年级:</h3>{$classinfo['grade']|getDataName}</td>
+                  <td colspan="2"><h3>学科:</h3>{$classinfo['course']|getCourseName}</td>
+                  <td colspan="2"><h3>版本:</h3>{$classinfo['edition']|getDataName}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>分册:</h3>{$classinfo['fence']|getDataName}</td>
+                  <td colspan="4"><h3>章节:</h3>{$classinfo['part']|getPart}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><h3>开课时间:</h3>{$classinfo['stime']|date="Y-m-d H:i",###}</td>
+                  <td colspan="2"><h3>结束时间:</h3>{$classinfo['etime']|date="Y-m-d H:i",###}</td>
+                  <td colspan="2"><h3>预计时长:</h3>{$classinfo['spendtime']} 分钟</td>
+                </tr>
+                <tr>
+                  <th>预定参加人员:</th>
+                  <td colspan="5">
+                <php>if(count($members['allteacher'])>0){</php>
+                  <div class="cjrs_box">
+                      <strong>【教师（{:count($members['allteacher'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name='members.allteacher' id='vo'>
+                          <div class="uinfo"><a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a><span>({$vo['signStatus']})({$vo['regStatus']})</span></div>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  <php>if(count($members['allstudent'])>0){</php>
+                  <div class="cjrs_box">
+                      <strong>【学生（{:count($members['allstudent'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name="members.allstudent" id='vo'>
+                          <div class="uinfo"><a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a><span>({$vo['signStatus']})({$vo['regStatus']})</span></div>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  <php>if(count($members['allparent'])>0){</php>
+                  <div class="cjrs_box">
+                      <strong>【家长（{:count($members['allparent'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name='members.allparent' id='vo'>
+                          <div class="uinfo"><a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a><span>({$vo['signStatus']})({$vo['regStatus']})</span></div>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  </td>
+                </tr>
+                <tr>
+                  <th>实际参加人员:</th>
+                  <td colspan="5">
+                <php>if(count($members['joinparent'])>0){</php>
+                  <div class="cjrs_box" style="background:#f8ffc9">
+                      <strong>【教师（{:count($members['jointeacher'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name='members.jointeacher' id='vo'>
+                          <a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  <php>if(count($members['joinstudent'])>0){</php>
+                  <div class="cjrs_box" style="background:#f8ffc9">
+                      <strong>【学生（{:count($members['joinstudent'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name="members.joinstudent" id='vo'>
+                          <a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  <php>if(count($members['joinparent'])>0){</php>
+                  <div class="cjrs_box" style="background:#f8ffc9">
+                      <strong>【家长（{:count($members['joinparent'])}人）】</strong>
+                      <div class="rslist">
+                          <volist name='members.joinparent' id='vo'>
+                          <a href="###">{:(empty($vo['xm'])?'佚名':$vo['xm'])}</a>
+                          </volist>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+                  <php>}</php>
+                  </td>
+                </tr>
+                <tr>
+                  <th>相关资料:</th>
+                  <td colspan="5">
+                  <strong>视频：</strong>
+                  <a href="javascript:void(0);" onclick="c.edit({$classinfo['classid']})"><img src="../Public/images/main.jpg" width="155" height="125" /></a>
+                  <br /><br />
+                  <strong>资源列表：</strong>
+                  <div class="ResouseList">
+                      <ul>
+                          <eq name="resources" value="">暂无资源</eq>
+                          <volist name='resources' id='vo'>
+                          <li><img src="../Public/images/sourceico.png"  /> <a href="{:U('airclass/Index/downResource',array('id'=>$vo['id']))}" title="点击下载">{$vo.name}</a></li>
+                          </volist>
+                      </ul>
+                      
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>主题:</th>
+                  <td colspan="5"><p>{$classinfo['info']}</p></td>
+                </tr>
+              </table>
+<script type="text/javascript">
+$(document).ready(function(e) {
+  //上传资料方法
+  $('#uploadResouse').bind('click',function(){
+      //ui.box.load("{:U('airclass/Upload/addResource',array('classid'=>$classinfo['classid']))}", {title:'上传相关资料'});
+      $('#win').dialog({   
+          title: '上传相关资料',   
+          width: 750,   
+          height: 500,   
+          closed: false,   
+          cache: false,   
+          href: '{:U('airclass/Upload/addResource',array('classid'=>$classinfo['classid']))}',   
+          modal: true  
+      });
+  });
+  //下载资源方法
+  $('#downResouse').bind('click',function(){
+      //ui.box.load("{:U('airclass/Upload/downResource',array('classid'=>$classinfo['classid']))}", {title:'下载相关资源'});
+      $('#win').dialog({   
+          title: '下载相关资源',   
+          width: 750,   
+          height: 500,   
+          closed: false,   
+          cache: false,   
+          href: '{:U('airclass/Upload/downResource',array('classid'=>$classinfo['classid']))}',   
+          modal: true  
+      });
+  });
+});
+</script>
+<script type="text/javascript">
+c = new ctrl('meetingId[]');
+</script>
+      </div>
+    </div>
+    <div class="main_right">
+      <div class="source_right">
+        <h3>相关信息：</h3>
+        <div class="source_count">
+          <p><strong>创建者：</strong><span>{$classinfo.uid|getUserSpace}</span></p>
+          <p><strong>共发布课堂：</strong><span>节</span></p>
+        </div>
+        
+        <h2>相关课堂推荐</h2>
+        <ul class="recommend">
+          <volist name="onList3" id='vo'>
+          <li><strong><a href="{:U('square/Airclass/detail',array('classId'=>$vo[classid]))}" title="{$vo[name]}">{$vo[name]} </a></strong>
+            <div class="score"></div>
+            <span></span>
+            <div class="clear"></div>
+          </li>
+          </volist>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <div class="bottom"> <strong>Powered By EDU-GridSNS</strong> <strong>山东锐杰网格信息技术有限公司</strong> <strong>鲁ICP备09072052号</strong> <span>关于我们</span><span>|</span><span>官方网站</span> </div>
+  <div class="clear"></div>
+</div>
+</body>
+</html>

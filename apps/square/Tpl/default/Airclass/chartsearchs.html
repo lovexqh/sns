@@ -1,0 +1,68 @@
+<div style="display:none;">
+	<ul id="crumbs_left">
+		<li>当前位置</li>
+			<li>&gt;&gt;&nbsp;{$column}</li>
+			<volist name="path" id="obj">
+				<li>&gt;&gt;&nbsp;{$obj.cname}</li>
+			</volist>
+	</ul>
+</div>
+<div class="detil_title_chart">
+	<ul>
+		<li><a href="javascript:;" id="people" class="tab_visited" onclick="tab_show(this);">活跃人物排行榜</a></li>
+		<li><a href="javascript:;" id="active" onclick="tab_show(this);">课堂纪实排行榜</a></li>
+	</ul>
+</div>
+<div class="detil_content" id="con_people" style="display:block;"> 
+   <table border="0" cellpadding="0" cellspacing="0" width="97%">
+	   <tr>
+			<th width="70px"></th>
+			<th>姓名</th>
+			<th>创建课堂数</th>
+			<th>实参加课堂</th>
+			<th>应参加课堂</th>
+			<th>上传资源数</th>
+			<th>下载资源数</th>
+	   </tr>
+	   <volist name="person.data" id="obj">
+	   <tr>
+			<td style="text-align:center;"><a href="@{$obj.uid}"><space uid="obj.uid">{uavatar=m}</space></a></td>
+			<td>{$obj.uid|getwusername}</td>
+			<td>{$obj.count}</td>
+			<td>{$obj.ycanjia}</td>
+			<td>{$obj.scanjia}</td>
+			<td>{$obj.resource}</td>
+			<td>{$obj.resource}</td>
+	   </tr>
+	   </volist>
+   </table>
+   <div class="clear"></div>
+</div>
+
+<div class="detil_content"  id="con_active" style="display:none;"> 
+   <table border="0" cellpadding="0" cellspacing="0" width="97%">
+	   <tr>
+			<th>课堂纪实名称</th>
+			<th>点击数</th>
+			<th>评论数</th>
+			<th>活动资源数</th>
+			<th>应参加人数</th>
+			<th>实际参加人数</th>
+	   </tr>
+	   <volist name="teaching.data" id="obj">
+	   <tr>
+			<td style="text-align:left; padding-left:10px;">
+				<a href="{:U('square/Airclass/show',array('id'=>$obj['classid']))}">
+					{$obj.name|getshort=###,'16','…'}
+				</a>
+			</td>
+			<td>{$obj.readcount}</td>
+			<td>{$obj.commentcount}</td>
+			<td>{$obj.resource}</td>
+			<td>{$obj.ycanjia}</td>
+			<td>{$obj.scanjia}</td>
+	   </tr>
+	   </volist>
+   </table>
+   <div class="clear"></div>
+</div>

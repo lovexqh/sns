@@ -1,0 +1,228 @@
+  <!-------- 搜索知识点 -------->
+  <div id="searchClassification_div" <neq name="type" value="searchClassification">style="display:none;"</neq>>
+  	<div class="page_tit">搜索知识点 [ <a href="javascript:void(0);" onclick="searchClassification();">隐藏</a> ]</div>
+	
+	<div class="form2">
+	<form method="post">
+	<php>if($type != 'searchClassification') $uid = '';</php>
+    <dl class="lineD">
+      <dt>知识点内容：</dt>
+      <dd>
+        <input name="edukey" id="edukey" type="text" value="{$edukey}">
+        <p>请填写要搜索的知识点内容，支持模糊查询</p>
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+  
+  <!-------- 知识点列表 -------->
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$dataList.html}</div>
+    <form method="post">
+	<a href="javascript:void(0);" class="btn_a" onclick="searchClassification();">
+		<span class="searchClassification_action"><neq name="type" value="searchClassification">搜索知识点<else/>搜索完毕</neq></span>
+	</a>
+    <div class="btn_a select_box"><span>
+    <select name="publisher" class="dataPublisher" onchange="getSelect('publisher',0,this.value)">
+    <option value="0">请选择出版(或发行)者</option>
+    <volist id="val" name="dataPublisher">
+    	<option value="{$val['DataCode']}" <php>if($publisher == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <div class="btn_a select_box" <neq name="subject" value="show"><else/>style="display:none"</neq>><span>
+    <select name="subject" class="publisher" onchange="getSelect('subject',$('.dataPublisher').val(),this.value)">
+    <option value="0">全部</option>
+	<volist id="val" name="dataSubject">
+    	<option value="{$val['Subject']}" <php>if($subject == $val['Subject']) echo 'selected';</php>>{$val['SubjectName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <div class="btn_a select_box" <neq name="grade" value="show"><else/>style="display:none"</neq>><span>
+    <select name="grade" class="subject">
+    <option value="0">全部</option>
+    <volist id="val" name="dataGrade">
+    	<option value="{$val['Grade']}" <php>if($grade == $val['Grade']) echo 'selected';</php>>{$val['GradeName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <a href="javascript:void(0);" class="btn_a" onclick="$(this).parent().submit();"><span>过 滤</span></a>
+    </form>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">出版(或发行)者</th>
+    <th class="line_l">科目</th>
+    <th class="line_l">年级</th>
+    <th class="line_l">知识点</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="dataList.data">
+	  <tr overstyle='on' id="row_{$vo['id']}">
+	    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+	    <td>{$vo.CourseID}</td>
+	    <td>{$vo.PublisherName}</td>
+		<td>{$vo.SubjectName}</td>
+	    <td>{$vo.GradeName}</td>
+	    <td>{$vo.Course}</td>
+	    <td>
+            <a href="{:Addons::adminPage('addClassification', array('id'=>$vo['CourseID']))}">编辑</a>
+            <a href="javascript:void(0)" onclick="c.del({$vo.CourseID})">删除</a>
+		</td>
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$dataList.html}</div>
+	<form method="post">
+	<a href="javascript:void(0);" class="btn_a" onclick="searchClassification();">
+		<span class="searchClassification_action"><neq name="type" value="searchClassification">搜索知识点<else/>搜索完毕</neq></span>
+	</a>
+    <div class="btn_a select_box"><span>
+    <select name="publisher" class="dataPublisher" onchange="getSelect('publisher',0,this.value)">
+    <option value="0">请选择出版(或发行)者</option>
+    <volist id="val" name="dataPublisher">
+    	<option value="{$val['DataCode']}" <php>if($publisher == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <div class="btn_a select_box" <neq name="subject" value="show"><else/>style="display:none"</neq>><span>
+    <select name="subject" class="publisher" onchange="getSelect('subject',$('.dataPublisher').val(),this.value)">
+    <option value="0">全部</option>
+	<volist id="val" name="dataSubject">
+    	<option value="{$val['Subject']}" <php>if($subject == $val['Subject']) echo 'selected';</php>>{$val['SubjectName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <div class="btn_a select_box" <neq name="grade" value="show"><else/>style="display:none"</neq>><span>
+    <select name="grade" class="subject">
+    <option value="0">全部</option>
+    <volist id="val" name="dataGrade">
+    	<option value="{$val['Grade']}" <php>if($grade == $val['Grade']) echo 'selected';</php>>{$val['GradeName']}</option>
+    </volist>
+    </select>
+    </span></div>
+    
+    <a href="javascript:void(0);" class="btn_a" onclick="$(this).parent().submit();"><span>过 滤</span></a>
+    </form>
+    
+  </div>
+<script>
+	//鼠标移动表格效果
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function () {
+		    $(this).addClass("bg_hover");
+		  },
+		  function () {
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+
+	//搜索知识点
+	var isSearchHidden = <neq name="type" value="searchClassification">1<else/>0</neq>;
+	function searchClassification() {
+		if(isSearchHidden == 1) {
+			$("#searchClassification_div").slideDown("fast");
+			$(".searchClassification_action").html("搜索完毕");
+			isSearchHidden = 0;
+		}else {
+			$("#searchClassification_div").slideUp("fast");
+			$(".searchClassification_action").html("搜索知识点");
+			isSearchHidden = 1;
+		}
+	}
+
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('tr').addClass('bg_on') ;
+		}else{
+			$(o).parents('tr').removeClass('bg_on') ;
+		}
+	}
+
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+			$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择知识点的ID数组
+	function getChecked() {
+		var ids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			var val = $(n).val();
+			if (val > 0) {
+				ids.push( $(n).val() );
+			}
+		});
+		return ids;
+	}
+	
+	function getSelect(key,pvalue,value){
+		if(pvalue==0){
+			$('.subject option').remove();
+			$('.publisher').parent().parent().hide();
+		}
+		$('.grade option').remove();
+		$('.subject').parent().parent().hide();
+		
+		if(key!=''&&value!=''&&value!=0){
+			$.post("{:Addons::adminPage('doGetSelect')}",{key:key,pvalue:pvalue,value:value},function(text){
+				if(text!=''){
+					$('.'+key).parent().parent().show();	
+				}
+				var json = eval(text);
+				$('.'+key+' option').remove();
+				$('.'+key).append("<option value='0'>全部</option>");
+				for(var i=0; i<json.length; i++)
+				{
+					$('.'+key).append("<option value='"+json[i].cloumn+"'>"+json[i].text+"</option>");
+				}
+				//为Select追加一个Option(下拉项)   
+			});
+		}
+	}
+
+	var ctrl = function(){
+	}
+	ctrl.prototype = {
+	    del:function(id)
+	    {
+	    	var id = id ? id : getChecked();
+	        if(id == '' || id ==0){
+	        	ui.error("请选择要删除的知识点");return false;
+	        }
+			if(confirm('请确认是否删除该知识点！')){
+				$.post("{:Addons::adminPage('deleteClassification')}",{id:id},function(text){
+					if(text!=0){
+						window.navigate(location);
+					}
+				});
+			}
+	    }
+	}
+	var c = new ctrl();
+</script>
+<include file="../Public/_footer" />

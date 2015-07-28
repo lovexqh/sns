@@ -1,0 +1,62 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<div class="divcenter">
+    <include file="Public:_nav" />
+    <div class="divcenter">
+        <ul id="container" class="piclist">
+            <volist name="photo['data']" id="po">
+            <li class="item">
+                <p><a href="{:U('photo/Index/photo',array('id'=>$po['id']))}" target="_blank" title="{$po['name']}" ><img src="{$po['savepath']|get_photo_url}" alt="{$po['name']}" width="228"></a></p>
+                <p class="t"><a href="{:U('photo/Index/photo',array('id'=>$po['id']))}" target="_blank" title="{$po['name']}" > {$po['name']} </a></p>
+                <p class="t"><a href="{:U('photo/Index/album',array('id'=>$po['cateid']))}" target="_blank" title="{$po['catename']}" > {$po['catename']} </a></p>
+                <p class="t">{$po['cTime']|friendlyDate}</p>
+            </li>
+            </volist>
+        </ul>
+        <div class="clear"></div>
+        <php>if((int)$photo['nowPage'] < (int)$photo['totalPages']){</php>
+        <php>$nextPage = (int)$photo['nowPage'] + 1;</php>
+        <php>$url = U('photo/Index/index',array('p'=>$nextPage,'type'=>$type));</php>
+        <php>}else{</php>
+        <php>$url = '';}</php>
+        <div id="page-nav" style="display:none;"><a href="{$url}"></a></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $container = $('#container');
+    $(document).ready(function(){
+
+        $container.imagesLoaded( function(){
+            $container.masonry({
+                columnWidth: 40, //每两列之间的间隙为5像素
+                itemSelector: '.item'
+            });
+        });
+
+        $container.infinitescroll({
+                    navSelector  : '#page-nav',    // 选择的分页导航
+                    nextSelector : '#page-nav a',  // 选择的下一个链接到（第2页）
+                    itemSelector : '.item'     // 选择检索所有项目
+                },function(newElements){
+
+                    // 隐藏新的项目，而他们正在加载
+                    var newElems = $( newElements ).css({ opacity: 0 });
+
+                    // 确保的图像装载增加砖石布局
+                    newElems.imagesLoaded(function(){
+
+                        // 元素展示准备
+                        newElems.animate({opacity:1});
+                        $container.masonry( 'appended', newElems, true );
+
+                    });
+
+                }
+        );
+
+
+    });
+</script>
+<include file="Public:_footer" />
+
+

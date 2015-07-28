@@ -1,0 +1,163 @@
+/* CSS Document */
+.gray { color:#999; font-weight:normal }
+ a{cursor:pointer}
+ img {border:0;}
+ * html .pg { width:auto; }
+ body {background:#FFF;}
+.dzz_ct2_a{
+	width:100%;width:100% !important;
+	border:none;margin:0;padding:0;height:570px;overflow:hidden;}
+#dzz_ct .dzz_main {
+	float: right;
+	margin: 0;
+	padding: 0;
+	height: 570px;
+	width: 81.8%;
+}
+#dzz_ct .dzz_appl {
+	margin-bottom: 10px;
+	padding: 6px 10px;
+	width: 15%;
+	border: 1px solid #CDCDCD;
+	background: #E7F0F7;
+	float:left;
+	height:570px;
+	overflow:hidden;
+}
+.bm_h {
+	padding: 0 10px;
+	height: 31px;
+	border-bottom: 1px solid #C2D5E3;
+	background: #F2F2F2;
+	line-height: 31px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+th {font-size:12px;}
+.tbn li{cursor:pointer}
+.tbn li.a{
+	margin: -1px 0 0;
+	padding: 0 10px 0 9px;
+	border-top: 1px solid #CDCDCD;
+	border-bottom-style: solid;
+	background:url(../images/market/sohpbg.jpg) repeat-x;
+}
+.tbn ul li a {
+	display: block;
+	height: 33px;
+	line-height: 33px;
+	font-size:14px;
+}
+.tbn li.a a	{
+	color:#FFF;
+	font-size:14px;
+	
+}
+.paixu span{margin:5px;}
+.nav_movie {
+	padding-left: 10px;
+	float: left;
+}
+#market_pt {
+	margin:0;
+	padding:0;
+	border: 1px solid #CDCDCD;
+	background: #F2F2F2;
+	}
+#market_pt a, #market_pt em { float: left; height: 32px; }
+#market_pt em { width: 20px; background: url(../images/market/pt_item.png) no-repeat 30% 0; line-height: 200px; overflow: hidden; }
+#market_scbar { overflow: hidden; height: 36px; line-height: 36px; background: url(../images/market/search.gif) repeat-x 0 0; }
+				#scbar table { background: url(../images/market/search.gif) no-repeat 0 -36px; }
+					#scbar td { padding: 0 2px; white-space: nowrap; }
+				#scbar #srchtxt { margin-top: 2px\9; margin-right: 10px; margin-left: 35px; width: 250px; height: 18px; line-height: 18px; border: none; background: transparent; outline: none; }
+				#scbar label { margin-right: 8px; cursor: pointer; }
+				#scbar #search_submit { width: 51px; height: 36px; border: none; background: transparent url(../images/market/search.gif) no-repeat 0 -77px; cursor: pointer; }
+				#scbar .hot { padding-left: 1em; }
+					.ie6 #scbar .hot { white-space: normal; }
+.appico {width:54px;height:54px;margin:5px 10px;}
+.appop_div{width:54px;height:54px; }
+.appop {width:30px;height:30px;display:inline-block;line-height:30px;background:url(../images/market/sprite.gif) -176px -57px;text-align:center;overflow:hidden;}
+.appop:hover{background:url(../images/market/sprite.gif) -216px -57px; text-decoration:none;}
+.appcontent{width:390px;height:65px;margin:5px;overflow:hidden;}
+.appcontent li{height:22px; line-height:22px;_height:20px;_line-height:20px;}
+.apptitle{font-size:12px; font-weight:bold;color:#000}
+.appview_header{padding: 5px 10px;height: 70px;border-top:1px solid white;border-bottom: 1px solid #C2D5E3;background: #F2F2F2;line-height: 22px;white-space: nowrap;overflow: hidden;}
+.appdesc{margin:0 2px;}
+.nav_return {
+	display: block;
+	float: left;
+	padding: 3px 0 0 25px;
+	margin:6px 0 0 10px;
+	outline: none;
+	background: url(../images/market/sprite.gif) no-repeat;
+	text-decoration: none;
+	width: 30px;
+	height: 25px;
+	line-height:18px;
+	background-position: -1px -273px;
+}
+.nav_return:hover {background-position: -1px -308px;}
+
+.radius {-moz-border-radius: 5px;-webkit-border-radius: 5px;	border-radius: 5px;}
+.appStars{width: 78px;height: 16px;text-align: left;background: url(../images/market/sprite.gif) -280px -2px; margin-left:10px;}
+.appStar{width: 100%;height: 100%;background: url(../images/market/sprite.gif) no-repeat -280px -20px;}
+.appStar0{background-position:1000px 1000px;}.appStar1{background-position:-344px -20px;}.appStar2{background-position:-328px -20px;}.appStar3{background-position:-312px -20px;}.appStar4{background-position:-296px -20px;}.appStar5{background-position:-280px -20px;}
+.appStarBtn {
+	width: 16px;
+	height: 16px;
+	float: left;
+	display: block;
+	cursor: pointer;
+	font-size: 0;
+	line-height: 0;
+}
+
+.appIntroduce .introduceKey{float:left;}
+.appIntroduce .appStars{width:80px;float:left;margin-top:2px;}
+.appIntroduce .appStarBtn{width:16px;height:16px;float:left;display:block;cursor:pointer;font-size:0;line-height:0;}
+.appIntroduce .appStarTip{display:none;background:#FFFAE9;color:#F37D05;float:left;margin-left:10px;padding:0 3px;}
+.appIntroduce .myVote{float:left;font-weight:normal;margin-left:5px;}
+.appIntroduce .myAppVote{height:22px;}
+
+.appIntroduce .pre {
+				background:url(../images/market/pre.gif) left 50% no-repeat ;
+				cursor: default;
+				left: 0px;
+				cursor: pointer;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				width: 250px;
+			}
+.appIntroduce .next {
+				background:url(../images/market/next.gif) right 50% no-repeat ;
+				right: 0px;
+				cursor: pointer;
+				height: 100%;
+				position: absolute;
+				top: 0px;
+				width: 250px;
+			}
+.appIntroduce .pagenation li{
+	display: block;
+	width: 12px;
+	height: 12px;
+	background-image: url(../images/market/pagination.png);
+	background-position: 0 0;
+	background-repeat:no-repeat;
+	float: left;
+	padding:0 2px;
+	overflow: hidden;
+}
+.appIntroduce .pagenation .current{
+	background-position: 0 -12px;
+}
+ .pic_mlp img { max-width: 440px; max-height: 290px; }
+* html .pic_mlp img { width: expression(this.width > 440 && this.width>=this.height ? 440 : true); height: expression(this.height > 290 && this.width<=this.height ? 290 : true); }
+.subclass{padding:2px 10px; float:left;}
+.subclass .a{color:green; font-weight:bold;}
+
+.appitem_index{ text-align:center; float:left;width:75px;height:80px; overflow:hidden;padding:5px; margin-bottom:10px;}
+.appitem_index .apptitle_index{height:20px;line-height:20px; overflow:hidden; }
+.active_index {background:#09F;}
+.active_index a{color:#FFF}

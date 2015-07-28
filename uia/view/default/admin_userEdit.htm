@@ -1,0 +1,210 @@
+{template header}
+
+<script src="js/common.js" type="text/javascript"></script>
+
+	<div class="container">
+		<h3 class="marginbot">{lang user_edit_profile}
+			{if getgpc('fromadmin')}
+				<a href="admin.php?m=admin&a=ls" class="sgbtn">{lang admin_return_admin_ls}</a>
+			{else}
+				<a href="admin.php?m=user&a=ls" class="sgbtn">{lang admin_return_user_ls}</a>
+			{/if}
+		</h3>
+		<!--{if $status == 1}-->
+			<div class="correctmsg"><p>{lang user_edit_profile_sucessfully}</p></div>
+		<!--{elseif $status == -1}-->
+			<div class="correctmsg"><p>{lang user_edit_profile_failed}</p></div>
+		<!--{else}-->
+			<div class="note"><p class="i">{lang user_keep_blank}</p></div>
+		<!--{/if}-->
+		<div class="mainbox">
+			<form action="admin.php?m=user&a=edit&uid=$uid" method="post">
+			<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="opt">
+
+					<tr>
+						<th align="right">{lang login_username}:</th>
+						<td align="left">
+							<input type="text" name="newusername" value="$user[username]" class="txt" />
+							<input type="hidden" name="username" value="$user[username]" class="txt" />
+						</td>
+
+
+						<th>{lang RealName}:</th>
+						<td>
+							<input type="text" name="newRealName" value="$user[RealName]" class="txt" />
+						</td>
+
+					</tr>
+
+					<tr>
+						<th>{lang login_password}:</th>
+						<td>
+							<input type="text" name="password" value="" class="txt" />
+						</td>
+
+						<th>{lang login_secques}: <input type="checkbox" class="checkbox" name="rmrecques" value="1" /> {lang login_remove_secques}</th>
+
+					<tr>
+						<th>Email:</th>
+
+						<td>
+							<input type="text" name="email" value="$user[email]" class="txt" />
+						</td>
+
+                        <th>{lang DepartName}:</th>
+                        <td>
+							<select name="newDeptID" style=" width:115px; height:20px; border:#CCCCCC 1px solid;">
+							  <option value ="0">{lang top_dept}</option>
+						     <!--{if $list}-->
+					           <!--{loop $list $value}-->
+							       <option value ="$value[DeptID]" {if $value[DeptID]==$user[DeptID]}selected{/if}>$value['postion'].$value[DepartName]</option>
+					           <!--{/loop}-->
+			                <!--{/if}-->
+                            </select>
+						</td>
+
+					<tr>
+
+						<th>{lang user_avatar_virtual}:</th>
+
+						<td>$user[bigavatar]</td>
+
+						<th>{lang user_avatar_real}:</th>
+
+						<td>$user[bigavatarreal]</td>
+					</tr>
+				</table>
+				<div class="opt"><input type="submit" name="submit" value=" {lang submit} " class="btn" tabindex="3" /></div>
+			</form>
+		</div>
+	</div>
+<script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+<script language="javascript">
+//ajax添加角色
+function addRole(){
+	var addval = '';
+	var addid = document.getElementsByName("addRoleList[]");
+	for(var i=0;i<addid.length;i++){
+			if(addid[i].checked){
+				addval = addval + addid[i].value + ',';						
+		}					
+	}
+	addval = addval.substring(0,addval.length-1);
+	if(confirm('{lang roleFunc_sel_confirm}}')){
+		$.post('admin.php?m=user&a=ajaxAddRole&userID=$user[uid]',
+			{addRoleList:addval,time:new Date().getTime()},
+			function(data){
+				$('#delbox').html(data);
+			}
+		);
+		getRoleList();
+	}
+	return false;
+}
+//ajax删除角色
+function delRole(){
+	var delval = '';
+	var delid = document.getElementsByName("delete[]");
+	for(var i=0;i<delid.length;i++){
+			if(delid[i].checked){
+				delval = delval + delid[i].value + ',';						
+		}					
+	}
+	delval = delval.substring(0,delval.length-1);
+	
+	if(confirm('{lang roleFunc_del_confirm}')){
+		$.post('admin.php?m=user&a=ajaxDelRole&userID=$user[uid]',
+			{delRoleList:delval,time:new Date().getTime()},
+			function(data){
+				$('#delbox').html(data);
+			}
+		);
+		getRoleList();
+	}
+	return false;
+}
+function getRoleList(){
+	$.post('admin.php?m=user&a=ajaxRoleList&userID=$user[uid]',
+			{time:new Date().getTime()},
+			function(data){
+				$('#addbox').html(data);
+			}
+	);
+	return false;
+}
+</script>
+<!-- delete box -->
+<h3 align="left">{lang user_role_list}</h3>
+		<div class="mainbox" style="width:40%; float:left">
+			<!--{if $userRoleList}-->
+				<!-- <form action="admin.php?m=user&a=submitRoleList" onsubmit="return confirm('{lang roleFunc_del_confirm}');" method="post">-->
+				<form action="admin.php?m=user&a=submitRoleList" onsubmit="return false;" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+                <div id="delbox" style="text-align:left;">
+				<table class="datalist fixwidth" onmouseover="addMouseEvent(this);">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall" onclick="checkall('delete[]')" class="checkbox" /><label for="chkall">All</label></th>
+                       	<th>{lang role_name}</th>
+                        <th>description</th>
+
+					</tr>
+					<!--{loop $userRoleList $role}-->
+						<tr>
+							<td class="option" align="left"><input type="checkbox" name="delete[]" value="$role[RoleID]" class="checkbox" /></td>
+                            <td align="left">$role[RoleName]</td>
+							<td>$role[Remark]</td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td colspan="3"><input type="button" onclick="javascript:delRole();" value="{lang delete}" class="btn" /></td>
+						<td class="tdpage" colspan="6">$multipage</td>
+					</tr>
+				</table>
+                </div>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+	</div>
+	<!-- add box -->
+	<h3>{lang user_optRole_list}</h3>
+		<div class="mainbox" style="width:40%; float:right">
+			<!--{if $userOptionalRoleList}-->
+				<!--<form action="admin.php?m=user&a=AddUserRole&userID=$user[uid]" onsubmit="return confirm('{lang roleFunc_sel_confirm}');" method="post">-->
+                <form action="admin.php?m=user&a=AddUserRole&userID=$user[uid]" onsubmit="return false;" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+                <div id="addbox" style="text-align:left;">
+				<table class="datalist fixwidth" onmouseover="addMouseEvent(this);">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall" onclick="checkall('addRoleList[]')" class="checkbox" /><label for="chkall">All</label></th>
+						<th>{lang role_name}</th>
+                        <th>description</th>
+					</tr>
+					<!--{loop $userOptionalRoleList $role}-->
+						<tr>
+							<td class="option"><input type="checkbox" name="addRoleList[]" value="$role[RoleID]" class="checkbox" /></td>
+                            <td>$role[RoleName]</td>
+                            <td>$role[Remark]</td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td colspan="3"><input type="button" onclick="javascript:addRole();" value="{lang submit}" class="btn" /></td>
+						<td class="tdpage" colspan="6">$multipage</td>
+					</tr>
+				</table>
+                </div>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+	</div>
+
+
+{template footer}

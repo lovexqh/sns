@@ -1,0 +1,41 @@
+<php>if($isAdmin != '1'){</php>
+	<include file="__THEME__/desktop/header" />
+	<script>
+	function Jump(){
+		window.location.href = '{$jumpUrl}';
+	}
+	document.onload = setTimeout("Jump()" , {$waitSecond}* 1000);
+	</script>
+	<div class="successBox statusBox">
+		<div class="statusTopBorder"></div>
+	<eq name="status" value="1">
+		<h2>{$message}</h2>
+		<div class="statusContent">
+			<i class="icon-success"></i>
+		<present name="closeWin" >
+		  <p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 关闭</p>
+		</present>
+		<notpresent name="closeWin" >
+		  <p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 跳转<br/>
+			或者 <a href="<php>if(APP_NAME=='admin' || ACTION_NAME=='Admin'){echo U('admin/Index/index'); }else{echo "__ROOT__/" ;}</php>">返回首页</a></p>
+		</notpresent>
+		</div>
+	</eq>
+	<eq name="status" value="0">
+		<h2 style="color:red">{$message}</h2>
+		<div class="statusContent">
+			<i class="icon-error"></i>
+		<present name="closeWin" >
+			<p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 关闭</p>
+		</present>
+		<notpresent name="closeWin" >
+			<p>系统将在 <span style="color:blue;font-weight:bold">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <A HREF="{$jumpUrl}">这里</A> 跳转<br/>
+		  或者 <a href="<php>if(APP_NAME=='admin' || ACTION_NAME=='Admin'){echo U('admin/Index/index'); }else{echo "__ROOT__/" ;}</php>">返回首页</a></p>
+		</notpresent>
+		</div>
+	</eq>
+	<!-- end .registerBox --></div>
+	<include file="__THEME__/desktop/footer" />
+<php>}else {</php>
+	<include file="__THEME__/success" />
+<php>}</php>

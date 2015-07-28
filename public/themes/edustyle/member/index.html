@@ -1,0 +1,465 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<!-- 全局风格CSS -->
+<link href="__THEME__/member/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/index.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+body{
+	background:rgb(20, 160, 211);
+}
+.containerOuter{
+	background:url('__THEME__/member/images/topbg.png') no-repeat center top;	
+}
+
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/myfocus/myfocus-2.0.4.min.js"></script>
+
+<script type="text/javascript">
+//设置
+myFocus.set({
+	id:'mySquareFocus',//ID
+	trigger:'mouseover',
+	pattern:'mF_dleung'//风格
+});
+</script>
+
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+
+<!-- 验证码js -->
+<script type="text/javascript">
+function demo(obj) {
+	var verify = obj.value;
+	$.post("{:U('home/Public/isVerifyAvailableLogin')}", {verify:verify}, function(msg) {
+		if(msg == 'success') {
+			$('#copyverify').html('验证码正确！');
+		} else {
+			$('#copyverify').html("验证码错误！");
+		}
+	});
+}
+function  checkVerify(form){
+	var verify = $('#verify').val();
+	if("undefined" != typeof(form.email) && form.email.value == ''){
+		// $('#copyverify').html("帐号不能为空！");
+		ui.error("帐号不能为空！");
+		return false;
+	}
+	if(form.password.value == ''){
+		// $('#copyverify').html("密码不能为空！");
+		ui.error("密码不能为空！");
+		return false;
+	}
+	if(form.verify.value == ''){
+		// $('#copyverify').html("验证码不能为空！");
+		ui.error("验证码不能为空！");
+		return false;
+	}
+	$.post("{:U('home/Public/isVerifyAvailableLogin')}", {verify:verify}, function(msg) {
+		if(msg == 'success') {
+			form.submit();
+		} else {
+			// $('#copyverify').html("验证码错误！");
+			ui.error("验证码错误，请重新输入！");
+		}
+	});
+	return false;
+}
+</script>
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+<div class="containerOuter">
+	<br/>
+    <div class="container">
+        <div class="containerInner">
+        	<!-- 首页顶部banner start -->
+            <div class="idx_banner">
+            	<div class="idx_logo left">龙口教育阳光社区</div>
+                <ul class="idx_link right">
+                	<li class="idx_ico_home" style="display:none"><a href="{:U('home')}">首页</a></li>
+                    <nosession name="userInfo">
+                    <li class="idx_ico_login" style="display:none"><a href="{:U('home/Public/login')}">登录</a></li>
+                    <li class="idx_ico_register" style="display:none"><a href="{:U('home/Public/register')}">注册</a></li>
+                    </nosession>
+                    <session name="userInfo">
+                    <li class="idx_ico_login" style="display:none"><a href="{:U('home/Public/logout')}">退出</a></li>
+                    </session>
+                    <li class="idx_ico_contact" style="display:none"><a href="#">联系我们</a></li>
+                    <li class="idx_ico_help" style="display:none"><a href="#">帮助</a></li>
+                </ul>
+            </div>
+            <!-- /首页顶部banner end -->
+            <!-- /首页中部 start -->
+            <div class="idx_content">
+            	<div class="idx_mod_left left">
+                	<div class="idx_focus_pics">
+                    	<div id="mySquareFocus" style="width:645px; height:310px;"><!--焦点图盒子-->
+                          <div class="loading"></div><!--载入画面(可删除)-->
+                          <div class="pic"><!--图片列表-->
+                            <ul>
+                                <li><a href="#1"><img src="__THEME__/member/images/focus0.jpg" width="645" height="310" thumb="" alt="阳光广场" text="阳光广场" /></a></li>
+                                <li><a href="#2"><img src="__THEME__/member/images/focus1.jpg" width="645" height="310" thumb="" alt="社区风采" text="社区风采" /></a></li>
+                                <li><a href="#3"><img src="__THEME__/member/images/focus2.jpg" width="645" height="310" thumb="" alt="视频中心" text="视频中心" /></a></li>
+                                <li><a href="#4"><img src="__THEME__/member/images/focus3.jpg" width="645" height="310" thumb="" alt="资源中心" text="资源中心" /></a></li>
+                            </ul>
+                          </div>
+                        </div>
+                    </div><!-- /focus_pics -->
+                    <div class="idx_dynabox mt10">
+                    	<script language="javascript" type="text/javascript">
+						function change_dyna(id){
+							$('.dyna_menu').removeClass('on');
+							$('#dmenu_'+id).addClass('on');
+							$('#dyna_'+id).show();
+							$('.dyna_bcont').hide();
+							$('#dyna_'+id).show();
+						}
+						</script>
+                    	<div class="idx_btitle">
+                        	<h2><span class="ico_d">教育动态</span></h2>
+                            <ul class="dyna_menu">
+                            	<li id="dmenu_1" class="on dyna_menu"><a href="javascript:;" onClick="change_dyna(1)">学生</a></li>
+                                <li id="dmenu_2" class="dyna_menu"><a href="javascript:;" onClick="change_dyna(2)">老师</a></li>
+                                <li id="dmenu_3" class="dyna_menu"><a href="javascript:;" onClick="change_dyna(3)">家长</a></li>
+                            </ul>
+                            <div class="idx_dtrb"></div>
+                            <div class="clear"></div>
+                        </div><!-- /idx_btitle -->
+                        <php>$j = 1;</php>
+                        <volist name="dynainfo" id="vo" key="i">
+                        <div id="dyna_{$j}" class="idx_bcont dyna_bcont" style="display:<neq name='j' value='1'>none</neq>">
+                        	<div class="idx_weibo_box">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+                            <volist name="vo.weibos" id="weibo">
+                              <tr>
+                                <td nowrap width="65"><space uid="weibo['uid']" target="_blank">{uname}</space></td>
+                                <td>{$weibo.ctime|date=###,'Y-m-d h:i:s'}</td>
+                                <td><p title="{$weibo.content|formatUrl|format}"><span><a href="/@{$weibo['uid']}" target="_blank">{$weibo.content|formatUrl|format}</a></span></p></td>
+                                <td nowrap width="100"><neq name="j" value="3">{$weibo.uid|getUserParentDept}</neq></td>
+                                <td nowrap width="50">{$weibo.uid|getUserDept}</td>
+                              </tr>
+                            </volist>  
+                            </table>
+                            </div><!-- /idx_weibo_box -->
+							<div class="idx_photo_box">
+                            	<volist name="vo.photos" id="photo">
+                            	<dl>
+                                    <dt class="pic_show">
+                                        <a href="{:U('photo/Index/photo',array(id=>$photo['id'],aid=>$photo['albumId'],uid=>$photo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_pic"><img src="__ROOT__/thumb.php?w=143&h=88&url=./data/uploads/{$photo.savepath}" width="143" /></a>
+                                    </dt>
+                                    <dd><span>名称：</span><a href="{:U('photo/Index/photo',array(id=>$photo['id'],aid=>$photo['albumId'],uid=>$photo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_pic" class="a" >{$photo.name|strSubstr=###,0,15}</a></dd>
+                                    <dd><span>作者：</span><space uid="photo['userId']" target="_blank">{uname}</space></dd>
+                                    <dd><span>所在位置：</span><a href="#" class="a">{:getUserParentDept($photo['userId'])}</a></dd>
+                                </dl>
+                                </volist>
+                            </div><!-- /idx_photo_box -->
+                        </div><!-- /idx_bcont -->
+                        <php>$j++;</php>
+                        </volist>
+                        
+                    </div><!-- /idx_dynabox -->
+                    
+                    <div class="idx_ranking_box mt10">
+                    	<dl class="idx_menu_box">
+                        	<dt><span class="ico_rank">阳光教育榜中榜</span></dt>
+                            <dd id="star"><span class="on"><strong>社区明星</strong></span></dd>
+							<dd id="school"><span><strong>活力学校</strong></span></dd>
+                            <dd id="class"><span><strong>活力班级</strong></span></dd>
+                            <dd id="join"><span><strong>加入我们</strong></span></dd>
+                        </dl>
+                        <div id="c-star" class="idx_cont_box idx_start_list" style="display:">
+                        	<volist name="hot_user" id="vo">
+                        	<dl>
+                            	<dt>
+                                	<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}"><img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace=###,b}" width="85" height="85"></a>
+                                </dt>
+                                <dd>
+                                	<php>$rolename = getUserIdentity($vo['uid']);</php>
+                                	<a target="_blank" href="{:U('home/Space/index',array('uid'=>$vo['uid']))}">{$vo.uid|getUserName}</a><span><php>if(!empty($rolename)){</php>（{$rolename}）<php>}</php></span>
+                                </dd>
+                                <dd>
+                                	访问量：<font color="red">{$vo.count}</font>次
+                                </dd>
+                            </dl>
+                            </volist>
+                        </div><!-- /idx_cont_box -->
+                        
+                        <div id="c-school" class="idx_cont_box idx_school_list" style="display:none">
+                        	<dl>
+                            	<dt>
+                                	<a href="#"><img src="images/movie_03.gif" width="104" height="68" /></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">芝罘区第3实验小学</a>/<a href="#">烟台市</a></dd>
+                                <dd class="idx_intro">
+                                	<p>简介：学校以“求真立美”为校训，坚持“重实践、创特色、树品牌、高质量”的办学思路。...</p>
+                                    <a href="#" class="more">详细&gt;&gt;</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="images/movie_03.gif" width="104" height="68" /></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">芝罘区第3实验小学</a>/<a href="#">烟台市</a></dd>
+                                <dd class="idx_intro">
+                                	<p>简介：学校以“求真立美”为校训，坚持“重实践、创特色、树品牌、高质量”的办学思路。...</p>
+                                    <a href="#" class="more">详细&gt;&gt;</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="images/movie_03.gif" width="104" height="68" /></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">芝罘区第3实验小学</a>/<a href="#">烟台市</a></dd>
+                                <dd class="idx_intro">
+                                	<p>简介：学校以“求真立美”为校训，坚持“重实践、创特色、树品牌、高质量”的办学思路。...</p>
+                                    <a href="#" class="more">详细&gt;&gt;</a>
+                                </dd>
+                            </dl>
+                        </div><!-- /idx_cont_box -->
+                        
+                        <div id="c-class" class="idx_cont_box idx_class_list" style="display:none">
+                        	<dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                            <dl>
+                            	<dt>
+                                	<a href="#"><img src="" width="129" height="87"></a>
+                                </dt>
+                                <dd class="idx_title"><a href="#">三年级5班</a></dd>
+                                <dd class="idx_intro"><a href="#">莱山区实验小学</a></dd>
+                            </dl>
+                        </div><!-- /idx_cont_box -->
+                        
+                        <div id="c-join" class="idx_cont_box idx_about_list" style="display:none">
+                        	<p>统计截止到2012年11月28日<br/>
+							   全市共有<font color="red">2661</font>名学生，<font color="red">2259</font>名教师，<font color="red">67</font>所学校加入龙口教育阳光社区。欢迎您<a href="#">加入</a>！</p>
+                        </div><!-- /idx_cont_box -->
+                        
+                    </div><!-- /idx_ranking_box -->
+                    <script language="javascript" type="text/javascript">
+					$(document).ready(function(e) {
+                        /*$('.idx_ranking_box>.idx_menu_box>dd').bind('mouseover',function(){
+							$(this).parent().parent().find('.idx_menu_box>dd>span').removeClass('on');
+							$(this).children('span').addClass('on');
+							$(this).parent().parent().find('.idx_cont_box').hide();
+							var id = $(this).attr('id');
+							$(this).parent().parent().find('#c-'+id).show();
+						});*/
+                    });
+					</script>
+                </div><!-- /idx_mod_left -->
+                <div class="idx_mod_right right">
+                	<div class="idx_login">
+                    	<div class="idx_member_info">
+                        	<h2>用户登录</h2>
+                        	<div class="idx_login_box">
+                            <nosession name="userInfo">
+                            	<div class="idx_login_form">
+                                	<form action="{:U('home/Public/doLogin')}" method="post" onSubmit="return checkVerify(this)">
+                                    <div class="frow" style="position:relative;padding-top:10px;">
+                                    	<span>账号：</span>
+                                        <label id="_login_email_label" class="form_label" style="display:block;" onClick="$(this).hide();$('#email').focus();"></label>
+                                        <input type="text" id="email" name="email" class="text alB" title="邮箱" autocomplete="off" value="" onBlur="if($(this).val()=='') $('#_login_email_label').show();" onFocus="$('#_login_email_label').hide();" onpaste="return false" ondragenter="return false" oncontextmenu="return false;" style="ime-mode:disabled" />
+                                        <script language="javascript" type="text/javascript">
+										$(document).ready(function(e) {
+											var html = $('#email').val()!=''?'':'请输入邮箱';
+                                            $('#_login_email_label').html(html);
+                                        });
+										</script>
+                                    </div>
+                                    <div class="frow" style="position:relative;padding-top:10px;">
+                                    	<span>密码：</span>
+										<label id="_login_password_label" class="form_label" style="display:block;" onClick="$(this).hide();$('#password').focus();" >请输入密码</label>
+                                        <input type="password" title="密码" value="" id="password" name="password" class="text alB" onBlur="if($(this).val()=='') $('#_login_password_label').show();" onFocus="$('#_login_password_label').hide();" />
+                                    </div>
+                                    <div class="frow" style="padding-top:5px;">
+                                    	<span style="line-height:25px;">验证码：</span>
+                                        <input type="text" class="text alM" title="验证码" id="verify" name="verify" style="width:50px;" value="" />
+                                      &nbsp;<a href="###" onClick="changeverify()"><img style="margin:0 0 8px" src="__ROOT__/public/captcha.php" id="verifyimg" alt="换一张" class="alM" /></a>&nbsp;&nbsp;<a  href="###" onClick="changeverify()">换一换</a>
+                                    </div>
+                                    <div class="frow">
+                                    	<span></span>
+                                        <input name="remember" type="checkbox" value="1" />
+                                        记住登录状态
+									</div>
+                                    
+                                    <div class="frow">
+                                    	<span></span>
+                                        <button type="submit" class="logbtn hand">登 录</button>
+                                        <a href="{:U('home/Public/register')}" class="reg_link">没有账号？</a>
+                                        <a class="fuc0" href="{:U('home/Public/sendPassword')}">忘记密码？</a>
+                                    </div>
+                                </form>
+                                </div>
+                            </nosession>
+							<session name="userInfo">
+                            	<div class="idx_login_box">
+                                	<div class="idx_login_welcome">
+                                    	<strong>{$userInfo.uname}</strong>
+                                    	<php>if(!empty($userInfo['realname'])){echo '<span>('.($userInfo[realname]).')</span>';}</php>
+                                        <script type="text/javascript"> var now=(new Date()).getHours(); if(now>0&&now<=6){document.write("午夜好！"); }else if(now>6&&now<=11){ document.write("早上好！"); }else if(now>11&&now<=14){ document.write("中午好！"); }else if(now>14&&now<=18){ document.write("下午好！"); }else{ document.write("晚上好！"); }</script>
+                                    </div>
+                                    <php>$identityarr = array('2'=>'老师','3'=>'学生','4'=>'家长');</php>
+                                    <dl class="idx_uinfo">
+                                    	<dt><a target="_blank" href="{:U('home/Space/index',array('uid'=>$userInfo['uid']))}"><img alt="{$userInfo.uname}" src="{$userInfo.uid|getUserFace=###,b}"></a></dt>
+                                        <dd>身份：<php>echo empty($ucInfo['identitytype'])?'不详':$identityarr[$ucInfo['identitytype']];</php></dd>
+                                        <dd>角色：<php>echo empty($ucInfo['RoleName'])?'不详':$ucInfo['RoleName'];</php></dd>
+                                        <dd>性别：<php>echo $userInfo['sex']==1?'男':'女';</php></dd>
+                                        <dd>部门：<php>echo (empty($ucInfo['deptinfo']['schoolname'])?'未知':$ucInfo['deptinfo']['schoolname']);</php></dd>
+                                    </dl>
+                                    <div class="clear"></div>
+                                    <div class="idx_login_link">
+                                    	<ul>
+                                        	<li><a href="{:U('home/Account/index')}">完善资料</a></li>
+                                            <li><a href="{:U('home/User/index')}">我的社区</a></li>
+                                            <li><a href="{:U('home/Space/index',array('uid'=>$userInfo['uid']))}">个人主页</a></li>
+                                            <li><a href="{:U('home/Public/logout')}">退出登录</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </session>
+                            </div>
+                        </div><!-- /idx_member_info -->
+                        
+                        <div class="idx_cloudcount">
+                            <h3>教育云平台</h3>
+                            <p>截止到<strong><php>echo date("Y-m-d",time());</php></strong>日，龙口教育阳光社区已经迎来了<strong>{$usercount}</strong>名用户，欢迎您<a href="{:U('home/Public/register')}">加入</a>！</p>
+                        </div><!-- /idx_cloudcount -->
+                    </div><!-- /idx_login -->
+                    <div class="clear"></div>
+                    
+                    <div class="idx_video_box mt10">
+                    	<div class="idx_btitle">
+                        	<h2><span class="ico_movie">视频推荐</span></h2>
+                            <a href="{:U('video/Index/index')}" class="more">更多&gt;&gt;</a>
+                            <div class="clear"></div>
+                        </div><!-- /idx_btitle -->
+                        <div class="idx_bcont idx_video_list">
+                            <ul>
+                            <volist name="hot_video" id="vo">
+                              <li>
+                              	<div class="ivl_box">
+                                    <div class="pic">
+                                        <a title="{$vo.info}" href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}"><img onerror="imgVideoErr();" src="{$vo.pic_url}" width="140"><span class="play">播放</span></a>
+                                    </div>
+                                    <div class="tit">
+                                        <a title="{$vo.name}" href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}">{$vo.name}</a>
+                                    </div>
+                                    <div class="comm">
+                                        <span class="read_box left" title="播放">{$vo.readCount}</span>
+                                        <span class="comment_box right" title="评论">{$vo.commentCount}</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                              </li>
+                            </volist>
+                            </ul>
+                        </div><!-- /idx_bcont -->
+                    </div><!-- /idx_video_box -->
+                    
+                    <div class="idx_ad_box mt10">
+                    	<a href="#">
+                        <img src="__THEME__/member/images/idx_ad01.gif" width="305" />
+                        </a>
+                    </div><!-- /idx_ad_box -->
+                </div><!-- /idx_mod_right -->
+                <div class="clear"></div>
+            </div>
+            <!-- /首页中部 end -->
+            <!-- /首页低部 start -->
+            <div class="idx_footer">
+            	<div class="idx_explist"></div>
+                <div class="idx_powerinfo">
+                	<div class="fmenu_box">
+                    	关于我们 | 网站服务 | 商务合作 | 客服中心 | 联系我们 
+                    </div>
+                    <div class="fintro_box">
+                    	Powered by <a href="http://www.gridinfo.com.cn">EDU-GridSNS</a>   <a href="http://www.gridinfo.com.cn">山东锐杰网格信息技术有限公司</a> <a href="http://www.miibeian.gov.cn">鲁ICP备09072052号</a> <br/>
+						Tel:0535-6711586 6660368    Fax:0535-2103377    客服热线:400-690-8887    Email: <a href="mailto:service@ruijie-grid.com">service@ruijie-grid.com</a> 
+                    </div>
+                </div>
+            </div>
+            <!-- /首页低部 end -->
+          <div class="clear"></div>          
+        </div><!-- /containerInner -->
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+
+<footer>
+</footer>
+          
+</body>
+</html>

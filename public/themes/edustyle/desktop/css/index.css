@@ -1,0 +1,1513 @@
+/* CSS Document */
+html,body{
+	position:relative;
+	height:100%;
+	width:100%;
+	overflow:hidden;
+	background-color:transparent;
+}
+a:link, a:visited, a:active{
+	text-decoration: none;
+	color: #336699;
+}
+a:hover{
+	text-decoration:underline;
+}
+.clear {
+	ZOOM: 1; CLEAR: both; display:block; overflow:hidden; width:100%; height:0px;
+}
+.mt30{
+	margin-top:30px;
+}
+.hide{
+	display:none;
+}
+.right{
+	float:right;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  outline: 0;
+  /* IE6-9 */
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+/*警告条样式*/
+.system_warring{
+	position:relative;
+	left: 0;
+	width: 100%;
+	padding: 5px 0;
+	background-color: lightyellow;
+	z-index:999;
+	text-align:center;
+	color:#333;
+}
+.system_warring a.btn{
+	display:inline-block;
+	padding:0 10px;
+	margin:0 5px;
+	height:20px;
+	line-height:20px;
+	background-color:#999;
+	color:#fff;
+	font-size:12px;
+}
+.system_warring a.btn:hover{
+	background-color:#666;
+	text-decoration:none;	
+}
+.system_warring a.close{
+	position:absolute;
+	right:10px;
+	top:5px;
+}
+/*背景样式*/
+.slideback{
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:0;
+	background-color:#f6f6f6;
+}
+.slideback .content-box{
+	overflow:hidden;
+	position:relative;
+	height:799px;
+	text-align:center;
+	z-index:-3;
+	display:none;
+}
+.slideback .content-box .slide-content{
+	list-style:none; 
+	list-style-type:none; 
+	margin:0; 
+	padding:0;
+	z-index:-1;
+}
+.slideback .content-box .slide-content li{
+	zoom:1;
+	overflow:hidden;
+	vertical-align:text-top;
+	text-align:center;
+	float:left;
+}
+.slideback .content-box .slide-content li img{
+	display:block;
+}
+.slideback .slide-nav{
+	position:absolute;
+	right:30px;
+	bottom:75px;
+	z-index:1;
+}
+.slideback .slide-nav span{
+	display:inline-block;
+	height:25px;
+	line-height:25px;
+	margin-right:5px;
+	vertical-align:middle;
+	cursor:default;
+}
+.slideback .slide-nav a{
+	vertical-align:middle;
+}
+.slideback .slide-nav a i{
+	display:none;
+}
+.slideback .slide-nav .prev,
+.slideback .slide-nav .next{
+	display:inline-block;
+	width:15px;
+	height:15px;
+	background-color:transparent;
+	background-image:url(../images/index/slider-arrows.png)!important;
+	background-repeat:no-repeat;
+	opacity:0.65;
+	filter:alpha(opacity=65);
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/index/slider-arrows.gif);
+}
+.slideback .slide-nav a:hover{
+	opacity:1;
+	filter:alpha(opacity=100);
+}
+.slideback .slide-nav .prev{
+	background-position:0 0;
+}
+.slideback .slide-nav .next{
+	background-position:top right;
+}
+header,
+.containerInner{
+	position:relative;
+	width:980px;
+	margin:0 auto;
+	z-index:3;
+}
+header{
+	width:1000px;
+}
+.container{}
+
+/*顶部工具条样式*/
+.container .headerback{
+	display:block;
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:48px!important;
+	background:#0e7fc5 url(../images/index/navbg.png) repeat-x left top;
+	background-color:transparent;
+	background-image:url(../images/index/navbg.png);
+	background-repeat:repeat-x;
+	background-position:left top;
+	
+	/*IE6 Fix*/
+	_height:46px;
+	
+	/*opacity:0.75;
+	filter:alpha(opacity=75);*/
+	z-index:2;
+}
+.container header{
+	line-height:42px;
+}
+.container header h1{
+	background-image:url(../images/index/logo.png)!important;
+	/*IE6 Fix*/
+	_background-image:url(../images/index/logo.gif);
+	background-repeat:no-repeat;
+    /*ssq add 替换吉林建筑大学图标 */
+	/*background-position:left top;*/
+    background-position:0 0;
+	width:350px;
+	height:44px;
+	float:left;
+	overflow:hidden;
+}
+.container header h1 a{
+	display:inline-block;
+	width:100%;
+	height:44px;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+.container a.descript{
+	display:inline-block;
+	padding-top:16px;
+	line-height:22px;
+	color:#fff;
+}
+.container a.descript:hover{
+	text-decoration:none;
+}
+.container ul.menubar{
+	position:absolute;
+	right:0;
+	top:0;
+	line-height:46px;
+	z-index:4;
+}
+ul.menubar li{
+	position:relative;
+	float:left;
+	white-space:nowrap;
+	z-index:4;
+}
+ul.menubar li a:link,
+ul.menubar li a:active,
+ul.menubar li a:visited{
+	display:block;
+	padding:0 10px;
+	color:#fff;
+}
+ul.menubar li a:hover{
+	
+}
+ul.menubar li i.arrow-drop{
+	display:inline-block;
+	width:9px;
+	height:7px;
+	font-size:0;
+	overflow:hidden;
+	margin-left:5px;
+	background-image:url(../images/index/arrow_drop.png)!important;
+	background-position:center center;
+	background-repeat:no-repeat;
+	/*IE6 Fix*/
+	_height:44px;
+	_vertical-align:middle;
+	_background:url(../images/index/arrow_drop.gif) no-repeat;
+	_background-position:0 18px;
+}
+ul.menubar li ul{
+	display:none;
+	position:absolute;
+	left:-10px;
+	top:46px;
+	z-index:4;
+	background-color:transparent;
+}
+ul.menubar li ul li{
+	height:35px;
+	line-height:35px;
+	background:url(../images/index/esn_navbg.png);
+}
+ul.menubar li ul li a{
+	padding-left:15px;
+	padding-right:15px;
+}
+ul.menubar li ul li a:hover{
+	background-color:#16506d;
+}
+ul.menubar li.suggest{
+	position:relative;
+	padding-right:13px;
+}
+ul.menubar li.suggest a{
+	color:#FF0;
+	font-weight:bold;
+}
+ul.menubar li.suggest sup{
+	position:absolute;
+	right:2;
+	line-height:14px;
+	top:7px;
+	font-family:微软雅黑;
+	font-weight:normal;
+	margin-left:2px;
+}
+
+/*首页内容部分*/
+.containerInner{
+	position:relative;
+	height:100%;
+	z-index:0;
+}
+.containerInner .sidesnow{
+	position:absolute;
+	left:-10px;
+	top:50%;
+	margin-top:-170px;
+	z-index:-2;
+}
+.loginbar{
+	position:absolute;
+	right:0; 
+	top:50%;
+	margin-top:-140px;
+	width:300px;
+	height:300px;
+}
+/*登录*/
+#login_tips{
+	color:#F00;
+}
+.loginbox{}
+.loginbox ul{
+	list-style:none;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+.loginbox ul li{
+	position:relative;
+	margin-top:10px;
+	z-index:0;
+	color:#fff;
+}
+.loginbox li label{
+	position:absolute;
+	padding:10px;
+	font-size:14px;
+	color:#bebebe;
+	font-family:微软雅黑;
+	z-index:0;
+	cursor:text;
+}
+.loginbox li input{
+	border:0;
+	padding:9px 10px;
+	font-size:18px;
+	font-family:微软雅黑;
+	border-radius:4px;
+	color:#333;
+	vertical-align:middle;
+	background-color:#fff;
+}
+.loginbox li .ipt-txt{
+}
+.loginbox li.usr input,
+.loginbox li.pwd input{
+	padding-left:35px;
+	width:270px;
+}
+.loginbox li .icon-usr,
+.loginbox li .icon-pwd{
+	position:absolute;
+	left:0px;
+	top:5px;
+	_top:6px;
+	height:32px;
+	width:33px;
+	background-color:#fff;
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.loginbox li.usr label,
+.loginbox li.pwd label{
+	margin-left:25px;
+}
+.loginbox li .icon-usr{
+	background-image:url(../images/index/usr-ico.png);
+}
+.loginbox li .icon-pwd{
+	background-image:url(../images/index/pwd-ico.png);
+}
+/*邮箱联想样式*/
+.email-relevance{
+	position:absolute;
+	width:220px;
+	padding:5px 0;
+	max-height:300px;
+	overflow-y:auto;
+	background:#f5f5f5;
+	border-radius:5px;
+	z-index:5;
+	display:none;
+}
+.email-relevance ul{}
+.email-relevance ul li{
+	height:35px;
+	line-height:35px;
+	
+}
+.email-relevance ul li a{
+	display:block;
+	padding:0px 15px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	color:#000;
+}
+.email-relevance ul li a strong{
+	font-weight:bold;
+	color:#F00;
+	font-style:italic;
+}
+.email-relevance ul li a.sele,
+.email-relevance ul li a:hover{
+	font-size:18px;
+	font-weight:bold;
+	text-decoration:none;
+	background-color:#fff;
+}
+
+.loginbox li.code input{
+	width:120px;
+}
+.loginbox li.code .img-verify{
+	vertical-align:middle;
+	height:35px;
+}
+.loginbox li.remember label{
+	position:relative;
+	display:block;
+	float:none;
+	padding-left:0;
+	cursor:pointer;
+	color:#fff;
+}
+.loginbox li.remember input{
+	margin-right:10px;
+	background-color:#fff;
+	padding:0;
+	width:18px;
+	height:18px;
+	line-height:18px;
+	vertical-align:-2px;
+	*vertical-align:middle;
+	_vertical-align:3px;
+}
+.loginbox li .btn-sub{
+	width:170px;
+	height:41px;
+	border:0;
+	margin-right:5px;
+	/*text-indent:-9999px;
+	overflow:hidden;
+	background-image:url(../images/index/btn-sub.png);*/
+	background-color:transparent;
+	background-repeat:no-repeat;
+	background-position:0 0;
+	vertical-align:middle;
+	
+	/*IE Fix*/
+	background-image:url(../images/index/btn-sub.gif);
+	text-indent:0;
+	color:#b14f02;
+	font-size:18px;
+	font-family:微软雅黑;
+}
+.loginbox li a:link,
+.loginbox li a:active,
+.loginbox li a:visited{
+	margin:0 5px;
+	color:#fff;
+	vertical-align:middle;
+}
+.loginbox li .btn-sub:hover{
+	background-position:0 -41px;
+}
+/*进入体验按钮*/
+.learnbox{
+	display:block;
+	width:400px;
+	text-align:center;
+	position:absolute;
+	right:10px;
+	top:45%;	
+}
+.btn-learn{
+	width:170px;
+	height:41px;
+	border:0;
+	background-color:transparent;
+	background-repeat:no-repeat;
+	background-position:0 0;
+	vertical-align:middle;
+	background-image:url(../images/index/btn-sub.gif);
+	text-indent:0;
+	color:#b14f02;
+	font-size:18px;
+	font-family:微软雅黑;
+}
+
+/*扩展内容页*/
+.containerMain{
+	position:absolute;
+	width:100%;
+	top:9999px;
+	left:0;
+	background-color:#f6f6f6;
+	z-index:3;
+}
+.containerFooter .footerback{
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:100%;
+	height:60px;
+	border-top:1px solid #4095ce;
+	background:url(../images/index/fbg.png) repeat-x left bottom;
+	opacity:0.90;
+	filter:alpha(opacity=90);
+	z-index:-1;
+}
+.containerFooter{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	position:relative;
+	width:100%;
+	z-index:0;
+}
+.containerFooter aside{
+	display:block;
+	height:60px;
+	line-height:60px;
+	text-align:center;
+	cursor:pointer;
+}
+.containerFooter aside p{
+	display:block;
+	margin:0;
+	padding:0;
+	height:34px;
+	font-size:14px;
+	color:#000;
+	font-weight:bold;
+	/*IE6 Fix*/
+	_margin-top:13px;
+}
+.containerMain i.icon-up,
+.containerMain i.icon-down{
+	display:inline-block;
+	width:34px;
+	height:34px;
+	vertical-align:middle;
+	margin-left:20px;
+	background-image:url(../images/index/icon-updown.png)!important;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/index/icon-updown.gif);
+}
+.containerMain i.icon-up{
+	background-position:right top;	
+}
+.containerMain i.icon-down{
+	background-position:left top;
+}
+
+.containerHeader{
+	display:block;
+	height:61px;
+	line-height:61px;
+	width:100%;
+	text-align:center;
+	overflow:hidden;
+	background:url(../images/index/main-hbg.png) repeat-x;
+}
+.containerHeader aside{
+	display:block;
+	margin:0 auto;
+	width:550px;
+	overflow:hidden;
+}
+.containerHeader ul{
+	margin:0;
+	padding:0;
+	width:570px;
+}
+.containerHeader li{
+	margin:0;
+	height:61px;
+	line-height:61px;
+	float:left;
+	border-left:1px solid #c6c6c6;
+	display:inline-block;
+}
+.containerHeader li a{
+	display:block;
+	height:61px!important;
+	padding:0 25px;
+	font-size:14px;
+	color:#000;
+	font-weight:bold;
+	
+	/*IE6 Fix*/
+	_height:auto;
+}
+.containerHeader li.sele{
+	background:#fff url(../images/index/main-hfocus.png) repeat-x;
+}
+.containerHeader li a:hover{
+	text-decoration:none;
+}
+
+.containerMain .containerInner{
+	width:960px;
+	height:auto;
+	position:static;
+	z-index:0;
+}
+.clientMain{
+	width:100%;
+	overflow-y:scroll;
+}
+
+.containerMain .mainWarp{
+	padding:30px 0;
+}
+.containerMain h3{
+	display:block;
+	width:100%;
+	line-height:30px;
+	font-size:26px;
+	font-family:微软雅黑;
+	color:#333;
+}
+.mainWarp p{
+	margin:10px 0 5px;
+	line-height:20px;
+	color:#7f7f7f;
+}
+.containerMain .tc{
+	display:block;
+	text-align:center;
+}
+.containerMain .line{
+	margin:0 auto;
+	height:5px;
+	width:100%;
+	overflow:hidden;
+	background:url(../images/index/main-line.png) no-repeat top center;
+}
+.containerMain .pic-left{
+	display:inline;
+	float:left;
+	padding-right:20px;
+}
+.containerMain dl{
+	margin-top:30px;
+}
+.containerMain .pic-right{
+	display:inline;
+	float:right;
+	padding-left:20px;
+}
+.containerMain dd a{
+	display:block;
+	font-weight:bold;
+	color:#007cc3;
+}
+.containerMain .arrow-l,
+.containerMain .arrow-r{
+	display:block;
+	width:63px;
+	height:67px;
+	margin-top:30px;
+	background-image:url(../images/index/main-arrow.gif);
+	background-repeat:no-repeat;
+}
+.containerMain .arrow-l{
+	float:left;
+	background-position:0 0;
+}
+.containerMain .arrow-r{
+	float:right;
+	background-position:0 -67px;
+}
+.mobilebox{
+	display:block;
+	width:380px;
+}
+.imbox{
+	display:block;
+	width:440px;
+}
+.mobilebox img,
+.imbox img{
+	display:block;
+}
+.mobilebox{
+	float:left;
+}
+.imbox{
+	float:right;
+}
+.containerMain .btn-down{
+	width:171px;
+	height:42px;
+	border:0;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:url(../images/index/download.png);	
+}
+
+.containerMain .footer{
+	padding:30px 0;
+	color:#333;
+	text-align:center;
+}
+.containerMain .footer a{
+	color:#333;
+}
+
+/*回到顶部按钮*/
+.top_stick{
+	display:none;
+	width:60px;
+	height:130px;
+	position:absolute;
+	right:50px;
+	bottom:30px;
+	background:url(../images/index/top.png)!important;
+	
+	/*IE6 Fix*/
+	_background:url(../images/index/top.gif);
+}
+.top_stick:hover{
+	text-decoration:none;
+}
+
+/*注册相关样式*/
+.registerPicBg{
+	position:absolute;
+	left:-23px;
+	top:90px;
+	z-index:-2;
+}
+.registerBox{
+	position:relative;
+	z-index:-1;
+	width:734px;
+	height:inherit;
+	margin:0 auto;
+	background-image:url(../images/register/mainbg.png)!important;
+	background-repeat:repeat-y;
+	background-position:center top;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/register/mainbg.gif);
+}
+.registerBox h2{
+	display:block;
+	padding:43px 43px 20px;;
+	text-align:center;
+	font-size:25px;
+	font-family:微软雅黑;
+	color:#1f88cc;
+	width:467px;
+}
+.registerBox .progressBar{
+	background-image:url(../images/register/navline.png)!important;
+	background-repeat:no-repeat;
+	background-position:center 19px;
+	width:635px;
+	margin:0 auto;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/register/navline.gif);
+}
+.progressBar ul{}
+.registerBox .progressBar li{
+	width:125px;
+	float:left;
+	text-align:center;
+}
+.registerBox .progressBar i{
+	display:block;
+	width:42px;
+	height:42px;
+	line-height:42px;
+	margin:0 auto;
+	background-image:url(../images/register/navbg.png)!important;
+	background-repeat:no-repeat;
+	background-position:right center;
+	font-size:28px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-style:normal;
+	color:#fff;
+	text-align:center;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/register/navbg.gif);
+}
+.registerBox .progressBar span{
+	display:block;
+	text-align:center;
+	padding:5px;
+	font-size:14px;
+	font-family:微软雅黑;
+	color:#b3b3b3;
+}
+.registerBox .progressBar li.checked i{
+	background-position:left center;
+}
+.registerBox .progressBar li.checked span{
+	color:#1f88cc;
+}
+.identityBox{
+	padding:10px 40px 40px 55px;
+}
+.reg_type_word{font-size:14px;}
+.realname_area{border-bottom:1px solid #CCCCCC;padding-bottom:20px;}
+.openreg_area{padding-top:10px;height:246px;}
+
+.identityBox ul{
+	width:575px;
+	margin:0 auto;
+}
+.identityBox ul li{
+	display:inline-block;
+	width:250px;
+	float:left;
+}
+.student{
+	background:url(../images/register/identity.gif) no-repeat scroll 1px 2px;
+	display:block;
+	height:126px;
+	width:126px;
+}
+
+.identityword{font-size:14px;margin-left:99px;color:#6D6D6C;font-weight:bold;}
+.guestword{font-size:14px;margin-left:130px;color:#6D6D6C;font-weight:bold;}
+
+.teacher{
+	background:url(../images/register/identity.gif) no-repeat scroll -179px 2px;
+	display:block;
+	height:126px;
+	width:126px;
+}
+
+.student:hover{
+	
+}
+.identityBox ul li a.student{
+	
+}
+.identityBox ul li a.teacher{
+	
+}
+.identityBox ul li a.parent{
+	background-position:-380px 0;
+}
+.identityBox ul li a.student:hover{
+	background-position:1px -147px;
+}
+.stuiden:hover{background-position:1px -147px;}
+.identityBox ul li a.teacher:hover{
+	background-position:-179px -147px;
+}
+.identityBox ul li a.parent:hover{
+	background-position:-380px -200px;
+}
+
+.guest{
+	background-image:url(../images/register/guest.gif);
+	background-repeat:no-repeat;
+	background-position:-7px -5px;
+	display:block;
+	width:111px;
+	height:119px;
+	margin-left:105px;
+}
+
+.guest:hover{background-position:-190px -5px;}
+
+.registerBox{
+	height:inherit;
+}
+.registerBox .footer{
+	position:absolute;
+	left:22px;
+	bottom:-22px;
+	width:691px!important;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	color:#ff;
+	background-color:#007fff;
+	
+	/*IE6 Fix*/
+	_width:690px;
+}
+.registerBox .footer p{
+	color:#fff;
+}
+.registerBox .footer a{
+	color:#fff;
+}
+
+/*注册表单*/
+.registerBox .formBox{
+	padding-top:30px;
+	margin-left:130px;
+}
+.registerBox .formBox ul{}
+.registerBox .formBox ul li{
+	padding-bottom:10px;
+	color:#666666;
+	clear:both;
+}
+.registerBox .formBox ul li strong{
+	font-weight:bold;
+}
+.registerBox .formBox li span.uh{
+	position:relative;
+	display:inline-block;
+	width:75px;
+	padding-top:7px;
+	vertical-align:middle;
+	color:#666666;
+	float:left;
+}
+.registerBox i.identity{
+	display:inline-block;
+	width:80px;
+	height:70px;
+	text-indent:-9999px;
+	overflow:hidden;
+	vertical-align:middle;
+	background-image:url(../images/register/identityico.gif);
+	background-repeat:no-repeat;
+}
+.registerBox .icon-teacher{
+	background-position:0 -84px;
+}
+.registerBox .icon-student{
+	background-position:0 -2px;
+}
+
+.guestidentity{
+	display:inline-block;
+	width:80px;
+	height:70px;
+	text-indent:-9999px;
+	overflow:hidden;
+	vertical-align:middle;
+}
+
+.registerBox .icon-visitor{
+	background:url(../images/register/guestico.gif) no-repeat scroll;
+}
+.registerBox .icon-parent{
+	background-position:0 -140px;
+}
+.registerBox .formBox li span.uh em{
+	position:absolute;
+	right:8px;
+	top:7px;
+	font-size:14px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-style:normal;
+	color:#F00;
+}
+.registerBox .formBox li input{
+	border:0;
+	padding:6px;
+	font-size:14px;
+	font-family:微软雅黑;
+	border-radius:4px;
+	color:#333;
+	vertical-align:middle;
+	background-color:#fff;
+	border:1px solid #ccc;
+}
+.registerBox .btn{
+	width:168px;
+	height:39px;
+	border:0;
+	background-image:url(../images/register/button.gif);
+	background-repeat:no-repeat;
+	color:#fff;
+}
+
+/*注册信息确认*/
+.registerBox .regInfoBox{
+	padding-top:30px;
+	margin-left:130px;
+}
+.registerBox .regInfoBox ul{}
+.registerBox .regInfoBox ul li{
+	padding-top:8px;
+	padding-bottom:8px;
+	color:#666666;
+	clear:both;
+}
+.registerBox .regInfoBox ul li strong{
+	font-weight:bold;
+}
+.registerBox .regInfoBox li span.uh{
+	display:inline-block;
+	width:75px;
+	vertical-align:middle;
+	color:#666666;
+	float:left;
+}
+.registerBox .regInfoBox .bottomBox{
+	padding-top:35px;	
+}
+
+/*推荐的人*/
+.registerBox .followuser,
+.registerBox .followuser .bottomBox{
+	width:545px;
+	overflow-x:hidden;
+	border-top:1px solid #e6e6e6;
+}
+.registerBox .followuser{
+	padding:5px 0;
+	margin-top:20px;
+	margin-left:93px;
+}
+.followuser ul{
+	width:610px;
+}
+.followuser ul li{
+	width:120px;
+	padding-top:10px;
+	padding-bottom:10px;
+	height:105px;
+	float:left;
+}
+.followuser li .userPic{
+	position:relative;
+	display:block;
+	width:65px;
+	height:65px;
+	margin-bottom:4px;
+	overflow:hidden;
+}
+.followuser li a{
+	display:block;
+}
+.followuser li .userPic a{
+	position:relative;
+	z-index:1;
+}
+.followuser li .chk a i,
+.followuser li .userPic a:hover i{
+	position:absolute;
+	top:0;
+	right:0;
+	background-image:url(../images/register/user-chk.png);
+	background-repeat:no-repeat;
+	width:26px;
+	height:26px;
+	z-index:0;
+}
+.followuser li .chk a i,
+.followuser li .chk a:hover i{
+	background-position:0 -26px;
+}
+.followuser li .userPic img{
+	position:absolute;
+	width:65px;
+	z-index:0;
+}
+.followuser li .chk a,
+.followuser li .userPic a:hover{
+	width:61px;
+	height:61px;
+	overflow:hidden;
+	border:2px solid #ffa20e;
+}
+.followuser li .chk a img,
+.followuser li .userPic a:hover img{
+	top:-2px;
+	left:-2px;
+}
+.followuser li input[type="checkbox"]{
+	display:none;
+}
+.followuser .bottomBox{
+	position:relative;
+	z-index:0;
+	padding-top:15px;
+	text-align:center;
+}
+.followuser .bottomBox h3{
+	position:absolute;
+	left:0px;
+	top:15px;
+	z-index:0;
+	color:#1375b5;
+	cursor:default;
+}
+.followuser .bottomBox label{
+	color:#666;
+}
+.followuser .bottomBox label:hover{
+	color:#333;	
+}
+.followuser .bottomBox input{
+	vertical-align:middle;
+}
+.followuser .bottomBox a{
+	margin-left:5px;
+}
+.followuser .bottomBox .buttonBar{
+	margin:35px auto;
+}
+.followuser .buttonBar a{
+	margin-left:20px;
+}
+
+/*注册完成*/
+.regSuccess{
+	padding:40px 0 40px 40px;
+	text-align:center;	
+}
+.regSuccess h3{
+	padding-left:25px;
+	font-size:40px;
+	font-family:微软雅黑;
+	color:#333;
+}
+.regSuccess span{
+	display:block;
+	font-size:14px;
+	color:#959595;
+	padding:10px;
+}
+
+/*超时登录*/
+.publicLoginBox{
+	width:760px;
+	background-color:#fff;
+	background-image:url(../images/index/right_bg.gif)!important;
+	background-repeat:repeat-y;
+	background-position:right top;
+}
+.registerBox .rightBox{
+	position:absolute;
+	right:0;
+	top:40px;
+	width:180px;
+	color:#333;
+}
+.registerBox .rightBox p{
+	line-height:25px;
+	padding-bottom:10px;
+	color:#333;
+}
+.registerBox .rightBox .btn_reg{
+	display:block;
+	width:141px;
+	height:39px;
+	line-height:39px;
+	text-align:center;
+	background-image:url(../images/index/btn-sub.gif);
+	background-repeat:no-repeat;
+	background-position:0 -164px;
+	font-size:14px;
+	font-family:微软雅黑;
+	color:#666;
+}
+.registerBox .rightBox .btn_reg:hover{
+	text-decoration:none;
+	color:#333;
+}
+
+.publicLoginBox .footer{
+	width:760px!important;
+	left:0;	
+}
+.publicLoginBox h2{
+	text-align:left;
+	padding-left:55px;
+}
+.publicLoginBox .loginForm{
+	padding-left:55px;
+}
+.publicLoginBox .loginForm .uh{
+	display:inline-block;
+	width:55px;
+	white-space:nowrap;
+	text-align:right;
+	color:#333;
+	vertical-align:middle;
+}
+.publicLoginBox .loginForm li{
+	padding-bottom:10px;
+}
+.publicLoginBox .loginForm input{
+	border:0;
+	padding:8px;
+	font-size:16px;
+	font-family:微软雅黑;
+	border-radius:4px;
+	color:#333;
+	vertical-align:middle;
+	background-color:#fff;
+	border:1px solid #ccc;
+}
+.publicLoginBox .loginForm .ipt-txt{
+	width:220px;
+}
+.publicLoginBox .loginForm .ipt-code{
+	width:60px;
+}
+.publicLoginBox .loginForm .ipt-chk{
+	border:0;
+}
+.publicLoginBox .loginForm #verifyimg{
+	vertical-align:middle;
+}
+.publicLoginBox .loginForm .btn-sub{
+	width:170px;
+	height:41px;
+	background-image:url(../images/index/btn-sub.png);
+	background-position:0 -203px;
+	color:#b14f02;
+	font-size:18px;
+	font-family:微软雅黑;
+}
+
+/*错误提示*/
+input.error{
+	border-color:#F00;
+	
+}
+label.error{
+	display:inline-block;
+	height:24px;
+	line-height:24px;
+	vertical-align:middle;
+	margin-left:5px;
+	color:#F00;
+}
+label.checked{
+	background-position:0px -24px;	
+}
+label.error i{
+	display:inline-block;
+	width:28px;
+	height:24px;
+	vertical-align:middle;
+	background-image:url(../images/register/status-icon.gif);
+	background-repeat:no-repeat;
+}
+label.error i.error{
+	background-position:0 0;
+}
+label.error i.success{
+	background-position:0 -24px;
+}
+label.error i.warring{
+	background-position:0 -48px;
+}
+.registerBox .btn.next{
+	background-position:0 0;
+	font-size:16px;
+	font-family:微软雅黑;
+	border-radius:5px;
+}
+
+/*滚动条样式*/
+.scrollBox{
+	overflow-y:auto;
+	height:200px;
+}
+.registerBox .scrollBox{
+	margin-right:35px;
+}
+
+/*其它状态页面*/
+.statusTopBorder{
+	height:8px;
+	background-color:#0c76bc;
+}
+.statusBox{
+	display:block;
+	background:#ededed;
+	border-radius:8px;
+}
+.statusBox h2{
+	font-size:20px;
+	font-family:微软雅黑;
+	color:#0d7dc9;
+	margin:25px 30px 5px;
+}
+.statusContent{
+	margin:0 30px;
+}
+.statusContent p{
+	color:#7d7d7d;
+	padding:5px 0 5px;
+	font-size:14px;
+}
+.statusContent input{
+	border:0;
+	padding:6px;
+	font-size:14px;
+	font-family:微软雅黑;
+	border-radius:4px;
+	color:#333;
+	vertical-align:middle;
+	background-color:#fff;
+	border:1px solid #ccc;
+}
+.statusContent .sub-btn{
+	width:130px;
+	height:41px;
+	border:0;
+	background-image:url(../images/index/btn-sub.png);
+	background-color:transparent;
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	background-position:0 -123px;
+	color:#b14f02;
+	font-size:18px;
+	font-family:微软雅黑;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/index/btn-sub.gif);
+}
+.sendPasswordBox{
+	display:block;
+	width:550px;
+	height:210px;
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-275px;
+	margin-top:-100px;
+	overflow:hidden;
+}
+.sendPasswordBox p{
+	padding-bottom:10px;
+}
+.sendPasswordBox p label{
+	vertical-align:middle;
+}
+.sendPasswordBox p .text{
+	width:260px;
+	padding:9px;
+	font-size:16px;
+	margin:0;
+}
+.sendPasswordBox p .btn{
+	vertical-align:middle;
+}
+.sendPasswordBox p .sub-btn{
+	margin-left:2px;
+	background-position:0 -123px;
+}
+
+.resetPasswordBox{
+	display:block;
+	width:500px;
+	height:280px;
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-250px;
+	margin-top:-130px;
+	overflow:hidden;
+}
+.resetPasswordBox ul{
+	margin-top:10px;
+	margin-left:40px;
+}
+.resetPasswordBox ul li{
+	padding:5px 0;
+	color:#7d7d7d;
+}
+.resetPasswordBox li label{
+	display:inline-block;
+	width:70px;
+	vertical-align:middle;
+}
+.resetPasswordBox li span{
+	font-size:14px;
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+.error404Box{
+	display:block;
+	width:500px;
+	height:230px;
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-250px;
+	margin-top:-120px;
+	overflow:hidden;
+}
+.error404Box .statusContent{
+	padding-top:20px;
+	background-image:url(../images/index/404.gif);
+	background-repeat:no-repeat;
+	background-position:right 20px;
+	height:180px;
+}
+.error404Box p{
+	clear:both;
+}
+.error404Box h3{
+	font-size:65px;
+	color:#0d7ac4;
+	font-family:微软雅黑;
+	font-weight:bold;
+	vertical-align:baseline;
+}
+.error404Box p strong{
+	font-size:20px;
+	color:#0d7ac4;
+	font-family:微软雅黑;
+	vertical-align:baseline;
+}
+.error404Box p a{
+	margin:0 2px;
+}
+
+.error500Box{
+	display:block;
+	width:500px;
+	height:230px;
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-250px;
+	margin-top:-120px;
+	overflow:hidden;
+}
+.error500Box .statusContent{
+	padding-top:20px;
+	background-image:url(../images/index/500.png);
+	background-repeat:no-repeat;
+	background-position:right 20px;
+	height:180px;
+}
+.error500Box p{
+	clear:both;
+}
+.error500Box h3{
+	font-size:65px;
+	color:#F00;
+	font-family:微软雅黑;
+	font-weight:bold;
+	vertical-align:baseline;
+}
+.error500Box p strong{
+	font-size:20px;
+	color:#d4700c;
+	font-family:微软雅黑;
+	vertical-align:baseline;
+}
+.error500Box p a{
+	margin:0 2px;
+	color:#F00;
+}
+
+/*状态页面*/
+.successBox{
+	display:block;
+	width:550px;
+	height:200px;
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin-left:-275px;
+	margin-top:-100px;
+	overflow:hidden;
+}
+.successBox .statusContent{
+	padding-top:20px;
+}
+.successBox .statusContent p{
+	line-height:25px;
+}
+.successBox i.icon-success,
+.successBox i.icon-error{
+	display:block;
+	float:left;
+	width:64px;
+	height:64px;
+	background-image:url(../images/index/success.png) !important;
+	background-repeat:no-repeat;
+	margin-right:15px;
+	
+	/*IE6 Fix*/
+	_background-image:url(../images/index/success.gif);
+}
+.successBox i.icon-success{
+	background-position:0 0;
+}
+.successBox i.icon-error{
+	background-position:0 -64px;
+}

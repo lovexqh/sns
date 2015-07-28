@@ -1,0 +1,51 @@
+<include file="__THEME__/desktop/_header" />
+<link rel="stylesheet" href="../Public/css/tool.css" type="text/css" media="screen" charset="utf-8" />
+
+<!-- <script type="text/javascript" src="../Public/js/common.js"></script> -->
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false">
+  
+  <!-- 右侧主要内容 start -->
+  <div class="panel-cmain">
+        <div class="clearfix"></div>
+        <!-- 主要内容 start -->
+        <php>if($data==''){</php>
+        	暂无热门的资源
+        <php>}else{</php>
+			  <div class="r_1">
+              	<div class="clearfix" style=" height:10px;"></div>
+				  <table cellpadding="0" cellspacing="0" width="100%" class="table_list">
+				    <tr>
+					  <th width="30%">标题</th>
+					  <th width="13%">上传人</th>
+                      <th width="13%">工具类型</th>
+					 <!--  <th width="15%">版本信息</th> -->
+					  <th width="15%">上传时间</th>
+                     <th  width="10%">&nbsp;</th>
+					</tr>
+				  <volist name="data['data']" id='vo' key="k">
+					<tr id="list_{$vo['c_id']}">
+					  <td>
+                        <a href="javascript:;" onclick="parent.tabs.iframe('{$vo['title']}','{:U('tool/Index/showtool',array('id'=>$vo['id'],iframe=>'yes'))}');">
+                      {$vo.title|getShort=11}
+                      </a>
+                      </td>
+                      <td width="10%">{$vo['uid']|getUserName}</td>
+					  <td width="10%">{$vo['category_name']}</td>
+                    <!--   <td width="10%">{$vo['version']}</td> -->
+					  <td width="15%">{$vo.time|date="Y-m-d",###}</td>
+					  <td>{:W('Favorite',array('fid'=>$vo['id'],'act'=>'showtool','type'=>'link','count'=>1))}</td>
+					</tr>
+				  </volist>
+				  </table>
+				  <php>if($data){</php>
+                 <div class="page right">{$data['html']}</div>
+                  <php>}</php>
+			  </div>
+        <php>}</php>
+		<!-- /右侧主要内容 end -->
+  </div>
+<!-- 右侧主要内容栏 end -->
+<include file="__THEME__/desktop/_footer" />
+			  
+		 

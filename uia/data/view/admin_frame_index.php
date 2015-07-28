@@ -1,0 +1,93 @@
+<?php if(!defined('UC_ROOT')) exit('Access Denied');?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>统一身份认证</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<script src="js/boot.js" type="text/javascript"></script>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.header {
+	height: 60px;
+}
+</style>
+</head>
+<body>
+	<ul id="menu1" class="mini-menubar" style="width: 100%;"
+		url="admin.php?m=nav&a=ls" onitemclick="onItemClick" textField="text"
+		idField="id" parentField="pid">
+	</ul>
+	<div class="mini-fit" style="padding-top: 5px;">
+		<!--Tabs-->
+		<div id="mainTabs" class="mini-tabs" activeIndex="0"
+			style="width: 100%; height: 100%;">
+			<div title="首页"
+				url="admin.php?m=frame&a=main&sid=66caeWl7CHL0fg2pbukcZN%2FDdDZWyHSLbrLxPC8Pe2K5WUelyFMbGtAn5y3k3GONvOoo"></div>
+		</div>
+	</div>
+	<div class="foot">
+		<div
+			style="height: 40px; line-height: 40px; text-align: center; font-family: Tahoma; font-size: 12px;">
+			Powered by <a href="http://www.gridinfo.com.cn//" target="_blank">Ruijie-Grid</a>
+			1.6.0 © 2001 - 2013 Ruijie Inc.
+		</div>
+	</div>
+	<script type="text/javascript">
+		mini.parse();
+
+		function showTab(node) {
+			var tabs = mini.get("mainTabs");
+
+			var id = "tab$" + node.id;
+			var tab = tabs.getTab(id);
+			if (!tab) {
+				tab = {};
+				tab.name = id;
+				tab.title = node.text;
+				tab.showCloseButton = true;
+				//这里拼接了url，实际项目，应该从后台直接获得完整的url地址
+				var linkUrl = "admin.php?m=" + node.appname + "&a=ls";
+				switch (node.appname) {
+				case "admin":
+					linkUrl = "admin.php?m=" + node.appname + "&a=lsM";
+					break;
+				case "cache":
+					linkUrl = "admin.php?m=" + node.appname + "&a=update";
+					break;
+				case "dept":
+					linkUrl = "admin.php?m=" + node.appname + "&a=lsDept";
+					break;
+				case "character":
+					linkUrl = "admin.php?m=" + node.appname + "&a=lscharacter";
+					break;
+				case "logout":
+					linkUrl = "admin.php?m=user&a=logout";
+					document.location.href = linkUrl;
+					break;
+				}
+				tab.url = linkUrl;
+
+				tabs.addTab(tab);
+			}
+			tabs.activeTab(tab);
+		}
+
+		function onItemClick(e) {
+			var item = e.item;
+			var isLeaf = e.isLeaf;
+
+			if (isLeaf) {
+				showTab(item);
+			}
+		}
+	</script>
+</body>
+</html>

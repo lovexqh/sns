@@ -1,0 +1,205 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+<if condition="($control eq manage)"> <include
+	file="../Public/_manage_leftmenu" /> <else /> <include
+	file="../Public/_movestate_leftmenu" /> </if>
+<script language="javascript" type="text/javascript"
+	src="../Public/js/datepicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript"
+	src="__PUBLIC__/js/jquery-ui-1.8.6.custom.min.js"></script>
+<div class="trunk_right_g">
+	<div class="navi_rtitle">
+		<img src="__THEME__/space/images/space.gif" class="move_glory" /><span
+			class="title">每周之星</span>
+		<if condition="($control eq view)"> <span class="add"><a
+			href="{:U('space/WeekStar/showByName',array(classid=>$classid))}">[按姓名显示]</a></span>
+		</if>
+	</div>
+	<table width="640px;" style="margin: 10px 0 0 20px;">
+		<tr height="30">
+			<td width="60">学生姓名：</td>
+			<td width="160"><select id="stuname" name="stuname"
+				class='mon_boder mon_sel'>
+					<option value=0>请选择学生</option>
+					<volist name="studentList" id='student'> <if
+						condition="($student.xm eq $info['name'])">
+					<option value='{$student.identityid}' selected="selected">{$student.xm}</option>
+					<else />
+					<option value='{$student.identityid}'>{$student.xm}</option>
+					</if> </volist>
+			</select></td>
+			<td width="60">荣誉名称：</td>
+			<td><select id="gloryid" name="" class='mon_boder mon_sel'>
+					<option value=0>请选择类型</option>
+					<volist name="weekStarType" id='type'> <if
+						condition="($type.id eq $info['gloryid'])">
+					<option value='{$type.id}' selected="selected">{$type.name}</option>
+					<else />
+					<option value='{$type.id}'>{$type.name}</option>
+					</if> </volist>
+			</select></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr height="30">
+			<td>开始时间：</td>
+			<td><input type="text" value="{$info['starttime']}"
+				onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})"
+				name="" id="startTime" class='mon_boder input_height'></td>
+			<td>结束时间：</td>
+			<td><input type="text" value="{$info['endtime']}"
+				onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})"
+				name="" id="endTime" class='mon_boder input_height'></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>排序方式：</td>
+			<if condition="($orderList eq null) OR ($orderList eq '') ">
+			<td id="glory_order" class="glory_order" colspan="3"><a
+				class="glory_hjdate" value="date" href="#"></a> <a
+				class="glory_ry_tag" value="gloryid" href="#"></a> <a
+				class="glory_stu" value="xm" href="#"></a></td>
+			<else />
+			<td id="glory_order" class="glory_order" colspan="3"><volist
+					name="info.list" id='orderName'> <if
+					condition="$orderName eq date"> <a class="glory_hjdate"
+					value="date" href="#"></a> </if> <if condition="$orderName eq gloryid">
+				<a class="glory_ry_tag" value="gloryid" href="#"></a> </if> <if
+					condition="$orderName eq xm"> <a class="glory_stu" value="xm"
+					href="#"></a> </if> </volist></td>
+			</if>
+			<td><a href="javascript:void(0);"
+				onclick="searchGlory();" class="glory_conform"></a></td>
+				<td> <if
+					condition="($adviser neq 0) and ($control eq manage)"> <a
+					class="btn_glory_add" href="javascript:void(0);"
+					onclick="addGlory()"></a> </if></td>
+		</tr>
+	</table>
+	<div class="clear"></div>
+	<div class="mon_detail" style="width: 700px; margin-left: 20px;">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%"
+			align="left">
+			<tbody>
+				<tr>
+					<th width="90" height="35">姓名</th>
+					<th width="90">荣誉</th>
+					<th width="90">标志</th>
+					<th width="90">时间</th>
+					<th width="160">评语</th>
+					<if condition="($adviser neq 0) and ($control eq manage)">
+					<th style="border-right: 0 none;">操作</th>
+					</if>
+				</tr>
+			</tbody>
+		</table>
+		<div class="clear"></div>
+		<div style="height: 500px; overflow-y: scroll; overflow-x: hidden">
+			<table id="resultlist" border="0" cellpadding="0" cellspacing="0"
+				class="mon_table" align="left">
+				<tbody>
+					<volist name="resultList.data" id='vo'>
+					<tr id="resource_{$vo['rid']}">
+						<td width="90" class="xm" id="xm_{$vo['rid']}">{$vo['xm']}</td>
+						<td width="90" class="name" id="name_{$vo['rid']}">{$vo['name']}</td>
+						<td width="90"><img width="35" height="35"
+							id="pic_{$vo['rid']}" src="{$picPath}{$vo.pic}"></td>
+						<td width="90" height="35" class="date" id="date_{$vo['rid']}">{$vo['date']|date='Y-m-d',###}</td>
+						<td width="160" class="t_comment" id="comment_{$vo['rid']}">{$vo['t_comment']}</td>
+						<if condition="($adviser neq 0) and ($control eq manage)">
+						<td style="border-right: 0 none;"><a href="javascript:;"
+							class="a_edit" onClick="updateGlory({$vo['rid']})">编辑</a> <a
+							href="javascript:;" class="a_del"
+							onClick="del({$vo['rid']})">删除</a></td>
+						</if>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+			<div class="clear"></div>
+			<div class="page">
+                    {$resultList.html}
+            </div>
+		</div>
+	</div>
+</div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+var $data='list[]=date&list[]=gloryid&list[]=xm';
+//排序脚本
+$(
+  function() {  
+    var saveUpdate = function(e, ui) {
+      	$data = $(this).sortable(
+        'serialize', {
+          attribute: 'value',
+          expression: /^(.*)$/,
+          key: 'list[]'
+        }
+      );
+     // alert($data);
+    };
+
+    $('#glory_order').sortable({  
+      opacity: 0.8,
+      cursor: 'move',
+      update: saveUpdate
+    });
+  }
+);
+//添加荣誉
+function addGlory(){
+	ui.box.load('__URL__&act=saveView&classid='+<php>echo $classid;if(!empty($control)) {echo "+'&control=".$control."'";}</php>,{title:"添加荣誉"});
+}
+//修改荣誉
+function updateGlory(rid) {
+	ui.box.load('__URL__&act=saveView&classid='+<php>echo $classid."+'&rid='+rid";if(!empty($control)) {echo "+'&control=".$control."'";}</php>,{title:"添加荣誉"});
+}
+function del(rid) {
+	if(confirm("是否删除")){
+		$.post('__ROOT__/index.php?app=space&mod=weekStar&act=del',{ rid:rid,classid:{$classid}},function(res){
+			var JSONObject=jQuery.parseJSON(res);
+		//	alert(res+"---"+JSONObject.status);
+			if(JSONObject.status=='1') {
+				//$('#name_{$rId}').text(name);
+				$("#resource_"+rid).remove();
+				var data = JSONObject.data;
+				ui.success('删除成功');
+				ui.box.close();
+			}else {
+				ui.error(JSONObject.info);
+			}
+		}); 
+	}
+}
+//查询
+function searchGlory(){
+	var $where = '';
+	var $stuname = $("#stuname").find("option:selected").text();
+	if('请选择学生' != $stuname) {
+		$where = $where+'&name='+$stuname;
+	}
+	var $gloryid = $("#gloryid").val();
+	if(0 != $gloryid) {
+		$where = $where+'&gloryid='+$gloryid;
+	}
+	var $startTime = $("#startTime").val(); 
+	if($startTime != null && $startTime!='') {
+		$where = $where+'&starttime='+$startTime;
+	} else {
+		$startTime = null;
+	}
+	var $endTime = $("#endTime").val(); 
+	if($endTime != null && $endTime!='') {
+		$where = $where+'&endtime='+$endTime;
+	} else {
+		$endTime = null;
+	}
+	if($startTime!=null&&$endTime!=null&&$startTime>$endTime) {
+		ui.error("开始时间不能大于结束时间！");
+		return;
+	}
+	location.href = '__URL__&act=showByTime&classid='+<php>if($control=='manage') {echo "'".$classid."&control=manage"."'";} else {echo "'".$classid."'";}</php>+'&'+$data+$where;
+}
+</script>

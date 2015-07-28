@@ -1,0 +1,289 @@
+@charset "utf-8";
+/**
+ +------------------------------------------------------------------------------
+ * CSS Icon Document
+ +------------------------------------------------------------------------------
+ * @author		小波 <xiaobosun@gridinfo.com.cn>
+ * @version		1.0
+ +------------------------------------------------------------------------------
+ * 创建时间：	2013-5-13 10:01:58
+ +------------------------------------------------------------------------------
+ */
+.icon,
+[class^="icon-"],
+[class*=" icon-"] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-top: -2px;
+	margin-right: .3em;
+	line-height: 16px;
+	vertical-align: text-top;
+	background-image: url("../images/icons.png");
+	/*IE6*/
+	_background-image: url("../images/icons.gif");
+	background-position: 14px 14px;
+	background-repeat: no-repeat;
+}
+/*IE6*/
+.icon{
+	position:relative;
+	top:-2px;	
+}
+.icon-star{
+	background-position:0px 0px;
+}
+.icon-note{
+	background-position:0px -20px;
+}
+.icon-history{
+	background-position:0px -40px;
+}
+.icon-count{
+	background-position:0px -60px;
+}
+
+.icon-teach-activities{
+	background-position:-3px -77px;
+}
+.icon-teach-resource{
+	background-position:-28px -77px;
+}
+.icon-teach-group{
+	background-position:-51px -77px;
+}
+.icon-resource-rank{
+	background-position:-98px -77px;
+}
+.icon-manage{
+	background-position:-125px -78px;
+}
+.icon-data-count{
+	background-position:-148px -78px;
+}
+.icon-prepare{
+	background-position:-171px -77px;
+}
+.icon-prepare-team{
+	background-position:-193px -77px;
+}
+.icon-prepare-related{
+	background-position:-220px -77px;
+}
+
+.icon-checkup{
+	background-position:-3px -101px;
+}
+.icon-exercise{
+	background-position:-28px -101px;
+}
+.icon-exercise-related{
+	background-position:-51px -102px;
+}
+.icon-airclass{
+	background-position:-73px -101px;
+}
+.icon-resource{
+	background-position:-98px -103px;
+}
+.icon-down-rank{
+	background-position:-125px -101px;
+}
+.icon-video{
+	background-position:-147px -101px;
+}
+.icon-video-special{
+	background-position:-171px -102px;
+}
+.icon-sun-resource{
+	background-position:-195px -102px;
+}
+
+.icon-poster-class{
+	background-position:-220px -102px;
+}
+.icon-group{
+	background-position:-3px -126px;
+}
+.icon-group-class{
+	background-position:-27px -126px;
+}
+.icon-app-favorite{
+	background-position:-52px -126px;
+}
+.icon-album{
+	background-position:-75px -126px;
+}
+.icon-album-show{
+	background-position:-100px -126px;
+}
+.icon-vote{
+	background-position:-124px -126px;
+}
+.icon-all-vote{
+	background-position:-148px -126px;
+}
+.icon-event{
+	background-position:-172px -126px;
+}
+.icon-event-class{
+	background-position:-197px -126px;
+}
+.icon-poster{
+	background-position:-220px -126px;
+}
+.icon-all-poster{
+	background-position:-244px -126px;
+}
+
+
+/*内容相关小链接*/
+.icon-join,.icon-edit,.icon-share,.icon-delete,.icon-close,.icon-detail,.icon-favorite,.icon-download,.icon-preview{
+	display:inline-block;
+	width:24px;
+	height:24px;
+	margin-top:0;
+	text-indent:-9999px;
+	vertical-align:middle;
+	overflow:hidden;
+}
+.icon-join{
+	background-position:-24px -24px;
+}
+a:hover .icon-join{
+	background-position:-24px 0px;
+}
+.icon-edit{
+	background-position:-48px -24px;
+}
+a:hover .icon-edit{
+	background-position:-48px -0px;
+}
+.icon-share{
+	background-position:-72px -24px;
+}
+a:hover .icon-share{
+	background-position:-72px 0px;
+}
+.icon-delete{
+	background-position:-96px -24px;
+}
+a:hover .icon-delete{
+	background-position:-96px 0px;
+}
+.icon-editpic{
+	background-position:-74px -51px;
+	height: 25px;
+    width: 25px;
+}
+.icon-editpic:hover{
+	background-position:-97px -51px;
+	height: 25px;
+    width: 25px;
+}
+
+.icon-addpic{
+	background-position:-20px -51px;
+	height: 25px;
+    width: 25px;v
+}
+.icon-addpic:hover{
+	background-position:-44px -51px;
+	height: 25px;
+    width: 25px;
+}
+
+.icon-left{
+	background-position:-267px -27px;
+	height:25px;
+	width:25px;
+}
+a:hover .icon-left{
+	background-position:-267px -3px;
+	height:25px;
+	width:25px;
+}
+.icon-right{
+	background-position:-267px -74px;
+	height:25px;
+	width:25px;
+}
+a:hover .icon-right{
+	background-position:-267px -50px;
+	height:25px;
+	width:25px;
+}
+
+.icon-close{
+	background-position:-120px -24px;
+}
+a:hover .icon-close{
+	background-position:-120px 0px;
+}
+.icon-detail{
+	background-position:-144px -24px;
+}
+a:hover .icon-detail{
+	background-position:-144px 0px;
+}
+.icon-favorite{
+	background-position:-168px -24px;
+}
+.icon-favorite:hover{
+	background-position:-168px 0px;
+}
+.icon-favorite+a{
+	color:#666666;
+}
+.icon-favorite+a:hover{
+	color:#9c9c9c;
+	text-decoration:none;
+}
+a:hover .icon-favorite{
+	background-position:-168px 0px;
+}
+.icon-download{
+	background-position:-192px -24px;
+}
+a:hover .icon-download{
+	background-position:-192px 0px;
+}
+.icon-preview{
+	background-position:-216px -24px;
+}
+a:hover .icon-preview{
+	background-position:-216px 0px;
+}
+
+
+
+
+/*小元素箭头等*/
+.arrow,
+[class^="arrow-"],
+[class*=" arrow-"] {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: .3em;
+	vertical-align: text-top;
+	text-indent:-9999px;
+	overflow:hidden;
+	background-image: url("../images/arrows.png");
+	/*IE6*/
+	_background-image: url("../images/arrows.gif");
+	background-position: 14px 14px;
+	background-repeat: no-repeat;
+}
+.arrow-date-left{
+	background-position:0px 0px;
+}
+.arrow-date-right{
+	background-position:0px 10px;
+}
+.arrow-tip-up{
+	background-position:-31px 0px;
+}
+.arrow-tip-bottom{
+	background-position:-31px -15px;
+}

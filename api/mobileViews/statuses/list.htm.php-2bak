@@ -1,0 +1,186 @@
+<!--<div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>-->
+<?php //p($data);exit;?>
+<div id="wrapper">
+    <div id="scroller" class="weibo">
+        <div id="pullDown">
+            <span class="pullDownIcon"></span><span class="pullDownLabel"> 刷新...</span>
+        </div>
+
+        <ul id="thelist">
+            <?php
+            foreach ($data as $v) {
+                ?>
+                <li class="weibo-list" data-id="<?php echo $v['weibo_id'];?>">
+                    <img  class="img-r lazy" src="<?php echo API_PUBLIC_PATH;?>image/lazy-user.gif" data-url="<?php echo $v['face'];?>">
+                    <span class="time"><?php echo $v['agoTime'];?>前</span>
+                    <span class="name uname" data-uid="<?php echo $v['uid'];?>"><?php echo $v['uname'];?></span>
+<!--          内容区          -->
+                    <p class="weibo-content weibo-detail">
+                        <?php echo $v['content'];
+
+                        //转发微博
+                        if($v['transpond_id']){
+                        ?>
+                            <section class="zhuanfa" data-id="<?php echo $v['transpond_data']['weibo_id'];?>">
+                                <span class="zhuan-id" style="display: none;"><?php echo $v['transpond_data']['weibo_id'];?></span>
+                                <img  class="img-r lazy" src="<?php echo API_PUBLIC_PATH;?>image/lazy-user.gif" data-url="<?php echo $v['transpond_data']['face'];?>">
+                                <span class="yanse uname" data-uid="<?php echo $v['transpond_data']['uid'];?>"><?php echo $v['transpond_data']['uname'];?></span>
+                                <p>
+                                    <?php
+                                    echo $v['transpond_data']['content'];
+                                    if($v['transpond_data']['type'] == 1){
+                                        echo '<span class="show-pic">';
+                                        pic($data['transpond_data']);
+                                        echo '</span>';
+                                    }
+                                    ?>
+                                </p>
+                            </section>
+                        <?php
+                        }
+                        //如果是图片
+                        if($v['type'] == 1 && !$v['transpond_id']){
+                            ?>
+                            <br>
+                            <span class="show-pic">
+                            <?php if(count($v['type_data']) > 4){
+                                foreach ($v['type_data'] as $vv) {
+                                    if(is_array($vv)){
+                                ?>
+                                    <img class="pic lazy" src="<?php echo API_PUBLIC_PATH?>/image/lazy.jpg" data-url="<?php echo $v['type_data']['thumburl'],$vv['thumburl']?>">
+                                <?php
+                                    }
+                                }
+                            }else{
+                             ?>
+                                <img class="pic lazy" src="<?php echo API_PUBLIC_PATH?>/image/lazy.jpg" data-url="<?php echo $v['type_data']['thumburl'];?>">
+                            <?php
+                            }
+                            ?>
+                        </span>
+                        <?php
+                            //视频
+                        }elseif($v['type'] == 3){
+                            ?>
+                            <br>
+                                <img src="<?php echo API_PUBLIC_PATH;?>/image/play.png" data-url="<?php echo $v['type_data'];?>" class="media">
+<!--                            <video class="v" id="v" src="--><?php //echo $v['type_data'];?><!--"><a href="#">点击查看视频</a></video>-->
+                        <?php
+                            //音频
+                        }elseif($v['type'] == 999){
+                            ?>
+                            <br>
+                                <img src="<?php echo API_PUBLIC_PATH;?>/image/play.png" data-url="<?php echo $v['type_data']['mp3'];?>" class="media">
+                        <?php
+                        }
+                        ?>
+                    </p>
+                <!--底部-->
+                    <p class="down">
+
+                    <span class="down-r">
+                            <span class="comment">
+                                评论 <span class="yanse"><?php echo $v['comment'];?></span>
+                            </span>
+
+                            <span class="tran">
+                                转发 <span class="yanse"><?php echo $v['transpond'];?></span>
+                            </span>
+                    </span>
+
+                    <span class="from">
+                        <?php
+                        if($v['from']==0){
+                            echo '来自 网站';
+                        }elseif($v['from'] == 2){
+                            echo '来自 Android';
+                        }elseif($v['from'] == 3){
+                            echo '来自 iPhone';
+                        }
+                        ?>
+                    </span>
+
+                    </p>
+                </li>
+            <?php
+            }
+            ?>
+        </ul>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span><span class="pullUpLabel"> 加载更多...</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="<?php echo API_PUBLIC_PATH;?>js/iscroll.js"></script>
+<!--<div id="footer"></div>-->
+<script type="text/javascript">
+    var url = "<?php echo $url;?>";
+    var lazy_user = "<?php echo API_PUBLIC_PATH;?>image/lazy-user.gif";
+    var lazy_img = "<?php echo API_PUBLIC_PATH;?>image/lazy-user.gif";
+    var weibo,uid,zhuanfa;
+    iscroll('weibo')
+    $(function(){
+
+        /*
+         *   处理视频音频
+         */
+//        $("a").hammer({}).on("tap", ".media",function(){
+//            return false;
+//        })
+
+//           $("a").click(function(){});
+        $(".media").hammer({}).on("tap",function(){
+            var url = $(this).data('url');
+            window.location = "objc://media^"+url;
+            return false;
+        })
+
+         $("#thelist").hammer({}).on("tap",'li',weibo = function(){
+            var id = $(this).data('id');
+            window.location = "objc://weiboDetail^"+id;
+        });
+        $(".uname").hammer({}).on("tap",uid=function(){
+            var uid = $(this).data('uid')
+            window.location = "objc://uid^"+uid;
+        });
+
+        $(".zhuanfa").hammer({}).on("tap",zhuanfa=function(){
+            var zhuan_id = $(this).data("id");
+            window.location = "objc://weiboDetail^"+zhuan_id;
+        })
+
+        setTimeout(function(){
+            initLoad()
+        },801);
+
+        $(".weibo-list").hammer({ drag_lock_to_axis: true }).bind("dragup",delayLoad)
+        $(".weibo-list").hammer({ drag_lock_to_axis: true }).bind("dragdown",delayLoad)
+
+        $("#thelist").hammer({}).on("tap",'img',function(){
+            var url = $(this).attr("src");
+            window.location = "objc://img^"+url;
+            return false;
+        })
+
+
+    })
+
+    //图片延时加载
+
+    function initLoad(){
+        $(".lazy").each(function(){
+            var win_h = $(document).height();
+            var top = Math.round($(this).offset().top);
+            if( (top > 0) && (top < win_h)){
+                var img = $(this).data('url');
+                $(this).attr("src",img);
+            }
+        });
+        myScroll.refresh();
+    }
+
+    function delayLoad(ev){
+        ev.gesture.stopDetect();
+        setTimeout(initLoad,1000);
+    }
+</script>

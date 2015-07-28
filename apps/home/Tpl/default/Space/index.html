@@ -1,0 +1,98 @@
+<include file="header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script>
+var weibo = $.weibo({
+      timeStep : 10000
+});
+</script>
+<style>
+<!--
+body{background:none;}
+-->
+</style>
+  <div class="content">
+    <div class="personal_msg">
+      <ul>
+        <!-- <li class="identity">> 学生</li>-->
+        <li class="sex"> 真实姓名  <php>echo empty($userinfo['真实姓名'])?'未知姓名':$userinfo['真实姓名'];</php></li>
+        <li class="sex"> 性别  <php>echo empty($userinfo['性别'])?'未知性别':$userinfo['性别'];</php></li>
+        <li class="address"> 现居 <php>echo empty($userinfo['所在地'])?'未知地区':$userinfo['所在地'];</php></li>
+        <if condition="($userinfo['identitytype'] == 2)">
+        <li class="address" title="{$userinfo['部门']}"> 部门 <php>echo empty($userinfo['部门'])?'未知部门': mStr($userinfo['部门'],7);</php></li>
+        <li class="address" title="{$userinfo['职务']}"> 职务 <php>echo empty($userinfo['职务'])?'':mStr($userinfo['职务'],7);</php></li>
+        <else />
+        <li class="address" style="overflow:hidden;"> 院系  <php>echo empty($userinfo['院系'])?'未知院系':$userinfo['院系'];</php></li>
+        <li class="address"> 班级  <php>echo empty($userinfo['班级'])?'未知班级':$userinfo['班级'];</php></li>
+        </if>
+        <li class="personal_msg_xq"><a
+          href="{:U('home/space/profile',array('uid'=>$uid))}">>详细资料</a></li>
+      </ul>
+    </div>
+    {:Addons::hook('home_space_middle', array('uid'=>$uid))}
+    
+    <div>
+      <div class="c_left">
+        <div class="weibo_menu_tabs">
+          <ul>
+            <volist name="space_menu" id="vo">
+              <li><a id="feed_colleague_item" rel="colleague"
+              style="width:65px; text-align:center; color:#333" class="<if
+              condition="$type eq $key">on</if>" href="{:U('home/Space/index',
+                array('uid'=>$_GET['uid'], 'type'=>$key))}"><span>{$vo}</span></a></li>
+            </volist>
+          </ul>
+        </div>
+        <div class="clear clearfix"></div>
+        <!-- 个人主页微广播分类 -->
+        <eq name="type" value="weibo">
+          <div class="weibo_menu_tag" id="MenuSub">
+            <volist name="weibo_menu" id="vo">
+              <ul>
+                <li><a id="feed_colleague_item" rel="colleague" class="<if
+              condition="$weibo_type eq $key">on
+                  </if>
+                  "
+                  href="{:U('home/Space/index',array('uid'=>$uid,'weibo_type'=>$key))}"><span>{$vo}</span></a> </li>
+              </ul>
+            </volist>
+          </div>
+        </eq>
+        <eq name="type" value="teach">
+          <div class="summary-list task_list">
+            <include file="_teach" />
+          </div>
+        </eq>
+        <eq name="type" value="prepare">
+          <div class="summary-list task_list">
+            <include file="_prepare" />
+          </div>
+        </eq>
+        <eq name="type" value="resource">
+          <div class="summary-list task_list">
+            <include file="_resource" />
+          </div>
+        </eq>
+        <!-- 微博内容显示 -->
+        <div class="weibo_list"> 
+          <!-- /个人主页微广播分类 -->
+          <if condition="$list">
+            <div class="feedBox">{:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>0, 'hidden_user'=>1))}</div>
+            <div class="page">{$list.html}</div>
+            <else />
+            {:Addons::hook('home_space_list', array('uid'=>$uid,'type'=>$type))} </if>
+        </div>
+      </div>
+      <include file="right" />
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 页面主体内容end -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.personal_photo');</script>

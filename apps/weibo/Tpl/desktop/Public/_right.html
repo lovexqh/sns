@@ -1,0 +1,84 @@
+<div class="mainbox_R">
+{:Addons::hook('home_index_right_top')}
+<!--个人信息区 Start-->
+<div class="user_app">
+<div class="user_app_box">
+	<!--头像区-->
+	<div class="userinfo">
+		<div class="userpic" onmouseover="this.className='userpic over'" onmouseout="this.className='userpic'" >
+			<span id="my_face"><space uid="mid" class="nocard">{uavatar}</space></span>
+		</div>
+		<div class="user_name">
+			<h2><space uid="mid" class="nocard">{uname}</space><php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</h2>
+			<!--关注-->
+			<div class="user_follow">
+			<span><a href="{:U('home/space/follow',array('type'=>'following', 'uid'=>$mid))}"><strong>{$userInfoCache['following']}</strong><br />关注</a></span>
+			<span class="app_lineL"><a href="{:U('home/space/follow',array('type'=>'follower', 'uid'=>$mid))}"><strong>{$userInfoCache['follower']}</strong><br />粉丝</a></span>
+			<span class="app_lineL"><a href="{:U('home/space/index',array('uid'=>$uid))}"><strong id="miniblog_count">{$userInfoCache['miniNum']}</strong><br />微博</a></span>
+			</div>
+			<!--关注 end-->
+		</div>
+	</div>
+	<!--头像区 End-->
+	{:Addons::hook('home_index_left_avatar_bottom')}
+</div>
+<!--个人信息区 End-->
+<?php
+  function getMenuState($type){
+	$type = split('/',$type);
+	if( strtolower(MODULE_NAME)==strtolower($type[0]) && ( strtolower(ACTION_NAME)==strtolower($type[1]) || $type[1]=='*') ){
+	  return 'class="on"';
+	}
+  }
+?>
+<div class="app_line">
+  <div class="celerity_menu">
+	<ul>
+		<li><a href="{:U('weibo/Index/index')}" {:getMenuState('Index/index')}><span class="ico_side ico_home"></span>微博首页</a></li>
+		<li><a href="{:U('weibo/User/atme')}" {:getMenuState('User/atme')}><span class="ico_side ico_atme"></span>提到我的 
+		<span id="app_left_count_atme"><gt name="userCount['atme']" value="0">(<font color="red">{$userCount.atme}</font>)</gt></span>
+		</a>
+		</li>
+		<li><a href="{:U('weibo/User/collection')}" {:getMenuState('User/collection')}><span class="ico_side ico_favorites"></span>微博收藏</a></li>
+		<li><a href="{:U('weibo/User/comments')}" {:getMenuState('User/comments')}><span class="ico_side ico_comment"></span>我的评论 
+		<span id="app_left_count_comment"><gt name="userCount['comment']" value="0">(<font color="red">{$userCount.comment}</font>)</gt></span>
+		</a>
+		</li>
+	</ul>
+  </div>
+</div>
+
+</div><!-- user_app End -->
+<!--个人信息区 End-->
+  
+<div class="right_box lineS_btm">
+  <h2><a href="javascript:void(0)" onclick="$('.quick_win').show()" class="right" style="font-weight:400;font-size:12px">添加</a>关注的话题</h2>
+  <div style="display:none;" class="quick_win">
+	<a href="javascript:void(0)" onclick="$('.quick_win').hide()" class="del" title="关闭"></a>
+	<p>
+	  <input type="text" class="text" name="quick_name" style=" width:130px;display:block;margin:0 0 5px 0"/>
+	  <input type="button" onclick="addFollowTopic()" value="保存" class="btn_b" />
+	</p>
+	<p class="cGray2">请添加想关注的话题</p>
+  </div>
+  <ul class="topic_list" rel="followTopicArea">
+	<volist id="vo" name="followTopic">
+	  <li onmouseover="$(this).find('.del').show()" onmouseout="$(this).find('.del').hide()"><a class="del right" style="display:none" title="删除" href="javascript:void(0)" onclick="deleteFollowTopic(this,'{$vo.topic_id}')"></a><a href="{:U('weibo/user/topics',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}</a></li>
+	</volist>
+  </ul>
+</div>
+<div class="right_box">
+  {:W('HotTopic', array('type'=>'recommend','limit'=>5))}
+  <php>if(ACTION_NAME == "index"){</php>
+  {:W('HotTopic', array('type'=>'auto','limit'=>5))}
+  <php>}</php>
+</div>
+  {:Addons::hook('home_index_right_bottom')}
+<php>if (Addons::requireHooks('home_index_right_advert')) {</php>
+	{:Addons::hook('home_index_right_advert', array($ts['ad']['right']))}
+<php>} else {</php>
+	<volist name="ts['ad']['right']" id="vo">
+	<div class="ad_right"><div class="ke-post lineS_btm">{$vo.content}</div></div>
+	</volist>
+<php>}</php>
+</div>

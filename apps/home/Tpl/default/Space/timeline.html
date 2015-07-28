@@ -1,0 +1,100 @@
+<include file="header" />
+<script src="../Public/js/jquery.masonry.min.js"></script>
+<script src="__PUBLIC__/js/desktop/jquery.lazyload.min.js"></script>
+<script src="../Public/js/timeline.js"></script>
+<script type="text/javascript">
+var is_relink=true;
+$(function(){
+	$("img.maxphoto").lazyload({
+		effect : "fadeIn"
+	});	
+});
+</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+  <div class="sp-sitemap">
+    <h2>时光轴</h2>
+  </div>
+  <div class="content"><!-- 内容 begin  -->
+      <div class="main no_l"><!-- 画布 begin  -->  
+      	<php>if(empty($time)){</php>
+        暂无任何数据
+        <php>}else{</php>  
+        <div class="mainbox">  
+          <foreach name="time" item="ti" >
+          <div class="container">
+             <div class="box col6" ><h2>{$ti}</h2></div>
+             <volist name="datas[$ti]" id="vo">
+             <div class="box" id="r{$vo.id}<php>if(!empty($vo['savepath'])){echo 'tu';}else{echo 'bl';}</php>">
+              <div class="ti_bg"></div>
+              <li>
+                <p>{$vo.cTime|friendlyDate}---更新了{$vo.type}
+                	<if condition="!empty($vo['title'])">
+                   【<span id="{$vo.id}<php>if(!empty($vo['savepath'])){echo 'tu';}else{echo 'bl';}</php>">
+                          {$vo.title}
+                    </span>
+                   】
+                   </if>
+                </p>
+                <div class="c"></div>
+                <p class="bord"></p>
+                <p>
+                <php>if(!empty($vo['savepath'])){</php>             
+                 <img src="{$vo.savepath}" width="{$vo.width}" height="{$vo.height}" />  
+                 <php>} </php>
+                </p>
+    
+                   <php>if(!empty($vo['content'])){ </php>
+                   <p style="width:430px;">{$vo.content|strip_tags|msubstr=0,300}</p>
+                   <php>} </php>
+                <div class="c"></div>
+               <php> if($uid==$mid){ </php>
+               <p class="right" style="font-size:14px; margin-top:10px;">
+               <php>if($vo['type'] == '文章'){ </php>
+                    <a href="javascript:;" onclick="edit({$vo.id},{$mid})" >编辑</a>｜　
+                    <a href="javascript:;" onclick="deleteBlog({$vo['id']})">删除</a>
+                    <php>}else if($vo['type'] == '照片'){ </php>
+                    <a href="{:SITE_URL}{$vo.savepath}" target="_blank"><span class="ico_Preview"></span>查看原图</a>
+                    <a href="javascript:;" onclick="editphotoTab({$vo.id})"><span class="ico_Modify"></span>修改</a>
+                    <span id="divdelphoto"><a href="javascript:;" onclick="delphoto({$vo.id});" class="mr10"><span class="ico_Del"></span>删除</a></span>
+                    <php>} </php>
+    
+               </p>
+               <php> } </php>
+               </li>
+             </div>
+             </volist>
+          </div> <!-- container -->
+          </foreach>
+        </div>
+        <php>}</php>  
+      </div>
+      <div class="c"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 页面主体内容end -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script>
+function init_resize(){
+	$('.mainbox').masonry({
+      itemSelector: '.box',
+      columnWidth: 475,
+      isFitWidth: true
+    });
+	
+	$(".box").each(function(){
+		var y=0;
+		y = $(this).position().left;
+		if(y<50){ 
+		         $(this).children("li").css({"float":"right"});
+		         $(this).children(".ti_bg").addClass("ltitle"); 
+		}else{ $(this).children(".ti_bg").addClass("rtitle"); }
+	});
+
+}
+init_resize();
+
+replace_link('.relink');
+</script>

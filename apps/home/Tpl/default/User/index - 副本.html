@@ -1,0 +1,265 @@
+<include file="__THEME__/member/header" />
+
+<div class="containerOuter">
+	<include file="__THEME__/member/banner" />
+    <div class="container">
+        <div class="containerInner">
+          <include file="__THEME__/member/apps" />
+          <div class="mainbox pb15">
+          	<div class="mainbox_R">
+            	<a class="templete_enter" title="模板偏好设置" onclick="oSpaceStyle.fShowBox();" href="javascript:;"></a>
+                <div class="msg_center boxitem pt10">
+                	<div class="box_title">
+                    	<h2>消息中心</h2>
+                    </div>
+                    <div class="box_content">
+                    	<div class="msg_important notebox mt10">
+                        	<a href="#" class="close">×</a>
+                        	<strong>重要信息</strong>
+                            <p>
+                            	据传言王石离婚或净身出户，新欢为《甄嬛传》演员央cd视批新形势下事实上的信用卡高额罚息
+                            </p>
+                        </div>
+                    	<ul>
+                        	<li>个人消息：<a href="#">1条</a><img src="images/new.gif" /></li>
+                            <li>提到我的：<a href="#">3条</a><img src="images/new.gif" /></li>
+                            <li>评论消息：<a href="#">1条</a><img src="images/new.gif" /></li>
+                            <li>系统消息：0条</li>
+                            <li>应用消息：0条</li>
+                        </ul>
+                        <div class="clear pb10"></div>
+                    </div>
+                </div><!-- /msg_center -->
+                
+                <div class="clear lineD_btm"></div>
+                
+                <div class="access_log boxitem pt10">
+                	<div class="box_title">
+                    	<h2>最近来访</h2>
+                        <a href="#" class="more">更多</a>
+                    </div>
+                    <div class="box_content">
+                    	<ul>
+                        	<li><a href="#"><img src="upload/01.png" /></a><a href="#">水晶</a><span>11月1日</span></li>
+                            <li><a href="#"><img src="upload/02.png" /></a><a href="#">韩金峰</a><span>9月12日</span></li>
+                            <li><a href="#"><img src="upload/03.png" /></a><a href="#">杨小伟</a><span>10月21日</span></li>
+                            <li><a href="#"><img src="upload/04.png" /></a><a href="#">Davidwang</a><span>10月1日</span></li>
+                            <li><a href="#"><img src="upload/05.png" /></a><a href="#">小波</a><span>9月9日</span></li>
+                            <li><a href="#"><img src="upload/06.png" /></a><a href="#">朱长奇</a><span>8月31日</span></li>
+                        </ul>
+                        <div class="clear pb10"></div>
+                        <ol>
+                        	<li>今日访问量：<a href="#">10</a><img src="images/new.gif" /></li>
+                            <li>历史访问量：(<a href="#">99</a>)</li>
+                        </ol>
+                        <div class="clear pb10"></div>
+                    </div>
+                </div><!-- /access_log -->
+                
+                <div class="clear pt5 lineD_btm"></div>
+                
+                <div class="my_group boxitem pt10">
+                	<div class="box_title">
+                    	<h2>我的社团</h2>
+                        <a href="#" class="more">更多</a>
+                    </div>
+                    <div class="box_content">
+                    	<ul>
+                        	<li><span>社团标签：</span><a href="#">舞蹈</a></li>
+                            <li><span>社团主席：</span><a href="#">小波</a><a href="#">朱长奇</a></li>
+                            <li><span>社团活动：</span>
+                            	<div class="o_active">
+                                	<a href="#"><img src="images/active_03.gif" /></a>
+                                    <a href="#"><img src="images/active_05.gif" /></a>
+                                    <a href="#"><img src="images/active_07.gif" /></a>
+                                </div>
+                            </li>
+                            <li><span>其它社团：</span>
+                            	<div class="o_group">
+                                	<a href="">器乐协会</a>
+                                    <a href="">摄影协会</a>
+                                    <a href=""> 乒乓协会</a>
+                                    <a href="">书法协会</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- /mainbox_R -->
+            <div class="mainbox_C">
+            	<article class="main_content">
+                
+                <div class="mcbox pt10">
+                    <div class="system_msg notebox">
+                    	<a href="#" class="close">×</a>
+                        <aside>
+                            <img src="images/sound.gif" />
+                            <span>系统消息：</span>
+                            <a href="#">山东省教育厅2012年6月21日致各县市区通告......</a>
+                        </aside>
+                        <div class="clear"></div>
+                    </div><!-- /sys_msg -->
+                </div>
+                        
+                <section>
+                	<div class="talkBox mcbox">
+                        <h2>
+                            <div class="wordNum numObj">你还可以输入<strong id="strconunt">140</strong>字</div>
+                            <span>记录是一种态度！</span>
+                        </h2>
+                        <div class="clear"></div>
+                        
+                        <div class="cntBox">
+                            <input id="publish_handle" class="btn_big_disable hand buttonObj" value="发布" type="button" error="发布失败">
+                            <textarea id="content_publish" cols="20" rows="2" name="content"></textarea>
+                        </div>
+                        
+                        <div class="funBox">
+                            <div id="publish_type_content_before" class="kind">
+                                <a class="a52" onclick="ui.emotions(this)" href="javascript:void(0)" target_set="content_publish"><img class="icon_add_face_d" src="images/zw_img.gif">表情</a>
+                                <a class="a52" onclick="weibo.addtheme()" href="javascript:void(0)"><img class="icon_add_topic_d" src="images/zw_img.gif">话题</a> 
+                                <a class="a52" onclick="weibo.reset();weibo.plugin.image.click(this)" href="javascript:void(0)"><img class="icon_add_img_d" src="images/zw_img.gif">图片</a>
+                                <a class="a52" onclick="weibo.plugin.video.click(this)" href="javascript:void(0)"><img class="icon_add_video_d" src="images/zw_img.gif">视频</a>
+                                <a class="a52" onclick="weibo.plugin.music.click(this)" href="javascript:void(0)"><img class="icon_add_music_d" src="images/zw_img.gif">音乐</a>
+                                <a class="a52" onclick="weibo.plugin.vote.click(this)" href="javascript:void(0)"><img class="icon_add_vote_d" src="images/zw_img.gif">投票</a>
+							</div>
+              			</div><!-- /funBox -->
+                        
+                        <div class="clear pt5"></div>
+                        <div class="my_quick">
+                        	<span>我想做：</span>
+                            <aside>
+                            	<a href="#">传照片</a>
+                                <a href="#">写文章</a>
+                                <a href="#">发消息</a>
+                                <a href="#">聊聊天</a>
+                                <a href="#">发起预习</a>
+                                <a href="#">发布作业</a>
+                                <a href="#">查找资料</a>
+                                <a href="#">在线开课</a>
+                            </aside>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear pb15"></div>              
+                    </div><!-- /talkBox -->
+                </section>
+                    
+                <section>
+                    <div class="dynaBox mcbox pt15 pb15 mt10">
+                    	<div class="listbox">
+                        	<div class="menubox">
+                            	<h2 class="on">校长动态</h2>
+                                <h2>关注动态</h2>
+                                <h2>部门动态</h2>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="contentbox">
+                            	<ul>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">首都师大金琼花一行来访m并作学术报告</a><span>[2012-09-29]</span></li>
+                                	<li><a href="#">50名学子喜获佳隆集团慈善公b益基金助学金</a><span>[2012-10-26]</span></li>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛,我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">50名学子喜获佳隆：集团慈善公益基金”助学金</a><span>[2012-10-26]</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- /dynaBox -->
+                <section>
+                
+                <section>
+                    <div class="newInfoBox mcbox pt10 pb15 mt10">
+                    	<div class="mcboxitem">
+                        	<div class="box_title">
+                            	<h2 class="ico_newvideo">最新视频</h2>
+                                <a href="#" class="more">更多</a>
+                            </div>
+                            <div class="box_content videolist">
+                            	<ul>
+                                	<li class="">
+                                    	<a href="#"><img class="pic" src="images/movie_06.gif" /></a>
+                                        <a href="#">市井生活</a>
+                                        <span>重阳节关爱长辈行</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_03.gif" /></a>
+                                        <a href="#">知识讲堂（35）</a>
+                                        <span>知识就是力量</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_13.gif" /></a>
+                                        <a href="#">生活剧场</a>
+                                        <span>玛利亚梦露</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_15.gif" /></a>
+                                        <a href="#">名家导读</a>
+                                        <span>蔡峰的人生故事</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_03.gif" /></a>
+                                        <a href="#">知识讲堂（35）</a>
+                                        <span>知识就是力量</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_15.gif" /></a>
+                                        <a href="#">名家导读</a>
+                                        <span>蔡峰的人生故事</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_06.gif" /></a>
+                                        <a href="#">市井生活</a>
+                                        <span>重阳节关爱长辈行</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><img class="pic" src="images/movie_06.gif" /></a>
+                                        <a href="#">市井生活</a>
+                                        <span>重阳节关爱长辈行</span>
+                                        <div><img src="images/movie_10.gif" /> 1100</div>
+                                    </li>
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                    </div><!-- /newInfoBox -->
+                </section>
+                
+                <section>
+                    <div class="dynaBox mcbox pt15 pb15 mt10">
+                    	<div class="listbox">
+                        	<div class="menubox">
+                            	<h2 class="on">我的文章</h2>
+                                <h2>我的像片</h2>
+                                <h2>我的视频</h2>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="contentbox">
+                            	<ul>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">首都师大金琼花一行来访m并作学术报告</a><span>[2012-09-29]</span></li>
+                                	<li><a href="#">50名学子喜获佳隆集团慈善公b益基金助学金</a><span>[2012-10-26]</span></li>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">省高校音乐舞蹈专业师生基本功比赛,我校获佳绩</a><span>[2012-10-29]</span></li>
+                                	<li><a href="#">50名学子喜获佳隆：集团慈善公益基金”助学金</a><span>[2012-10-26]</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- /dynaBox -->
+                </section>
+                </article>
+            </div><!-- /mainbox_C -->
+          </div><!-- /mainbox -->
+          <div class="clear"></div>          
+        </div><!-- /containerInner -->
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+
+<include file="__THEME__/member/footer" />

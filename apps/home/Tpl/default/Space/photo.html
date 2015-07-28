@@ -1,0 +1,65 @@
+<include file="header" />
+
+  <div class="content">
+  
+    <div>
+      <div class="c_left">
+         <div class="weibo_menu_tabs">
+          <ul>
+            <volist name="space_menu" id="vo">
+              <li><a id="feed_colleague_item" rel="colleague"
+             		 style="width:65px; text-align:center; color:#333" 
+             	   ><span>{$vo}</span>
+                  </a>
+              </li>
+            </volist>
+          </ul>
+        </div> 
+		<div class="clear"></div>
+		<!--  <iframe src="{:U('photo/Index/albums',array('iframe'=>'yes', 'uid'=>$uid))}" width="100%" height="500px;" style="border:0px;"></iframe>
+      -->
+     <div class="falbumlist summary-list">
+  <ul class="task_list">
+     
+	<volist name="data.data" id="li">
+      <li>
+        <div class="box">
+          <div class="c1"><span class="photo140"><a href="{:U('photo/Index/album',array(uid=>$li['userId'],id=>$li['id']))}" title="{$li.name}" target="_blank"><img src="{$li.id|get_album_cover=###,$li}" alt="{$li.name}" /></a></span></div>
+          <div class="c2">
+            <dl>
+              <dt> <span class="right"></span><a href="{:U('photo/Index/album',array(uid=>$li['userId'],id=>$li['id']))}" class="OverH" title="{$li.name}" target="_blank"><strong>{$li.name}</strong></a></dt>
+              <dd>图片：{$li.photoCount}</dd>
+              <if condition=" $mid neq $li['userId']"><dd>作者：<a href="{:U('home/Space/index',array(uid=>$li[userId]))}" title="{$li.userId|getUserName}" target="_blank" >{$li.userId|getUserName}</a></dd></if>
+              <dd>{$li.mTime|friendlyDate}更新</dd>
+              <php>if(in_array($li['privacy'],array('2','3','4'))&&$mid!=$uid){</php><dd>
+                </dd><php>}</php>
+              <dd>
+              <if condition=" $mid eq $li['userId'] ">
+              	<php>if(ext_check_power('U')){</php>
+               		<a href="{:U('photo/Manage/album_edit',array(uid=>$li[userId],id=>$li['id']))}" target="_blank" >编辑该相册</a>
+               	<php>}</php>
+              </if>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </li>
+    </volist>
+  </ul>
+</div>
+<div class="page">{$data['html']}</div>
+      
+      </div>
+      <include file="right" />
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 页面主体内容end -->
+
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.task_list');</script>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

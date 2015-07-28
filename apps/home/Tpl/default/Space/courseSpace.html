@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>学科空间</title>
+<style type="text/css">
+html,body{
+	font-size:12px;
+	font-family:'宋体';
+	text-align:left;
+	padding:0;
+	margin:0;
+	background-color:#faf9f2;
+	background-image:url(../Public/images/coursebg.jpg);
+	background-position:center top;
+}
+body{
+	padding:5px 20px;
+	height:100%;
+}
+/* other styles! */
+.clearfix {
+	*zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+.clearfix:after {
+	clear: both;
+}
+a:link {
+	color:#333;
+	text-decoration:none;
+}
+a:visited {
+	color:#333;
+	text-decoration:none;
+}
+a:hover {
+	color:#1364ae;
+	text-decoration:underline;
+}
+a:active {
+	color:#333;
+	text-decoration:none;
+}
+.block{
+	position:relative;
+}
+h2{
+	margin:0;
+	padding:15px 0 10px;
+	font-size:14px;
+}
+ul{
+	margin:0;
+	padding:0;
+	list-style:none;
+	list-style-type:none;
+}
+ul li{
+	float:left;
+	margin-left:10px;
+	padding-right:11px;
+	line-height:20px;
+	background:url(../Public/images/split.gif) no-repeat right center;
+}
+ul li.last{
+	background-image:none;	
+}
+ul li a{
+	white-space:nowrap;
+}
+
+</style>
+</head>
+
+<body>
+<if condition="!empty($jygroup)">
+<div class="block">
+	<h2>教研组</h2>
+	<ul>
+		<volist name="jygroup" id="group" key="key">
+		<li <if condition="count($jygroup) eq $key">class="last"</if>><a href="javascript:;" onclick="top. OpenBrowser('{:U('course/Organize/index',array('schoolid'=>$group['xxid'], 'courseid'=>$group['xkid'], 'xueduan'=>$group['xd']))}','{$group.xxmc} - {$group.name}教研组','width=1024,height=600,titlebutton=close|max|min');return false;">{$group.name}教研组</a></li>
+		</volist>
+	</ul>
+	<div class="clearfix"></div>
+<!-- end .block --></div>
+</if>
+<if condition="!empty($bkgroup)">
+<div class="block">
+	<h2>备课组</h2>
+	<ul>
+		<volist name="bkgroup" id="group" key="key">
+		<if condition="!empty($group['xkmc'])">
+		<li <if condition="count($bkgroup) eq $key">class="last"</if>><a href="javascript:;" onclick="top. OpenBrowser('{:U('course/Organize/index',array('schoolid'=>$group['xxid'], 'courseid'=>$group['xkid'], 'xueduan'=>$group['xd'],'grade'=>$group['nj'],'gradeid'=>$group['njid']))}','{$group.njmc}{$group.name}备课组 - {$group.xxmc}'),'width=1024,height=600,titlebutton=close|max|min';return false;">{$group.njmc}{$group.xkmc}</a></li>
+		</if>
+		</volist>
+	</ul>
+	<div class="clearfix"></div>
+<!-- end .block --></div>
+</if>
+<if condition="!empty($xzgroup)">
+<div class="block">
+	<h2>协作组</h2>
+	<ul>
+		<volist name="xzgroup" id="group" key="key">
+		<li <if condition="count($xzgroup) eq $key">class="last"</if>><a href="javascript:;" onclick="top. OpenBrowser('{:U('course/Index/club',array('groupid'=>$group['id']))}','{$group.name}'),'width=1024,height=600,titlebutton=close|max|min';return false;">{$group.name}</a></li>
+		</volist>
+	</ul>
+	<div class="clearfix"></div>
+<!-- end .block --></div>
+</if>
+</body>
+</html>

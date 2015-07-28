@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+
+#navbar .indicator{
+	cursor:pointer;
+	display:inline-block;
+	float:left;
+	width:62px;		
+	overflow:hidden;
+	outline:none;
+	text-align:center;
+}
+
+#navbar .indicator:hover{
+	cursor:pointer;
+	display:inline-block;
+	float:left;	
+	width:62px;	
+	overflow:hidden;outline:none;text-align:center;
+}
+
+#navbar .indicator_current{	
+	cursor:pointer;display:inline-block;
+	float:left;	
+	width:62px;	
+	overflow:hidden;outline:none;text-align:center;
+}
+

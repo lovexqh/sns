@@ -1,0 +1,67 @@
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+    </head>
+    
+    <body>
+        <form action="__URL__&act=send" method='post' onsubmit='return check()'>
+            <div style="margin-top:10px;">
+                <h2 class="f14px fB lh30">我目前拥有的 {$money.alias} 是： {$money.credit}</h2>
+            </div>
+            <div style="margin-top:10px;">
+                <h2 class="f14px fB lh30">选择接收人：</h2>
+                <div style="width:360px; margin-top:10px;">{:W('SelectFriends',array('uid'=>$_GET['uid']))}</div>
+                <div style="margin-top:20px;">
+                    <h2 class="f14px fB lh30">附加消息：</h2>
+                    <p style="margin:0; padding:0;">不能超过200个字符</p>
+                    <textarea cols="50" rows="6" class="Text20" name='sendInfo' id='sendInfo'></textarea>
+                </div>
+                <div>
+                    <div class="lh30 fB f14px">选择赠送的方式：</div>
+                    <div>
+                        <div class="left">
+                            <input checked="checked" value="1" id="public" name="sendWay" type="radio" />
+                        </div>
+                        <div style="margin:0 0 20px 20px;" class="lh18">
+                            <label for="public">
+                                <strong>公开赠送</strong>
+                                <br />
+                                <span class="cGray2">所有人都能看见你的名字、赠送的礼物和附加消息。
+                                    <br />这个礼物将显示在接收人的礼物盒，并可发布动态到微广播。</span>
+                            </label>
+                        </div>
+                        <div class="left">
+                            <input value="2" id="private" name="sendWay" type="radio" />
+                        </div>
+                        <div style="margin-left:20px;" class="lh18">
+                            <label for="private">
+                                <strong>私下赠送</strong>
+                                <br />
+                                <span class="cGray2">只有接收礼物的人能看见你的名字和附加消息。
+                                    <br />这个礼物将只出现在接收人的礼物盒，且其他人无法知道发送人是谁。</span>
+                            </label>
+                        </div>
+                        <br />
+                        <div class="left">
+                            <input value="3" id="anonymous" name="sendWay" type="radio" />
+                        </div>
+                        <div style="margin:0 0 20px 20px;" class="lh18">
+                            <label for="anonymous">
+                                <strong>匿名赠送</strong>
+                                <br />
+                                <span class="cGray2">接收礼物的人只能看见你的附加消息，不显示你的名字。
+                                    <br />这个礼物将只出现在接收人的礼物盒，且其他人无法知道发送人是谁。</span>
+                            </label>
+                        </div>
+                        <input type='hidden' name='giftId' value='' id='gift_id' />
+                    </div>
+                </div>
+                <div class="mt10">
+                    <input type="submit" class="btn_b" style="margin-right:5px;" value="赠送礼物" />
+                </div>
+            </div>
+        </form>
+    </body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>班级搜索页面</title>
+<link rel="stylesheet" type="text/css" href="../Public/css/style.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="../Public/js/search.js"></script>
+<script language="javascript">
+function ajaxget(type,id){
+	if(id !=''){
+		if(type == 'xd'){
+			$('#xxlist').html('<li class="height27">正在加载...</li>');
+			$('#njlist').html('<li class="height27"></li>');
+			$('#bjlist').html('<li class="height27"></li>');
+			$.post("{:U('home/Search/search_by_xd')}",
+					{xd:id,time:new Date().getTime()},
+					function(data){
+						if(data != ''){
+							$('#xxlist').html(data);
+						}else{
+							$('#xxlist').html('<li class="height27">没有学校信息</li>');
+						}
+						$('#njlist').html('<li class="height27"></li>');
+						$('#bjlist').html('<li class="height27"></li>');
+			});
+		}else if(type == 'xx'){
+			var idar = id.split('_');
+			$('#njlist').html('<li class="height27">正在加载...</li>');
+			$('#bjlist').html('<li class="height27"></li>');
+			$.post("{:U('home/Search/search_by_xx')}",
+					{xd:idar[0],xx:idar[1],time:new Date().getTime()},
+					function(data){
+						
+						if(data != ''){
+							$('#njlist').html(data);
+						}else{
+							$('#njlist').html('<li class="height27">没有年级信息</li>');
+						}
+						
+			});
+		}else if(type == 'nj'){
+			$.post("{:U('home/Search/search_by_nj')}",
+					{nj:id,time:new Date().getTime()},
+					function(data){
+						if(data != ''){
+							$('#bjlist').html(data);
+						}else{
+							$('#bjlist').html('<li class="height27">没有班级信息</li>');
+						}
+						
+			});
+		}
+		
+	}
+}
+</script>
+</head>
+<body>
+<div class="divcenter">
+	<div class="yzytitle">与我有关的空间</div>
+    <ul class="yzyclass">
+    	<volist name="myclass" id="vo">
+    		<li><a class="liasty" href="javascript:;" onclick="top.OpenBrowser('{:U('space/Class/index',array('classid'=>$vo['classid']))}','{$vo.classname}', 'width=1024,height=600,titlebutton=close|max|min');" >{$vo.classname}</a></li>
+    	</volist>
+    </ul>
+    <div class="yzytitle yzymartop">班级搜索</div>
+    <div class="yzylist xd">
+    	<div class="yzylisttitle">学段：</div>
+        <ul class="yzylistul">
+        	<li><a class="yzylisty  yzylistya"  lang="21" href="#">小学</a> 
+        		<div class="posjt"></div>
+        	</li>
+         	 <li><a class="yzylisty"  lang="31" href="#">初中</a></li>
+            <li><a class="yzylisty"  lang="34" href="#">高中</a></li>
+        </ul>
+        <div class="yzyc"></div>
+    </div>
+    <input type="hidden" name="xdval" id="xdval" />
+    <div class="yzylist xx">
+    	<div class="yzylisttitle">学校：</div>
+        <div class="yzylistul yzybkcolor" style="position: relative;">
+            <ul class="yzylistul" id="xxlist">
+                <li class="height27"></li>
+             </ul>
+            <div class="posjt"></div> 
+        </div>
+        <div class="yzyc"></div>
+    </div>
+     <div class="yzylist nj">
+    	<div class="yzylisttitle">年级：</div>
+        <ul class="yzylistul yzybkcolor" id="njlist">
+        	<li class="height27"></li>
+         </ul>
+        <div class="yzyc"></div>
+    </div>
+     <div class="yzylist bj">
+    	<div class="yzylisttitle">班级：</div>
+        <div class="yzylistul yzybkcolor">
+            <ul class="yzycla" id="bjlist">
+               <li class="height27"></li>
+             </ul>
+         </div>
+        <div class="yzyc"></div>
+        
+    </div>
+    <div class="yzyc"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+		<label for="checkbox"></label>
+		</th>
+		<th class="line_l">ID</th>
+		<th class="line_l">栏目名称</th>
+		<th class="line_l">视频标题</th>
+		<th class="line_l">排序</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="vo" name="square_video.data">
+	<tr overstyle='on' id="{$vo.id}">
+		<td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		<td>{$vo.id}&nbsp;</td>
+		<td>{$vo.category_id|getcategory}&nbsp;</td>
+		<td>{$vo.video_id|getvideotitle}&nbsp;</td>
+		<td>
+			<a href="javascript:void(0)" class="ico_top" onclick="move('{$vo['id']}','up');">
+				<img src="__PUBLIC__/admin/images/zw_img.gif">
+			</a>&nbsp;&nbsp;
+			<a href="javascript:void(0)" class="ico_btm" onclick="move('{$vo['id']}','down');">
+				<img src="__PUBLIC__/admin/images/zw_img.gif">
+			</a>&nbsp;
+		</td>
+		<td>
+		<a href="{:U('square/admin/videosee',array('id'=>$vo['id']))}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="javascript:void(0);" onclick="deletes('{$vo.id}')">删除</a>
+		</td>	
+	</tr>
+</volist>
+</table>

@@ -1,0 +1,32 @@
+<!-- 左侧列表 --应用收藏start -->
+<div class="panel-list-box bottom-line">
+	<h2><i class="icon-star"></i>按应用分类收藏</h2>
+	<ul class="list">
+	   <php>if(empty($applist)){</php>
+	   		<li>暂无收藏任何内容</li>
+	   <php>}else{</php> 
+	   		<!-- <li><a href="{:U('favourite/Index/Index')}" class="MIB_linkar">全部收藏</a></li> -->      
+	        <volist name="applist" id="alist">      	
+	       		 <li><a href="javascript:;" onclick="tabs.iframe('{$alist['title']}','{:U('favorite/Index/index', array('appname'=>$alist['appname']))}');"  class="MIB_linkar">{$alist['title']}</a></li>
+	        </volist>
+       <php>}</php>
+	</ul>
+</div>
+<!-- 左侧列表 --应用收藏 end -->
+<!-- 
+<div class="mainbox_appR">	
+    <div class="mod_class clearfix">
+      <h2>按应用分类收藏信息</h2>
+      <ul class="rankBlog">
+      	<li>
+          <h3><a href="{:U('favourite/Index/Index')}" class="MIB_linkar">全部收藏</a></h3>
+        </li>
+      	<volist name="applist" id="alist">      	
+        <li>
+          <h3><a href="{:U('favourite/Index/Index', array('appname'=>$alist['appname']))}" class="MIB_linkar">{$alist['title']}</a></h3>
+        </li>
+        </volist>
+      </ul>
+    </div>
+</div>
+ -->

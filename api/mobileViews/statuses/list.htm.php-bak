@@ -1,0 +1,114 @@
+<!--<div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>-->
+<?php //echo 111;//var_dump($data);exit;?>
+<div id="wrapper">
+    <div id="scroller" class="weibo">
+        <div id="pullDown">
+            <span class="pullDownIcon"></span><span class="pullDownLabel"> 刷新...</span>
+        </div>
+
+        <ul id="thelist">
+            <?php
+            foreach ($data as $v) {
+                ?>
+                <li class="weibo-list">
+                    <img src="<?php echo $v['face'];?>" alt=""/>
+                    <span class="time"><?php echo putTime(strtotime($v['ctime']));?>前</span>
+                    <span class="name"><?php echo $v['uname'];?></span>
+                    <p class="weibo-content">
+                        <?php echo $v['content'];?>
+                    </p>
+                    <p class="down">
+                        <?php echo $v['ctime']?>
+                    </p>
+                </li>
+            <?php
+            }
+            ?>
+        </ul>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span><span class="pullUpLabel"> 加载更多...</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="<?php echo API_PUBLIC_PATH;?>js/iscroll.js"></script>
+<!--<div id="footer"></div>-->
+<script type="text/javascript">
+    var url = "<?php echo $url;?>";
+    iscroll()
+    $(function(){
+        $(".weibo-list").hammer({ drag_lock_to_axis: true }).on("dragleft",actionLeft)
+        $(".weibo-list").hammer({ drag_lock_to_axis: true }).on("dragright",actionRight)
+        $(".weibo-list").hammer({}).on("tap",function(){
+            if(a==0){
+                $(".action").hide();
+            }
+        })
+    })
+
+    var a = 1;
+    var c = 1;
+    var left,right;
+    function actionRight(ev){
+        ev.gesture.stopDetect()
+        if($(this).hasClass('c')){
+            moveRight($(this))
+        }
+    }
+    function actionLeft(ev){
+        ev.gesture.stopDetect()
+        if(a == 1 || c==0){
+            if(!$(this).hasClass('o')){
+                if($(".c").width()){
+                    moveRight($(".c"));
+                }
+                var con = $(this).html();
+                var htm = "<div class='con-warp'><div class='con con-right'>分享</div><div class='con con-left'>"+con+"</div></div>";
+                $(this).html(htm);
+                var  h = $(this).height();
+                var  w = $(this).width();
+//        var l_w = Math.ceil(w * 0.7);
+                var r_w = Math.ceil(w * 0.3);
+                $(".con").css({height:h});
+                $(".con-left").css({width:w});
+                $(".con-right").css({width:r_w});
+                $(".con-warp").css({width:w+r_w});
+                $(this).addClass('o');
+                moveLeft($(this));
+                c = 0;
+            }else{
+                if($(".c").width()){
+                    moveRight($(".c"));
+                }
+                $(this).addClass('c');
+                moveLeft($(this))
+            }
+        }
+    }
+
+    function moveLeft(obj){
+        var num = 0;
+        left = setInterval(function(){
+            num +=3;
+            if(num > 80){
+                obj.addClass('c');
+                clearInterval(left);
+               return false;
+            }
+            obj.children('.con-warp').css({marginLeft:-num+'px'});
+        },8)
+    }
+
+    function moveRight(obj){
+        var num = 80;
+        right = setInterval(function(){
+            num -=3;
+            if(num < 1){
+                obj.removeClass('c');
+                clearInterval(right);
+                return false;
+            }
+            obj.children('.con-warp').css({marginLeft:-num+'px'});
+        },8)
+    }
+
+</script>

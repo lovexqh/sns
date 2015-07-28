@@ -1,0 +1,124 @@
+<div class="pop" style="width:400px;margin:20px;">
+  <table  border="0" cellspacing="2" cellpadding="0">
+  <tr>
+    <th>相册名称：</th>
+    <td><input type="text" name="name" id="name" style="width:250px;" value="{$album.name}" />
+    </td>
+  </tr>
+  <tr>
+    <th>访问权限：</th>
+    <td align="left" height="34" style="float:left;color: #555555;display: inline-block; font-size: 14px; height: 20px;line-height: 20px; padding: 4px 6px;vertical-align: middle;">
+			<select style = "height:29px;" name="album_privacy"  id="privacy" onchange="javascript:changePrivacy(this);change_flag=true;" class="text">
+					<option value="1" <if condition="$album['privacy'] eq 1">selected="selected"</if>>所有人可见</option>
+					<!--<option value="2" <if condition="$album['privacy'] eq 2">selected="selected"</if>>仅我关注可见</option>-->
+					<option value="3" <if condition="$album['privacy'] eq 3">selected="selected"</if>>仅自己可见</option>
+					<option value="4" <if condition="$album['privacy'] eq 4">selected="selected"</if>>凭密码访问</option>
+			</select>
+    </td>
+    
+    
+    
+    
+  </tr>
+ <tr id="need_password" style="display:none;">
+			<th>设置密码：</th>
+			<td style="float:left;margin-left:6px;">
+			<input name="album_privacy_data" value="{$album.privacy_data}" type="password" class="text" id="album_privacy_data" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2'" />
+			</td>
+</tr>
+  </table>
+<!--  <div class="li" id="need_password" style="display:none;">
+				<div class="c1">设置密码：</div>
+				<div class="c2">
+				<input name="album_privacy_data" value="{$album.privacy_data}" type="text" class="text" id="album_privacy_data" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2'" />
+				</div>
+</div> -->
+			<input type="hidden" name="albumId" id="albumId" value="{$album.id}" />
+			<input type="hidden" name="album_name" id="album_name" value="{$album.name}" />
+</div>
+<div style="background-color:#DEE2EB;height:30px;">
+<div style="margin-left:330px;">
+	<input type="button" onclick="album_edit_p()" class="btn_b"  style="background-color:#005FAC;margin-top:2px;width:50px;color:white;" value="确定">
+	</div>
+</div>
+
+<script type="text/javascript">
+//相册信息
+//var $albumId			=	intval($_POST['albumId']);
+//var $album_privacy		=	intval($_POST['album_privacy']);
+//var $album_privacy_data	=	$_POST['album_privacy_data'];
+
+
+//编辑相册名称及权限
+function album_edit_p(){
+//	var id		=	$('#photoId').val();
+	var name	=	$('#name').val();
+	var albumId	=	$('#albumId').val();
+	var album_privacy=$('#privacy').val();
+	var album_privacy_data=$('#album_privacy_data').val();
+	if(!name || getLength(name.replace(/\s+/g,"")) == 0){
+		alert('相册名不能为空！');
+      return false;
+	}
+	$.post(U('photo/Manage/do_update_album_new'),{name:name,albumId:albumId,album_privacy:album_privacy,album_privacy_data:album_privacy_data},function(data){
+		//alert(data.result);
+	    if(data.result==1){
+					location.href=U('photo/Index/album')+'&id='+album_id+'&uid='+_UID_;
+					ui.box.close();
+					ui.success('修改成功！');
+			}else{
+			ui.box.close();
+			ui.success('未修改！');
+		}
+	}, 'json');
+	
+}
+
+
+
+
+/** 离开页面提醒 **/
+	var change_flag = false;	//修改标识
+	var pb_strConfirmCloseMessage	=	"你的修改还没有保存，如果离开本页，修改不会生效！";
+	function ConfirmClose() {
+		window.event.returnValue = pb_strConfirmCloseMessage;
+	}
+	function ShowConfirmClose(blnValue) {
+		if(blnValue) {
+			document.body.onbeforeunload = ConfirmClose;
+		} else {
+			document.body.onbeforeunload = null;
+		}
+	}
+	//如果页面被修改则弹出提醒
+	if(change_flag){
+	//	ShowConfirmClose(true);
+	}
+/** 离开页面提醒 **/
+
+//初始化密码框
+if($('#privacy').val()==4){
+	$('#need_password').show();
+}
+
+//显示密码框
+function changePrivacy(obj){
+	if(obj.value==4){
+		$('#need_password').show();
+	}else{
+		$('#need_password').hide();
+	}
+}
+
+/* //表单验证
+function check_form(obj){
+	var name = $("#album_name").val();
+	if(obj.album_name.value=='' || getLength(name.replace(/\s+/g,"")) == 0){
+		ui.error('相册名字不能为空');
+		return false;
+	}
+	//提交表单不弹出提醒
+	//ShowConfirmClose(false);
+	return true;
+} */
+</script>

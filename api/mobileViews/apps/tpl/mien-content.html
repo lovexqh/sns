@@ -1,0 +1,17 @@
+<style type="text/css">
+    body,html{height: 100%;width: 100%}
+    #mien-content{
+        height: 100%;overflow: hidden;
+        text-overflow:ellipsis;
+        word-wrap: break-word;
+    }
+</style>
+<div id="mien-content"><div style="text-align: center"><img src="./image/ajax-loader-white.gif" /></div></div>
+<script type="text/javascript">
+    X.loadData(handleHtml);
+    function handleHtml(data){
+        if(data == 'error') return false;
+        if(data['code'] == '00001') return false;
+        $('#mien-content').html(data.data.tcontent);
+    }
+</script>

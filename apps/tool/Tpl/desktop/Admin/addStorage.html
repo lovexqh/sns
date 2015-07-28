@@ -1,0 +1,29 @@
+<style>
+.checkform{ width:350px; float:left; margin-top:20px; margin-bottom:20px;}
+.checkform li{ line-height:30px; height:30px;}
+.c1{  float:left;width:80px;}
+.c2{  float:left;width:250px;}
+.ad_i{ width:250px;}
+.blank0px{ clear:both; background:none; height:10px; overflow:hidden;}
+</style>
+<form method="post" action="{:U('tool/Admin/doStorage')}" name="do_check" enctype="multipart/form-data">
+<div class="checkform">
+  <ul>
+   <li>
+    <div class="c1">存储地址：</div>
+    <div class="c2">
+        <input name="storage" value="{$result['address']}" type="text" class="ad_i"/>
+		<php>if($do=='do_mody'){</php>
+         <input type="hidden" name="id" value="{$id}" />
+        <php>}</php>
+    </div>
+   </li>
+   <li>
+    <div class="c1">&nbsp;</div>
+    <div class="c2">
+        <input type="submit" class="btn_b" value=" 提 交 " readonly="true" />
+    </div>
+</li>
+  </ul>
+</div>
+</form>

@@ -1,0 +1,176 @@
+<input name="societyId" type="hidden" value="{$societyInfo.id}">
+<php>if($identitytype==3){</php>
+	<include file="../Public/student" />
+<php>}else if($identitytype==2){</php>
+	<include file="../Public/teacher" />
+<php>}else{</php>
+	<include file="../Public/otherUser" />
+<php>}</php>
+<div id="top_background">
+	<div class="s_icon">
+		<img src="__ROOT__/thumb.php?w=100&h=100&t=c&url={$societyInfo['icon']|get_photo_url}">
+	</div>
+	<if condition="$isManage eq '1'">
+	<div class="edit_icon" onclick="top_edit_icon(event);">更换Logo</div>
+	<else /></if>
+	<div class="sign">
+		<p style="line-height: 50px; font-size: 20px;font-weight: bold;">{$societyInfo.societyName}</p>
+		<div style="float: left;width: 90px;">
+			<php>if($societyInfo['type']==1){echo '班级签名：';}</php>
+			<php>if($societyInfo['type']==2){echo '专业签名：';}</php>
+			<php>if($societyInfo['type']==3){echo '年级签名：';}</php>
+			<php>if($societyInfo['type']==4){echo '院系签名：';}</php>
+			<php>if($societyInfo['type']==5){echo '部门签名：';}</php>
+			<php>if($societyInfo['type']==0){echo '圈子签名：';}</php>
+		</div>
+		<div style="width: 680px; float: left; font-weight: 15px;margin-bottom:7px;min-height: 20px;" id="sign_div">
+			{$societyInfo['sign']}
+			<if condition="$isManage eq '1'">
+				<a class="edit" onclick="top_sign(event);" id="sign" society="{$societyId}"></a>
+			<else /></if>
+		</div>
+		<div style="float: left;width: 90px;">
+			<php>if($societyInfo['type']==1){echo '班级标签：';}</php>
+			<php>if($societyInfo['type']==2){echo '专业标签：';}</php>
+			<php>if($societyInfo['type']==3){echo '年级标签：';}</php>
+			<php>if($societyInfo['type']==4){echo '院系标签：';}</php>
+			<php>if($societyInfo['type']==5){echo '部门标签：';}</php>
+			<php>if($societyInfo['type']==0){echo '圈子标签：';}</php>
+		</div>
+		<div style="width: 680px; float: left; font-weight: 15px; color: white;" id="tags_div">
+			<php>
+				$list = explode(',',$societyInfo['tags']);
+				if($societyInfo['tags']){
+					foreach ($list as $value) {
+						if($value){
+							echo '<span>'.$value.'</span>';
+						}
+					}
+				}
+			</php>			
+			<if condition="$isManage eq '1'">
+				<a class="edit" id="tags" onclick="top_tags(event);" society="{$societyId}"></a>
+			<else /></if>
+		</div>
+		
+	</div>
+	<div class="editCont _sign">
+		<div style="float: right; margin-right: 6px; cursor: pointer;" class="close_sign" onclick="top_close_sign();">x</div>
+		<p>请输入签名：</p>
+			<textarea name="sign" style="width: 560px;height: 55px;">{$societyInfo.sign}</textarea>
+			<input class="btn_bS" onclick="top_btn_bS();" type="button" maxlength="" value="确认">
+	</div>
+	<div class="editCont _icon">
+		<div style="float: right; margin-right: 6px; cursor: pointer;" class="close_sign" onclick="top_close_sign();">x</div>
+		<form action="{:U('society/Index/doUploadIcon')}" onsubmit="ckeckIcon();return false;" method="post" enctype="multipart/form-data">
+		<p>请选择上传的Logo：</p>
+			<input type="hidden" name="societyId" value="{$societyInfo.id}"/>
+			<input type="file" name="icon" style="font-size: 12px;margin-left: 12px; width: 210px;"/></br>
+			<input  class="btn_bI" type="submit" value="确认" style="margin-top: 0px;">
+		</form>
+	</div>
+	<div class="editCont _tags">
+		<div style="float: right; margin-right: 6px; cursor: pointer;" class="close_sign" onclick="top_close_sign();">x</div>
+		<p>请输入标签：</p>
+			<input type="text" name="tags" class="tags_input" pro_val="{$societyInfo.tags}" value="{$societyInfo.tags}"/>
+			<input class="btn_bT" onclick="top_btn_bT();" type="button" value="确认" style="margin-top: 0px;">
+		<p>标签最多设置5个，多个标签之间请用逗号做间隔。</p>
+	</div>
+	<div class="menus">
+		<php>if($societyInfo['type']==0){</php>
+			<php>if(!$myInfo){</php>
+			<div class="addI" sid='{$societyInfo.id}'></div>
+			<php>}else{</php>
+			<div class="add_0"></div>
+			<php>}</php>
+			<php>if($myInfo['status']==0){</php>
+				<div class="mess_0"></div>
+			<php>}else{</php>
+				<div class="mess" onclick="top_mess();"></div>
+			<php>}</php>
+			<php>if(!$myInfo){</php>
+				<div class="setting_0"></div>
+			<php>}else{</php>
+				<div class="setting" onclick="top_setting();"></div>
+			<php>}</php>
+		<php>}else{</php>
+			<div class="add_0"></div>
+			<div class="mess_0"></div>
+			<div class="setting_0"></div>
+		<php>}</php>
+	</div>
+	<!-- 快捷菜单 -->
+	<php>if($societyInfo['type']==0){</php>
+	<div class="mess_list">
+		<ul style="font-size: 13px; max-height: 240px; overflow: hidden;">
+			<volist name="societyNews" id="vo"> <php>if($vo['result']==0&&$vo['newsType']==1){</php>
+			<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+				<div class="mess_content_icon">
+					<img src="{$vo.fromUid|getUserFace}">
+				</div>
+				<div class="mess_content_main" style="width: 180px;">
+					<span style="font-size: 13px;"><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="face" href="javascript:void(0);">{$vo.fromUid|getUserName}</a>
+						申请加入该圈子 </span>
+					<p style="font-size: 13px;">
+						<span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span>
+					</p>
+				</div>
+				<div class="tongguo">
+					<a href="javascript:;" onclick="top_tongGuoNews({$vo.newsId},{$vo.societyId});"></a>
+				</div>
+				<div style="clear: both;"></div>
+			</li>
+			<php>}</php> </volist>
+		</ul>
+		<div style="height: 30px; background-color: #D8D8D8; line-height: 30px;min-width: 180px;" onclick="more();">查看全部消息>></div>
+	</div>
+	<div class="setting_list">
+		<ul>
+			<php>if($myInfo['status']==0){</php>
+			<li><a style="color: #D8D8D8;" href="javascript:;">圈子设置</a></li>
+			<li><a style="color: #D8D8D8;" href="javascript:;">成员管理</a></li>
+			<li onclick="yaoqingMember({$societyInfo.id});"><a href="javascript:;">邀请加入</a></li>
+			<li onclick="tuichuquanzi();"><a href="javascript:;">退出圈子</a></li>
+			<php>}else{</php>
+			<li onclick="setting();"><a href="javascript:;">圈子设置</a></li>
+			<li onclick="member();"><a href="javascript:;">成员管理</a></li>
+			<li onclick="yaoqingMember({$societyInfo.id});"><a href="javascript:;">邀请加入</a></li>
+			<li onclick="tuichuquanzi();"><a href="javascript:;">退出圈子</a></li>
+			<php>}</php>
+		</ul>
+	</div>
+	<php>}</php>
+	<!-- 快捷菜单 -->
+
+
+	<div class="main_nav">
+		<ul>
+			<li id="index" <php>if($nav==1){echo 'class="selected"';}</php>><a
+				href="{:U('society/Index/message')}&societyId={$societyInfo.id}">新鲜事</a></li>
+			<li id="blog" <php>if($nav==2){echo 'class="selected"';}</php>><a
+				href="{:U('society/Index/blog')}&societyId={$societyInfo.id}">博客</a></li>
+			<li id="photo" <php>if($nav==3){echo 'class="selected"';}</php>><a
+				href="{:U('society/Index/photo')}&societyId={$societyInfo.id}">图片</a></li>
+			<li id="share" <php>if($nav==4){echo 'class="selected"';}</php>><a
+				href="{:U('society/Index/share')}&societyId={$societyInfo.id}">
+					<php>if($societyInfo['type']==1){echo '班级共享';}</php> <php>if($societyInfo['type']==2){echo
+					'专业共享';}</php> <php>if($societyInfo['type']==3){echo '年级共享';}</php> <php>if($societyInfo['type']==4){echo
+					'院系共享';}</php> <php>if($societyInfo['type']==0){echo '圈子共享';}</php> <php>if($societyInfo['type']==5){echo '部门共享';}</php>
+			</a></li>
+			<php>if((checkMember($societyInfo['id']))==1 && ($societyInfo['type']!=0)){</php>
+					<li id="vote" <php>if($nav==5){echo 'class="selected"';}</php>><a href="{:U('society/Index/vote')}&societyId={$societyInfo.id}">选举</a></li>
+			<php>}</php>
+			<li id="member"  <php>if($nav==6){echo 'class="selected"';}</php>><a
+				href="{:U('society/Index/member')}&societyId={$societyInfo.id}">
+					<php>if($societyInfo['type']==1){echo '班级成员';}</php> <php>if($societyInfo['type']==2){echo
+					'专业成员';}</php> <php>if($societyInfo['type']==3){echo '年级成员';}</php> <php>if($societyInfo['type']==4){echo
+					'院系成员';}</php> <php>if($societyInfo['type']==0){echo '圈子成员';}</php> <php>if($societyInfo['type']==5){echo '部门成员';}</php>
+			</a></li>
+			<li id="wall"  <php>if($nav==7){echo 'class="selected"';}</php>><a style="border: 0 none;"
+				href="{:U('society/Index/wall')}&societyId={$societyInfo.id}"> <php>if($societyInfo['type']==1){echo
+					'班级印象';}</php> <php>if($societyInfo['type']==2){echo '专业印象';}</php> <php>if($societyInfo['type']==3){echo
+					'年级印象';}</php> <php>if($societyInfo['type']==4){echo '院系印象';}</php> <php>if($societyInfo['type']==0){echo
+					'圈子印象';}</php> <php>if($societyInfo['type']==5){echo '部门印象';}</php></a></li>
+		</ul>
+	</div>
+</div>

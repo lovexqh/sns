@@ -1,0 +1,163 @@
+/*space_detail 用户信息面板 */
+#space_detail{
+	position:absolute;
+	display:none;
+	width:200px;
+	height:200px;
+	_width:210px;
+	_height:225px;
+	z-index:99999;
+	top:52px;
+	right:10px;
+	background:#FFF;	
+}
+#space_detail .userdetail{
+	margin:5px;
+	clear:both;
+	height:25px;
+	line-height:25px;
+}
+#space_detail .space_upgrade{
+	float:right;
+	display:inline-block;
+	width:48px;
+	height:20px;
+	background:url(upgrade.gif) no-repeat;
+}
+#space_detail .space_size_img{
+	float:left;
+}
+#space_detail .hr{
+	border-bottom:1px solid #cdcdcd;
+	height:5px;
+	margin:0 5px 5px;
+}
+#space_detail .space_size_back{
+	border:1px solid #e5e5e5;
+	background:#f7f7f7;
+	height:6px;
+	padding:5px;
+	position:relative;
+	float:left;
+	clear:both;
+	width:175px;
+}
+#space_detail .space_size_back .space_size_per{
+	border:1px solid #428601;
+	background: #6ab40d;
+	height:5px;
+	float:left;
+	margin-left:-1px;
+}
+/* 边框样式 */
+#space_detail .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 42px;
+	height: 21px;
+	left:-9px;
+	top:-21px;
+	z-index:1;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/LEFT_TOP.png', sizingMethod='scale');
+	background-image:url(LEFT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+#space_detail .TOP
+{
+	position:absolute;
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 21px;
+	left:0px;
+	top:-21px;
+	width:100%;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/TOP.png', sizingMethod='scale');
+	background-image:url(TOP.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+#space_detail .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 21px;
+	right:-9px;
+	top:-21px;
+	z-index:10;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/RIGHT_TOP.png', sizingMethod='scale');
+	background-image:url(RIGHT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+
+#space_detail .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height:100%;
+	right:-9px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/RIGHT.png', sizingMethod='scale');
+	background-image:url(RIGHT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+#space_detail .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 18px;
+	bottom:-18px;
+	right:-9px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/RIGHT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(RIGHT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+#space_detail .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	height: 18px;
+	width:100%;
+	bottom:-18px;
+	left:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/BOTTOM.png', sizingMethod='scale');
+	background-image:url(BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+#space_detail .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height: 19px;
+	left:-9px;
+	bottom:-19px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/LEFT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(LEFT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+#space_detail .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position:absolute;
+	width: 9px;
+	height:100%;
+	left:-9px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/LEFT.png', sizingMethod='scale');
+	background-image:url(LEFT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}

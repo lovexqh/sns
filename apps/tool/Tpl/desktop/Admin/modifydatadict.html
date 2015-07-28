@@ -1,0 +1,142 @@
+<include file="_header" />
+<div class="so_main">
+  
+  <div class="page_tit">基础分类管理</div>
+  <include file="_tab" />
+  
+  <div class="form2">
+  <form method="post" action="{:U('resource/Admin/doModify')}" onsubmit="return checkForm(this)">
+  <input type="hidden" name="do" value="{$do}" />
+  <input type="hidden" name="id" value="{$data.ID}" />
+  	<dl class="lineD">
+      <dt>分类类型（中文）：<span class="cRed pr5">*</span></dt>
+      <dd style="position:relative; z-index:2;">
+      	<input type="text" name="dataDescribe" id="dataDescribe" onclick="showMenu('dataDesc')" value="{$data.DataDescribe}" /> （例如：资源类型）
+        <div class="float_select" id="dataDesc" style="display:none">
+        	<ul>
+            <volist id="vo" name="datatype">
+            <li><a href="javascript:;" onclick="setValue(this,'cn');" value='{$vo.datatype}' order='{$vo.datatorder}' id="dataListType">{$vo.datadescribe}</a></li>
+            </volist>
+            </ul>
+        </div>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>分类类型（英文）：<span class="cRed pr5">*</span></dt>
+      <dd style="position:relative; z-index:1;">
+      	<input type="text" name="dataType" onclick="showMenu('dataTypes')" id="dataType" value="{$data.DataType}" /> （例如：RecourseType）
+        <div class="float_select" id="dataTypes" style="display:none">
+        	<ul>
+            <volist id="vo" name="datatype">
+            <li><a href="javascript:;" onclick="setValue(this,'en');" value='{$vo.datadescribe}' order='{$vo.datatorder}' id="dataListType">{$vo.datatype}</a></li>
+            </volist>
+            </ul>
+        </div>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>分类名称（中文）：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<input type="text" name="dataName" id="dataName" value="{$data.DataName}" /> （例如：视频）
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>分类名称（英文）：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input type="text" name="dataCode" id="dataCode" value="{$data.DataCode}" /> （例如：Video）
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>数字排序：</dt>
+      <dd>
+        <input type="text" name="dataOrder" id="dataOrder" value="<php>if($data[DataOrder]){echo $data[DataOrder];}else{echo 0;}</php>" /> （注意：数字越小越靠前）
+      </dd>
+    </dl>
+    
+    <dl>
+      <dt>备注：</dt>
+      <dd>
+        <textarea name="remark" id="remark" cols="40" rows="3">{$data.Remark}</textarea>
+      </dd>
+    </dl>
+	
+    <div class="page_btm">
+                  <input type="submit" class="btn_b" value="确定" />
+    </div>
+
+  </form>
+  </div>  
+</div>
+
+<script language="javascript" type="text/javascript">
+function onBodyDown(event) {
+	if(event.target.id=='dataDescribe'){
+		return;
+	}
+	if(event.target.id=='dataDesc'){
+		return;
+	}
+	if(event.target.id=='dataListType'){
+		return;	
+	}
+	hideMenu();
+}
+function setValue(obj,language){
+	var value = $(obj).attr('value')
+	var order = $(obj).attr('order')
+	var text = $(obj).html();
+	var cnid = language=='cn'?'dataDescribe':'dataType';
+	var enid = language!='cn'?'dataDescribe':'dataType';
+	$('#'+cnid).val(text);
+	$('#'+enid).val(value);
+	//$('#dataOrder').val(order+1);
+	hideMenu();
+}
+function hideMenu(){
+	$('.float_select').hide();
+}
+function showMenu(id){
+	$('#'+id).show();
+}
+$(document).ready(function(){
+	$("body").bind("mousedown", onBodyDown);
+
+});
+
+//表单验证
+function checkForm(form){
+	var dataDescribe = form.dataDescribe;
+	var dataType = form.dataType;
+	var dataName = form.dataName;
+	var dataCode = form.dataCode;
+	var msg = '';
+	if(dataDescribe.value==''){
+		errinfo = '分类类型（中文）不能为空！';
+		msg += msg==''?errinfo:'\r\n'+errinfo;
+	}
+	if(dataType.value==''){
+		errinfo = '分类类型（英文）不能为空！';
+		msg += msg==''?errinfo:'\r\n'+errinfo;
+	}
+	if(dataName.value==''){
+		errinfo = '分类名称（中文）不能为空！';
+		msg += msg==''?errinfo:'\r\n'+errinfo;
+	}
+	if(dataCode.value==''){
+		errinfo = '分类名称（英文）不能为空！';
+		msg += msg==''?errinfo:'\r\n'+errinfo;
+	}
+	
+	if(msg!=''){
+		alert(msg);
+		//ui.error(msg);
+		return false;
+	}else
+		return true;
+}
+</script>
+<include file="_footer" />

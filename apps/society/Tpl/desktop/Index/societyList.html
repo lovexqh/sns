@@ -1,0 +1,86 @@
+<include file="../Public/_header" />
+<style type="text/css">
+.select>div>ul {
+	height: 480px;
+	overflow: hidden;
+}
+.search_result>div>ul {
+	max-height: 480px;
+	overflow: hidden;
+}
+.commentOf4 span {
+	padding: 1px 3px 1px 3px;
+	background-color: #FF6A6A;
+	border-radius: 3px;
+	margin-left: 3px;
+}
+.center{
+	background-color: #FFFFF2;
+}
+</style>
+<script type="text/javascript">
+	function enter(societyId){
+		$.post(U('society/Index/visitable'),{societyId : societyId},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+				window.location.href = "{:U('society/Index/index')}&societyId="+societyId;
+            }else{
+            	ui.error(data.msg);
+            }
+		});
+	}
+	function searchResult(form){
+		window.location.href = "{:U('society/Index/showSearch')}&societyName="+$('input[name=societyName]').val();
+	}
+	function message_visitable(societyId,id){
+		$.post(U('society/Index/message_visitable'),{societyId : societyId},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+				window.location.href = "{:U('society/Index/messView')}&societyId="+societyId+"&id="+id;
+            }else{
+            	ui.error(data.msg);
+            }
+		});
+	}
+</script>
+<div class="center">
+	<php>if($identitytype==3){</php>
+		<include file="../Public/student" />
+	<php>}else if($identitytype==2){</php>
+		<include file="../Public/teacher" />
+	<php>}else{</php>
+		<include file="../Public/otherUser" />
+	<php>}</php>
+	<div class="others"
+		style="width: 920px; margin: 0 auto; background-color: #FFF; padding: 0px 30px 30px 30px;">
+		<div class="search_result select">
+			<h2>我的圈子</h2>
+			<h3 style="text-align: left;margin-left: 10px;">邀请说明：自定义圈子可邀请用户加入。</h3>
+			<div id="sList">
+				<ul>
+				<php>if(empty($societyList['data'])){echo '<span style="width: 600px;margin-left: 10px;">您没有创建或加入任何圈子，请先<a href="javascript:;" onclick="openSociety();"> <span class="strong">创建</span> </a>或是<a href='.U("society/Index/showZiDingYi").'> <span class="strong">加入</span> </a>圈子之后再邀请用户加入！</span>'; }else{</php>
+					<volist name="societyList.data" id="vo">
+					<li>
+							<span class="listName">
+								<a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>
+							</span>
+						<img style="height: 60px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+						<div style="height: 105px; background-color: #EDEDED; line-height: 25px; font-size: 13px;">
+							<span style="float: right;margin-right:10px;">
+								<div class="word" style="cursor: pointer;" onclick="yaoqingMember({$vo.societyId});">邀请</div>
+							</span>
+							<span style="float: left;margin-left: 92px;margin-top: 25px;">创建者：{$vo.societyId|getSocietyManager}</span>
+							<span style="float: left;margin-left: 92px;">成员数：{$vo.societyId|getCount}</span>
+							<span style="float: left;margin-left: 92px;">创建时间： {$vo.cTime|date="Y-m-d",###}</span>
+						</div>
+					</li>
+					</volist>
+				<php>}</php>
+				</ul>
+				<div class="page">{$societyList.html}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="clear: both;"></div>
+<include file="../Public/_footer" />

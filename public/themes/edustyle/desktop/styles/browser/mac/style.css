@@ -1,0 +1,497 @@
+/* ---- X_Browser 样式 ---- */
+.X_Browser
+{
+	font-size: 1px;
+}
+
+.X_Browser .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 28px;
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/ltop3_1.png', sizingMethod='image');
+	background-image:url(images/ltop3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.X_Browser .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/topbg3_1.png', sizingMethod='scale');
+	background-image:url(images/topbg3_1.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+
+.X_Browser .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 28px;
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/rtop3_1.png', sizingMethod='image');
+	background-image:url(images/rtop3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.X_Browser .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/rbg.png', sizingMethod='scale');
+	background-image:url(images/rbg.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+.X_Browser .RIGHT_BOTTOM
+{
+	width: 21px;
+	height: 22px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/rbottom2_1.png', sizingMethod='image');
+	background-image:url(images/rbottom2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.X_Browser .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/bottombg2_1.png', sizingMethod='scale');
+	background-image:url(images/bottombg2_1.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+.X_Browser .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 21px;
+	height: 22px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/lbottom2_1.png', sizingMethod='image');
+	background-image:url(images/lbottom2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+
+.X_Browser .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/lbg.png', sizingMethod='scale');
+	background-image:url(images/lbg.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+
+/* 功能区样式 */
+.X_Browser .RESIZE
+{
+	width: 15px;
+	height: 15px;
+	right: 0px;
+	bottom: 0px;
+	z-index:10;
+}
+.X_Browser .RESIZE-X
+{
+	width: 15px;
+	right: 0px;
+	top: 0px;
+	z-index:9;
+}
+.X_Browser .RESIZE-Y
+{
+	height: 15px;
+	bottom: 0px;
+	left:0px;
+	z-index:9;
+}
+.X_Browser .CLOSE
+{
+
+   float:right;
+	margin:2px;
+   	width:16px;height:15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/guanbi.png', sizingMethod='scale');
+	background-image:url(images/guanbi.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;	
+	
+}
+.X_Browser .MIN
+{
+ 	z-index:2;
+   float:right;
+	margin:2px;
+    width:16px;height:15px;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/suoxiao.png', sizingMethod='scale');
+	background-image:url(images/suoxiao.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;	
+	
+}
+.X_Browser .MAX
+{
+	
+	float:right;
+	margin:2px;
+  	width:16px;height:15px;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/fangda.png', sizingMethod='scale');
+	background-image:url(images/fangda.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;							
+	
+}
+.X_Browser .RESTORE
+{
+	
+	float:right;
+	margin:2px;
+  	width:16px;height:15px;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/fangda.png', sizingMethod='scale');
+	background-image:url(images/fangda.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;							
+	
+}
+/* 逻辑区样式 */
+.X_Browser .CONTENT
+{
+	/* 请不要定义padding/margin属性 */
+	/* 请定义left = -(border-left),top = -(border-top) */
+	left: 0px;
+	top: 0px;
+    background:#f7f7f7;
+	overflow:auto;
+	font-size:12px;
+
+	
+}
+.X_Browser .TITLE
+{
+	/* 请不要定义margin属性 */
+   width:100%;
+}
+.X_Browser .TITLE .titleBar{
+	margin:16px 16px 0px 16px;	
+}
+.X_Browser .TITLE .titleBar .titleButtonBar{
+	margin-top:2px;
+}
+.X_Browser .TITLE .titleBar .titleText{
+	height:25px;font-size:12px; color:black;line-height: 25px;overflow: hidden;	
+	color:#000;
+	font-weight:bold;
+}
+.X_Browser .TITLE .titleText .title_icon img
+{
+	width:20px;
+	height:20px;
+	float:left;
+	margin-top:3px;
+}
+.X_Browser .TITLE .title_txt
+{
+	float:left;
+	text-align:center;
+	font-weight:bold;
+	font-size:12px;
+    color:#000;
+	margin-left:5px;
+	line-height:25px;
+	vertical-align:center;
+    text-shadow: 1px 1px 0px #CCC;
+	_filter:Glow(color=white,Strength=1);
+	
+}
+.X_Browser .TITLE H3
+{
+	color:#000;
+	font-weight: bold;
+}
+.X_Browser .TITLE .titleButton
+{
+	position:absolute;width:100%;height:23px;top:40px;left:0px;z-index:10; font-weight:normal;font-size:12px;
+}
+
+.X_Browser .TITLE .input_zuo
+{
+
+	width:20px;height:23px;
+	background-image:url(images/kuang_zuo.gif);
+	background-repeat:no-repeat;
+	z-index:20;
+	
+}
+.X_Browser .TITLE .input_you
+{
+	width:20px;
+	height:23px;
+	background-image:url(images/kuang_you.gif);
+	background-repeat:no-repeat;
+}
+.X_Browser .TITLE #size_drag
+{
+	cursor:e-resize;
+}
+.X_Browser .TITLE .input_bg
+{
+	height:23px;
+	background-image:url(images/kuang_bg.gif);
+	background-repeat:repeat-x;
+}
+.X_Browser .TITLE .input_addr
+{
+	border:none;
+	background:none;
+	width:100%;
+	height:23px;
+}
+.X_Browser .TITLE .input_add
+{
+	height:23px;
+	width:27px;
+	background-image:url(images/tianjia.gif);
+	background-repeat:no-repeat;
+}
+
+.X_Browser .TITLE .tabs_td .zuo
+{
+	position:absolute;
+	left:0px;
+	width:3px;
+	height:23px;
+	z-index:2;
+	background-image:url(images/biaoqian_zuo_1.gif);
+	background-repeat:no-repeat;
+	
+}
+.X_Browser .TITLE .tabs_td .you
+{
+	position:absolute;
+	right:0px;
+	width:3px;
+	height:23px;
+	z-index:2;
+	background-image:url(images/biaoqian_you_1.gif);
+	background-repeat:no-repeat;
+}
+.X_Browser .TITLE .tabs_td .bg
+{
+	position:absolute;
+	left:0px;
+	color:#000;
+	width:100%;
+	
+	overflow:hidden;
+	line-height:23px;
+	z-index:1;height:23px;margin-left:3px;margin-right:3px;
+	background-image:url(images/biaoqian_bg_1.gif);
+	background-repeat:repeat-x;
+}
+.X_Browser .TITLE .tabs_td_active .zuo
+{
+	position:absolute;
+	left:0px;
+	width:3px;height:23px;
+	z-index:2;
+	background-image:url(images/biaoqian_zuo.gif);
+	background-repeat:no-repeat
+}
+.X_Browser .TITLE .tabs_td_active .you
+{
+	position:absolute;
+	right:0px;
+	width:3px;height:23px;
+	z-index:2;
+	background-image:url(images/biaoqian_you.gif);
+	background-repeat:no-repeat;
+}
+.X_Browser .TITLE .tabs_td_active .bg
+{
+	position:absolute;
+	color:#000;
+	left:0px;
+	width:100%;
+	height:23px;
+	
+	overflow:hidden;
+	line-height:23px;
+	z-index:1;
+	margin-left:3px;margin-right:3px;
+	background-image:url(images/biaoqian_bg.gif);
+	background-repeat:repeat-x;
+}
+.X_Browser .TITLE .tabs_close
+{
+	position:absolute;
+	right:4px;
+	display:none;
+	top:4px;
+	width:16px;
+	height:16px;
+	z-index:5;
+	background-image:url(images/guanbi.gif);
+	background-repeat:no-repeat;
+}
+.X_Browser .CONTENT .tablist_container
+{
+	position:absolute;
+	right:0px;
+	top:0px;
+	width:200px;
+	z-index:20;
+	overflow:auto;
+	background:#E1E1E1;
+	border-top:0px solid #666;
+	border-left:1px solid #666;
+	border-bottom:1px solid #666;
+}
+.X_Browser .CONTENT .tablist_li
+{
+	position:relative;
+	height:25px;
+	line-height:25px;
+	overflow:hidden;
+	z-index:20;
+	padding-left:5px;padding-right:5px;
+	color:#000;
+}
+.X_Browser .CONTENT .tablist_li:hover
+{
+	background:#011A3F;
+	color:#FFF;
+	
+}
+.X_Browser .TITLE #tablist
+{
+	position:absolute;
+	top:0px;
+	right:20px;
+	width:16px;
+	height:23px;
+	z-index:20;
+	background-image:url(images/xiangxia.gif);
+	background-repeat: no-repeat;
+}
+
+.X_Browser .TITLE #add_tabs
+{
+	position:absolute;
+	top:0px;
+	right:40px;
+	width:16px;
+	height:23px;
+	z-index:25;
+	background-image:url(images/tianjia2.gif);
+	background-repeat: no-repeat;
+}
+.X_Browser  .rightrun_s
+{
+	position:absolute;
+	top:0px;
+	right:60px;
+	width:16px;
+	height:23px;
+	z-index:20;
+	background-image:url(images/xiangyou.gif);
+	background-repeat: no-repeat;
+}
+
+.X_Browser  .leftrun_s
+{
+	position:absolute;
+	top:0px;
+	width:16px;
+	height:23px;
+	z-index:20;
+	background-image:url(images/xiangzuo.gif);
+	background-repeat: no-repeat;
+}
+.X_Browser .TITLE .BACK1
+{
+	float:left;
+	width:27px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/back.png' , sizingMethod='scale');
+	background-image:url(images/back.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.X_Browser .TITLE .BACK2
+{
+	float:left;
+	width:27px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/back2.png', sizingMethod='scale');
+	background-image:url(images/back2.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;}
+.X_Browser .TITLE .NEXT1
+{
+	float:left;
+	
+	width:26px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/next.png', sizingMethod='image');
+	background-image:url(images/next.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.X_Browser .TITLE .NEXT2
+{
+	float:left;
+	width:26px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/browser/mac/images/next2.png', sizingMethod='image');
+	background-image:url(images/next2.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+
+
+
+
+.X_Browser .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	
+	font-size: 12px;
+	color:#000;
+	
+	overflow:hidden;
+	
+	
+}
+
+.X_Browser .input_search
+{
+	width:145px;
+	height:16px!important;
+	height:16px;
+	
+	
+	border:none;
+}
+/* 窗口最大化时隐藏的阴影 */
+.X_Browser .SHADOW_TOP
+{
+	height:15px;
+}
+.X_Browser .SHADOW_LEFT
+{
+	width:15px;
+}
+.X_Browser .SHADOW_RIGHT
+{
+	width:15px;
+}
+.X_Browser .SHADOW_BOTTOM
+{
+	height:15px;
+}
+/* ---- X_Browser 样式 ---- */
+

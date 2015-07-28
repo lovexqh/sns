@@ -1,0 +1,112 @@
+	{:Addons::hook('home_index_left_top_outline')}
+		<div class="user_app">
+        	{:Addons::hook('home_index_left_top')}
+          	<div class="userinfo lineD_btm">
+            	<dl>
+                	<dt class="userpic" onmouseover="this.className='userpic over'" onmouseout="this.className='userpic'">
+                    	<space uid="mid" class="nocard">{uavatar}</space>
+                        <a class="pic" href="{:U('home/account/index')}#face">上传头像</a>
+                    </dt>
+                    <dd class="user_name">
+                    	<a href="{:U('home/Space/index', array('uid' => $uid))}">{$userInfoCache['uname']}</a><php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</dd>
+                    <php>if(!empty($ucInfoCache['deptinfo'])){</php>
+                    <eq name="ucInfoCache['identitytype']" value="2"><!-- 老师 -->
+                    	<dd>老师</dd>
+                    	<dd>{$ucInfoCache['deptinfo']['schoolname']}</dd>
+                    </eq>
+                    <eq name="ucInfoCache['identitytype']" value="3"><!-- 学生 -->
+                    	<dd>{$ucInfoCache['deptinfo']['schoolname']}</dd>
+                    	<dd><php>echo empty($ucInfoCache['deptinfo']['bj'])?'无班级信息':$ucInfoCache['deptinfo']['bj'];</php></dd>
+                    </eq>
+                    <eq name="ucInfoCache['identitytype']" value="4"><!-- 家长 -->
+                    	<dd>{$ucInfoCache['deptinfo']['bj']}</dd>
+                    	<dd>{$ucInfoCache['deptinfo']['sonname']}的家长</dd>
+                    </eq>
+                    <php>}</php>
+                </dl>
+                <div class="clear"></div>
+                <ul>
+                	<li><span class="left mr10">资料完整度</span><div class="progress"><span class="bg" style="width:{$userinfo_rate}%"></span></div><div class="percent">{$userinfo_rate}%</div></li>
+                    <li><span class="left mr10">我关注的人</span><em><a href="{:U('home/space/follow',array('type'=>'following', 'uid'=>$mid))}">{$userInfoCache['following']}</a></em></li>
+                    <li><span class="left mr10">关注我的人</span><em><a href="{:U('home/space/follow',array('type'=>'follower', 'uid'=>$mid))}">{$userInfoCache['follower']}</a></em></li>
+                </ul>
+                <div class="clear pb10"></div>
+            </div><!-- /userinfo -->
+            <div class="userappbox mt10">
+            	<div class="app_menu boxitem">
+                	<div class="box_title">
+                    	<h2 class="ico_mysns">我的空间</h2>
+                    </div>
+                    <div class="box_content">
+                    	<ul>
+                        <volist name="install_app" id="vo">
+                            <php>if(empty($vo['app_alias'])||$vo['group_id']!=1) continue;</php>
+                            <li><img src="{:getAppIconUrl($vo['icon_url'],$vo['app_name']);}" /><a href="{$vo.app_entry}" title="{$vo.description}">{$vo.app_alias|getShort=###,5,'...'}</a></li>
+                        </volist>
+                        </ul>
+                        <div class="clear pb10"></div>
+                    </div>
+                </div><!-- /app_menu -->
+                <div class="clear lineD_btm"></div>
+                
+                <div class="myapp boxitem">
+                	<div class="box_title mt10">
+                    	<h2 class="ico_myapp">我的应用</h2>
+                        <div class="setting"><a href="{:U('home/Index/editapp')}">设置</a></div>
+                    </div>
+                    <div class="box_content">
+					<volist name="group" id="gr">
+					<php>
+                    	$roles = explode(',', $_SESSION['userInfo']['role']);
+                        $_role = false;
+                        foreach($roles as $val){
+                        	if(in_array($val,explode(',', $gr['role_private']))){
+                            	$_role = true;
+                            }
+                        }
+                    	if(!$_role){
+                        	continue;
+                        }
+                    </php>
+                    <h3>{$gr.group_name}</h3>
+                    	<ul>
+                        	<volist name="install_app" id="vo">
+                                <php>if(empty($vo['app_alias'])||!in_array($gr['group_id'],explode(',',$vo['group_id']))) continue;</php>
+                                <li><img src="{:getAppIconUrl($vo['icon_url'],$vo['app_name']);}" /><a href="{$vo.app_entry}" title="{$vo.description}"<if condition="$vo['host_type']"> target="_blank"</if>>{$vo.app_alias|getShort=###,5,'...'}</a></li>
+                            </volist>
+                        </ul>
+                     </volist>
+                        <div class="clear pb10 lineD_btm"></div>
+                    </div>
+                    <div class="app_setting">
+                        <ol>
+                        	<li><a href="{:U('home/Index/addapp')}" class="app_add">添加</a></li>
+                            <li><a href="{:U('home/Index/editapp')}" class="app_manager">管理</a></li>
+                        </ol>
+                        <div class="clear pb10"></div>
+                    </div><!-- /app_setting -->
+                </div><!-- /myapp -->
+   				
+                {:Addons::hook('home_index_left_middle')}
+                
+            </div>
+            
+            {:Addons::hook('home_index_left_bottom')}
+    <php>if (Addons::requireHooks('home_index_left_advert')) {</php>
+    	{:Addons::hook('home_index_left_advert', array($ts['ad']['left']))}
+    <php>} else {</php>
+		<volist name="ts['ad']['left']" id="vo">
+	    <div class="ad_left"><div class="ke-post">{$vo.content}</div></div>
+		</volist>
+    <php>}</php>
+    
+<php>
+function getMenuState($type){
+	$type = split('/',$type);
+	if( strtolower(MODULE_NAME)==strtolower($type[0]) && ( strtolower(ACTION_NAME)==strtolower($type[1]) || $type[1]=='*') ){
+		return 'class="on"';
+	}
+}
+</php>
+
+          </div><!-- /user_app -->

@@ -1,0 +1,84 @@
+  <form method="post" action="{:Addons::adminUrl('saveClassification')}" onsubmit="return modifyClassification(this);">
+  <div class="form2">
+    <dl class="lineD">
+      <dt>出版(或发行)者：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="publisher">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataPublisher">
+                <option value="{$val['DataCode']}" <php>if($classification[Publisher] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select>
+    </dl>
+
+    <dl class="lineD">
+      <dt>科目：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="subject">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataSubject">
+                <option value="{$val['DataCode']}" <php>if($classification[Subject] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select> 
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>年级：<span class="cRed pr5">*</span></dt>
+      <dd>
+      	<select name="grade">
+        	<option value="0">--=请选择=--</option>
+            <volist id="val" name="dataGrade">
+                <option value="{$val['DataCode']}" <php>if($classification[Grade] == $val['DataCode']) echo 'selected';</php>>{$val['DataName']}</option>
+            </volist>
+        </select>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>知识点：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input type="text" name="course" id="course" style="width:260px" value="{$classification.Course}" />
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>备注：</dt>
+      <dd>
+        <textarea name="remark" id="remark" cols="40" rows="3">{$classification.Remark}</textarea>
+      </dd>
+    </dl>
+	
+    <div class="page_btm">
+      <if condition="$classification['id']">
+      	<input name="id" type="hidden" value="{$classification['id']}" />
+      </if>
+      <if condition="$jumpUrl">
+      	<input name="jumpUrl" type="hidden" value="{$jumpUrl}" />
+      </if>
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </div>
+  </form>
+<script>
+function modifyClassification(o)
+{
+	if (!o.uid.value.match(/^[\d]+$/)) {
+		ui.error('请选择用户');
+		o.uid.focus();
+		return false;
+	} else if (o.realname.value && !o.realname.value.match(/^[\u4e00-\u9fa5]+$|^[a-zA-Z\.·]+$/)) {
+		ui.error('请输入真实姓名');
+		o.realname.focus();
+		return false;
+	} else if (o.phone.value && !o.phone.value.match(/^[\d]{11}$/)) {
+		ui.error('请输入手机号');
+		o.phone.focus();
+		return false;
+	} else if (o.info.value.length <= 0) {
+		ui.error('请输入认证资料');
+		o.info.focus();
+		return false;
+	}
+}
+</script>

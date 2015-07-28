@@ -1,0 +1,583 @@
+
+.userPanel{
+	position:absolute;
+	width:258px;
+	height:100%;
+	right:0px;
+	top:0px;
+	background:url(images/bg.jpg);
+	overflow:visible;
+	z-index:3999;
+	display:none;
+}
+.userPanel .panel_shadow_left{
+	position:absolute;
+	z-index:1;
+	width:7px;
+	height:100%;
+	left:-1px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/images/shadow_left.png', sizingMethod='scale');
+	background-image:url(images/shadow_left.png) !important;
+	background-image:none;
+	background-repeat:repeat;
+	
+}
+.userPanel .panel_shadow_right{
+	position:absolute;
+	z-index:1;
+	width:7px;
+	height:100%;
+	right:-1px;
+	top:0px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/images/shadow_right.png', sizingMethod='scale');
+	background-image:url(images/shadow_right.png) !important;
+	background-image:none;
+	background-repeat:repeat;
+}
+.userPanel .panel_title{
+	position:absolute;
+	width:100%;
+	height:31px;
+	line-height:31px;
+}
+.userPanel .panel_title_button{
+	float:right;
+	display:inline-block;
+	text-align:center;
+}
+.userPanel .panel_title_button span{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	margin:7px;
+}
+.userPanel .button1{
+	width:52px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/button1.png', sizingMethod='image');
+	background-image:url(images/button1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:inline-block;
+}
+.userPanel .button1:hover{
+	width:52px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/button1_hover.png', sizingMethod='image');
+	background-image:url(images/button1_hover.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:inline-block;
+}
+.userPanel .button2{
+	width:35px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/button2.png', sizingMethod='image');
+	background-image:url(images/button2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:inline-block;
+}
+.userPanel .button2:hover{
+	width:35px;
+	height:31px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/button2_hover.png', sizingMethod='image');
+	background-image:url(images/button2_hover.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	display:inline-block;
+}
+.button_img_home{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/home.png', sizingMethod='image');
+	background-image:url(images/home.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.button_img_move{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/move.png', sizingMethod='image');
+	background-image:url(images/move.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.button_img_suoxiao{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/suoxiao.png', sizingMethod='image');
+	background-image:url(images/suoxiao.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.button_img_fangda{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/fangda.png', sizingMethod='image');
+	background-image:url(images/fangda.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.button_img_shouqi{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/shouqi.png', sizingMethod='image');
+	background-image:url(images/shouqi.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.userPanel .myPanel {
+	position:relative;
+	height:74px;
+	overflow:hidden;
+	margin:5px 5px 5px 10px;
+}
+.userPanel .myPanel_noLogin {
+	margin:4px
+}
+.userPanel .myAvatar {
+	display:inline;
+	position:relative;
+	float:left;
+	border:1px solid #999;
+	padding:1px;
+	width:64px;
+	height:64px;
+	overflow:hidden;
+	background:white;
+	zoom:1;
+	cursor:pointer;
+	box-shadow:1px 1px 3px #666;
+	-moz-box-shadow:1px 1px 3px #666;
+	-webkit-box-shadow:1px 1px 3px #666
+}
+.userPanel .myAvatar_offline {
+	opacity:.5;
+	filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)
+}
+.userPanel .myTitle {
+	padding:3px 10px 0 10px;
+	height:20px;
+	line-height:20px;
+	font-weight:bold;
+	font-size:16px;
+	overflow:hidden;
+	zoom:1;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+}
+.userPanel .myInfo {
+	padding:3px 10px 0 10px;
+	height:16px;
+	overflow:hidden;
+	zoom:1
+}
+.userPanel .myInfo .exitButton {
+	display:inline-block;
+	text-decoration:none;
+	cursor:pointer;
+	float:right;
+	height:16px;
+	overflow:hidden;
+	color:#999;
+	text-shadow:1px 1px 1px #000;
+	zoom:1
+}
+.userPanel .myInfo .exitButton:hover {
+	color:red;
+}
+.userPanel .myState {
+	display:none;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.userPanel .myNick {
+	float:left;
+	/*width:170px;*/
+	height:18px;
+	overflow:hidden;
+	line-height:18px;
+	font-weight:bold;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+	cursor:default
+}
+.userPanel .myService {
+	
+	padding:3px 10px 0 10px;
+	height:22px;
+	overflow:hidden;
+	zoom:1
+}
+
+
+.userPanel .mySignature_wraper {
+	color:#FFF;
+	height:20px;
+	overflow:hidden;
+	position:relative;
+	top:1px;
+	left:1px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.userPanel .myStateDown {
+	float:left;
+	width:7px;
+	height:6px;
+	overflow:hidden;
+	background:url(./images/arrow_down.png) center no-repeat;
+	text-indent:-999em;
+	margin-top:5px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.userPanel .DisableMyStateSelect {
+	width:16px;
+	cursor:default
+}
+.userPanel .DisableMyStateSelect .myStateDown {
+	display:none
+}
+#MySignature {
+	display:block;
+	height:20px;
+	outline:0;
+	line-height:20px;
+	border:0;
+	margin:0;
+	background:0;
+	cursor:pointer;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+	-webkit-appearance:none
+}
+input#MySignature {
+	width:100%
+}
+.userPanel .MySignature_hover {
+	border:1px solid #b3b3b3;
+	top:0;
+	left:0;
+	background:url('images/hover.png') repeat-x
+}
+.mySignature_wraper.MySignature_edit #MySignature {
+	cursor:text;
+	background:#fff;
+	color:#000;
+}
+.userPanel .myState {
+	display:none;
+	position:absolute;
+	width:30px;
+	height:16px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	top:50px;
+	left:40px;
+	margin:0;
+}
+.userPanel .myStateShow {
+	float:left;
+	width:15px;
+	height:16px;
+	overflow:hidden;
+	text-indent:-999em;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.userPanel .callme {
+	background:url(./images/dim_sprite.gif?t=20111011001) -71px 3px no-repeat
+}
+.userPanel .online {
+	background:url(./images/dim_sprite.gif?t=20111011001) 1px 3px no-repeat
+}
+.userPanel .away {
+	background:url(./images/dim_sprite.gif?t=20111011001) -17px 3px no-repeat
+}
+.userPanel .busy {
+	background:url(./images/dim_sprite.gif?t=20111011001) -35px 3px no-repeat
+}
+.userPanel .silent {
+	background:url(./images/dim_sprite.gif?t=20111011001) -107px 3px no-repeat
+}
+.userPanel .hidden {
+	background:url(./images/dim_sprite.gif?t=20111011001) -53px 3px no-repeat
+}
+.userPanel .offline {
+	background:url(./images/dim_sprite.gif?t=20111011001) -90px 3px no-repeat
+}
+.userPanel .panel_Container{
+	overflow:hidden;
+}
+/*  notice */
+.panel_mainArea{
+	overflow:auto;
+}
+.panel_mainArea a,.panel_mainArea h4,.panel_mainArea div{
+	color:#FFF;
+	font-weight:normal;
+	text-shadow:1px 1px 1px #000;
+}
+.panel_mainArea .userapp_msg img{
+	float:left;
+	padding:0 5px 0 0;
+}
+.panel_mainArea .xlda dl { padding-left: 55px; }
+.panel_mainArea .xlda .m { display: inline; margin: 8px 0 8px -55px; }
+.panel_mainArea .xlda .avt img { display: block; }
+.panel_mainArea .avt img { padding: 1px; width: 40px; height: 40px; background: #FFF; border: 1px solid; border-color: #CCC }
+.panel_mainArea .xld a.d, .xl a.d, .attc a.d, .c a.d, .sinf a.d {
+    background: url("./images/notice_hk_1.png") no-repeat center;
+    float: right;
+    height: 16px;
+    line-height: 100px;
+    overflow: hidden;
+    width: 16px;
+}
+.panel_mainArea .xld a.d:hover, .xl a.d:hover, .attc a.d:hover, .c a.d:hover, .sinf a.d:hover {
+    background: url("./images/notice_hk_2.png") no-repeat center;
+}
+.panel_mainArea .xld span{
+	
+	text-shadow:1px 1px 1px #000;
+}
+.panel_mainArea  .nts{
+	padding:10px;
+}
+.panel_mainArea .xld a ,.panel_mainArea .xld dd a{
+	color:#BFFFBF;
+}
+.panel_mainArea .xld dl{
+	border-bottom: 0px solid #CDCDCD;
+}
+.panel_mainArea .xld  dd{
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+}
+ .Notice_tab {
+	padding-top:5px;
+	margin:0;
+	width:100%;
+	height:40px;
+	overflow:hidden;
+}
+ .Notice_tab li {
+	cursor:default;
+	background:url(./images/dim/user_bg_1.png) repeat-x center;
+}
+ .Notice_tab .current {
+	cursor:default;
+	background:url(./images/dim/user_bg_2.png) repeat-x center;
+}
+ .Notice_tab_item {
+	text-align:center;
+	display:inline;
+	float:left;
+	width:33%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+ .Notice_tab_item.last {
+	width:34%;
+}
+
+ .Notice_tabmenu_icon {
+	background:url('./images/dim/user_bg_xian.png') no-repeat center;
+	height:100%;
+	width:2px;
+	float:right;
+	cursor:pointer;
+	position:absolute;
+	top:0;
+	right:0
+}
+
+ .Notice_tab .tab_icon {
+	margin:0 auto;
+	height:40px;
+	line-height:40px;
+	color:#FFF;
+	font-weight:bold;
+	text-align:center;
+	cursor:pointer;
+}
+.panel_mainArea .ajaxpage_next{
+	position:relative;
+	height:27px;
+	line-height:27px;
+	text-align:center;
+	cursor:pointer;
+	margin:0 10px;
+	background:url(images/top_bg.png) repeat-x center;
+}
+.panel_mainArea .ajaxpage_next.hover{
+	background:url(images/down_bg.png) repeat-x center;
+}
+
+.panel_mainArea .ajaxpage_next .ajaxpage_next_left{
+	position:absolute;
+	width:5px;
+	height:27px;
+	top:0px;
+	left:-5px;
+	background:url(images/top_bg_left.png) repeat-x center;
+}
+.panel_mainArea .ajaxpage_next.hover .ajaxpage_next_left{
+	background:url(images/down_bg_left.png) repeat-x center;
+}
+.panel_mainArea .ajaxpage_next .ajaxpage_next_right{
+	position:absolute;
+	width:5px;
+	height:27px;
+	top:0px;
+	right:-5px;
+	background:url(images/top_bg_right.png) repeat-x center;
+}
+.panel_mainArea .ajaxpage_next.hover .ajaxpage_next_right{
+
+	background:url(images/down_bg_right.png) repeat-x center;
+}
+.panel_mainArea .pn{
+	box-shadow: 1px 1px 1px #000000;
+}
+
+/*  notice  end */
+/* xiezuo  start */
+ .xiezuo_tab {
+	padding-top:5px;
+	margin:0;
+	width:100%;
+	height:40px;
+	overflow:hidden;
+}
+.xiezuo_tab li {
+	cursor:default;
+	background:url(./images/dim/user_bg_1.png) repeat-x center;
+}
+.xiezuo_tab .current {
+	cursor:default;
+	background:url(./images/dim/user_bg_2.png) repeat-x center;
+}
+.xiezuo_tab_item {
+	text-align:center;
+	display:inline;
+	float:left;
+	width:50%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+ .xizuo_tab_item.last {
+	width:50%;
+}
+
+ .xiezuo_tabmenu_icon {
+	background:url('./images/dim/user_bg_xian.png') no-repeat center;
+	height:100%;
+	width:2px;
+	float:right;
+	cursor:pointer;
+	position:absolute;
+	top:0;
+	right:0
+}
+
+ .xiezuo_tab .tab_icon {
+	margin:0 auto;
+	height:40px;
+	line-height:40px;
+	color:#FFF;
+	font-weight:bold;
+	text-align:center;
+	cursor:pointer;
+}
+/*  xiezuo  end */
+/*home  start*/
+.panel_mainArea .home_container{
+	padding:0 10px;
+}
+.panel_mainArea .home_item{
+	margin:5px;
+	float:left;
+	position:relative;
+	height:110px;
+	width:100px;
+	overflow:hidden;
+	cursor:pointer;
+}
+.panel_mainArea .home_item.hover{
+	background:#39f;
+	 -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+.panel_mainArea .home_item .home_item_icon{
+	height:54px;
+	width:54px;
+	text-decoration:none;
+	outline:none;
+	display:inline-block;
+	background-size:100%;
+}
+.panel_mainArea .home_item_notice{
+	background:url(./images/notice.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_notice,.ie7 .panel_mainArea .home_item_notice,.ie8 .panel_mainArea .home_item_notice{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/notice.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_dim{
+	background:url(./images/friend.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_dim,.ie7 .panel_mainArea .home_item_dim,.ie8 .panel_mainArea .home_item_dim{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/friend.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_share{
+	background:url(./images/share.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_share,.ie7 .panel_mainArea .home_item_share,.ie8 .panel_mainArea .home_item_share{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/share.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_xiezuo{
+	background:url(./images/xiezuo.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_xiezuo,.ie7 .panel_mainArea .home_item_xiezuo,.ie8 .panel_mainArea .home_item_xiezuo{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/xiezuo.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_setdeskconfig{
+	background:url(./images/deskconfig.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_setdeskconfig,.ie7 .panel_mainArea .home_item_setdeskconfig,.ie8 .panel_mainArea .home_item_setdeskconfig{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/deskconfig.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_browser{
+	background:url(./images/liulanqi.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_browser,.ie7 .panel_mainArea .home_item_browser,.ie8 .panel_mainArea .home_item_browser{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/liulanqi.png', sizingMethod='scale');
+	background:none;
+}
+.panel_mainArea .home_item_hotkey{
+	background:url(./images/hotkey.png) center no-repeat;
+}
+.ie6 .panel_mainArea .home_item_hotkey,.ie7 .panel_mainArea .home_item_hotkey,.ie8 .panel_mainArea .home_item_hotkey{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/userpanel/default/images/hotkey.png', sizingMethod='scale');
+	background:none;
+}
+.panel_Container .line_spacer{
+	width:100%;
+	height:2px;
+	background:url(images/xian.jpg) repeat-x ;
+}
+.panel_mainArea .icobutton_tips{
+	position:absolute;
+	right:5px;
+	top:5px;
+	z-index:1;
+	background:#900;
+}
+.panel_mainArea .icobutton_tips  span{
+	padding:2px 3px;
+}
+/*home end*/
+

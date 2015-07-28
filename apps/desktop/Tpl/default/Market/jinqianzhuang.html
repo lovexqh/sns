@@ -1,0 +1,30 @@
+<include file="../Public/_header_ajax" />
+<if condition="!empty($list)">
+<div style="display: block;" class="appPanel sidePanel radius5 rankingList simpleRanking">
+    <div id="appPanel_introduce_link_titleBar" class="appPanelTitleBar">{:L('recent_main')}</div>
+    <div id="appPanel_introduce_link_body" class="appPanelBody">
+        <ul class="appListUl">
+        <volist name="list" key="key" id="value">
+        <li class="appListLi <php>if($key == count($list)){echo "appListLiLast";}</php>">
+             <a href="javascript:void(0);" class="appListItem" appid="{$value['appid']}" cat="{$classid}" cmd="introduce" url="" index="{$key}" title="{$value['appname']}"> <span class="appTime" title="{$value['installtime']|date='Y-m-d H:i:s',###}">{$value['installtime']|date='m-d',###}</span> <span class="appIndex radius3 heightLight">{$key}</span> <img class="appSmallIcon" src="{$value['appico']}" width="16" height="16" onload="fixpng(this)"></span> <span class="appName">{$value['appname']}</span> </a> 
+        </li>
+        </volist>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div id="appPanel_introduce_link_pageBar" class="appPanelPagebar">
+        <div class="appPanelPagination"> <a href="javascript:void(0);" class="paginationBtn preBtn" hidefocus="">&lt;</a>
+            <div class="paginationList"></div>
+            <a href="javascript:void(0);" class="paginationBtn nextBtn" hidefocus="">&gt;</a> </div>
+    </div>
+</div>
+<script type="text/javascript" reload="1">
+jQuery('#appPanel_introduce_link_body .appListItem').bind('click',function(){
+        var cat=parseInt(jQuery(this).attr('cat'));
+        var appid=parseInt(jQuery(this).attr('appid'));
+        var cmd=jQuery(this).attr('cmd');
+        control_click(jQuery(this),cmd,cat,0,appid);
+        return false;
+    });
+</script>
+<include file="../Public/_footer_ajax" />

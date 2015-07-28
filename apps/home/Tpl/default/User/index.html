@@ -1,0 +1,814 @@
+<include file="__THEME__/member/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.autocomplete.js"></script>
+<script src="../Public/js/slides.min.jquery.js"></script>
+
+<div class="containerOuter">
+	<include file="__THEME__/member/banner" />
+    <div class="container">
+        <div class="containerInner">
+          <include file="__THEME__/member/apps" />
+          <div class="mainbox pb15">
+          	<div class="mainbox_R">
+            
+            	<volist name="ts['ad']['right_top']" id="vo">
+                <div class="ke-post setskinbox lineS_btm">
+                    {$vo['content']}
+                </div>
+                </volist>
+                
+                <!-- 右侧插件开始 -->
+                {:Addons::hook('home_index_right_top')}
+          		<!-- 右侧插件结束 -->
+                
+                <!--{:Addons::hook('home_index_right_qiandao')}-->
+                
+                <div class="msg_center boxitem pt10">
+                	<div class="box_title">
+                    	<h2>消息中心</h2>
+                    </div>
+                    <div class="box_content">
+                    	<div class="msg_important notebox mt10">
+                        	<a href="#" class="close" style="display:none">×</a>
+                        	<strong>重要信息</strong>
+                            <p>
+                            	{$announce['content']|formatUrl}
+                            </p>
+                        </div>
+                    	<ul>
+                        	<li><span>个人消息：</span><gt name="userCount['message']" value="0"><a href="{:U('home/message/index')}"></gt>{$userCount.message}条<gt name="userCount['message']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                            <li><span>提到我的：</span><gt name="userCount['atme']" value="0"><a href="{:U('home/user/atme')}"></gt>{$userCount.atme}条<gt name="userCount['atme']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                            <li><span>评论消息：</span><gt name="userCount['comment']" value="0"><a href="{:U('home/user/comments')}"></gt>{$userCount.comment}条<gt name="userCount['comment']" value="0"><img src="__THEME__/member/images/new.gif" /></a></li></gt></li>
+                            <li><span>系统消息：</span><gt name="userCount['notify']" value="0"><a href="{:U('home/message/notify')}"></gt>{$userCount.notify}条<gt name="userCount['notify']" value="0"><img src="__THEME__/member/images/new.gif" /></a></li></gt></li>
+                            <li><span>应用消息：</span><gt name="userCount['appmessage']" value="0"><a href="{:U('home/message/appmessage')}"></gt>{$userCount.appmessage}条<gt name="userCount['appmessage']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                        </ul>
+                        <div class="clear pb10"></div>
+                    </div>
+                </div><!-- /msg_center -->
+                
+                <div class="clear lineD_btm"></div>
+                
+                <div class="my_finduser boxitem pt10">
+                	<div class="box_title">
+                    	<h2>用户查找</h2>
+                        <a href="{:U('home/User/searchuser');}" class="more">更多</a>
+                    </div>
+                    <div class="box_content">
+                    	<form action="{:U('home/user/searchuser')}" method="post" target="_blank">
+                    	<ul>
+                        	<li>
+                            	<label onclick="$(this).parent().find('input').focus();">输入朋友的姓名或昵称，如：小A</label>
+                                <input type="text" name="k" class="txt_finduser" style="width:97%;" maxlength="40" value="" 
+                                onfocus="if(this.value == '')$(this).parent().find('label').hide()" onblur="if(this.value == '')$(this).parent().find('label').show();" />
+                            </li>
+                        	<li>
+                            	<a href="javascript:;" id="moreselect" class="more">&lt;&lt;更多选项</a>
+                                <script language="javascript" type="text/javascript">
+								$('#moreselect').bind('click',function(){
+									if($('#morebox').css('display')=='none'){
+										$('#morebox').slideDown('fast');
+									}else{
+										$('#morebox').slideUp('fast');
+									}
+								});
+								
+								//判断是否为json格式
+								function isjson(obj){
+									var isjson = typeof(obj) == "object" && obj.length;    
+									return isjson;
+								}
+
+								//根据学校ID获取班级列表
+								function selectSchool(id){
+									if(id>0){
+										$.post(U('home/User/getClassList'),{'sid':id},function(data){
+											$("#classSelect option").remove();
+											$("#classSelect").prepend("<option value=''>全部</option>");
+											var obj = eval(data);
+											if(isjson(obj)){
+												for(i=0;i<obj.length;i++){
+													$("#classSelect").append("<option value='"+obj[i]['id']+"'>"+obj[i]['bj']+"</option>");
+												}
+											}
+										});
+									}else{
+										
+									}
+								}
+								</script>
+                            	<div id="morebox" class="morebox" style="display:none">
+                                	<dl>
+                                    	<dt>角色：</dt>
+                                        <dd>
+                                        	<select name="identity">
+                                        		<option value="">全部</option>
+                                                <option value="2">学生</option>
+                                                <option value="3">老师</option>
+                                                <option value="4">家长</option>
+                                        	</select>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                    	<dt>性别：</dt>
+                                        <dd>
+                                        	<select name="sex">
+                                        		<option value="">全部</option>
+                                                <option value="1">男</option>
+                                                <option value="0">女</option>
+                                        	</select>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                    	<dt>学校：</dt>
+                                        <dd>
+                                        	<select name="school" onchange="selectSchool(this.value)">
+                                        		<option value="">全部</option>
+                                                <volist name="schoollist" id="vo">
+                                                <option value="{$vo.id}">{$vo.xxmc}</option>
+                                                </volist>
+                                        	</select>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                    	<dt>班级：</dt>
+                                        <dd>
+                                        	<select id="classSelect" name="class">
+                                        		<option value="">全部</option>
+                                        	</select>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            	<button type="submit" class="btn_search buttonObj">搜 索</button>
+                            </li>
+                        </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="clear lineD_btm"></div>
+                
+                <!-- 推荐话题 /-->
+                {:W('HotTopic', array('type'=>'recommend','limit'=>5))}
+                
+                <php>if(ACTION_NAME == "index"){</php>
+                {:W('HotTopic', array('type'=>'auto','limit'=>5))}
+                <php>}</php>
+                
+                {:Addons::hook('home_index_right_visitor')}
+                
+                <php>if(!empty($my_group_list)){</php>
+                <div class="my_group boxitem pt10">
+                	<div class="box_title">
+                    	<h2>我的社团</h2>
+                        <a href="{:U('group/Index/newIndex');}" class="more">更多</a>
+                    </div>
+                    <div class="box_content">
+                    	<ul>
+                        	<php>
+                            	$show_group = $my_group_list[array_rand($my_group_list,1)];
+                                $group = getGroupInfo($show_group['id']);
+                            </php>
+                            <php>if($show_group){</php>
+                        	<li><span>社团名称：</span><a href="{:U('group/group/index',array('gid'=>$group['id']))}" title="{$group['intro']}">{$group['name']}</a></li>
+                            <li><span>社团主席：</span><space uid="group.uid">{uname}</space></li>
+                            <li><span>新入成员：</span>
+                            	<div class="o_active">
+                                <ul>
+                                <volist name="group.member" id="vo" key='k'>
+                                	<php>if($k<=3){</php>
+                                	<li>
+                                        <space uid="vo.uid">{uavatar=m}</space>
+                                        <space uid="vo.uid" class="fn">{uname}</space>
+                                        <span>{$vo.ctime|date='m月d日',###}</span>
+                                    </li>
+                                    <php>}</php>
+                                </volist>
+                                </ul>
+                                <div class="clear"></div>
+                                </div>
+                            </li>
+                            <php>}</php>
+                            <li><span>已加入社团：</span>
+                            	<div class="o_group">
+                                <php>$moreGroup = false;</php>
+                                <php>
+                                foreach($my_group_list as $key=>$value){
+                                	if(empty($value['logo'])){
+                                		$picurl = __THEME__.'/member/images/group_default_min.png';
+                                	}else{
+                                		$picurl = __UPLOAD__.'/'.$value['logo'];
+                                	}
+                                </php>
+                                    <a href="{:U('group/group/index',array('gid'=>$value['id']))}"><img src="__ROOT__/thumb.php?w=16&t=f&url={$picurl}" />{$value['name']}</a>
+                                    <php>
+                                    if($key>=5){
+                                        $moreGroup = true;
+                                        break;
+                                    }
+                                    </php>
+                                <php>}</php>
+                                <php>if($moreGroup){</php><a href="{:U('group/SomeOne')}" class="more">更多&raquo;</a><php>}</php>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+				<php>}</php>
+                
+            </div><!-- /mainbox_R -->
+            <div class="mainbox_C">
+            	<article class="main_content">
+                <php>if ($announcement['is_open'] && !empty($announcement['content'])) {</php>
+                <div class="mcbox pt10">
+                    <div id="announcement" class="system_msg notebox">
+                    	<a href="javascript:void(0);" onclick="close_announcement();" class="close">×</a>
+                        <aside>
+                            <img src="__THEME__/member/images/sound.gif" />
+                            <span>系统消息：</span>
+                            <a href="javascript:;">{$announcement['content']|formatUrl}</a>
+                        </aside>
+                        <div class="clear"></div>
+                    </div><!-- /sys_msg -->
+                </div>
+                <php>}</php>
+                        
+                <section>
+                <switch name="ACTION_NAME">
+                  <case value="index">
+                  {:Addons::hook('home_index_middle_top')}
+                  <div class="talkBox mcbox send_weibo">
+                  	<form method="post" action="{:U('weibo/operate/publish')}" id="miniblog_publish" oncomplete="false">
+                    <h2>
+                        <div class="wordNum numObj">你还可以输入<strong id="strconunt">{$GLOBALS['ts']['site']['length']}</strong>字</div>
+                        <span>社区的建设需要你我共同的参与！</span>
+                        <!--<div class="title"><img src="../Public/images/show_img.jpg" /></div>-->
+                    </h2>
+                    
+                    <div class="clear"></div>                    
+					<input type="hidden" name="publish_type" value="0">
+					<div class="cntBox">
+                        <input id="publish_handle" class="btn_big_publish hand buttonObj" value="发布" type="button" error="发布失败">
+                        <textarea id="content_publish" name="content" cols="20" rows="2" class="contentObj"></textarea>
+                        <div class="txtShadow" style="z-index:-1000"></div>
+                    </div>
+                    <div class="funBox">
+                    	<!--<php>if(Addons::requireHooks("home_index_middle_publish")){</php>
+                        <div class="right" style="padding-bottom:5px;_margin-top:-8px; cursor:hand;width:80px;_padding-top:10px; cursor:pointer"  onclick='weibo.showAndHideMenu("Sync", this, "", "");'>
+                            同步<a href="#" class="ico_sync_on"></a>
+                        </div>
+                        <div id="Sync" style="display:none;position:absolute;right:23px;top:30px;z-index:9999">
+                            <div class="topic_app"></div>
+                            <div class="pop_inner">
+								{:Addons::hook('home_index_middle_publish')}
+                            </div>
+                        </div>
+                        <php>}</php>-->
+                        <div id="publish_type_content_before" class="kind">
+                          {:Addons::hook('home_index_middle_publish_type',array('position'=>'index'))}
+                        </div>
+                    </div><!-- /funBox -->
+					<input type="hidden" name="simple" value="3" />
+                    </form>
+                                     
+                        <div class="clear pt10"></div>
+                        <div class="my_quick">
+                            <span>我想做：</span>
+                            <aside>
+                            	<volist name="install_app" id="vo">
+                                <php>if(empty($vo['app_alias'])||empty($vo['sidebar_title'])) continue;</php>
+                                    <php>if($vo['sidebar_entry']){</php>
+                                        <a href="{$vo.sidebar_entry}">{$vo.sidebar_title}</a>
+                                    <php>}</php>
+                                </volist>
+                                <a href="{:U('home/user/collection')}">我的收藏</a>
+                            </aside>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear pb15"></div>
+                    
+                    </div>  
+                        
+                    <php>if (Addons::requireHooks('home_index_middle_advert')) {</php>
+                    {:Addons::hook('home_index_middle_advert', array($ts['ad']['middle']))}
+                    <php>} else {</php>
+                    
+                    <volist name="ts['ad']['middle']" id="vo"> 
+                        <div class="ad_middle">
+                          <div class="ke-post"> 
+                            {$vo['content']}
+                          </div>
+                        </div>
+                    </volist>
+                    <php>}</php>
+
+                  </case>
+                  <case value="atme">
+                    <div class="tab-menu">
+                      <ul>
+                        <li><a href="###" class="on"><span>提到我的</span></a></li>
+                      </ul>
+                    </div>
+                  </case>
+                  <case value="collection">
+                    <div class="tab-menu">
+                      <ul>
+                        <li><a href="###" class="on"><span>我收藏的</span></a></li>
+                      </ul>
+                    </div>
+                  </case>
+                </switch>
+                </section>
+                <if condition="(!empty($zoneNode['relevant']))">
+                <section>
+                    <div class="myZoneBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">我相关的空间</h2>
+                            </div>
+                            <div class="box_content">
+                            	<div class="node_box">
+                                	<volist name="zoneNode.relevant" id="vo">
+                                    <a href="{:U('space/Class/index',array('classid'=>$vo['bjid']))}" target="_blank"><span>[{$vo.xxmc}]{$vo.bjmc}</span></a>
+                                    </volist>
+                                </div>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                        
+                    </div>
+                </section>
+                </if>
+                
+                <section>
+                    <div class="esnNodeBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">班级空间</h2>
+                                <div class="infoshow">点击<img src="__THEME__/images/node_a.gif" />查看更多内容</div>
+                            </div>
+                            <div class="box_content">
+                            	<div class="node_box line_style">
+                                	<div class="cheight">
+                                        <span class="title">学段：</span>
+                                        <div class="node_cont">
+                                            <a href="javascript:;" type="xd" value="0" onclick="bindxd(this);" class="on"><span>全部</span></a>
+                                            <a href="javascript:;" type="xd" value="1" onclick="bindxd(this);"><span>小学</span></a>
+                                            <a href="javascript:;" type="xd" value="2" onclick="bindxd(this);"><span>初中</span></a>
+                                            <a href="javascript:;" type="xd" value="3" onclick="bindxd(this);"><span>高中</span></a>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div><!-- /node_box -->
+                                
+                                <div class="node_box line_style">
+                                	<div class="cheight">
+                                        <span class="title">学校：</span>
+                                        <div class="node_cont">
+                                            <span class="more">更多</span>
+                                            <if condition="(empty($zoneNode['xxnode']))"><a href="javascript:;"><span>没有找到相关学校</span></a></if>
+                                            <volist name="zoneNode.xxnode" id="vo">
+                                            <a href="javascript:;" type="xx" value="{$vo.id}" onclick="bindxx(this);" <if condition="($zoneNode['sid'] eq $vo['id'])"> class="on"</if>><span>{$vo.xxmc}</span></a>
+                                            </volist>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div><!-- /node_box -->
+                                
+                                <div class="node_box line_style">
+                                	<div class="cheight">
+                                        <span class="title">年级：</span>
+                                        <div id="grade_node" class="node_cont">
+                                            <span class="more">更多</span>
+                                            <if condition="(empty($zoneNode['njnode']))"><a href="javascript:;"><span>没有找到相关年级</span></a></if>
+                                            <volist name="zoneNode.njnode" id="vo">
+                                            <a href="javascript:;" type="nj" value="{$vo.id}" xxid="{$vo.xxid}" onclick="bindnj(this);"<if condition="($zoneNode['gid'] eq $vo['id'])"> class="on"</if>><span>{$vo.njmc}</span></a>
+                                            </volist>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div><!-- /node_box -->
+                                
+                                <div class="node_box">
+                                	<div class="cheight">
+                                        <span class="title">班级：</span>
+                                        <div id="class_node" class="node_cont">
+                                            <span class="more">更多</span>
+                                            <if condition="(empty($zoneNode['bjnode']))"><a href="javascript:;"><span>没有找到相关班级</span></a></if>
+                                            <volist name="zoneNode.bjnode" id="vo">
+                                            <a href="{:U('space/Class/index',array('classid'=>$vo['id']))}" target="_blank"><span>{$vo.bj}</span></a>
+                                            </volist>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div><!-- /node_box -->
+                                
+                            </div>
+                        </div><!-- /mcboxitem -->
+                        <script language="javascript" type="text/javascript">					
+						//nodebox内的所有a标签进行遍历绑定
+						var xd = 0;
+						function bindxd(n){
+							var type = $(n).attr('type');
+							var val = $(n).attr('value');
+							xd = val;
+							$.post(U('home/User/getSchoolList'),{xd:val},function(data){
+								var schoollist = '';
+								for(var i=0;i<data.length;i++){
+									schoollist += '<a href="javascript:;" type="xx" value="'+data[i]['id']+'" onclick="bindxx(this);"><span>'+data[i]['xxmc']+'</span></a>\r\n';
+								}
+								if(schoollist==''){
+									schoollist += '<a href="javascript:;"><span>没有找到相关学校</span></a>\r\n';
+								}
+								$(n).parent().find('a').removeClass('on');
+								$(n).addClass('on');
+								var node = $(n).parent().parent().parent().next('.node_box');
+								$(node).find('.node_cont').fadeOut(500,function(){
+									//移除年级内容
+									$('#grade_node').find('a').remove();
+									//移除班级内容
+									$('#class_node').find('a').remove();
+									$(node).find('.node_cont>a').remove();
+									$(node).find('.node_cont').append(schoollist);
+									$(this).fadeIn('slow');
+								});
+							},'json');
+						}
+						
+						//绑定学校事件
+						function bindxx(n){
+							var val = $(n).attr('value');
+							$.post(U('home/User/getGradeList'),{xx:val,xd:xd},function(data){
+								var gradelist = '';
+								for(var i=0;i<data.length;i++){
+									gradelist += '<a href="javascript:;" type="nj" value="'+data[i]['nj']+'" xxid="'+data[i]['xxid']+'" onclick="bindnj(this);"><span>'+data[i]['njmc']+'</span></a>\r\n';
+								}
+								if(gradelist==''){
+									gradelist += '<a href="javascript:;"><span>没有找到相关年级</span></a>\r\n';
+								}
+								$(n).parent().find('a').removeClass('on');
+								$(n).addClass('on');
+								var node = $(n).parent().parent().parent().next('.node_box');
+								$(node).find('.node_cont').fadeOut(500,function(){
+									//移除班级内容
+									$('#class_node').find('a').remove();
+									$(node).find('.node_cont>a').remove();
+									$(node).find('.node_cont').append(gradelist);
+									$(this).fadeIn('slow');
+								});
+							},'json');	
+						}
+						
+						//绑定年级事件
+						function bindnj(n){
+							var val = $(n).attr('value');
+							var xxid = $(n).attr('xxid');
+							$.post(U('home/User/getClassList'),{sid:xxid,nj:val,xd:xd},function(data){
+								var data = eval("("+data+")");
+								var classlist = '';
+								for(var i=0;i<data.length;i++){
+									classlist += '<a href="'+U('space/Class/index',['classid='+data[i]['id']])+'" target="_blank"><span>'+data[i]['bj']+'</span></a>\r\n';
+								}
+								if(classlist==''){
+									classlist += '<a href="javascript:;"><span>没有找到相关班级</span></a>\r\n';
+								}
+								$(n).parent().find('a').removeClass('on');
+								$(n).addClass('on');
+								var node = $(n).parent().parent().parent().next('.node_box');
+								$(node).find('.node_cont').fadeOut(500,function(){
+									$(node).find('.node_cont>a').remove();
+									$(node).find('.node_cont').append(classlist);
+									$(this).fadeIn('slow');
+								});
+							});	
+						}
+
+						//处理更多收起事件
+						$('.esnNodeBox').find('span.more').bind('click',function(){
+							var h = $(this).parent().parent().height();
+							if(h>29){
+								$(this).fadeOut("slow",function(){
+									$(this).html('更多');
+									$(this).fadeIn('slow');
+								});
+								$(this).parent().parent().animate({height:"29px"});
+							}else{
+								$(this).fadeOut("slow",function(){
+									$(this).html('收起');
+									$(this).fadeIn('slow');
+								});
+								$(this).parent().parent().animate({height:$(this).parent().height()+"px"});
+							}
+						});
+						</script>
+                    </div>
+                </section>
+
+                
+                <section style="display:none">
+                    <div class="dynaBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">教育动态</h2>
+                            </div>
+                            <div class="box_content">
+                            <php>echo date('Y-m-d H:i:s',time());</php>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                        
+                    </div>
+                </section>
+                
+                <section style="display:none">
+                    <div class="dynaBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">网上名声</h2>
+                                <a href="{:U('video/Index/index')}" class="more">更多</a>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                        
+                    </div>
+                </section>
+                    
+                <section>
+                	<a name="weibo"></a>
+                    <div class="dynaBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">社区动态</h2>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                    	<div class="listbox">
+                        	<div class="menubox">
+                            	<h2 id="follow" class="on" onclick="tab_show(this);">关注动态</h2>
+                                <h2 id="master" onclick="tab_show(this);">校长动态</h2>
+                                <h2 id="depat" onclick="tab_show(this);">部门动态</h2>
+                                
+                                <div class="clear"></div>
+                            </div>
+                            <div style="display:none">
+                            	<!-- 微博类型列表 -->
+                            	<volist name="weibo_menu" id="vo">
+                                    <a id="feed_all_item" rel="all" class="<eq name='weibo_type' value='$key'>on</eq> feed_item" href="{:U('home/User/index',array('follow_gid'=>$group_now['follow_group_id'],'type'=>$type,'weibo_type'=>$key))}"><span>{$vo}</span></a>
+                                </volist>
+                            </div>
+                            <div id="cont-follow" class="contentbox weibo_box">
+                            	<div id="countNew"></div>
+                                <php>if($gid){</php>
+                                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>2))}
+                                <php>}else{</php>
+                                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>3))}
+                                <php>}</php>
+                                
+                                <php>if(ACTION_NAME=="index"){</php>
+                                    <php>if($list['data']){</php>
+                                    <div class="more_box">
+                                        <a id="loadMoreDiv" href="javascript:void(0)"><span class="ico_morefoot"></span>更多</a>
+                                        <a id="retract" href="#weibo" class="retract_btn" style="display:none"><span class="ico_retract"></span>收起</a>
+                                    </div>
+                                    <php>}else{</php>
+                                        <div class="more_box">没有任何数据</div>
+                                    <php>}</php>
+                                <php>}else{</php>
+                                    <div class="page">{$list['html']}</div>
+                                <php>}</php>
+                                
+                            </div>
+                            
+                            <div id="cont-master" class="contentbox weibo_box" style="display:none">
+                            	<ul>
+                                <volist name="atten_weibo" id="vo">
+                                    <li>
+                                      <dl>
+                                      	<dt class="userpic"><space uid="vo.uid">{uavatar=m}</space></dt>
+                                        <dd><p><space uid="vo.uid" class="fn">{uname}</space>说：{$vo.content}</p><span>[{$vo.ctime|date='m月d日 H:i:s',###}]</span></dd>
+                                        <div class="clear"></div>
+                                      </dl>
+                                    </li>
+                                </volist>
+                                </ul>
+                                <div class="more_box">
+                                	<a id="loading" style="display:none;"><span class="ico_loading"></span>载入中...</span></a>
+                                	<a id="loadsuccess" href="javascript:;" onclick="loadweibo($(this).parent());"><span class="ico_morefoot"></span>查看更多</a>
+                                    <a id="retract" href="#" onclick="retract($(this).parent());" class="retract_btn" style="display:none"><span class="ico_retract"></span>收起</a></div>
+                            </div>
+                            
+                            <div id="cont-depat" class="contentbox weibo_box" style="display:none">
+                            	<ul>
+                                <volist name="atten_weibo" id="vo">
+                                    <li>
+                                      <dl>
+                                      	<dt class="userpic"><space uid="vo.uid">{uavatar=m}</space></dt>
+                                        <dd><p><space uid="vo.uid" class="fn">{uname}</space>说：{$vo.content}</p><span>[{$vo.ctime|date='m月d日 H:i:s',###}]</span></dd>
+                                        <div class="clear"></div>
+                                      </dl>
+                                    </li>
+                                </volist>
+                                </ul>
+                                <div class="more_box">
+                                	<a id="loading" style="display:none;"><span class="ico_loading"></span>载入中...</a>
+                                	<a id="loadsuccess" href="javascript:;" onclick="loadweibo($(this).parent());"><span class="ico_morefoot"></span>查看更多</a>
+                                    <a id="retract" href="#" onclick="retract($(this).parent());" class="retract_btn" style="display:none"><span class="ico_retract"></span>收起</a></div>
+                            </div>
+                        </div>
+                    </div><!-- /dynaBox -->
+                <section>
+                
+                <section>
+                    <div class="newInfoBox mcbox pt10 pb15 mt10">
+                    	<div class="mcboxitem">
+                        	<div class="box_title">
+                            	<h2 class="ico_newvideo">最新视频</h2>
+                                <a href="{:U('video/Index/index')}" class="more">更多</a>
+                            </div>
+                            <div class="box_content videolist">
+                            	<ul>
+                                <volist name="videolist" id="vo">
+                                  <li>
+                                    <div class="pic">
+                                    	<a href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$vo.name}"><img src="{$vo.serverpath}{$vo.savepath}/img/{$vo.fcode}_3.jpg" onerror="imgVideoErr();" /><span class="play">播放</span></a>
+                                    </div>
+                                    <div>
+                                    	<a href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$vo.name}"  >{$vo.name|getShort=###,'8','...'}</a>
+                                    </div>
+                                    <div class="comm">
+                                    	<span class="read_box left" title="播放">{$vo.readCount}</span>
+                                        <span class="comment_box right" title="评论">{$vo.commentCount}</span>
+                                        <div class="clear"></div>
+                                    </div>
+                                  </li>
+                                </volist>
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                    </div><!-- /newInfoBox -->
+                </section>
+                
+                <section>
+                    <div class="dynaBox mcbox pt5 pb15 mt10">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">我的社区</h2>
+                                <a href="{:U('home/Space/index', array('uid' => $uid))}" class="more">详情</a>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                    	<div class="listbox">
+                        	<div class="menubox">
+                                <h2 id="photo" class="on" onclick="tab_show(this);">我的照片</h2>
+                                <h2 id="video" onclick="tab_show(this);">我的视频</h2>
+                                <h2 id="blog" onclick="tab_show(this);">我的文章</h2>
+                                <div class="clear"></div>
+                            </div>
+                            <div id="cont-blog" class="contentbox bloglist" style="display:none">
+                            	<ul>
+                                <php>if(empty($myblogs)){</php>
+                                	<li>暂无发布的内容</li>
+                                <php>}</php>
+                                <volist name="myblogs" id="vo">
+                                	<li><a href="{:U('blog/Index/show',array(id=>$vo['id'],mid=>$vo['uid']))}" title="{$vo.title}">{$vo.title|getShort=###,'26','...'}</a><span>[{$vo.cTime|date='Y-m-d',###}]</span></li>
+                                </volist>
+                                </ul>
+                            </div>
+                            <div id="cont-photo" class="contentbox photolist" style="display:">
+                            	<ul>
+                                <php>if(empty($myphotos)){</php>
+                                	<li>暂无发布的内容</li>
+                                <php>}</php>
+                                <volist name="myphotos" id="vo">
+                                	<li>
+                                    	<div class="pic">
+                                        	<a href="{:U('photo/Index/photo',array(id=>$vo['id'],aid=>$vo['albumId'],uid=>$vo['userId']))}" title="{$vo.name}" class="photo"><img src="__ROOT__/thumb.php?w=110&h=110&t=f&url=.__ROOT__/data/uploads/{$vo.savepath}" onerror="imgPicErr('110');" /></a>
+                                        </div>
+                                        <div class="title"><a href="{:U('photo/Index/photo',array(id=>$vo['id'],aid=>$vo['albumId'],uid=>$vo['userId']))}" title="{$vo.name}">{$vo.name|getShort=###,'8','...'}</a></div>
+                                        <div class="info">更新：{$vo.mTime|friendlyDate}</div>
+                                    </li>
+                                </volist>
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                            <div id="cont-video" class="contentbox videolist" style="display:none">
+                            	<ul>
+                                <php>if(empty($myvideos)){</php>
+                                	<li>暂无发布的内容</li>
+                                <php>}</php>
+                                <volist name="myvideos" id="vo">
+                                  <li>
+                                    <div class="pic">
+                                    	<a href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$vo.name}"><img src="{$vo.video_server_url}{$vo.savepath}/img/{$vo.fcode}_3.jpg" onerror="imgVideoErr();" /><span class="play">播放</span></a>
+                                    </div>
+                                    <a href="{:U('video/Index/video',array(id=>$vo['id'],aid=>$vo['categoryId'],uid=>$vo['userId']))}<neq name="type" value="">&type={$type}</neq>#show_video" title="{$vo.name}"  >{$vo.name|getShort=###,'8','...'}</a>
+                                    <div>更新：{$vo.mTime|friendlyDate}</div>
+                                    <div><span class="read_box" title="播放">{$vo.readCount}</span><span class="comment_box" title="评论">{$vo.commentCount}</span></div>
+                                  </li>
+                                </volist>
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div><!-- /dynaBox -->
+                </section>
+                </article>
+            </div><!-- /mainbox_C -->
+          </div><!-- /mainbox -->
+          <div class="clear"></div>          
+        </div><!-- /containerInner -->
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+<script language="javascript" type="text/javascript">
+var weibo = $.weibo({
+      sinceId: parseInt('{$sinceId}'),
+      
+	  <php>if(ACTION_NAME=="index"){</php>
+      timeStep : 30000,
+      initForm:true,
+      <php>}</php>
+
+      lastId:parseInt('{$lastId}'),
+      show_feed:parseInt('{$show_feed}'),
+      follow_gid:parseInt('{$follow_gid}'),
+      gid:parseInt('{$gid}'),
+      weiboType:'{$weibo_type}',
+      type:parseInt('{$type}'),
+      typeList:{
+          WEIBO:parseInt(<php>echo UserAction::INDEX_TYPE_WEIBO;</php>),
+          GROUP:parseInt(<php>echo UserAction::INDEX_TYPE_GROUP;</php>),
+          ALL:parseInt(<php>echo UserAction::INDEX_TYPE_ALL;</php>)
+      }
+});
+function close_announcement() {
+	$('#announcement').hide('slow');
+	$.post("{:U('home/User/closeAnnouncement')}",{},function(res){});
+}
+
+/*标签切换函数*/
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().find('h2').removeClass('on');
+	$(obj).parent().parent().find('.contentbox').hide();
+	$(obj).addClass('on');
+	$("#cont-"+id).show();	
+}
+
+/*载入更多的微广播信息*/
+function loadweibo(obj){
+	var count = $(obj).parent().find('ul>li').length;
+	$.ajax({
+		url	:	"{:U('home/User/getWeiboList')}",
+		type:	"POST",
+		data:	{count:count},
+		timeout	:	50000,
+		dataType:"json",
+		beforeSend: function(){
+			// Handle the beforeSend event
+			$(obj).find('#loadsuccess').hide();
+			$(obj).find('#loading').show();
+		},
+		success: function(result){
+			var length = result.length;
+			if (typeof(length) == "undefined") 
+			{ 
+				loadweibo(obj); //如果未返回任何值，则重新请求这个方法
+				return;
+			} 
+			if(length==0){
+				$(obj).find('#loadsuccess').html('没有更多数据了');
+			}
+			var html = "";
+			for(i=0;i<length;i++){
+				html += "<li>";
+				html += "<dl>";
+				html += "<dt><a class=\"userface\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\"><img src=\""+result[i].face+"\"></a></dt>";
+				html += "<dd><p><a class=\"fn\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\">"+result[i].name+"</a>说："+result[i].content+"</p><span>["+result[i].time+"]</span></dd>";
+				html += "<div class=\"clear\"></div>";
+				html += "</dl>";
+				html += "</li>";
+			}
+			$(obj).parent().find('ul').append(html);
+		},
+		complete: function(){
+			// Handle the complete event
+			$(obj).find('#loading').hide();
+			$(obj).find('#loadsuccess').show();
+			$(obj).find('#retract').show();
+		}
+		// ...
+	});
+}
+//微广播收起功能
+function retract(obj){
+	 var length = $(obj).parent().find('ul>li').length;
+	 if(length>5){
+		 $(obj).parent().find('ul>li').each(function(i, e) {
+            if(i>=5){
+				$(this).remove();	
+			}
+        });
+		weibo.sinceId = parseInt('{$sinceId}');
+	 }
+	 $(obj).find('#loadMoreDiv').html('<span class="ico_morefoot"></span>更多');
+}
+
+</script>
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/member/footer" />

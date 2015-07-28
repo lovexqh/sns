@@ -1,0 +1,19 @@
+
+
+
+.refer_btn{
+	margin-left:180px;
+	width:50px;
+	height:28px;
+	border:none;
+	background:url(../images/form_btn.gif) no-repeat;
+	cursor:pointer;}
+
+/*班级基础信息页面增加课程按钮*/
+.sub_add {
+	width: 100%;
+}
+.sub_add a {
+	float: right;
+	margin-right: 10px;
+}

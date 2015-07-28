@@ -1,0 +1,94 @@
+
+
+/* Shape */
+
+.default {
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.square {
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.bubble {
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+}
+
+
+/* Colors */
+
+.blue {
+	background: #166ba9;
+	border-color: #166ba9;
+}
+.blue:hover,
+.blue:focus {
+	background: #3390CF;
+	border-color: #3390CF;
+}
+
+.red {
+	background: #D81204;
+	border-color: #D81204;
+}
+.red:hover,
+.red:focus {
+	background: #FF2F1F;
+	border-color: #FF2F1F;
+}
+
+.green {
+	background: #95A006;
+	border-color: #95A006;
+}
+.green:hover,
+.green:focus {
+	background: #B2BF17;
+	border-color: #B2BF17; 
+}
+
+.yellow {
+	background: #FFAF09;
+	border-color: #FFAF09;
+}
+.yellow:hover,
+.yellow:focus {
+	background: #FFCF09;
+	border-color: #FFCF09;
+}
+
+.purple {
+	background: #9F1D78;
+	border-color: #9F1D78;
+}
+.purple:hover,
+.purple:focus {
+	background: #CF33A0;
+	border-color: #CF33A0;
+}
+
+.orange {
+	background: #FF5F09;
+	border-color: #FF5F09;
+}
+.orange:hover,
+.orange:focus {
+	background: #FF7F09;
+	border-color: #FF7F09;
+}
+
+.gray {
+	background: #777;
+	border-color: #777;
+}
+.gray:hover,
+.gray:focus {
+	background: #999;
+	border-color: #999;
+}

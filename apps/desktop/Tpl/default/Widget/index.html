@@ -1,0 +1,75 @@
+<include file="../Public/_header_common" />
+<link href="../Public/css/widget.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+var wname = window.name;
+if (wname == "") throw Error("window name error!");
+wname=jQuery.evalJSON(decodeURIComponent(wname));
+</script>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+<tr>
+<if condition="!empty($class)">
+<td width="136" valign="top" class="tbg">
+	<div class="dzztbn">
+		<h2 class="mt a" ><a class="catitem">{:L('all')}</a></h2>
+		<div class="line" style="font-size:2px"></div>
+		<volist name="class[0]" id="value">
+		<h2 class="mt toggle" classid="{$value[classid]}">
+			<a style="float:left;" classid="{$value[classid]}" class="catitem">{$value[classname]}</a>
+			<if condition="$class[$value[classid]] and $value[classid] gt 0">
+			<span classid="{$value[classid]}" class="sub_toggle sub_toggle_close"></span>
+			</if>
+		</h2>
+		<div class="line" style="font-size:2px"></div>
+			<if condition="$class[$value[classid]] and $value[classid] gt 0">
+			<ul id="sub_{$value[classid]}" style="display:none">
+			<volist name="class[$value[classid]]" id="value1">
+				<li><a classid="{$value[classid]}" subid="{$value1[classid]}" class="catitem">{$value1[classname]}</a></li>
+				<li class="line" style="font-size:2px"></li>
+			</volist>
+			</ul>
+			</if>
+		 </volist>
+	</div>
+</td>
+</if>
+<td valign="top">		
+<style>
+.xl .active img,.xl .active1 img{background:#09f;}
+.xl li{height:130px;float:left; margin:0; cursor:pointer}
+</style>
+<div id="widget_container" class="bm_c cl"></div>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+	ajaxget("{:U('desktop/Widget/getlist',array('uid'=>$mid))}","widget_container");
+	jQuery(document).ready(function(){
+		jQuery('.toggle').bind('click',function(){
+			var classid=jQuery(this).attr('classid');
+			if(document.getElementById('sub_'+classid).style.display=='none'){
+				jQuery(this).find('.sub_toggle').removeClass('sub_toggle_close').addClass('sub_toggle_open');
+				document.getElementById('sub_'+classid).style.display='block'
+			}else{
+				jQuery(this).find('.sub_toggle').removeClass('sub_toggle_open').addClass('sub_toggle_close');
+				document.getElementById('sub_'+classid).style.display='none'
+			}
+			return false;
+		});
+		jQuery('.catitem').bind('click',function(){
+			var classid=jQuery(this).attr('classid');
+			var subid=jQuery(this).attr('subid');
+			var url="{:U('desktop/Widget/getlist',array('uid'=>$mid))}";
+			if(classid){
+				url+='&classid='+classid;
+			}
+			if(subid){
+				url+='&subid='+subid;
+			}
+			ajaxget(url,'widget_container');
+			jQuery('.dzztbn .mt,.dzztbn li').removeClass('a');
+			jQuery(this).parent().addClass('a');
+			return false;
+		});
+	});
+</script>
+<include file="../Public/_footer" />

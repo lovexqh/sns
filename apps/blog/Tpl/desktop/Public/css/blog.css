@@ -1,0 +1,265 @@
+html, body, ul, li, span, a, table, tr, td, div, input, textarea, form, h1, h2, h3, h4, dl, dt, dd{margin:0px; padding: 0px; font-family: "Microsoft YaHei","微软雅黑",helvetica,arial,verdana,tahoma,sans-serif;;}
+ul{ list-style: none;}
+a{ text-decoration: none;}
+img{border: 0px;}
+.left{ float: left; display: inline-block;}
+.divall{ width: 100%; height: auto;}
+.divcenter{ width: 960px; height: auto; margin:0px auto; overflow: hidden;}
+.clear{ width: 100%; height: 1px; overflow: hidden; clear: both;}
+
+.header_top{ height: 113px; overflow: hidden; clear: both; position: relative;}
+.logo{float:left;}
+.search{ float: right; height: auto;}
+
+
+.nav_wrapper{ height: 40px; background: #1071a6; clear: both;}
+.nav{ height: 40px;padding-left: 15px;}
+.nav li{ float: left;padding:8px 7px;}
+.nav li a{ color: white; font-size: 14px;}
+.searchBar{background: #efefef;margin-bottom: 15px;padding:10px 0;}
+.searchBar form{padding-left:30px; float: left;}
+.searchBar label{padding:0 15px; float: left; line-height: 30px;}
+.searchBar .input{ font-size: 13px; float: left; border: 1px solid #076589; border-radius: 5px; width: 415px; padding-left: 25px; height: 30px; line-height: 30px;}
+.btn {
+    background: none repeat scroll 0 0 #05BE01;
+    border: 1px solid #434B56;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 33px;
+    margin-left: 10px;
+    width: 127px;
+    cursor: pointer;
+}
+
+.blogleft{
+    border-right: 1px solid #DDDDDD;
+    float: left;
+    margin: 0 19px 0 0;
+    overflow: hidden;
+    padding-right: 19px;
+    width: 620px;
+    min-height: 200px;
+    padding-bottom: 20px;
+}
+.topblog{ width: 992px; height: 150px; clear: both;margin-bottom: 15px;}
+.topblog li{ width: 216px; height: 150px; margin-right: 32px; float: left; background: #cccccc; }
+
+.blogtitle h1{
+    height: 75px;
+    line-height: 75px;
+}
+.bloglist{width: 620px; height: auto; clear: both;}
+.bloglist li{ border-bottom: 1px dashed #dedede; padding-bottom: 15px;}
+.bloglist li h1{ font-size: 28px; margin:20px 0 10px; line-height: 40px; font-weight: normal;}
+.bloglist li h1 a{ color: #000000;}
+.bloglist li h4{ color: #999999;margin: 0 0 15px; font-weight: normal;font-size: 12px; position: relative;}
+.bloglist li .more{ position:  absolute; right: 0px; top:0px; width: 100px; height: 30px; line-height: 20px; text-align: right; padding: 0 10px; }
+.bloglist li .more a{ font-weight: bold; color: #ff6600; text-decoration: underline;}
+.bloglist li h4 span{ margin:0 8px;}
+.bloglist li h4 a{ color: #777777;}
+.bloglist li h4 a:hover{ text-decoration: underline;}
+.bloglist li h4 .hover{ color: #F07900;}
+.bloglist li .cnt{ color: #666666;font-size: 14px; line-height: 25px;word-break: break-all;word-wrap:break-word;}
+.bloglist li .cnt *{word-break: break-all;word-wrap:break-word; color: black;}
+.bloglist li .cnt em{font-style: italic;}
+.bloglist li .cnt img{max-width:100%;}
+.blogright{
+    float: left;
+    overflow: hidden;
+    width: 300px;
+    min-height: 200px;
+}
+.blogrtop{ height: 35px; border-bottom: 2px solid #cccccc; position: relative; padding:5px;}
+.btpinfo{ padding:8px 10px; font-size: 18px; border-bottom: 2px solid #1071a6; position: absolute; left: 0px; bottom:-2px; }
+.btprlist{ height: auto;padding-bottom: 15px;}
+.btprlist li{ background: url(../images/list_blue.gif) no-repeat 2px 16px; padding: 3px 10px 3px 10px; clear: both;}
+.btprlist li a{ color: #000000; font-size: 12px;}
+.center{ text-align: center;}
+.page{ float: right;padding-top: 15px; }
+.page span, .page a{ display: block; float: left; padding: 5px 10px; margin-right: 5px; border: 1px solid #cdcdcd; background: #dedede;}
+.page a{ background: #efefef; color: #000000;}
+
+
+.rightlist {
+    margin-top: 15px;
+    padding-left:5px;
+}
+.rlf, .rln {
+    height: auto;
+    margin-bottom: 10px;
+    position: relative;
+}
+.rln {
+    height: 17px;
+}
+.rln span {
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: normal;
+    height: 17px;
+    line-height: 17px;
+}
+.tp {
+    background: none repeat scroll 0 0 #B3B3B3;
+    color: #FFFFFF;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    width: 17px;
+}
+.tp1 {
+    background: none repeat scroll 0 0 #FE7900;
+}
+.tp2 {
+    background: none repeat scroll 0 0 #7CB411;
+}
+.tp3 {
+    background: none repeat scroll 0 0 #2196CD;
+}
+.spnum {
+    color: #FFFFFF;
+    text-align: center;
+    width: 17px;
+}
+.sptit {
+    padding-left: 15px;
+    width: 180px;
+
+}
+.sptit a {
+    font-size: 14px;
+    font-weight: normal;
+    color: #000000;
+}
+.sphit {
+    color: #9F9F9F;
+    text-align: center;
+    width: 43px;
+}
+
+.right{ float: right;}
+.message_text{ height: 80px;}
+.bottomBar{ margin-top: 30px; font-size: 12px; text-align: center;}
+.subbtn{ background: #f07900;}
+
+.userleft{
+    background: none repeat scroll 0 0 #EDEDED;
+    border-bottom: 3px solid #D9D9D9;
+    color: #5D5D5D;
+    float: left;
+    font-size: 12px;
+    padding-bottom: 10px;
+    width: 197px;
+}
+.userright{
+    color: #333333;
+    float: right;
+    font-size: 12px;
+    width: 739px;
+}
+.ucateinfo {
+    padding-top: 20px;
+}
+.ucateinfo li{
+    height: 30px;
+    line-height: 30px;
+    margin: 0 18px;
+    padding-left: 5px;
+}
+
+
+.ucatelist {
+    background: url("../images/usercate_im.gif") no-repeat scroll left top rgba(0, 0, 0, 0);
+    margin-top: 5px;
+    padding-top: 35px;
+    position: relative;
+}
+.ucatelist li{
+    height: 30px;
+    line-height: 30px;
+    margin: 0 18px;
+    padding-left: 5px;
+}
+.ucatelist li a{ color: #000000;}
+.vuserimg {
+    background: url("../images/usercate_sex_1.gif") no-repeat scroll center top rgba(0, 0, 0, 0);
+}
+.vuserimg.u0 {
+    background: url("../images/usercate_sex_0.gif") no-repeat scroll center top rgba(0, 0, 0, 0);
+}
+.uname {
+    font-size: 12px;
+    font-weight: bold;
+    height: 47px;
+    line-height: 60px;
+    padding-left: 18px;
+    text-align: left;
+}
+
+.ucatelist .hover {
+    background: url("../images/ico_right.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
+    color: #4582C5;
+}
+
+.ucatelist .hover a {
+    color: #4582C5;
+}
+.post{background: #f1f1f1; padding: 15px; width: 930px;}
+.post form{ font-size: 14px; color: #666666;}
+.post td{ margin:0px; padding: 0px;}
+.post select {
+    background: url("../images/selbk.jpg") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    color: #666666;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    height: 30px;
+    padding-left: 5px;
+    padding-top: 2px;
+    border:1px solid #BDC7D8;
+}
+.title{
+    border: 1px solid #AAAAAA;
+    height: 30px;
+    width: 415px;
+}
+.tags{ width: 213px; height: 87px;}
+.contentbox{ width: 213px; height: 313px; background: white; border: 1px solid #adadad;}
+.dosave{ padding-top: 20px; text-align: center;}
+.grzx{ position: absolute; right: 10px; top: 75px; display:  block; z-index: 1000;}
+
+.newtopline, .newrighttop {
+    background: url("../images/topbk.jpg") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    clear: both;
+    height: 25px;
+    padding-top: 8px;
+}
+.liveintro_left {
+    font-size: 14px;
+    font-weight: bold;
+    text-indent: 1em;
+}
+
+.tleft {
+    float: right;
+    line-height: 25px;
+    padding-right: 10px;
+}
+
+.useroper {
+    float: left;
+    padding-left: 15px;
+    padding-top: 2px;
+}
+.useroper a {
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: normal;
+}
+.oper-ico{ padding: 0 5px;}
+.oper-ico img{ margin-bottom: -5px;}
+.error{padding: 65px; text-align: center; clear: both;}
+.navhover{ background: #217FC0; font-weight: bold;}
+em{ color: red; word-break: break-all;word-wrap: break-word;}

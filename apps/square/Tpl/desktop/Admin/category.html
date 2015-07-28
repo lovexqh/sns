@@ -1,0 +1,242 @@
+<include file="../Public/_header" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<SCRIPT type="text/javascript">
+		var IDMark_A = "_a";
+		var setting = {
+			view: {
+				showLine: false,
+				showIcon: false,
+				selectedMulti: false,
+				dblClickExpand: false,
+				addDiyDom: addDiyDom
+				},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+		var sethid = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		var zNodes =[
+			<volist name="category" id='obj'>
+				{ id:{$obj[id]}, pId:{$obj[p_id]}, name:"{$obj[category_name]}",iconOpen:"../Public/images/open.png",icon:"../Public/images/close.png",url:"", target:"_self", click:"noteClick({$obj['id']})"<volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist>},				
+			</volist>
+		];
+		function onClick(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("hidtree"),
+			nodes = zTree.getSelectedNodes(),
+			v = "";
+			nodes.sort(function compare(a,b){return a.id-b.id;});
+			for (var i=0, l=nodes.length; i<l; i++) {
+				v += nodes[i].id + ",";
+			}
+			if (v.length > 0 ) v = v.substring(0, v.length-1);
+			var cityObj = $("#square");
+			cityObj.attr("value", v);
+		}
+
+		function showMenu() {
+			var cityObj = $("#square");
+			var cityOffset = $("#square").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+		function addDiyDom(treeId, treeNode) {
+			var aObj = $("#" + treeNode.tId + IDMark_A);
+			var id = treeNode.id;
+			var editStr = "<a style='color:#0066FF; margin-left:100px;float:right;' href='{:U('square/admin/modifycategory',array('id'=>'"+id+"'))}'>编辑</a>" +
+				"<a href='javascript:void(0);' onclick='deleteAppGroup("+id+");'  style='color:#0066FF; margin-left:100px;float:right;' >删除</a>";
+			aObj.after(editStr);
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#navtree"), setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("navtree");
+			
+			$.fn.zTree.init($("#hidtree"), sethid, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("hidtree");
+		});
+		//-->
+	</SCRIPT>
+<style type="text/css">
+.ztree{ font-size:12px;}
+.ztree li,.ztree li ul { margin-top:10px;}
+</style>
+<div class="so_main">
+	<include file="_tab" />
+	<div class="Toolbar_inbox">
+		<div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+			<div class="page_tit">增加子栏目 [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+			<div class="form2">
+				<form action="__URL__&act=addcategory" method="POST">
+					<dl class="lineD">
+					  <dt>栏目中文名称：</dt>
+					  <dd>
+						<input name="category_name" class="txt" >
+					  </dd>
+					</dl>
+					 <dl class="lineD">
+					  <dt>栏目英文名称：</dt>
+					  <dd>
+						<input name="category_ename" class="txt" >
+					  </dd>
+					</dl>
+					<dl class="lineD">
+					  <dt>所属父类：</dt>
+					  <dd>
+						 <input name="p_id" id="square" class="text mr5" type="text" readonly value="" style="width:120px;"/>
+						 <a id="menuBtn" href="#" onClick="showMenu(); return false;">选择</a>
+					  </dd>
+					</dl>
+					<div class="page_btm">
+					  <input type="submit" class="btn_b" value="确定" />
+					</div>
+				</form>
+			</div>
+			<div id="menuContent" class="menuContent" style=" display:none; position: absolute; background:#FFFFFF; border:#CCCCCC 1px solid;">
+				<UL id="hidtree" class="ztree" style="margin-top:0; width:160px;overflow-x: auto; overflow-y: hidden;"></UL>
+			</div>
+		</div>
+			<div class="Toolbar_inbox">
+				<div class="page right">{$html}</div>
+				<span>栏目列表</span>
+				<a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+					<span class="searchObject_action"><neq name="isSearch" value="1">增加栏目<else/>取消</neq></span>
+				</a>
+			</div>
+		</div>
+		<div class="list" >
+			<UL id="navtree" class="ztree" style=" width:600px;"></UL>
+		</div>
+		<div class="tit_tab"></div>
+		<span>&nbsp;</span>
+	</div>
+</div>
+<script>
+    //鼠标移动表格效果
+    $(document).ready(function(){
+        $("tr[overstyle='on']").hover(
+          function () {
+            $(this).addClass("bg_hover");
+          },
+          function () {
+            $(this).removeClass("bg_hover");
+          }
+        );
+    });
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    //获取已选择用户的ID数组
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+    
+    function deleteAppGroup(ids) {
+
+        var length = 0;
+        if(ids) {	
+            length = 1;
+        }else {
+            ids    = getChecked();
+            length = ids[0] == 0 ? ids.length - 1 : ids.length;
+            ids    = ids.toString();
+        }
+        if(ids=='') {
+            ui.error('请先选择一条数据！');
+            return ;
+        }
+        if(confirm('您将删除'+length+'条记录，删除后无法恢复，确定继续？')) {
+            $.post("{:U('square/admin/doDelCategory')}",{ids:ids},function(res){
+                if(res=='1') {
+                    ui.success('删除成功');
+                    removeItem(ids);
+                    window.location.reload();
+                }else {
+                    ui.error('删除失败');
+                }
+            });
+        }
+    }
+    
+    function removeItem(ids) {
+        ids = ids.split(',');
+        for(i = 0; i < ids.length; i++) {
+            $('#'+ids[i]).remove();
+        }
+    }
+	function move(group_id, direction) {
+	var baseid  = direction == 'up' ? $('#'+group_id).prev().attr('id') : $('#'+group_id).next().attr('id');
+    if(!baseid) {
+        direction == 'up' ? ui.error('已经是最前面了') : ui.error('已经是最后面了');
+    }else {
+        $.post("{:U('admin/Apps/doGroupAppOrder')}", {group_id:group_id, baseid:baseid}, function(res){
+
+            if(res == '1') {
+                //交换位置
+                direction == 'up' ? $('#'+group_id).insertBefore('#'+baseid) : $("#"+group_id).insertAfter('#'+baseid);
+                ui.success('保存成功');
+            }else {
+			
+                ui.error('保存失败');
+            }
+        });
+    }
+	}
+	//增加子栏目
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchObject() {
+    if(isSearchHidden == 1) {
+        $("#searchObject_div").slideDown("fast");
+        $(".searchObject_action").html("取消");
+        isSearchHidden = 0;
+    }else {
+        $("#searchObject_div").slideUp("fast");
+        $(".searchObject_action").html("增加子栏目");
+        isSearchHidden = 1;
+    }
+}
+</script>
+<include file="../Public/_footer" />

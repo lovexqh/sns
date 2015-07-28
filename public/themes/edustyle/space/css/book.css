@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+h1 {
+	display: block;
+	background: url(../images/book_title.gif);
+	margin: 10px 0 10px 20px;
+	width: 225px;
+	height: 24px;
+	line-height: 24px;
+	text-indent: 10px;
+	font-size: 12px;
+	color: #2a8fdd;
+}
+.book_detail {
+	padding-bottom: 10px;
+	margin: 10px 0 10px 20px;
+	width:700px;
+	border-bottom: 1px dashed #e6e6e6;
+}
+.info {
+	float: left;
+	margin: 0 0 0 10px;
+	width: 580px;
+	line-height: 25px;
+}
+.info strong {
+	display: block;
+	float: left;
+	font-weight: normal;
+	color: #8b8b8b;
+	width: 70px;
+}
+.info span {
+	display: block;
+	float: left;
+	width: 500px;
+}
+.book_name {
+	margin:10px 0 10px 20px;
+}
+.book_name strong {
+	font-size:14px;
+	margin-right:30px;
+}
+.gray {
+	color:#8b8b8b;
+}
+.detail_info {
+	width:700px;
+}

@@ -1,0 +1,17 @@
+<style>
+.detil{ width:400px; height:300px;}
+.cont{ margin:30px 50px;}
+.cont li{ float:left; width:100%;height:25px; line-height:25px;}
+.bg{ float:left;width:50px;background:url(../Public/images/price.gif) left no-repeat; padding-left:20px;}
+</style>
+<div class="detil">
+  <div class="cont">
+    <ul>
+      <li><font color="#000000" style=" font-weight:bold">{$result['title']}</font></li>
+      <li><label>文件大小：</label>{$result['toolsize']|getSize}</li>
+      <li><label style=" float:left">所需积分：</label><div class="bg">{$result['price']}</div></li>
+      <li><label>当前剩余积分：</label>{$money['credit']}</font></li>
+    </ul>
+    <a href="{:U("tool/Index/dodown",array(id=>$result['id']))}" onclick="parent.win.refresh_left();"><img src="__THEME__/square/images/downed.gif" /></a>
+  </div>
+</div>

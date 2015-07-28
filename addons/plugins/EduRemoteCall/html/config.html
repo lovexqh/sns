@@ -1,0 +1,53 @@
+<div class="so_main">
+  <div class="page_tit">远程采集配置</div>
+  
+  <div class="form2">
+    <form method="post" action="{:Addons::adminUrl('saveConfig')}" onsubmit="checkForm(this);">
+	<php>
+	foreach($formlist as $vo){
+    	switch($vo['type']){
+        	case 'text':
+            	$width = '400px';
+            	break;
+            case 'checkbox':
+            	if(!empty($vo['value'])||0!=intval($vo['value'])){
+                	$checked = "checked";
+                }
+                $vo['value'] = 1;
+            	break;
+            default:
+            	break;
+        }
+	</php>
+    <dl class="lineD">
+      <dt>{$vo.name}</dt>
+      <dd>
+        <input name="{$vo.field}" type="{$vo.type}" value="{$vo.value}" {$checked} style="width:{$width}">
+        <label></label>
+        <p>{$vo['description']}</p>
+      </dd>
+    </dl>
+	<php>}</php>
+    <div class="page_btm">
+    	<input type="button" onclick="preview(this.form);" class="btn_b" value="预览" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<script language="javascript" type="text/javascript">
+function checkForm(form){
+	
+}
+//预览方法
+function preview(form){
+	var action = form.action;
+	var newAction = "{:Addons::adminUrl('preView')}";
+	//新窗口打开
+	form.target = "_blank";
+	form.action = newAction;
+	form.submit();
+	form.action = action;
+	form.target = "";
+}
+</script>

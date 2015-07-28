@@ -1,0 +1,193 @@
+/*topbar部分html代码，编写css代码可以参考此
+<div style="z-index: 4000; top: 0px;" id="topbar">
+	<!--背景层-->
+	<div id="topbar_back"></div>
+	<!--预留层-->
+	<div class="nav_mask nav_mask2"></div>
+	<div class="nav_mask nav_mask3"></div>
+	<!--logo层-->
+	<div class="navlogo_container" id="nav-logo"> <a href="dzz.php" class="navlogo"></a> </div>
+	<!--桌面名称层-->
+	<div class="nav_spacename"> <a title="admin!de!!desktop!" href="###" class="spacename nav_text" id="nav_spacename">温馨小窝</a> </div>
+	<!--用户信息区域-->
+	<div class="userinfo_container cl" id="nav_userinfo">
+		<div class="userinfo sys_message_container"> <a title="消息提示" onClick="return false;" href="javascript:return false;" class="userinfo sys_message" id="sys_message">&nbsp;</a> </div>
+		<strong class="user_vwmy vwmy userinfo"><a title="点击查看详细"><span class="nav_text"> admin</span></a></strong>
+		<div class="nav_mask user_avatar_mask"></div>
+		<a href="home.php?mod=space&amp;uid=1" class="userinfo  user_avatar"><img src="http://127.0.0.1/uc_server/avatar.php?uid=1&amp;size=small"></a> <a title="退出" onClick="_login.click('logout');return false;" href="javascript:return false;" class="userinfo sys_exit">&nbsp;</a>
+	</div>
+</div>
+*/
+#topbar{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:35px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:4000;
+	overflow:hidden;
+
+}
+#topbar_back{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:35px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:-1;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/bg.png', sizingMethod='scale');
+	background-image:url(bg.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: repeat-x;
+}
+#topbar .nav_mask{
+	position:absolute;
+	display:none;
+}
+#topbar a{
+   text-decoration:none;
+   outline:none;
+}
+#topbar .navlogo_container{
+	float:left;
+	height:30px;
+}
+#topbar .navlogo{
+	float:left;
+	width:165px;
+	height:35px;
+	margin:0px 0px 0px 5px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/logo.png', sizingMethod='scale');
+	background-image:url(logo.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+#topbar .nav_spacename{
+	float:left;
+	font-size:14px;
+	color:#FFF;
+	line-height:35px;
+	height:35px;
+	margin:0 0 0 5px;
+	font-weight:bold;
+}
+#topbar .userinfo_container{
+	float:right;
+	height:30px;
+	padding-top:2px;
+	
+}
+#topbar .userinfo{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	
+}
+
+#topbar .login{
+	float:right;
+	font-size:12px;
+	padding:1px 3px 0px 5px;
+	display:inline-block;
+}
+#topbar .vwmy {
+     padding-right: 5px;
+	 padding-left: 5px;
+	 background:none;
+}
+#topbar .vwmy a {
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+}
+#topbar .user_avatar_mask {
+     display:block;
+	 width:34px;
+	 height:34px;
+	 right:25px;
+	 top:2px;
+	 _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/touxiang.png', sizingMethod='scale');
+	background-image:url(touxiang.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+}
+#topbar .user_avatar{
+	float:left;
+}
+#topbar .user_avatar img {
+	width:24px;
+	height:24px;
+	padding:4px;
+	background:none;
+	border:none;
+}
+#topbar .sys_message_container{
+	float:left;
+	position:relative;
+}
+#topbar .sys_message {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/message.png', sizingMethod='image');
+	background-image:url(message.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+	display:none;
+	float:left;height:16px;;width:16px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:8px 5px;
+	_margin:8px 5px 0;
+	
+}
+#topbar .sys_message_glint {
+	_fileter:none;
+	background-image:url(../../../images/b.gif) !important;
+}
+#topbar .sys_exit {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/exit.png', sizingMethod='image');
+	background-image:url(exit.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+	/*display:none;*/
+	float:left;height:16px;;width:16px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:8px 5px;
+	_margin:8px 5px 0;
+}
+#topbar .sys_exit:hover {
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/hui/exit_1.png', sizingMethod='image');
+	background-image:url(exit_1.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+}
+
+#topbar .nav_text{
+	padding:0px 0px 5px 0px;
+	_padding:0px 0px 2px 0px;
+	color:#FFF; 
+	font-size:14px;
+	text-shadow: 0px 1px 1px #000,0px 1px 1px #000;
+}
+#topbar .dzzreglink,#topbar .dzzlogin{
+	background:none;border:none;
+	box-shadow:none;
+	float:left;
+	font-size:14px;
+	padding:5px;
+	display:inline-block;
+}
+#topbar .topbar_container{
+	position:relative;
+	height:100%;
+	padding:1px 0;
+	overflow:hidden;
+}
+

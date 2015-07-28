@@ -1,0 +1,28 @@
+<div class="topic_page">
+	<div class="topic_header">
+		<span class="topic_header_word">成员</span>
+	</div>
+	<div class="c"></div>
+	<div class="member_bottom">
+		<ul class="nav_list_bottom_member">
+			<li><a class="nav_icon_bottom nav_member_now" href="{:U('club/Member/index', array('id'=>$clubInfo['id']))}">现成员</a></li>
+			<li>|</li>
+			<php>if($member['type']==1 || $member['type']==2){</php>
+			<li><a class="nav_icon_bottom nav_member_audit" href="{:U('club/Member/auditMember', array('id'=>$clubInfo['id']))}">待审核成员</a></li>
+			<li>|</li>
+			<li><a class="nav_icon_bottom nav_member_noclass" href="{:U('club/Member/noclassMember', array('id'=>$clubInfo['id']))}">没课成员</a></li>
+			<li>|</li>
+			<php>}</php>
+			<li><a class="nav_icon_bottom nav_member_cancel" href="{:U('club/Member/cancelMember', array('id'=>$clubInfo['id']))}">已退出成员</a></li>
+		</ul>
+		<div class="tb_search">
+			<form action="{:U('club/Member/index', array('id'=>$clubInfo['id']))}" method="post" enctype="multipart/form-data" onsubmit="return chkMemberSearch(this);">
+				<input class="search_input" type="text" id="memberKey" name="memberKey" value="成员搜索" style="color:#555555;" onfocus="memberSearchFocuc();" onblur="memberSearchBlur();" />
+				<input class="search_btn" type="submit" value="搜索" />
+				<div class="c"></div>
+			</form>
+		</div>
+		<div class="c"></div>
+	</div>
+	<div class="c"></div>
+</div>

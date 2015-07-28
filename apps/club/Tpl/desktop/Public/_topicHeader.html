@@ -1,0 +1,25 @@
+<div class="topic_page">
+	<div class="topic_header">
+		<span class="topic_header_word">帖子</span>
+	</div>
+	<div class="c"></div>
+	<div class="topic_bottom">
+		<ul class="nav_list_bottom_topic">
+			<li><a class="nav_icon_bottom nav_topic_all" href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}">全部</a></li>
+			<li>|</li>
+			<li><a class="nav_icon_bottom nav_topic_tjian" href="{:U('club/Topic/tjian', array('id'=>$clubInfo['id']))}">推荐</a></li>
+			<li>|</li>
+			<li><a class="nav_icon_bottom nav_topic_mine" href="{:U('club/Topic/mine', array('id'=>$clubInfo['id']))}">我的帖子</a></li>
+		</ul>
+		<div class="tb_search">
+			<form action="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}" method="post" onsubmit="return chkSearch(this);">
+				<input class="search_input" type="text" id="topicKey" name="topicKey" value="帖子搜索" style="color:#555555;" onfocus="topicSearchFocuc();" onblur="topicSearchBlur();" />
+				<input class="search_btn" type="submit" value="搜索">
+				<div class="c"></div>
+				<!--<input class="search_btn" type="submit" />-->
+			</form>
+		</div>
+	</div>
+	<div class="c"></div>
+	<div class="top_header"></div>
+</div>

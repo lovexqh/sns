@@ -1,0 +1,738 @@
+<!--{dzztemplate header_common}-->
+<link rel="stylesheet" type="text/css" href="dzz/system/images/detail/detail.css?{VERHASH}" /> 
+<!--{if $type == 'app'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$app[appico]">
+				
+			</div>
+			<!--<a href="javascript:void(0);"><div class="appActionBtn appActionBtn_add" id="introduce_appAddBtn_{$app[appid]}" appid="$app[appid]" cmd="add" hidefocus="" ></div></a>--> 
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$app[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$app[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$app[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$app[appname]</span><a href="javascript:void(0);" class="cateLinkBtn" cat="$app[classid]" cmd="all">[ {$app[classname]} ]</a></div>
+			<div><span class="black_bold">{lang popularity_index}</span><span class="introduceValue"><span class="height_light1">$app[setupnum]</span>{lang person}{lang added}</span></div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$app[dateline]</span></div>
+			<div><span class="black_bold">{lang vendor}</span><span class="introduceValue">$app[vendor]</span> </div>
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer_{$app[appid]}" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang AppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang AppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang AppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang AppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang AppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer_{$app[appid]}').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer_{$app[appid]}').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$app[appid]}&idtype=appid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+	
+			if(!getcookie('view_{$type}_{$data[appid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[appid]&type=$type');
+		}	
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<div class="column3">
+		<div><span class="black_bold">{lang app_introduce}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">$app[appdesc]</div>
+			</div>
+		</div>
+		<div class="appThumbs">
+			<div class="appThumbList">
+				<div class="introduceKey"><span class="black_bold">{lang app_photo}</span></div>
+			</div>
+			<!--{if !$imagesum}-->
+				<div class="bm_c cl">{lang no_photo}</div>
+			<!--{else}--> 
+		   
+			<div style="position:relative; text-align:center; width:100%;_height:300px;margin-top:10px;">
+				<div style="position:relative;width:450px;overflow:hidden;margin:0 auto;">
+					<ul id="preview" style="position:relative;left:0px;width:{eval echo $imagesum*450}px;">
+						 <!--{loop $images $value}-->
+							 <li class="pic_mlp" style="cursor:pointer;text-align:center;float:left; padding:5px; width:440px;" ><img src="$value[pic]" /></li>
+						  <!--{/loop}-->
+					</ul>
+				</div>
+				<!--{if $imagesum>1}-->
+				<div title="{lang custom_btnpre_title}" class="btn pre" id="prePreBtn" onClick="showpic('','pre')" ></div>
+				<div title="{lang custom_btnnext_title}" class="btn next" id="preNextBtn" onClick="showpic('','next')"></div>
+				<!--{/if}-->
+			</div>
+			 <!--{if $imagesum>1}-->
+			<div class="cl" style="text-align:center;width:100%;">
+				<ul class="pagenation" style="width:{eval echo $imagesum*16>400?400:$imagesum*16}px;margin: 5px auto 0;">
+				 <!--{loop $images $key $value}-->
+						   <li id="pagenation_{$key}" <!--{if $key==0}-->class="current"<!--{/if}--> onclick="showpic('$key');"></li>
+				  <!--{/loop}-->
+				</ul>
+			</div>
+			<!--{/if}-->
+			<script type="text/javascript">
+				var current=0;
+				var total=$imagesum;
+				function showpic(num,dir){
+					var obj=$E('preview');
+					if(!num) num=current;
+					if(dir=='pre') {
+						if(num<=0) num=total-1;
+						else num=num-1;
+					}else if(dir=='next'){
+						if(num>=total-1) num=0;
+						else num=num+1;
+					}
+					current=num;
+					obj.style.left=-num*450+'px';
+					jQuery('.pagenation li').removeClass('current');
+					jQuery('#pagenation_'+num).addClass('current');
+				}
+				
+			</script>
+			<!--{/if}-->
+		</div>
+	</div>
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter_appid_{$app[appid]}">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$app[appid]&idtype=appid','comment_containter_appid_{$app[appid]}','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+
+<!--{elseif $type == 'link'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$data[img]">
+			</div>
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$data[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$app[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$data[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$data[title]</span></div>
+			<div><span class="black_bold">{lang viewnum}</span><span class="introduceValue"><span class="height_light1">$data[viewnum]</span></span></div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$data[dateline]</span></div>
+			<div><span class="black_bold">{lang username}</span><span class="introduceValue">$data[username]</span> </div>
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer_{$data[lid]}" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang myAppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang myAppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang myAppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang myAppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang myAppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer_{$data[lid]} .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer_{$data[lid]}').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer_{$data[lid]} .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer_{$data[lid]}').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer_{$data[lid]} .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer_{$data[lid]} .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$data[lid]}&idtype=lid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+		if(!getcookie('view_{$type}_{$data[lid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[lid]&type=$type');
+		}	
+			
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<div class="column3">
+		<div><span class="black_bold">{lang jianjie}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">$data[desc]</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter_lid_{$data[lid]}">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$data[lid]&idtype=lid','comment_containter_lid_{$data[lid]}','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+
+<!--{elseif $type == 'video'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$data[img]">
+				
+			</div>
+			
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$data[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$data[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$data[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$data[title]</span></div>
+			<div><span class="black_bold">{lang viewnum}</span><span class="introduceValue"><span class="height_light1">$data[viewnum]</span></span></div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$data[dateline]</span></div>
+			<div><span class="black_bold">{lang username}</span><span class="introduceValue">$data[username]</span> </div>
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang myAppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang myAppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang myAppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang myAppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang myAppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$data[picid]}&idtype=picid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+		if(!getcookie('view_{$type}_{$data[vid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[vid]&type=$type');
+		}	
+			
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<div class="column3">
+		<div><span class="black_bold">{lang jianjie}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">$data[desc]</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$data[lid]&idtype=lid','comment_containter','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+<!--{elseif $type == 'music'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$data[img]">
+				
+			</div>
+			
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$data[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$data[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$data[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$data[title]</span></div>
+			<div><span class="black_bold">{lang viewnum}</span><span class="introduceValue"><span class="height_light1">$data[viewnum]</span></span></div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$data[dateline]</span></div>
+			<div><span class="black_bold">{lang username}</span><span class="introduceValue">$data[username]</span> </div>
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang myAppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang myAppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang myAppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang myAppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang myAppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$data[mid]}&idtype=mid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+	
+		if(!getcookie('view_{$type}_{$data[mid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[mid]&type=$type');
+		}		
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<div class="column3">
+		<div><span class="black_bold">{lang jianjie}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">$data[desc]</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$data[mid]&idtype=mid','comment_containter','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+<!--{elseif $type == 'image'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$data[img]">
+				
+			</div>
+			
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$data[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$data[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$data[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$data[title]</span></div>
+			<div><span class="black_bold">{lang viewnum}</span><span class="introduceValue"><span class="height_light1">$data[viewnum]</span></span></div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$data[dateline]</span></div>
+			<div><span class="black_bold">{lang username}</span><span class="introduceValue">$data[username]</span> </div>
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang myAppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang myAppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang myAppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang myAppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang myAppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$data[picid]}&idtype=picid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+	
+		if(!getcookie('view_{$type}_{$data[picid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[picid]&type=$type');
+		}	
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<div class="column3">
+		<div>
+			<div class="appDesc radius5 pic_mlp">
+				<div><a target="_blank" href="$data[oimg]"><img src="$data[oimg]" ></a></div>
+				<div class="appDescText">$data[title]</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$data[picid]&idtype=picid','comment_containter','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+<!--{elseif $type == 'attach'}-->
+<div style="display: block;"  class="appIntroduce clearfix">
+	<div class="introduce-item clearfix">
+		<div class="column1">
+			<div class="appBigIconBg">
+				<img class="appBigIcon" src="$data[img]">
+				
+			</div>
+		<div class="appActionBtn appActionBtn_add" id="introduce_appAddBtn_{$app[appid]}" appid="$app[appid]" cmd="add" hidefocus="" style="cursor:pointer" onclick="top._ico.downAttach('{$id}');return false;" ></div>
+		</div>
+		<div class="column2">
+			<div class="appAvgVote radius3">
+				<div class="height_light2" id="appBigStarsNum">$data[star]</div>
+				<div class="appBigStars">
+					<div class="appBigStar" style="width: {$data[scorestyle]}%" id="appBigStar"></div>
+				</div>
+				<div class="appVoteCount" id="appVoteCount">{lang total_mark}<span class="appVoteCount_bold">$data[starnum]</span>{lang ci}</div>
+			</div>
+			<div class="appTitle"><span class="appName">$data[filename]</span></div>
+			<div><span class="black_bold">{lang viewnum}</span><span class="introduceValue"><span class="height_light1">$data[viewnum]</span></span></div>
+			<div><span class="black_bold">{lang filesize}</span><span class="introduceValue">$data[filesize]</span> </div>
+			<div><span class="black_bold">{lang post_dateline}</span><span class="introduceValue">$data[dateline]</span></div>
+			<div><span class="black_bold">{lang username}</span><span class="introduceValue">$data[username]</span> </div>
+			
+			
+			<div class="myAppVote clearfix">
+				<div class="introduceKey"><span class="black_bold">{lang myAppVote}</span></div>
+				<div class="appStars">
+					<div id="appIntroduce_starContainer" class="appStar appStar{$pingjia[star]}"><span class="appStarBtn" vote="1" title="{lang myAppVote_1}"></span><span class="appStarBtn" vote="2" title="{lang myAppVote_2}"></span><span class="appStarBtn" vote="3" title="{lang myAppVote_3}"></span><span class="appStarBtn" vote="4" title="{lang myAppVote_4}"></span><span class="appStarBtn" vote="5" title="{lang myAppVote_5}"></span> </div>
+				</div>
+				<div class="myVote height_light1" id="introduce_myVote"><!--{if $pingjia[star]}-->$pingjia[star].0<!--{/if}--></div>
+				<div id="introduce_appStarTip" class="appStarTip">{lang AppVote_success}</div>
+			</div>
+		</div>
+		<script type="text/javascript" >
+		
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseover',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar'+jQuery(this).attr('vote');
+			$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('mouseout',function(){
+			$E('appIntroduce_starContainer').className='appStar appStar{$pingjia[star]}';
+			$E('introduce_myVote').innerHTML='$pingjia[star].0';
+		});
+		jQuery('#appIntroduce_starContainer .appStarBtn').bind('click',function(){
+			jQuery('#appIntroduce_starContainer .appStarBtn').unbind();
+			ajaxget('{DZZSCRIPT}?mod=system&op=detail&do=score&star='+jQuery(this).attr('vote')+'&id={$data[qid]}&idtype=qid');
+			$E('introduce_appStarTip').style.display='block';
+			window.setTimeout(function(){$E('introduce_appStarTip').style.display='none';},3000);
+		});
+		if(!getcookie('view_{$type}_{$data[qid]}')){
+			jQuery.get('{DZZSCRIPT}?mod=system&op=json&do=updateview&id=$data[qid]&type=$type');
+		}
+			
+			
+	</script>
+	</div>
+	<div class="introduce-item clearfix">
+	<div class="column3">
+		<div><span class="black_bold">{lang shareto}</span>
+			<div class="share radius5">
+				<!-- Baidu Button BEGIN -->
+				<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+					<a class="bds_tsina"></a>
+					<a class="bds_tqq"></a>
+					<a class="bds_renren"></a>
+					<a class="bds_douban"></a>
+					<a class="bds_qzone"></a>
+					<a class="bds_taobao"></a>
+					<a class="bds_tsohu"></a>
+					<a class="bds_t163"></a>
+					<a class="bds_kaixin001"></a>
+					<a class="bds_tieba"></a>
+					<a class="bds_tqf"></a>
+					<a class="bds_qq"></a>
+					<a class="bds_qy"></a>
+					<a class="bds_tfh"></a>
+					<a class="bds_ty"></a>
+					<a class="bds_sohu"></a>
+					<a class="bds_fx"></a>
+					<a class="bds_hx"></a>
+					<a class="bds_twi"></a>
+					<a class="bds_fbook"></a>
+					<a class="bds_ms"></a>
+					<a class="bds_msn"></a>
+					<a class="bds_linkedin"></a>
+					<a class="bds_copy"></a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1" ></script>
+				<script type="text/javascript" id="bdshell_js"></script>
+				<script type="text/javascript">
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+				</script>
+				<!-- Baidu Button END -->
+			</div>
+		</div>
+	</div>
+	<!--{if $data[desc]}-->
+	<div class="column3">
+		<div><span class="black_bold">{lang jianjie}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">$data[desc]</div>
+			</div>
+		</div>
+		
+	</div>
+	<!--{/if}-->
+	<div class="column3">
+		<a id="comment"></a>
+		<div id="comment_containter">
+		<script src="dzz/comment/scripts/comment_common.js" type="text/javascript"></script> 
+		<script type="text/javascript" >
+			ajaxget('{DZZSCRIPT}?mod=comment&op=ajax&do=commentform&id=$data[qid]&idtype=qid','comment_containter','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+<!--{/if}-->
+<!--{dzztemplate footer}-->

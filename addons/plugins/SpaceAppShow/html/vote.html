@@ -1,0 +1,64 @@
+<style type="text/css">
+.LogList li{
+	line-height:20px;
+}
+.LogList li .userinfo{
+	float:left;
+	display:block;
+	width:570px;
+	padding-left:15px;
+}
+.LogList li .userinfo p{
+	display:block;
+}
+.right{
+	float:right;
+}
+</style>     
+<div class="pollBox pt10">
+  <div class="LogList">
+    <ul class="win">
+    <if condition="empty($data)">
+        <li class="lineD_btm">暂无相应信息</li>
+    </if>
+      <volist name="data" id="vo">
+        <li class="lineD_btm mb10 pb5 win">
+          <div style="float:left; text-align:center; padding-top:10px;">
+            <div class="userPic"><a href="{:U('home/space/index',array('uid'=>$vo[uid]))}" class="tips" rel="{:U('home/space/index',array('uid'=>$vo[uid]))}" uid="{$vo[uid]}" title="{$vo.uid|getUserName}的个人主页" target="_blank"><img src="{$vo.uid|getUserFace}" /></a></div>
+            <div class="OverH" style="clear: left;"><a href="{:U('home/space/index',array('uid'=>$vo[uid]))}" class="U" uid="{$vo[uid]}" title="{$vo.uid|getUserName}的个人主页" target="_blank">{$vo.uid|getUserName}</a></div>
+          </div>
+          <div class="userinfo">
+          <div class="num">
+              <div><strong>{$vo.vote_num}</strong>参与人数</div>
+            </div>
+            <h3 class="f14px"><a href="{:U('vote/Index/pollDetail',array('id'=>$vo[id]))}" class="tips" rel="{:U('vote/Index/pollDetail',array('id'=>$vo[id]))}" uid="{$vo[uid]}" title="投票-{$vo.title}" target="_blank"><strong>{$vo.title}</strong></a><php>if( $vo['deadline'] < time() ){</php>
+            <span class="cRed ">(已结束)</span></p>
+            <php>}else{</php>
+             <php>}</php></h3>
+            <volist name="vo.opts" id="opt">
+              <php>if($vo['type'] == "0"){</php>
+              <p>
+                <input type="radio" name="checkbox" id="checkbox" disabled="true"/>
+                <php>}else{</php>
+              <p>
+                <input type="checkbox" name="checkbox" id="checkbox" disabled="true"/>
+                <php>}</php>
+                {$opt.name}</p>
+            </volist>
+            <php>if( $vo['deadline'] < time() ){</php>
+            <p><span class="right cGray2">发起时间：{$vo.cTime|friendlyDate}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}" target="_blank">查看投票&gt;&gt;</a></span>．．．</p>
+            <php>}else{</php>
+            <p><span class="right cGray2">发起时间：{$vo.cTime|friendlyDate}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}" target="_blank">参与投票&gt;&gt;</a></span>．．．</p>
+            <php>}</php>
+          </div>
+          <div class="clearfix clear"></div>
+        </li>
+      </volist>
+    </ul>
+    <div id="Pagination" class="pagination">{$html}</div>
+  </div>
+</div>
+        
+<script type="text/javascript">var is_relink = true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script>replace_link('.win');</script>

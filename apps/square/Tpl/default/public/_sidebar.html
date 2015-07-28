@@ -1,0 +1,47 @@
+	<div class="sidebar">
+        <div class="sidebar_box">
+            <h4>教研分享公告</h4>
+            <ul class="share">
+              <li><a href="#">1.中考中考中考中考中考中</a></li>
+              <li><a href="#">2.高考高考高考高考高考高考高</a></li>
+              <li><a href="#">3.高考高考高考高考高高考高考</a></li>
+              <li><a href="#">4.高考高考高考高考高考考高考</a></li>
+              <li><a href="#">4.高考高考高考高考高考考高考</a></li>
+              <div class="clear"></div>
+            </ul>
+        </div>
+      <div class="sidebar_box">
+        <h4>基础资源分类</h4>
+        <ul class="star">
+            <li><a href="javascript:void(0)" onclick="rank('dept_tree')">按学校</a></li>
+            <li><a href="javascript:void(0)" onclick="rank('noschool_tree')">按科目</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div>
+          <ul id="dept_tree" class="ztree">
+          </ul>
+          <ul id="noschool_tree" class="ztree" style="display:none">
+          </ul>
+        </div>
+      </div>
+      <div class="sidebar_box">
+        <h4>教研类型</h4>
+        <ul class="lesson">
+        <volist name='types' id='vo'>
+          <li><a href="#">{$vo.datacode}</a></li>
+		</volist>
+          <div class="clear"></div>
+        </ul>
+      </div>      
+	  <div class="sidebar_box">
+        <h4>统计信息</h4>
+        <ul class="share">
+          <li>正在进行的教研:50个</li>
+          <li>已经完成的教研:50个</li>
+          <li>即将开始的教研:50个</li>
+          <li>所有教研:50个</li>
+          <div class="clear"></div>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>

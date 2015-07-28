@@ -1,0 +1,110 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<style>
+#pre {
+    display:block;
+    float:left;
+    height:100%;
+    background:#003366;
+    filter:Alpha(Opacity=0);
+    opacity:0;
+    z-index:2;
+    width:330px;
+    cursor:url(../Public/images/pre.cur), auto;
+}
+#next {
+    z-index:2;
+    display:block;
+    float:left;
+    background:#00CC99;
+    filter:Alpha(Opacity=0);
+    opacity:0;
+    height:100%;
+    width:330px;
+    float:left;
+    cursor:url(../Public/images/next.cur), auto;
+}
+</style>
+<div class="divcenter photo">
+    <div class="poleft">
+        <div class="poluser bkwhite">
+            <span><img src="{$photo['userId']|getUserFace}" width="55"></span>
+            <span class="line-height25">
+                <p><a style="color: #058cf1;" href="{:U('photo/Index/photos',array('uid'=>$photo['userId']))}">{$photo['userId']|getUserName}</a> </p>
+                <p>上传：{$num}张   </p>
+            </span>
+            <if condition="$selfuid neq true">
+            <div class="vusername" id="follow_state" style="text-align:center; padding:10px 0;">
+                <script>document.write(followState('{$followstate}','',{$photo['userId']}));</script>
+            </div>
+            </if>
+            <div class="clear"></div>
+        </div>
+        <a name="showpic" id="showpic"></a>
+        <div class="polcnt bkwhite">
+            <p class="poltitle">{$photo['name']}</p>
+            <p class="polinfo"><img src="../Public/images/sz.jpg">{$photo['cTime']|friendlyDate}发布
+
+                {:W('Weibo',array('tpl_name'=>'photo_share_weibo','button_title'=>'分享','addon_info'=>''))}
+                <php>
+                    $tpl_data = array('author'=>getUserName($photo['userId']),'title'=>$photo['name'],'body'=>getShort(strip_tags($photo['info']),80),'url'=>U('photo/Index/photo',array('id'=>$photo['id'])));
+                    $tpl_data = urlencode(serialize($tpl_data));
+                </php>
+                | <a href="javascript:;" onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$photo['id']}">分享</a>
+
+                <if condition="$mid neq $uid">
+                    | {:W('Favorite',array('fid'=>$photo['id'],'mod'=>'Index','act'=>'photo','type'=>'link','count'=>0,'appconfig'=>'photo'))}
+                </if>
+            </p>
+            <table class="polpic">
+                <tr>
+                    <td align="center" valign="middle">
+                        <div  style="position: relative; width: 710px;">
+                        <if condition="($pre neq '')">
+                            <a id="pre" href="{:U('photo/Index/photo',array('id'=>$pre))}" style="height:100%;width:40%;position:absolute;left:0;top:0"></a>
+                        </if>
+                        <if condition="($next neq '')">
+                            <a id="next" href="{:U('photo/Index/photo',array('id'=>$next))}" style=" display:block;height:100%;width:40%;position:absolute;right:0;top:0"></a>
+                        </if>
+                        <img onload="$('#pre').css('height',this.height);$('#next').css('height',this.height);" style="z-index: -1000;"  src="{$photo['savepath']|get_photo_url}" {$photo['savepath']|get_photo_url|resize_photo} />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="pollike bkwhite">
+            <p>专辑照片</p>
+            <div class="wholike">
+                <table>
+                    <tr>
+                        <volist name="photos" id="po">
+                        <td <if condition="($photo['id'] == $po['id'])"> class="hover"</if>><a href="{:U('photo/Index/photo',array('id'=>$po['id']))}" target="_self"><img width="60" height="60" src="{$po['savepath']|get_photo_url}"></a></td>
+                        </volist>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="comment bkwhite" style="font-size: 12px;">
+            {:W('Comment',array('type'=>'photo','appid'=>$photo['id'],'author_uid'=>$photo['userId'],'title'=>$photo['name'], 'url'=>U('photo/Index/photo',array('id'=>$photo['id'])), 'table'=>'photo','id_field'=>'id','comment_count_field'=>'commentCount'))}
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="poright">
+        <div class="portop">用户相册</div>
+        <ul class="categorylist">
+            <volist name="right_albums" id="ra"  empty="$temp_empty">
+            <li>
+                <span><a href="{:U('photo/Index/album',array('id'=>$ra['id']))}" target="_blank" title="{$ra['name']}"><img src="{$ra.id|get_album_cover=###,$li}" width="50" height="50"> </a> </span>
+                <span>
+                    <p>相册名称：</p>
+                    <p><a href="{:U('photo/Index/album',array('id'=>$ra['id']))}" target="_blank" title="{$ra['name']}">{$ra['name']}</a></p>
+                </span>
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<PHP>$showjavascript=1;</PHP>
+<include file="__THEME__/desktop/_footer" />

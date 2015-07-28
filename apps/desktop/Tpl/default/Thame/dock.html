@@ -1,0 +1,55 @@
+<include file="../Public/_header_common" />
+<link rel="stylesheet" type="text/css" href="../Public/css/thame.css?{$verhash}" />
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+<tr>
+<td width="136" valign="top" class="thame_sidebar">
+    <include file="_sidebar" />
+</td>
+<td valign="top">
+	<script type="text/javascript">
+        jQuery(document).ready(function(){
+            var el=jQuery('.color_block');
+            el.bind('mouseover',function(){
+                jQuery(this).addClass('active');
+            });
+            el.bind('mouseout',function(){
+                jQuery(this).removeClass('active');
+            });
+            el.bind('click',function(){
+                jQuery('.color_block').removeClass('active1');
+                jQuery(this).addClass('active1');
+                top._config.setdock(jQuery(this).attr('folder'));
+            });
+            el.each(function(){
+                if(jQuery(this).attr('folder')==top._config.thame.custom.custom_dock) jQuery(this).addClass('active1');
+            });
+                
+            
+        });
+    </script>
+    <style>
+    .xl .active img,.xl .active1 img{background:#09f;}
+    .xl li{height:100px;float:left; margin:0; cursor:pointer}
+    </style>
+    
+    <div class="bm_c cl">
+<if condition="$data">
+    <ul class="xl cl mlp">
+    <volist name="data" id="value">
+        <li folder="{$value[folder]}" class="color_block backgound_radius">
+            <table width="100%" height="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+                <tr><td align="center"><img class="backgound_radius" src="{$value[thumb]}" /></td></tr>
+                <tr><td align="center"><div style="height:20px; margin:0 auto;">{$value[name]}</div></td></tr>
+            </table>
+        </li>
+    </volist>
+    </ul>
+    <div class="cl">{$html}</div>
+<else />
+    {:L('no_result')}
+</if>
+    </div>
+</td>
+</tr>
+</table>
+<include file="../Public/_footer" />

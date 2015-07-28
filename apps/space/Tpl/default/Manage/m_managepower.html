@@ -1,0 +1,246 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+  <include file="../Public/_manage_leftmenu" />
+	<div class="trunk_right">
+		 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="keyadd" />授予教师权限<span>(班主任具有所有权限)</span></div>
+		 <div class="manage_content">
+			<form class="manage_form">
+			   <div class="teacher_set">
+			   	   <div class="sel_li" style=" float:left">
+				   		<div class="sel_title">教师</div>
+					 	<ul class=" u_list" id="teacher">
+					   	<volist name='teacherlist' id='vo' key='k'>
+                        	<if condition="$vo['identityid'] neq ''">
+                        	<li <if condition="($k%2) neq 0">class="li_bg"</if>><a href="javascript:void(0);" style=" display:block;" value="{$vo['identityid']}">{$vo['name']}</a></li>
+                        	</if>
+                        </volist>
+					 </ul>
+				    </div>
+				   <div class="sel_li" style=" float:right">
+				   	<div class="sel_title">
+					   <span class="sel_span">权限</span>
+					   <span class="sel_span" style=" color:#999">
+					  	 <input type="checkbox" name="clickall" value="" id="clickall"/>全选
+					   </span>
+				   </div>
+				   	<ul class=" u_list" id="teacherpower">
+						<volist name='Jurisdicte' id='vo'>
+						<php>if($vo['userType']==2){</php>
+							<li><input name="teapower[]" type="checkbox"  value="{$vo['id']}" class="teapower"/>{$vo['typeName']}</li>
+						<php>}</php>
+					 	</volist>
+					</ul>
+				 </div>
+				   <div class="clear10"></div>
+			   </div>
+			   <div class="save_btn">
+			   		<input type="hidden" id="identityid" name="identityid" value="" />
+				 	<a href="javascript:void(0);" onclick="saveposition();" />
+						<img src="__THEME__/space/images/bt_bg.gif"  />
+				 	</a>
+			   </div>
+			</form>
+			<div class="clear"></div>
+		 </div>
+         <div class="clear"></div>
+		 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="keyadd" />授予学生权限</div>
+		 <div class="manage_content">
+			<form class="manage_form">
+			   <div class="student_set">
+				  <div class="sel_li" style=" float:left">
+					 <div class="sel_title">学生</div>
+					 <ul class=" u_list" id="student">
+						 <volist name="userinfo" id="vo" key="k">
+							<li <if condition="($k%2) neq 0">class="li_bg"</if>><a href="javascript:void(0);" style=" display:block;" value="{$vo['identityid']}">{$vo['xm']}</a></li>
+						 </volist>
+					 </ul>
+				  </div>
+				  <div class="sel_li" style=" float:right">
+					  <div class="sel_title">
+						 <span class="sel_span">权限</span>
+						 <span class="sel_span" style=" color:#999">
+							<input type="checkbox" name="checkstuall" value="" id="checkstuall" />全选
+						 </span>
+					 </div>
+					  <ul class=" u_list" id="studentpower">
+					   <volist name='Jurisdicte' id='vo'>
+						<php>if($vo['userType']==3){</php>
+							 <li><input name="stupower[]" type="checkbox" class="stupower" value="{$vo['id']}"/>{$vo['typeName']}</li>
+						 <php>}</php>
+					   </volist>
+					 </ul>
+			      </div>
+				  <div class="clear10"></div>
+			   </div>
+			   <input type="hidden" id="stuidentityid" name="stuidentityid" value="" />
+			   <div class="save_btn">
+					<a href="javascript:void(0);" onclick="savestuposition();" />
+						<img src="__THEME__/space/images/bt_bg.gif"  />
+					</a>
+			   </div>
+			</form>
+			<div class="clear"></div>
+		 </div>
+         <div class="clear"></div>
+		 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="keyadd" />权限显示</div>
+		 <div class="manage_table" id="manage_table">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="re">
+			  <tr>
+				 <td width="10%" class="line_border" align="center">教师</td>
+				 <td width="90%" class="line_border" style="clear:both;">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+					  <tr>
+						 <th width="15%" height="25" align="center">姓名</th>
+						 <th width="85%"  align="center">权限</th>
+					  </tr>
+					  <volist name="tea_pos" id="vo">
+					  <tr>
+						 <td width="15%" height="25"  align="center">{$vo.identityid|get_namebyidentityid=###,2}</td>
+						 <td style="padding-left:10px;">
+						 	<volist name="vo['mid']" id="v">
+								<php>if($i!=1){</php>、<php>}</php>{$v.mid|get_powername}
+							</volist>
+						 </td>
+					  </tr>
+					  </volist>
+					</table>
+				 </td>
+			  </tr>
+			  <tr>
+				 <td class="line_border"  align="center">学生</td>
+				 <td class="line_border">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+					  <tr>
+						 <th width="15%" height="25" align="center">姓名</th>
+						 <th width="85%"  align="center">权限</th>
+					  </tr>
+					   <volist name="stu_pos" id="vo">
+					  <tr>
+						 <td width="15%" height="25"  align="center">{$vo.identityid|get_namebyidentityid=###,3}</td>
+						 <td style="padding-left:10px;">
+						 	<volist name="vo['mid']" id="v">
+								<php>if($i!=1){</php>、<php>}</php>{$v.mid|get_powername}
+							</volist>
+						 </td>
+					  </tr>
+					  </volist>
+					</table>
+				 </td>
+			  </tr>
+			</table>
+			<div class="clear"></div>
+		 </div>
+    </div>
+<include file="../Public/_footer" />
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+	$("#teacherpower").find('li').each(function(index, element) {
+         $(element).css('background',index%2==0 ? "#f0f0f0" : "#fff");
+    });
+	$("#studentpower").find('li').each(function(index, element) {
+         $(element).css('background',index%2==0 ? "#f0f0f0" : "#fff");
+    });
+/*老师权限*/
+    $('#teacher a').click(function(e) {
+		var identityid=$(this).attr('value');
+		$('#identityid').val(identityid);
+		$('#clickall').attr('checked',false);
+		$("#teacherpower").find('input').each(function(i,e){
+			$(e).attr('checked',false);
+		});
+		$.post("{:U('space/Manage/GetPersonPower')}",{identitytype:2,identityid:identityid,classid:<php>echo $classid;</php>},function(result){
+	  		var json=eval(result);
+			if(!$.isEmptyObject(json)){
+				for(var i=0;i<json.length;i++){
+					var json_data=json[i];
+					$("#teacherpower").find('input').each(function(i,e){
+						var obj=$(e).val();
+						if(json_data['mid']==obj){
+							$(e).attr('checked',true);
+						}
+					});
+				}
+			}
+		 });	
+		$('#teacher').find('a').each(function(index, element) {
+            $(element).css('background','');
+        });
+		$(this).css('background','#3DA4EC');
+    });
+/*学生权限*/
+	$('#student a').click(function(e) {
+		var identityid=$(this).attr('value');
+		$('#stuidentityid').val(identityid);
+		$('#checkstuall').attr('checked',false);
+		$("#studentpower").find('input').each(function(i,e){
+			$(e).attr('checked',false);
+		});
+		$.post("{:U('space/Manage/GetPersonPower')}",{identitytype:3,identityid:identityid,classid:<php>echo $classid;</php>},function(result){
+	  		var json=eval(result);
+			if(!$.isEmptyObject(json)){
+			  for(var i=0;i<json.length;i++){
+				  var json_data=json[i];
+				  $("#studentpower").find('input').each(function(i,e){
+					  var obj=$(e).val();
+					  if(json_data['mid']==obj){
+						  $(e).attr('checked',true);
+					  }
+				  });
+			  }
+			}
+		 });	
+		$('#student').find('a').each(function(index, element) {
+            $(element).css('background','');
+        });
+		$(this).css('background','#3DA4EC');
+    });
+/*老师权限全选*/
+	$('#clickall').click(function(e) {
+		  $('.teapower').attr('checked',this.checked);
+    });
+/*学生权限全选*/
+	$('#checkstuall').click(function(e) {
+		  $('.stupower').attr('checked',this.checked);
+    });
+});
+function saveposition(){
+		var identityid= $('#identityid').val();
+		if(!identityid){
+		 ui.error('请先选择对象');
+		 return false;}
+		var array=new Array();
+		$("input[name='teapower[]']:checked").each(function(i,e){
+			array[i]=$(e).val();
+		});
+		$.post("{:U('space/Manage/AddPower')}",{identitytype:2,identityid:identityid,mid:array,classid:<php>echo $classid;</php>},function(data){
+				if(data.length==1){
+					 ui.error('设置失败');
+				}else if(data.length>1){
+					ui.success('设置成功');
+					$('#manage_table').html(data);
+				}
+		 });
+		
+}
+function savestuposition(){
+		var identityid= $('#stuidentityid').val();
+		if(!identityid){
+		 ui.error('请先选择对象');
+		 return false;}
+		var array=new Array();
+		$("input[name='stupower[]']:checked").each(function(i,e){
+			array[i]=$(e).val();
+		}); 
+		 $.post("{:U('space/Manage/AddPower')}",{identitytype:3,identityid:identityid,mid:array,classid:<php>echo $classid;</php>},function(data){
+				if(data.length==1){
+					 ui.error('设置失败');
+				}else if(data.length>1){
+					ui.success('设置成功');
+					$('#manage_table').html(data);
+				}
+		 });
+		
+}
+</script>
+    

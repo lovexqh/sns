@@ -1,0 +1,466 @@
+<include file="../Public/_header" />
+<link href="__THEME__/space/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/main.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/space/css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__THEME__/space/js/index.js"></script>
+<script type="text/javascript" src="__THEME__/space/js/space.js"></script>
+<script src="../Public/js/preview.js" type="text/javascript"></script>
+<div class="containerOuter">
+  <div class="head">
+    <div class="pic" style="background:url(__THEME__/space/images/topbg.gif) no-repeat;">
+      <div class="pics"><img src="{$classinfo['sns_class']['logo']|getAName}"/></div>
+      <div class="cla">
+        <h2>{$classinfo['uc_class']['bj']}</h2>
+        <br>
+        <div class="cx">
+          <dl>
+            <dt>班级口号:</dt>
+            <dd>{$classinfo['sns_class']['logan']}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="containerInner"> <include file="../Public/_nav_menu" /> 
+      <!--左侧开始-->
+      <div class="user_app">
+        <div class="classte">
+          <div class="top">
+            <p>班主任寄语</p>
+          </div>
+          <div class="bot">
+            <div class="speak"><span>
+              <p>{$classinfo['sns_class']['message']}</p>
+              </span></div>
+          </div>
+          <div class="clear pb10"></div>
+        </div>
+        <div class="userappbox">
+          <div class="c_monitor">
+            <div class="c_boxitem">
+              <div class="box_title">
+                <h2>班级干部</h2>
+                <a href="{:U('/Class/LeaderMember',array(classid=>$classid))}" class="more">更多</a> </div>
+            </div>
+            <div class="mon_content">
+              <table  border="0" cellpadding="0" cellspacing="0" style="margin-left:10px;">
+                <tr>
+                  <td colspan="2" height="5">&nbsp;</td>
+                </tr>
+                <volist name="leader" id="vo" key="k">
+                  <tr>
+                    <td><if condition="($vo['uid'] eq '')"> <img src="__THEME__/images/user_pic_bigjj.gif"/>
+                        <else />
+                        <space uid="vo.uid">{uavatar=b}</space>
+                      </if></td>
+                    <td  align="left"><table border="0" cellpadding="0" cellspacing="0" align="left">
+                        <tr>
+                          <td align="left" height="25"><font color="#2B8FDB">{$vo.identityid|get_namebyidentityid}</font></td>
+                          <td align="right"><if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+                              <div id="follow_list_{$vo.uid}" class="follow_{$vo.uid}"> 
+                                <script>document.write(followStateClass('{:getFollowState($mid, $vo[uid])}','dolistfollowClass',{$vo.uid}))</script> 
+                              </div>
+                            </if></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="left" height="25"><font color="#414141">
+                            <volist name="vo['positionid']" id="v">
+                              <php>if($i!=1){</php>
+                              、
+                              <php>}</php>
+                              {$v.positionid|get_positionname} </volist>
+                            </font></td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" width="100%" style=" border-top:#999 1px dashed; height:2px;">&nbsp;</td>
+                  </tr>
+                </volist>
+              </table>
+            </div>
+          </div>
+          <!-- /app_menu -->
+          <div class="clear lineD_btm"></div>
+          <div class="c_item">
+            <div class="c_boxitem">
+              <div class="box_title">
+                <h2 >科目信息</h2>
+              </div>
+            </div>
+            <div class="box_content">
+              <ul class="list_ul">
+                <volist name="subjectlist" id='vo'>
+                  <li class="item_list"> <img src="__THEME__/space/images/c_book.jpg" width="17" height="14"/> <a href="#">{$vo['subjectid']|get_Datacodename}</a> </li>
+                </volist>
+              </ul>
+              <div class="clear pb10 lineD_btm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 左侧结束--> 
+      <!--中间开始-->
+      <div class="cl_mainbox">
+        <div class="c_infor">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <p class="ico_in" style=" font-size:12px; font-weight:bold; height:25px;">班级信息</p>
+            </div>
+          </div>
+          <div class="box_content">
+            <table width="500" height="130" border="0" cellpadding="0" cellspacing="0" style=" margin-left:10px;">
+              <tr>
+                <td width="71" height="28" align="right" valign="middle"> 班级名称：</td>
+                <td width="449">{$classinfo['uc_class']['bj']}<font style="font-weight:bold">({$classinfo['uc_class']['xxmc']})</font></td>
+              </tr>
+              <tr>
+                <td height="18" align="right" valign="middle">人&nbsp;&nbsp;&nbsp;&nbsp;数：</td>
+                <td><font color="#A9A9AB">男生{$classinfo['uc_classcount']['mancount']}人，女生:{$classinfo['uc_classcount']['womencount']}人，总计{$classinfo['uc_classcount']['count']}人</font></td>
+              </tr>
+              <tr>
+                <td height="30" align="right" valign="middle">班&nbsp;主&nbsp;任：</td>
+                <td><font color="#FA891F">{$classinfo['uc_class']['bzrxm']['bzrxm']}</font></td>
+              </tr>
+              <tr>
+                <td align="right" valign="top"><p style="margin-top:5px;">班级简介：</p></td>
+                <td valign="top"><font color="#2A8FDD">
+                  <p style="background:#F7F7F9; line-height:20px; margin-right:10px;">{$classinfo['sns_class']['info']}</p>
+                  </font></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="c_sta">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h4 class="ico_sta">座位表</h4>
+            </div>
+          </div>
+          <script>
+                   var photo_preview ='1';
+                </script>
+          <div class="sta_content">
+            <ul class="tab_seat" id="save">
+              <php> for($i=0;$i<$row;$i++)
+                         {
+                           for($j=0;$j<$col;$j++)
+                            {
+                                  if($xms[$i+1][$j+1])
+                                   $obj="<a href='javascript:void(0);'  value='".$identityids[$i+1][$j+1]."' onmouseover='moveover()'  rel='".$headpic[$i+1][$j+1]."' class='preview'>".$xms[$i+1][$j+1]."</a>";
+                else
+                $obj="&nbsp;";
+                if($i==0)
+                {
+                if($j==0)
+                {echo "
+                <li style=' border-top:#ccc 1px solid;border-left:#ccc 1px solid;width:".$width."%'>".$obj."</li>
+                ";}
+                else
+                {echo "
+                <li style=' border-top:#ccc 1px solid;width:".$width."%'>".$obj."</li>
+                ";}
+                }
+                else
+                {
+                if($j==0)
+                {echo "
+                <li style='border-left:#ccc 1px solid;width:".$width."%'>".$obj."</li>
+                ";}
+                else
+                {echo "
+                <li style='width:".$width."%'>".$obj."</li>
+                ";}
+                }
+                }
+                } </php>
+            </ul>
+          </div>
+          <div class="clear5"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="c_mov">
+          <div class="mov_title">
+            <div class="title_left">
+              <h4 class="ico_mov">课程表</h4>
+            </div>
+          </div>
+          <div class="mov_list">
+            <table width="100%" border="1" cellspacing="0" cellpadding="0" class="index_course">
+              <tbody>
+                <tr>
+                  <th scope="col">&nbsp;</th>
+                  <th scope="col">星期一</th>
+                  <th scope="col">星期二</th>
+                  <th scope="col">星期三</th>
+                  <th scope="col">星期四</th>
+                  <th scope="col">星期五</th>
+                </tr>
+              </tbody>
+              <php>$num1=1;$num2=2;$num3=3;$num4=4;</php>
+              <tbody id="zzx">
+              {$classinfo['sns_class']['zzx']|getCourse=###,$course['zzx'],$num1,''}
+                </tbody>
+              
+              <php>if($classinfo['sns_class']['zzx']){</php>
+              <tbody>
+                <tr>
+                  <th colspan='6' align='center' style=" border-right:0px;">早休</th>
+                </tr>
+              </tbody>
+              <php>}</php>
+              <tbody id="zw">
+              {$classinfo['sns_class']['zw']|getCourse=###,$course['zw'],$num2,''}
+                </tbody>
+              
+              <php>if($classinfo['sns_class']['xw']){</php>
+              <tbody>
+                <tr>
+                  <th colspan='6' align='center' style=" border-right:0px;">午休</th>
+                </tr>
+              </tbody>
+              <php>}</php>
+              <tbody id="xw">
+              {$classinfo['sns_class']['xw']|getCourse=###,$course['xw'],$num3,$classinfo['sns_class']['zw']}
+                </tbody>
+              
+              <php>if($classinfo['sns_class']['wzx']){</php>
+              <tbody>
+                <tr>
+                  <th colspan='6' align='center' style=" border-right:0px;">晚休</th>
+                </tr>
+              </tbody>
+              <php>}</php>
+              <tbody id="wzx">
+              {$classinfo['sns_class']['wzx']|getCourse=###,$course['wzx'],$num4,''}
+                </tbody>
+              
+            </table>
+          </div>
+          <div class="clear" style=" height:10px;"><img src="__THEME__/space/images/hui_bac.jpg" /></div>
+        </div>
+        <div class="clear"></div>
+        <div class="c_inf">
+          <div class="inf_title">
+            <div class="title_left">
+              <h4 class="ico_inf">班级资讯</h4>
+            </div>
+            <div class="title_right">
+              <ul>
+                <li><a href="javascript:void(0);" onmouseover="infswitch(1)" id="iswitc_1" class="select">班级公告</a></li>
+                <li><a href="javascript:void(0);" onmouseover="infswitch(2)" id="iswitc_2" class="no_select">班级荣誉</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="inf_list">
+            <div  id="iswitch_1" style=" display:block; min-height:165px;">
+              <ul class="list_content">
+                <volist name="announcelist" id="vo">
+                  <li><img src="__THEME__/space/images/c_cov.jpg"/><a href="{:U('/Class/showAnnounce',array(classid=>$classid,aid=>$vo['id']))}">{$vo.title|getShort=15}</a><span>{$vo.aTime|date="Y-m-d",###}</span></li>
+                </volist>
+              </ul>
+            </div>
+            <div id="iswitch_2" style="display:none; min-height:165px;">
+              <ul class="list_content">
+                <volist name="honorlist" id="vo">
+                  <li><img src="__THEME__/space/images/c_cov.jpg"/><a href="{:U('/Class/showHonor',array(classid=>$classid,hid=>$vo['id']))}">{$vo.title}</a><span>{$vo.hTime|date="Y-m-d",###}</span></li>
+                </volist>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="c_photo">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h4 class="ico_pho">班级相册</h4>
+              <a href="{:U('/Class/MovePhoto',array(classid=>$classid))}" class="more">更多</a> </div>
+          </div>
+          <div class="pho_list">
+            <ul>
+              <volist name="classalbum" id="li" offset="0" length='3'>
+                <li>
+                  <div class="pic"> <a href="{:U('/Class/albums',array(classid=>$classid,id=>$li['id']))}"><img src="{$li.id|get_album_cover=###,$li}" alt="{$li.name}" /></a> </div>
+                  <div class="info">
+                    <p><a href="{:U('/Upload/album',array(classid=>$classid,id=>$li['id']))}">{$li.name|getShort=8}</a></p>
+                  </div>
+                </li>
+              </volist>
+            </ul>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="c_stumov">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h4 class="ico_stu">同学动态</h4>
+              <a href="{:U('/Class/MoveState',array(classid=>$classid))}" class="more">更多</a> </div>
+          </div>
+          <div class="stumov_list">
+            <div id="cont-follow" class="contentbox weibo_box"> {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>4))} </div>
+          </div>
+        </div>
+        <div class="clear"> </div>
+      </div>
+      <!--中部结束-->
+      
+      <div class="mainbox_right">
+        <div class="today_inf">
+          <div class="today_title">
+            <h2>近期作业</h2>
+          </div>
+          <div class="today_content">
+            <ul id="bswitch_3">
+              <volist name="exelist" id="vo">
+                <li><span>{$vo['courseid']|get_Datacodename||getShort=4}：</span> <a href="{:U('space/Class/showExercise',array(hid=>$vo['id'],classid=>$classid))}">{$vo['title']|getShort=9}</a></li>
+              </volist>
+            </ul>
+            <div class="clear pb10"></div>
+          </div>
+        </div>
+        <div class="clear10"></div>
+        <div class="c_notice">
+          <div class="noti_title"> <img src="__THEME__/space/images/notice.gif"/> </div>
+          <div class="not_list">
+            <volist name="announcelist" id="vo" offset="0" length='1'>
+              <p style="color:#FF0101; font-weight:bold;">{$vo['title']}：</p>
+              <p style="padding-bottom:10px; padding-left:20px; line-height:20px; text-indent:1.5em;">{$vo['content']|getShort=50}</p>
+            </volist>
+          </div>
+        </div>
+        <div class="clear10"></div>
+        <div class="money">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h2 >储钱罐</h2>
+            </div>
+          </div>
+          <div class="money_list">
+          <strong>班费收入：</strong><span>{$sr['shouru']}元</span>
+          <div class="clear10"></div>
+          <strong>班费支出：</strong><span>{$zc['zhichu']}元</span>
+          <div class="clear10"></div>
+          <strong>合计余额：</strong><span>{$sr['shouru']-$zc['zhichu']}元</span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear10"></div>
+        <div class="mon_birth">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h2 >本月寿星</h2>
+            </div>
+          </div>
+          <div class="birth_list">
+            <table  border="0" cellpadding="0" cellspacing="0" style="margin-left:10px;" width="95%">
+              <tr>
+                <td colspan="2" height="5">&nbsp;</td>
+              </tr>
+              <volist name="birstlist" id="vo" key="k">
+                <if condition="$vo['uid'] neq ''">
+                  <tr>
+                    <td width="33%"><space uid="vo['uid']" class="nocard">{uavatar}</space></td>
+                    <td align="left"  width="66%"><table border="0" cellpadding="0" cellspacing="0" align="left" width="100%">
+                        <tr>
+                          <td align="left" height="25"><space uid="vo['uid']" class="co">{uname}</space>
+                            <img src="__THEME__/space/images/bir.jpg"/></td>
+                        </tr>
+                        <tr>
+                          <td align="left" height="25"> {$vo['csrq']|getDatetime=###} </td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" width="100%" style=" border-top:#999 1px dashed; height:2px;">&nbsp;</td>
+                  </tr>
+                  <else/>
+                  <tr >
+                    <td  width="33%"><img src="__THEME__/images/user_pic_bigjj.gif" width="50" height="50"/></td>
+                    <td  align="left"  width="66%"><table border="0" cellpadding="0" cellspacing="0" align="left" width="100%">
+                        <tr>
+                          <td align="left" height="25">{$vo['xm']}<img src="__THEME__/space/images/bir.jpg"/></td>
+                        </tr>
+                        <tr>
+                          <td  align="left" height="25"> {$vo['csrq']|getDatetime=###} </td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" width="100%" style=" border-top:#999 1px dashed; height:2px;">&nbsp;</td>
+                  </tr>
+                </if>
+              </volist>
+            </table>
+          </div>
+        </div>
+        <!--<div class="live_class">
+				   <div class="c_boxitem">
+                	<div class="box_title">
+                    	<h2 >在线课堂</h2>
+						<a href="#" class="more">更多</a>
+			        </div>
+				  </div>
+				  <div class="live_list">
+				    <div class="live"><a href=""><img src="__THEME__/space/images/c_live.jpg"/></a></div>
+				  </div>
+				</div>-->
+        <div class="last_guest">
+          <div class="c_boxitem">
+            <div class="box_title">
+              <h2 >最近访客</h2>
+            </div>
+          </div>
+          <div class="guest_list">
+            <ul>
+              <volist name='visit' id='vo'>
+                <li>
+                  <div class="visit_img">
+                    <space uid="vo.visituid" class="nocard">{uavatar}</space>
+                  </div>
+                  <p>
+                    <space uid="vo.visituid"><font color="#2B8FDB">{uname}</font></space>
+                  </p>
+                  <p><font color="#8B8B8B">{$vo.vTime|friendlyDate=###,'cv'}</font></p>
+                </li>
+              </volist>
+            </ul>
+            <div class="clear"></div>
+            <div class="visitcount"> 总访问量:<font color="#FF0000">{$classinfo['sns_class']['visitcount']}</font> </div>
+            <div class="clear10"></div>
+          </div>
+        </div>
+      </div>
+      <!--右侧结束-->
+      <div class="clear pb10"></div>
+    </div>
+    <!-- /containerInner --> 
+  </div>
+</div>
+<footer>
+  <div class="menu"> <a href="http://www.ruijie-grid.com" target="_blank">官方网站</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a href="http://edns.ruijie-grid.com/index.php?app=home&mod=Public&act=document&id=2" target="_blank">关于我们</a> </div>
+  <div> Powered by <a title="EDU-GridSNS教育博客系统" href="http://www.ruijie-grid.com/" target="_blank">EDU-GridSNS</a>&nbsp;&nbsp; 山东锐杰网格信息技术有限公司 鲁ICP备09072052号 </div>
+</footer>
+</body></html><script language="javascript">
+ function infswitch(num)
+ {
+	for(var id = 1;id<=2;id++)
+	{
+		if(id==num)
+		   {
+			document.getElementById("iswitc_"+id).style.background="#fff";
+			document.getElementById("iswitc_"+id).style.color="#2A8FE1";
+		    document.getElementById("iswitch_"+id).style.display="block";
+			}
+	   else
+		  {
+			document.getElementById("iswitc_"+id).style.background="#ccc";
+			document.getElementById("iswitc_"+id).style.color="#A8A7AC";
+		    document.getElementById("iswitch_"+id).style.display="none";
+		  }
+    }
+ }
+</script>

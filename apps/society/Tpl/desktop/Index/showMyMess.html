@@ -1,0 +1,347 @@
+<script type="text/javascript">
+$(document).ready(function (){
+	var size = $('#shenqing li').size();
+	if(size==0){
+		$('#shenqing').html('暂无消息！');
+	}
+	$('div[mid=1] a').html($('div[mid=1] a').html()+'(<span style="color:red;">'+size+'</span>)');
+	var size = $('#yaoqing li').size();
+	if(size==0){
+		$('#yaoqing').html('暂无消息！');
+	}
+	$('div[mid=2] a').html($('div[mid=2] a').html()+'(<span style="color:red;">'+size+'</span>)');
+	var size = $('#qita li').size();
+	if(size==0){
+		$('#qita').html('暂无消息！');
+	}
+	$('div[mid=3] a').html($('div[mid=3] a').html()+'(<span style="color:red;">'+size+'</span>)');
+	
+});
+	function reCount(societyId){
+		var count = $('.nav_right li:first span').html();
+  		$('.nav_right li:first span').html(count-1);
+  		var s_count = $('.nav_center #s_id_'+societyId+' span').html();
+  		$('.nav_center #s_id_'+societyId+' span').html(s_count-1)
+		
+		var size1 = $('#shenqing li').size();
+		if(size1==0){
+			$('#shenqing').html('暂无消息！');
+		}
+		$('div[mid=1] a span').html(size1);
+		var size2 = $('#yaoqing li').size();
+		if(size2==0){
+			$('#yaoqing').html('暂无消息！');
+		}
+		$('div[mid=2] a span').html(size2);
+		var size3 = $('#qita li').size();
+		if(size3==0){
+			$('#qita').html('暂无消息！');
+		}
+		$('div[mid=3] a span').html(size3);
+		$('.nav_right li:first span').html(size1+size2+size3);
+	}
+	function shenqing(id){
+		$(".mess_title>div").removeClass("onselected");
+		$(id).parent().addClass("onselected");
+		$("#qita").css("display","none");
+		$("#yaoqing").css("display","none");
+		$("#shenqing").css("display","block");
+	}
+	
+	function yaoqing(id){
+		$(".mess_title>div").removeClass("onselected");
+		$(id).parent().addClass("onselected");
+		$("#shenqing").css("display","none");
+		$("#qita").css("display","none");
+		$("#yaoqing").css("display","block");
+	}
+	
+	function qita(id){
+		$(".mess_title>div").removeClass("onselected");
+		$(id).parent().addClass("onselected");
+		$("#shenqing").css("display","none");
+		$("#yaoqing").css("display","none");
+		$("#qita").css("display","block");
+	}
+	var height = $(".myMess").height();
+	if(height>540){
+		$(".myMess").css('height','540px');
+	}
+	$('html').css('height','100%');
+	$('html').css('width','100%');
+	$('html').css('overflow','hidden');
+	$('.close').click(function(){
+		$('html').css('height','100%');
+		$('html').css('width','100%');
+		$('html').css('overflow','auto');
+	});
+	function joinNews(newsId,societyId){
+		$('a[snid='+newsId+']').attr('onclick','alert("请勿重复操作！");');
+		$.post(U('society/Index/joinNews'),{ newsId : newsId , societyId : societyId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+			if(data.status>=1){
+				ui.success('加入该圈子成功！');
+				$('li[name='+newsId+']').hide('slow');
+				$('li[name='+newsId+']').remove();
+				reCount(societyId);
+	      	}else if(data.status==0){
+	      		ui.error(data.msg);
+	      		$('a[snid='+newsId+']').attr('onclick','joinNews('+newsId+','+societyId+');');
+	      	}else if(data.status==-99){
+	      		ui.error(data.msg);
+				$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+	      	}else{
+	      		ui.error(data.msg);
+	      		$('a[snid='+newsId+']').attr('onclick','joinNews('+newsId+','+societyId+');');
+	      	}
+		});
+	}
+	function ignoreNews(newsId,societyId){
+		$('a[snid='+newsId+']').attr('onclick','alert("请勿重复操作！");');
+		$.post(U('society/Index/ignoreNews'),{ newsId : newsId , societyId : societyId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+			if(data.status==1){
+				$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+	      	}else{
+	      		ui.error(data.msg);
+	      		$('a[snid='+newsId+']').attr('onclick','ignoreNews('+newsId+','+societyId+');');
+	      	}
+		});
+	}
+	function deleteNews(newsId,societyId){
+		$('a[snid='+newsId+']').attr('onclick','alert("请勿重复操作！");');
+		$.post(U('society/Index/deleteNews'),{ newsId : newsId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+			if(data.status==1){
+				$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+	      	}else{
+	      		ui.error(data.msg);
+	      		$('a[snid='+newsId+']').attr('onclick','deleteNews('+newsId+','+societyId+');');
+	      	}
+		});
+	}
+	function enter(societyId){
+		$.post(U('society/Index/visitable'),{societyId : societyId,enter : 1},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+				window.location.href = "{:U('society/Index/index')}&societyId="+societyId;
+            }else{
+            	ui.error(data.msg);
+            }
+		});
+	}
+	//忽略消息
+	function ignoreNewsS(newsId,societyId){
+		$('a[snid='+newsId+']').attr('onclick','alert("请勿重复操作！");');
+		$.post(U('society/Index/ignoreNewsS'),{ newsId : newsId , societyId : societyId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+            	$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+            }else{
+            	ui.error(data.msg);
+            	$('a[snid='+newsId+']').attr('onclick','ignoreNewsS('+newsId+','+societyId+');');
+            }
+		});
+	}
+	//通过申请
+	function tongGuoNews(newsId,societyId){
+		$('a[snid='+newsId+']').attr('onclick','alert("请勿重复操作！");');
+		$.post(U('society/Index/tongGuoNews'),{ newsId : newsId , societyId : societyId , enter : 1},function(data){
+			var data = eval('(' + data + ')');
+            if(data.status==1){
+            	$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+            }else if(data.status==1){
+            	ui.success(data.msg);
+            	$('a[snid='+newsId+']').attr('onclick','tongGuoNews('+newsId+','+societyId+');');
+            }else if(data.status==-99){
+            	ui.error(data.msg);
+            	$('li[name='+newsId+']').hide('slow');
+	      		$('li[name='+newsId+']').remove();
+	      		reCount(societyId);
+            }
+		});
+	}
+</script>
+<div style="width: 750px;height: 500px;overflow-Y: scroll;background-color: #F9F9F9;" class="myMess">
+	<div class="mess_title">
+		<div mid="1" style="margin-left: 17px" class="mess_title_shenqing onselected"><a href="javascript:;" onclick="shenqing(this);">申请消息</a></div>
+		<div mid="2" style="margin-left: 2px" class="mess_title_shenqing"><a href="javascript:;" onclick="yaoqing(this);">邀请消息</a></div>
+		<div mid="3" style="margin-left: 2px" class="mess_title_shenqing"><a href="javascript:;" onclick="qita(this);">其他消息</a></div>
+	</div>
+	<div class="mess_content">
+	<!-- 申请消息Begin -->
+		<ul id="shenqing">
+		<volist name="myNews" id="vo">
+			<php>if($vo['newsType']==1){</php>
+				<php>if($vo['result']==0){</php>
+					<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+						<div class="mess_content_icon">
+							<img src="{$vo.fromUid|getUserFace}">
+						</div>
+						<div class="mess_content_main">
+							<span><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 申请加入 <a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>！ </span>
+							<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+						</div>
+						<div class="mess_content_join">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="tongGuoNews({$vo.newsId},{$vo.societyId});" class="mess_tongguo"></a>
+						</div>
+						<div class="mess_content_ignore">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="ignoreNewsS({$vo.newsId},{$vo.societyId});" href="#" class="mess_ignore"></a>
+						</div>
+					</li>		
+				<php>}</php>
+				<php>if($vo['result']==1){</php>
+					<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+						<div class="mess_content_icon">
+							<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+						</div>
+						<div class="mess_content_main">
+							<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> 管理员 <a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 通过了您的申请请求！ </span>
+							<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+						</div>
+						<div class="mess_content_delete">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+						</div>
+					</li>
+				<php>}</php>
+				<php>if($vo['result']==2){</php>
+					<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+						<div class="mess_content_icon">
+							<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+						</div>
+						<div class="mess_content_main">
+							<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> 管理员 <a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 拒绝了您的申请请求！ </span>
+							<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+						</div>
+						<div class="mess_content_delete">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+						</div>
+					</li>
+				<php>}</php>
+			<php>}</php>
+		</volist>
+		</ul>
+	<!-- 申请消息End -->
+	<!-- 邀请消息Begin -->
+		<ul id="yaoqing" style="display: none;">
+		<volist name="myNews" id="vo">
+			<php>if(($vo['newsType']==2)&&($vo['result']==0)){</php>
+				<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+					<div class="mess_content_icon">
+						<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+					</div>
+					<div class="mess_content_main">
+						<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> 成员 <a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 邀请您加入该圈子！ </span>
+						<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+					</div>
+					<div class="mess_content_join">
+						<a snid="{$vo.newsId}" href="javascript:;" onclick="joinNews({$vo.newsId},{$vo.societyId});" class="mess_join"></a>
+					</div>
+					<div class="mess_content_ignore">
+						<a snid="{$vo.newsId}" href="javascript:;" onclick="ignoreNews({$vo.newsId},{$vo.societyId});" class="mess_ignore"></a>
+					</div>
+				</li>
+			<php>}</php>
+			<php>if(($vo['newsType']==2) && ($vo['result']!=0)){</php>
+				<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+				<php>if($vo['result']==1){</php>
+					<div class="mess_content_icon">
+						<img src="{$vo.fromUid|getUserFace}">
+					</div>
+					<div class="mess_content_main">
+						<span><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 同意了圈子邀请,加入了 <a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>！ </span>
+				<php>}else if($vo['result']==2){</php>
+					<div class="mess_content_icon">
+						<img src="{$vo.fromUid|getUserFace}">
+					</div>
+					<div class="mess_content_main">
+						<span><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 拒绝了圈子邀请,没有加入 <a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>！ </span>
+				<php>}else if($vo['result']==3){</php>
+					<div class="mess_content_icon">
+						<img src="{$vo.fromUid|getUserFace}">
+					</div>
+					<div class="mess_content_main">
+						<span><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 加入了 <a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>！ </span>
+				<php>}</php>
+						<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+					</div>
+					<div class="mess_content_delete">
+						<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+					</div>
+				</li>
+			<php>}</php>
+		</volist>
+		</ul>
+	<!-- 邀请消息End -->
+	<!-- 其他消息Begin -->
+		<ul id="qita" style="display: none;">
+		<volist name="myNews" id="vo">
+			<php>if($vo['newsType']==3){</php>
+				<php>if($vo['result']==0){</php>
+					<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+						<div class="mess_content_icon">
+							<img src="{$vo.fromUid|getUserFace}">
+						</div>
+						<div class="mess_content_main">
+							<span><a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 退出了圈子 <a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a>！ </span>
+							<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+						</div>
+						<div class="mess_content_delete">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+						</div>
+					</li>
+				<php>}else if($vo['result']==1){</php>
+					<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+						<div class="mess_content_icon">
+							<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+						</div>
+						<div class="mess_content_main">
+							<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> 管理员 <a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 把您踢出了该圈子！ </span>
+							<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+						</div>
+						<div class="mess_content_delete">
+							<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+						</div>
+					</li>
+				<php>}</php>
+			<php>}</php>
+			<php>if($vo['newsType']==4){</php>
+			<li name="{$vo.newsId}" s_id="{$vo.societyId}">
+				<div class="mess_content_icon">
+					<img style="height: 50px;" src="__ROOT__/thumb.php?w=100&t=c&url={$vo['icon']|get_photo_url}">
+				</div>
+				<div class="mess_content_main">
+				<php>if($vo['result']==0){</php>
+					<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> : <a title="{$vo.toUid|getUserName}的个人主页" class="username" uid="{$vo.toUid}" rel="user" href="javascript:void(0);">{$vo.toUid|getUserName}</a> 成为普通成员！ </span>
+				<php>}</php>
+				<php>if($vo['result']==1){</php>
+					<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> : <a title="{$vo.toUid|getUserName}的个人主页" class="username" uid="{$vo.toUid}" rel="user" href="javascript:void(0);">{$vo.toUid|getUserName}</a> 成为圈子管理员！ </span>
+				<php>}</php>
+				<php>if($vo['result']==2){</php>
+					<span><a href="javascript:;" onclick="enter({$vo.societyId});">{$vo.societyName}</a> : <a title="{$vo.toUid|getUserName}的个人主页" class="username" uid="{$vo.toUid}" rel="user" href="javascript:void(0);">{$vo.toUid|getUserName}</a> 成为圈主！ </span>
+				<php>}</php>
+				<php>if($vo['result']==3){</php>
+					<span><span style="color: #3B7096;">{$vo.societyName}</span> 管理员 <a title="{$vo.fromUid|getUserName}的个人主页" class="username" uid="{$vo.fromUid}" rel="user" href="javascript:void(0);">{$vo.fromUid|getUserName}</a> 解散了该圈子！ </span>
+				<php>}</php>
+					<p><span style="color: #8D8D8D"><em class="time"></em>{$vo.cTime|date="Y-m-d H:i:s",###}</span></p>
+				</div>
+				<div class="mess_content_delete">
+					<a snid="{$vo.newsId}" href="javascript:;" onclick="deleteNews({$vo.newsId},{$vo.societyId});" class="mess_delete"></a>
+				</div>
+			</li>
+			<php>}</php>
+		</volist>
+		</ul>
+	<!-- 其他消息End -->
+	</div>
+</div>

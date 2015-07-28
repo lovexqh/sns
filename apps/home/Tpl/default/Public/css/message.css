@@ -1,0 +1,56 @@
+.message {
+	width:539px; height:313px; background:url(../images/message/msg_bg.jpg) no-repeat; position:relative; z-index:10;
+}
+.msgtitlebox{
+	display:block;
+	width:100%;
+	height:30px;
+	position:absolute;
+	right:20;
+	top:20;
+	z-index:11;
+}
+.msgtitlebox a.close{
+	margin-top:15px;
+	margin-right:15px;
+	float:right;
+	display:block;
+	width:17px;
+	height:17px;
+	text-indent:-9999px;
+	overflow:hidden;
+	background-image:url(../images/close.gif);
+	background-repeat:no-repeat;
+	background-position:0 -17px;
+}
+.msgtitlebox a.close:hover{
+	background-position:0 0;
+}
+.message table {
+	position:absolute; top:100px; left:10px; width:500px;
+}
+.message table th {
+	width:100px; text-align:right; font-weight:bold; vertical-align:top;
+}
+.message table .inputbox {
+	border:solid 1px #BEC7D8; margin-bottom:5px; width:420px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.message table textarea {
+	border:solid 1px #BEC7D8; margin-bottom:5px; width:410px; height:90px;
+}
+.message table a.expression {
+	display:inline-block; width:30px; height:18px; padding-left:18px; background:url(../images/message/icons.png) no-repeat; color:#9A9A9A;
+}
+.message table a.img {
+	display:inline-block; width:30px; height:18px; padding-left:18px; background:url(../images/message/icons.png) no-repeat 0 -30px; color:#9A9A9A;
+}
+.message table a.more {
+	display:inline-block; width:30px; height:18px; padding-right:18px; background:url(../images/message/icons.png) no-repeat right -54px; color:#9A9A9A;
+}
+.message table input.btn {
+	float:right;
+}

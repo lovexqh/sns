@@ -1,0 +1,42 @@
+<div class="apply_join_club">
+	<div class="join_word_line">需通过该社团管理员的审核才能加入</div>
+	<div class="join_word_line">申请加入的理由:</div>
+	<div class="join_word_line"><input type="text" id="joinreason" style="width:290px;" /></div>
+	<div class="join_word_line apply_join_btn">
+   		<a href="javascript:void(0);" id="apply_join_ok" clubid="{$clubid}">确定</a>
+   		<a href="javascript:void(0);" class="easyui-linkbutton medium-primary" onclick="ui.box.close();">取消</a>
+	</div>
+</div>
+<script type="text/javascript">
+$("#apply_join_ok").click(function(){
+	var reason = $("#joinreason").val();
+	var clubid = $(this).attr('clubid');
+	if(!clubid){
+		ui.success('操作失败!');
+		ui.box.close();
+	}
+	if(!reason){
+		alert("请填写加入理由!");
+		return false;
+	}
+	if( getLength(reason)>30 ){
+		alert("申请加入理由 不能超过30个字!");
+		return false;
+	}
+	$.ajax({
+		url : "{:U('club/Member/doApplyJoinClub')}",
+		type: 'POST',
+		data : {clubid:clubid,reason:reason},
+		success: function (data){
+			if( data==1 ){
+				ui.success('申请成功!');
+				ui.box.close();
+				window.location.reload();
+			}else{
+				ui.error('申请失败!');
+				ui.box.close();
+			}
+		}
+	});
+});
+</script>

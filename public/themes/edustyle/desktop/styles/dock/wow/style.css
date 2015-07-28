@@ -1,0 +1,39 @@
+/* dock条部分开始*/
+#dock_bottom { position:absolute;width:100%;height:70px;bottom:0px;left:50%; z-index:10;}
+.dock_container{position:absolute;	z-index:-1;	bottom:0px;	height:70px;}
+.dock_container_center{height:100%;
+	overflow:hidden;
+    
+	background-image:url('bg2.png') !important;
+	_background-image:url('bg2.gif');
+	
+	background-repeat: repeat-x;
+}
+.dock_container_left{height:100%;width:115px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/dock/wow/bg1.png', sizingMethod='scale');
+	background-image:url('bg1.png') !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	overflow:hidden;
+}
+.dock_container_right{height:100%;width:115px;	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/dock/wow/bg3.png', sizingMethod='scale');
+	background-image:url('bg3.png') !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	overflow:hidden;
+}
+
+.dock_img{	display:none;}
+
+#dock_bottom .dock{height:70px;top:3px;}
+
+#docksro {width:0px;z-index:1;height:70px;position:relative;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/dock/wow/xian.png', sizingMethod='scale');
+	background-image:url('xian.png') !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	overflow:hidden;
+	}
+
+/* dock条部分结束*/

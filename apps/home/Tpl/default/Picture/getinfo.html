@@ -1,0 +1,27 @@
+<!-- 
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+ -->
+<style>
+dt{display:none;}
+dd{margin:0px;padding:0px;}
+.msgCnt{height:20px;line-height:15px;padding-bottom:5px;}
+.msgCnt .ts_icon{width:10px;height:10px;}
+.lineD_btm{height:auto;padding:10px 0px 0 0;}
+.feed_c_btm{padding:10px 0;line-height: 20px;}
+.message_text{margin-bottom:15px;}
+textarea{font-size:12px;}
+.box_comment, .feedBox{width:95%}
+</style>
+<div class="ruserinfo" style="padding-bottom:5px;border-bottom:1px solid #cccccc;">
+<div  class="ruserpic">
+<img alt="{$photo['userId']|getUserName}" src="{$photo['userId']|getUserFace}" width="50" height="50" />
+</div>
+<div class="ruseri">
+<div style="width:100%;height:20px;line-height:20px;">{$photo['userId']|getUserName}</div>
+<div style="width:100%;height:30px;line-height:30px;">{$photo['albumname']}</div>
+</div>
+</div>
+<div id="showarticle" style="width:100%;height:335px;overflow: auto; overflow-x:hidden">
+{:W('Comment',array('type'=>'photo','appid'=>$photo['id'], 'author_uid'=>$uid, 'title'=>$title, 'url'=>U('photo/Index/photo',array('id'=>$photo['id'],'aid'=>$photo['albumId'],'uid'=>$photo['userId'],'iframe'=>'yes')), 'table'=>'photo','id_field'=>'id','comment_count_field'=>'commentCount'))}
+</div>

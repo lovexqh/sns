@@ -1,0 +1,39 @@
+<include file="../Public/_header_ajax" />
+<h3 class="flb"> <em id="return_{$_GET[handlekey]}">{:L('share_web_music_flash')}</em> 
+	<if condition="!empty($inajax)"><span><a href="javascript:;" onclick="hideWindow('{$_GET[handlekey]}');return false;" class="flbc" title="{:L('close')}">{:L('close')}</a></span></if> 
+</h3>
+<div class="c flm">
+	<form id="shareform" name="shareform" action="{:U('desktop/System/doNewLink')}" method="post" autocomplete="off" onsubmit="ajaxpost(this.id, 'return_{$_GET[handlekey]}','return_{$_GET[handlekey]}','',$E('newlinksubmit_btn'));">
+		<input type="hidden" name="refer" value="" />
+		<input type="hidden" name="formhash" value="{FORMHASH}" />
+		<input type="hidden" name="newlinksubmit" value="true" />
+		<input type="hidden" name="container" value="{$container}" />
+		<input type="hidden" name="ukey" value="{$ukey}" />
+		<input type="hidden" name="uid" value="{$mid}" />
+		<if condition="!empty($inajax)">
+		<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+		</if>
+		
+		<p class="mtn mbm">
+			<input type="text" size="60" class="px" name="link" onchange="$E('newlinksubmit_btn').value=true"  onblur="javascript:if(''==this.value)this.value='http://';" onfocus="this.select();" id="share_link" value="http://" />
+		</p>
+		<!-- <p class="mtn mbm"><em>{lang privacy_settings}</em></p>-->
+		<p style="display:none">
+			<label ><input name="friend" type="radio" value="0" <if condition="$sysconfig[friend] eq 0"> checked="checked" </if> >{:L('friend_0')}</label>
+			&nbsp; &nbsp; &nbsp; &nbsp;
+			<label ><input name="friend" type="radio" value="1" <if condition="$sysconfig[friend] eq 1"> checked="checked" </if> >{:L('friend_1')}</label>
+			&nbsp; &nbsp; &nbsp; &nbsp;
+			<label ><input name="friend" type="radio" value="2" <if condition="$sysconfig[friend] eq 2"> checked="checked" </if> >{:L('friend_2')}</label>
+		</p>
+		<p  class="mtn mbm">
+			<button type="submit" name="newlinksubmit_btn" id="newlinksubmit_btn" value="{:L('submit')}" class="pn pnc"  ><strong>{:L('submit')}</strong></button>
+		</p>
+	</form>
+</div>
+
+<script type="text/javascript" reload="1">
+	function succeedhandle_{$_GET['handlekey']}(url, message, values) {
+		_ico.createIco(values);
+	}
+</script> 
+<include file="../Public/_footer_ajax" />

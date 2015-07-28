@@ -1,0 +1,31 @@
+<!-- 博客资源 -->
+<if condition="($num neq 0)">
+    <div class="contc">
+        <div class="coltop">博客 <span>截止目前为止：社区共有博客信息{$num}条</span> <a href="{:U('blog/Index/index')}" target="_blank" title="博客中心">>> 点击进入</a> </div>
+        <ul class="ccl bloglist">
+            <volist name="newlist" id="nl">
+            <li>
+                <div class="bl1"><img src="{$nl['uid']|getUserFace}" alt="{$nl['uid']|getUserName}"></div>
+                <div class="bl2">
+                    <div class="bl2top"><a href="{:U('home/Space/index',array('uid'=>$nl['uid']))}" target="_blank">{$nl['uid']|getUserName}</a> 发表新文章<a href="{:U('blog/Index/show',array('id'=>$nl['id']))}" target="_blank" title="{$nl['title']}"> {$nl['title']} </a> <span>{$nl['cTime']|friendlyDate}</span></div>
+                    <div class="bl2cnt">
+                        <p style="word-break:break-all;word-wrap:break-word;">{$nl['content']|strip_tags|getShort=###,100}...</p>
+                        <div class="jt1"></div>
+                    </div>
+                </div>
+                <div class="c"></div>
+            </li>
+            </volist>
+        </ul>
+        <div class="ccr">
+            <div class="ccrtop"><div>博客点击榜</div></div>
+            <ul class="crrlist">
+                <volist name="hotlist" id="hl" key="i">
+                    <li><span class="sp1 <php>if($i <= 3){echo 'sp1h';}</php>">{$i}</span><span class="sp2"><a target="_blank" href="{:U('blog/Index/show',array('id'=>$hl['id']))}" target="_blank"  title="{$hl['title']}">{$hl['title']|getShort=###,15}</a></span><span class="sp3">{$hl['readCount']}</span> </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="c"></div>
+        <div class="cb"></div>
+    </div>
+</if>

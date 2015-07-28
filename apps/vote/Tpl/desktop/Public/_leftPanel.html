@@ -1,0 +1,29 @@
+<!-- 左侧收起按钮 start -->
+<div class="panel-tool"> <a class="layout-button-left" href="javascript:void(0)" onclick="panel.collapse('nv_dsk','west');"></a> </div>
+<!-- 左侧收起按钮 end --> 
+<!-- 左侧列表分类 start -->
+<div class="panel-list-box bottom-line">
+  <h2><i class="icon-all-vote"></i>所有投票</h2>
+  <ul class="list">
+    <li><a href="javascript:;" onclick="tabs.iframe('最新投票','{:U('vote/Index/index', array('order'=>'new'))}');">最新投票</a></li>
+    <li><a href="javascript:;" onclick="tabs.iframe('我关注的人的投票','{:U('vote/Index/index', array('order'=>'following'))}');">我关注的人的投票</a></li>
+    <li><a href="javascript:;" onclick="tabs.iframe('我管理的投票','{:U('vote/Index/my')}');">我管理的投票</a></li>
+    <li><a href="javascript:;" onclick="tabs.iframe('我收藏的投票','{:U('vote/Index/favorite')}');">我收藏的投票</a></li>
+  </ul>
+</div>
+<!-- 左侧列表分类 end --> 
+<!-- 我的文章存档 start -->
+<div class="panel-list-box">
+  <h2><i class="icon-vote"></i>我的投票</h2>
+  <ul class="list">
+     <li><a href="javascript:;" onclick="tabs.iframe('我参与的投票','{:U('vote/Index/my', array('action'=>'in'))}');">我参与的投票</a></li>
+    <li><a href="javascript:;" onclick="tabs.iframe('我发起的投票','{:U('vote/Index/my',array('action'=>'add'))}');">我发起的投票</a></li>
+   
+  </ul>
+</div>
+<!-- 课堂管理 start -->
+    {:W('ForeAdmin',array('title'=>'投票','type'=>'leftlist'))}
+<!-- 课堂管理 end -->
+
+
+<!-- 我的文章存档 end --> 

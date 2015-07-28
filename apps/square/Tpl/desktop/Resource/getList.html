@@ -1,0 +1,121 @@
+<include file="_header" />
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <include file="_left" />
+    <div class="content">
+      <div class="box width" id="resourcelist">
+        <ul class="course_category">
+          <php>if($get['classified']=='SpecialEDU'){</php>
+              <li <php>if($get['type']==''){</php>class="on"<php>}</php>>
+                <a href="{:U('square/Resource/getList',array('stage'=>$get['stage'],'classified'=>'SpecialEDU','subject'=>$get['subject'],'publisher'=>$get['publisher'],'attribute'=>$get['attribute']))}">全部</a>
+              </li>
+          	  <volist name="Specialtype" id="obj" key="k">
+                 <li <php>if($get['type']==$obj['DataCode']){</php>class="on"<php>}</php>>
+                     <a href="{:U('square/Resource/getList',URLformat(array('type'=>$obj['DataCode'],'classified'=>'SpecialEDU','subject'=>$get['subject'],'publisher'=>$get['publisher'],'attribute'=>$get['attribute'])))}" 
+                         <php>if($get['type']==$obj['DataCode']){</php>id="format"<php>}</php>>
+                         {$obj['DataName']}
+                     </a>
+                 </li>
+              </volist>
+          <php>}elseif($get['classified']=='OtherEDU'){</php>
+          	  <li class="on">
+                <a>搜索结果</a>
+              </li>
+          <php>}elseif($tags!=''){</php>    
+               <li class="on">
+               		<a>搜索结果</a>
+               </li>  
+          <php>}else{</php>
+          	   <li <php>if($get['type']==''){</php>class="on"<php>}</php>>
+               		<a href="{:U('square/Resource/getList',array('stage'=>$get['stage'],'subject'=>$get['subject'],'publisher'=>$get['publisher'],'grade'=>$get['grade'],'volume'=>$get['volume'],'cell'=>$get['cell'],'course'=>$get['course'],'attribute'=>$get['attribute']))}">全部</a>
+               </li>
+               
+               <volist name="type" id="obj" key="k">
+             <li <php>if($get['type']==$obj['DataCode']){</php>class="on"<php>}</php>>
+                 <a href="{:U('square/Resource/getList',URLformat(array('type'=>$obj['DataCode'],'subject'=>$get['subject'],'publisher'=>$get['publisher'],'grade'=>$get['grade'],'volume'=>$get['volume'],'cell'=>$get['cell'],'course'=>$get['course'],'attribute'=>$get['attribute'])))}" 
+                     <php>if($get['type']==$obj['DataCode']){</php>id="format"<php>}</php>>
+                     {$obj['DataName']}
+                 </a>
+             </li>
+          </volist>
+         <php>}</php>
+          <div class="clear"></div>
+        </ul>
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+        <php>if(empty($data)){</php><tr style="border:none;"><td>暂无信息。</td></tr><php>}</php>
+        <volist name="data" id="vo">
+          <tr>
+            <td>
+            <table class="small_table">
+                <tr>
+                  <td rowspan="3" width="70">
+                    <php>if($obj[tabletypeid]==1){</php>
+                        <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                    <php>}elseif($obj[tabletypeid]==2){</php>
+                        <a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                    <php>}else{</php>
+                        <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">
+                    <php>}</php> 
+                  <img src="{$vo['id']|getThumb}" width="49px" height="61px">
+                  </a>
+                  </td>
+                  <td style="font-weight:bold;width:500px; height:25px;">
+                   <php>if($vo[tabletypeid]==1){</php>
+                        <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                    <php>}elseif($vo[tabletypeid]==2){</php>
+                        <a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                    <php>}else{</php>
+                        <a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">
+                    <php>}</php> 
+                  {$vo['title']}&nbsp;&nbsp;
+                  </a>
+                  </td> 
+                  <td class="last_table">{$vo['readCount']}人已阅读</td>
+                </tr>
+                <tr>
+                	<td>
+                       <php>if($vo['subject']){</php>{$vo['subject']|getDictionary}  <php>}</php>
+                       <php>if($vo['grade']){</php>{$vo['grade']|getDictionary}  <php>}</php>
+                       <php>if($vo['publisher']){</php>{$vo['publisher']|getDictionary}  <php>}</php>
+                       <php>if($vo['chapters']){</php>{$vo['chapters']|getCourse}  <php>}</php>
+                       <php>if($vo['attribute']){</php>{$vo['attribute']|getbyDC}  <php>}</php>
+                       <php>if($vo['type']){</php>{$vo['type']|getbyDC}  <php>}</php>
+                       <php>if($vo['category_id']){</php>{$vo['category_id']|getcategory}  <php>}</php>
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                     <php>if($vo['mtime']){</php>
+                      <td>上传于：{$vo['mtime']|date="Y-m-d H:i",###}   贡献者：{$vo['uid']|getUserName=###}</td>
+                     <php>}elseif($vo['time']){</php>
+                      <td>上传于：{$vo['time']|date="Y-m-d H:i",###}   贡献者：{$vo['uid']|getUserName=###}</td>
+                     <php>}</php> 
+                      
+                 	 <td style="border-left:1px solid #e6e6e6;width:110px;">
+                       <php>if($vo[tabletypeid]==1||$vo[tabletypeid]==2){</php>
+                       [{$vo.schoolid|getSchoolName}]
+                       <php>}else{</php>
+                       <php>for($i=1;$i<=5;$i++){</php>
+                         <php>if($i<=getAVG($vo['id'])){</php>
+                         <img src="__THEME__/square/images/star_full.png">
+                         <php>}else{</php>
+                         <img src="__THEME__/square/images/star_empty.png">
+                         <php>}</php>
+                       <php>}}</php>
+                     </td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          </volist>
+        </table>
+        <div class="page">{$html}</div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />
+</div>
+</body>
+</html>

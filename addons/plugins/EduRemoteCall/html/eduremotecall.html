@@ -1,0 +1,27 @@
+<section>
+    <div class="dynaBox mcbox pt5 pb5 mt10">
+        <div class="mcboxitem pb10">
+            <div class="box_title">
+                <h2 class="ico_newvideo">{$title}</h2>
+                <a href="{$morelink}" target="_blank" class="more">更多</a>
+            </div>
+            <div class="box_content">
+            	<span class="loading">系统正在努力为您加载中...</span>
+            </div>
+        </div><!-- /mcboxitem -->
+    </div>
+</section>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(e) {
+	var uid = '{$mid}';
+	$.post(U('weibo/Operate/follow') ,{uid:uid},function(data){
+		
+	});	
+});
+</script>
+<ul class="news_list">
+            
+            </ul>
+<volist name="data" id="vo">
+            	<li><a href="{$vo.url}" target="_blank">{$vo.name}</a><span>{$vo.date}</span>
+            </volist> 

@@ -1,0 +1,138 @@
+<include file="../Public/_header_ajax" />
+<div style="display: block;"  class="appPanel appIntroduce clearfix">
+	<div class="column1">
+		<div class="appBigIconBg">
+			<img class="appBigIcon" src="{$app.appico}" onload="fixpng(this)">
+			
+		</div>
+		<if condition="empty($myicos)">
+            <a class="appOpenBtn" href="javascript:void(0);" appid="{$app.appid}"  cmd="add" hidefocus="" onclick="top.OpenWindow('',encodeURI('{$app[appurl]}'),'{$app[appname]}');return false;">{:L('added')}</a>
+        <elseif condition="$myicos[$app['appid']] gt 0" />
+            <a class="appOpenBtn"  href="javascript:void(0);" appid="{$app.appid}"  cmd="add" hidefocus="" onclick="top._ico.Open('{$myicos[$app[appid]]}');return false;">{:L('added')}</a>
+        <else />
+            <a class="appAddBtn appAddBtn_{$app.appid}" href="javascript:void(0);" appid="{$app.appid}"  cmd="add" hidefocus="" onclick="addapp('appAddBtn_{$app.appid}','{$app.appid}');return false;">{:L('added')}</a>
+        </if>
+	</div>
+	<div class="column2">
+		<div class="appAvgVote radius3">
+			<div class="height_light2" id="appBigStarsNum">{$score['star']}</div>
+			<div class="appBigStars">
+				<div class="appBigStar" style="width: {$score['corestyle']}%" id="appBigStar"></div>
+			</div>
+			<div class="appVoteCount" id="appVoteCount">{:L('total_mark')}<span class="appVoteCount_bold">{$score['starnum']|intval}</span>{:L('ci')}</div>
+		</div>
+		<div class="appTitle"><span class="appName">{$app['appname']}</span><a href="javascript:void(0);" class="cateLinkBtn" cat="{$classid}" cmd="all">[ {$app['group_name']} ]</a></div>
+		<div><span class="black_bold">{:L('popularity_index')}</span><span class="introduceValue"><span class="height_light1">{$app['setupnum']|intval}</span>{:L('person')}{:L('added')}</span></div>
+		<div><span class="black_bold">{:L('post_dateline')}</span><span class="introduceValue">{$app['dateline']|date='Y-m-d H:i:s',###}</span></div>
+		<div><span class="black_bold">{:L('vendor')}</span><span class="introduceValue">{$app['vendor']}</span> </div>
+		
+		<div class="myAppVote">
+			<div class="introduceKey"><span class="black_bold">{:L('myAppVote')}</span></div>
+			<div class="appStars">
+				<div id="appIntroduce_starContainer_{$app['appid']}" class="appStar appStar{$pingjia['star']|intval}"><span class="appStarBtn" vote="1" title="{:L('AppVote_1')}"></span><span class="appStarBtn" vote="2" title="{:L('AppVote_2')}"></span><span class="appStarBtn" vote="3" title="{:L('AppVote_3')}"></span><span class="appStarBtn" vote="4" title="{:L('AppVote_4')}"></span><span class="appStarBtn" vote="5" title="{:L('AppVote_5')}"></span> </div>
+			</div>
+			<div class="myVote height_light1" id="introduce_myVote"><if condition="$pingjia['star'] gt 0">{$pingjia['star']|intval}.0</if></div>
+			<div id="introduce_appStarTip" class="appStarTip">{:L('AppVote_success')}</div>
+		</div>
+	</div>
+	<script type="text/javascript" reload="1">
+	jQuery('#introduce_region_lt .cateLinkBtn').bind('click',function(){
+			var cat=parseInt(jQuery(this).attr('cat'));
+			var cmd=jQuery(this).attr('cmd');
+			control_click(jQuery('#cat_nav'+cat),cmd,cat,0);
+			return false;
+		});
+	
+	jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('mouseover',function(){
+		$E('appIntroduce_starContainer_{$app[appid]}').className='appStar appStar'+jQuery(this).attr('vote');
+		$E('introduce_myVote').innerHTML=jQuery(this).attr('vote')+'.0';
+	});
+	jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('mouseout',function(){
+		$E('appIntroduce_starContainer_{$app[appid]}').className='appStar appStar{$pingjia[star]|intval}';
+		$E('introduce_myVote').innerHTML='{$pingjia[star]|intval}.0';
+	});
+	jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').bind('click',function(){
+		jQuery('#appIntroduce_starContainer_{$app[appid]} .appStarBtn').unbind();
+		start = jQuery(this).attr('vote');
+		id = '{$app[appid]}';
+		jQuery.get(U('desktop/System/score',['star='+start+'&id='+id+'&idtype=appid']),{},function(data){
+				$E('introduce_appStarTip').style.display='block';
+			});
+		window.setTimeout(function(){
+			$E('introduce_appStarTip').style.display='none';
+		},3000);
+	});
+	</script>
+	<div class="column3">
+		<div><span class="black_bold">{:L('app_introduce')}</span>
+			<div class="appDesc radius5"><span class="pointUp"></span>
+				<div class="appDescText">{$app['appdesc']}</div>
+			</div>
+		</div>
+		<div class="appThumbs">
+			<div class="appThumbList">
+				<div class="introduceKey"><span class="black_bold">{:L('app_photo')}</span></div>
+			</div>
+			<if condition="$imagesum gt 0">
+				<div class="bm_c cl">{:L('no_photo')}</div>
+			<else />
+		   
+			<div style="position:relative; text-align:center; width:100%;_height:300px;margin-top:10px;">
+				<div style="position:relative;width:450px;overflow:hidden;margin:0 auto;">
+					<ul id="preview" style="position:relative;left:0px;width:{eval echo $imagesum*450}px;">
+						 <volist name="images" id="value">
+							 <li class="pic_mlp" style="cursor:pointer;text-align:center;float:left; padding:5px; width:440px;" ><img src="{$value['pic']}" /></li>
+						 </volist>
+					</ul>
+				</div>
+                <if condition="$imagesum gt 1">
+				<div title="{:L('custom_btnpre_title')}" class="btn pre" id="prePreBtn" onClick="showpic('','pre')" ></div>
+				<div title="{:L('custom_btnnext_title')}" class="btn next" id="preNextBtn" onClick="showpic('','next')"></div>
+				</if>
+			</div>
+			<if condition="$imagesum gt 1">
+			<div class="cl" style="text-align:center;width:100%;">
+				<ul class="pagenation" style="width:{eval echo $imagesum*16>400?400:$imagesum*16}px;margin: 5px auto 0;">
+				 <volist name="images" key="key" id="value">
+					<li id="pagenation_{$key-1}" <if condition="($key-1) eq 0">class="current"</if> onclick="showpic('{$key-1}');"></li>
+				 </volost>
+				</ul>
+			</div>
+			</if>
+			<script type="text/javascript">
+				var current=0;
+				var total=$imagesum;
+				function showpic(num,dir){
+					var obj=$E('preview');
+					if(!num) num=current;
+					if(dir=='pre') {
+						if(num<=0) num=total-1;
+						else num=num-1;
+					}else if(dir=='next'){
+						if(num>=total-1) num=0;
+						else num=num+1;
+					}
+					current=num;
+					obj.style.left=-num*450+'px';
+					jQuery('.pagenation li').removeClass('current');
+					jQuery('#pagenation_'+num).addClass('current');
+				}
+				if(!getcookie('view_app_{$app[appid]}')){
+					ajaxget("{:U('desktop/Market/ajax',array('do'=>'updateview','appid'=>$app[appid]))}");
+					setcookie('view_app_{$app[appid]}',86400);
+				}
+			</script>
+			</if>
+		</div>
+	</div>
+	<div class="column3" style="width:480px; display:none">
+		<a id="comment"></a>
+		<div id="comment_containter_{$app[appid]}">
+		<script src="../Public/js/comment.js" type="text/javascript" reload="1"></script> 
+		<script type="text/javascript" reload="1">
+			ajaxget("{:U('desktop/Market/ajax',array('do'=>'comment','appid'=>$app[appid]))}",'comment_containter_{$app[appid]}','ajaxwaitid');
+		</script>
+		</div>
+	</div>
+</div>
+<include file="../Public/_footer_ajax" />

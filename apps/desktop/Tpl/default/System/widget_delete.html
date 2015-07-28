@@ -1,0 +1,25 @@
+<include file="../Public/_header_ajax" />
+<h3 class="flb">
+	<em id="return_{$_GET[handlekey]}">{:L('widget_delete')} </em>
+	<if condition="$_REQUEST['inajax']"> <span><a href="javascript:;" onclick="hideWindow('{$_GET[handlekey]}');" class="flbc" title="{:L('close')}">{:L('close')}</a></span></if>
+</h3>
+<form id="deletewidgetform_{$gid}" name="deletewidgetform_{$gid}" method="post" autocomplete="off" action="{:U('desktop/System/doWidgetDelete')}" <if condition="$_REQUEST['inajax']"> onsubmit="ajaxpost(this.id, 'return_{$_GET[handlekey]}');"</if>>
+	<input type="hidden" name="referer" value="{$referer}" />
+	<input type="hidden" name="deletesubmit" value="true" />
+	<input type="hidden" name="gid" value="{$gid}" />
+	<input type="hidden" name="uid" value="{$uid}" />
+	<input type="hidden" name="ukey" value="{$ukey}" />
+	<input type="hidden" name="formhash" value="{FORMHASH}" />
+	<if condition="$_REQUEST['inajax']"> <input type="hidden" name="handlekey" value="{$_GET[handlekey]}" /></if>
+	<div class="c">{:L('widget_delete_message')}</div>
+	<p class="o pns">
+		<button type="submit" name="deletesubmitbtn" value="{:L('delete')}" class="pn pnc"><strong>{:L('delete')}</strong></button>
+	</p>
+</form>
+<script type="text/javascript" reload="1">
+	function succeedhandle_{$_GET['handlekey']}(url, message, values) {
+		_widget.Delete(values['gid']);
+		hideWindow('{$_GET[handlekey]}');
+	}
+</script>
+<include file="../Public/_footer_ajax" />

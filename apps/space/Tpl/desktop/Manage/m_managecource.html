@@ -1,0 +1,260 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_manage_leftmenu" />
+   <div class="trunk_right">
+                 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="keycourse" /><span class="title">课程表</span><span class="add"><a href="javascript:void(0);" onclick="clickshow()">[课程设置]</a></span></div>
+                 <div class="right_contents" id="add_announce" style="display:none;">
+                   <div class="clear10"></div>
+                   <form action="__URL__&act=doSetCourse" method="POST" onsubmit="return checkData();" enctype="multipart/form-data">
+                   		<input name="classid" type="hidden" value="{$classid}" />
+                       <table  width="96%" cellpadding="0" cellspacing="0" border="0" style=" padding:0 10px;">
+                         <tr>
+                            <th  height="25" colspan="4" align="left"><font color="#FF0000">*请选择课程安排</font></th>
+                         </tr>
+                         <tr>
+                            <th  height="20" width="80"  align="right">早自习:</th>
+                            <td class="con_input"  align="left">
+                            <select name="zzxcourse" class="maxlength">
+                              <option value="0" <eq name="classinfo['sns_class']['zzx']" value="0">selected</eq>>0</option>
+                              <option value="1" <eq name="classinfo['sns_class']['zzx']" value="1">selected</eq>>1</option>
+                              <option value="2" <eq name="classinfo['sns_class']['zzx']" value="2">selected</eq>>2</option>
+                              <option value="3" <eq name="classinfo['sns_class']['zzx']" value="3">selected</eq>>3</option>
+                            </select></td>
+                            <th  height="20" width="80" align="right" class="coursetime">上午:</th>
+                            <td class="con_input" align="left"><select name="morcourse" class="maxlength">
+                              <option value="0" <eq name="classinfo['sns_class']['zw']" value="0">selected</eq>>0</option>
+                              <option value="1" <eq name="classinfo['sns_class']['zw']" value="1">selected</eq>>1</option>
+                              <option value="2" <eq name="classinfo['sns_class']['zw']" value="2">selected</eq>>2</option>
+                              <option value="3" <eq name="classinfo['sns_class']['zw']" value="3">selected</eq>>3</option>
+                              <option value="4" <eq name="classinfo['sns_class']['zw']" value="4">selected</eq>>4</option>
+                              <option value="5" <eq name="classinfo['sns_class']['zw']" value="5">selected</eq>>5</option>
+                              <option value="6" <eq name="classinfo['sns_class']['zw']" value="6">selected</eq>>6</option>
+                            </select></td>
+                            <th  height="20" width="80" align="right" class="coursetime">下午:</th>
+                            <td class="con_input"><select name="aftcourse" class="maxlength">
+                              <option value="0" <eq name="classinfo['sns_class']['xw']" value="0">selected</eq>>0</option>
+                              <option value="1" <eq name="classinfo['sns_class']['xw']" value="1">selected</eq>>1</option>
+                              <option value="2" <eq name="classinfo['sns_class']['xw']" value="2">selected</eq>>2</option>
+                              <option value="3" <eq name="classinfo['sns_class']['xw']" value="3">selected</eq>>3</option>
+                              <option value="4" <eq name="classinfo['sns_class']['xw']" value="4">selected</eq>>4</option>
+                              <option value="5" <eq name="classinfo['sns_class']['xw']" value="5">selected</eq>>5</option>
+                              <option value="6" <eq name="classinfo['sns_class']['xw']" value="6">selected</eq>>6</option>
+                            </select></td>
+                            <th  height="20" width="80" align="right" align="center">晚自习:</th>
+                            <td class="con_input"><select name="wzxcourse" class="maxlength">
+                              <option value="0" <eq name="classinfo['sns_class']['wzx']" value="0">selected</eq>>0</option>
+                              <option value="1" <eq name="classinfo['sns_class']['wzx']" value="1">selected</eq>>1</option>
+                              <option value="2" <eq name="classinfo['sns_class']['wzx']" value="2">selected</eq>>2</option>
+                              <option value="3" <eq name="classinfo['sns_class']['wzx']" value="3">selected</eq>>3</option>
+                            </select></td>
+                            <td class="con_input"><button name="submit" type="submit"  class="space_btn"/>保存设置</td>
+                         </tr>
+                       </table>
+                   </form>
+                   <div class="clear10"></div>
+                 </div>
+                 <div class="manage_course" id="nn">
+                    <table width="80%" border="1" cellspacing="0" cellpadding="0" class="tab_course" style=" float:left; margin-left:10px;" id="table1">
+                      <tbody>
+                      <tr>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">星期一</th>
+                        <th scope="col">星期二</th>
+                        <th scope="col">星期三</th>
+                        <th scope="col">星期四</th>
+                        <th scope="col" style=" border-right:0;">星期五</th>
+                      </tr>
+                      </tbody>
+                      
+                      <php>$num1=1;$num2=2;$num3=3;$num4=4;</php>
+                      <tbody id="zzx">{$classinfo['sns_class']['zzx']|getCourse=###,$result['zzx'],$num1,''}</tbody>
+                      <php>if($classinfo['sns_class']['zzx']){</php>
+                      <tbody><tr><th colspan='6' align='center' style=" border-right:0px;">早休</th></tr></tbody>
+                      <php>}</php>
+                      <tbody id="zw">{$classinfo['sns_class']['zw']|getCourse=###,$result['zw'],$num2,''}</tbody>
+                      <php>if($classinfo['sns_class']['xw']){</php>
+                      <tbody><tr><th colspan='6' align='center' style=" border-right:0px;">午休</th></tr></tbody>
+                      <php>}</php>
+                      <tbody id="xw">{$classinfo['sns_class']['xw']|getCourse=###,$result['xw'],$num3,$classinfo['sns_class']['zw']}</tbody>
+                      <php>if($classinfo['sns_class']['wzx']){</php>
+                      <tbody><tr><th colspan='6' align='center' style=" border-right:0px;">晚休</th></tr></tbody>
+                      <php>}</php>
+                      <tbody id="wzx">{$classinfo['sns_class']['wzx']|getCourse=###,$result['wzx'],$num4,''}</tbody>
+                    </table>
+                    <table width="15%" border="1" cellspacing="0" cellpadding="0" class="tab_course" style=" float:right; margin-right:10px;"  id="table2">
+                      <tr>
+                          <th scope="col">待选课程</th>
+                      </tr>
+                      <volist name="subject" id="vo">
+                        <tr>
+                          <td scope="col"><input name="kc" type="hidden" value="{$vo['subjectid']}">{$vo['subjectid']|get_Datacodename}</td>
+                        </tr>
+                      </volist>
+                      <tr>
+                          <td scope="col"><input name="kc" type="hidden" value="0"><font color="#FF0000">清除标签</font></td>
+                      </tr>
+                    </table>
+                    <div class="clear10"></div>
+                    <div class="save_course"><a href="javascript:void(0);" onclick="course_save()"><img src="__THEME__/space/images/sub_save.gif" /></a></div>
+                    <div class="clear"></div>
+                 </div>
+               </div>
+
+<include file="../Public/_footer" />
+<script type="text/javascript">
+function clickshow()
+{
+  $('#add_announce').toggle();
+}
+function course_save()
+{
+	var arr=new Array();
+	var m=0;
+	$("#zzx td").each(function(i){
+		obj=$(this).attr('val');
+		object=$(this).find('input').val();
+		if(object)
+		{
+		  festival=parseInt(i/5)+1;
+		  weekday=i%5+1;
+		  data=obj+','+festival+','+weekday+','+object;
+		  arr[m]=data;
+		  m++;
+		}
+    });
+	$("#zw td").each(function(i){
+		obj=$(this).attr('val');
+		object=$(this).find('input').val();
+		if(object)
+		{
+		  festival=parseInt(i/5)+1;
+		  weekday=i%5+1;
+		  data=obj+','+festival+','+weekday+','+object;
+		  arr[m]=data;
+		  m++;
+		}
+    });
+	$("#xw td").each(function(i){
+		obj=$(this).attr('val');
+		object=$(this).find('input').val();
+		if(object)
+		{
+		  festival=parseInt(i/5)+1;
+		  weekday=i%5+1;
+		  data=obj+','+festival+','+weekday+','+object;
+		  arr[m]=data;
+		  m++;
+		}
+    });
+	$("#wzx td").each(function(i){
+		obj=$(this).attr('val');
+		object=$(this).find('input').val();
+		if(object)
+		{
+		  festival=parseInt(i/5)+1;
+		  weekday=i%5+1;
+		  data=obj+','+festival+','+weekday+','+object;
+		  arr[m]=data;
+		  m++;
+		}
+    });
+	
+	var url="{:U('space/Manage/doManageCourse')}";
+    $.post(url,{data:arr,classid:<php>echo $classid;</php>},function(result){
+	   if(result==1)
+	   {ui.success("保存成功");}
+	   else
+	   {ui.error("保存失败");}
+    });
+}
+</script>
+<style type="text/css">
+.mouseOver
+{background-color:#ccc;}
+.selected
+{ background-color:#ccc;}
+</style>
+<script type='text/javascript'>	
+		$(document).ready(function(){
+			var tbody = $('#nn');
+			var tb1 = $('#table1');
+			var tb2 = $('#table2');
+			var rows = tbody.find("td");
+			var row1 = tb1.find("td");
+			var row2 = tb2.find("td");
+			var selectedRow1;
+			var selectedRow2;
+			var object;
+			var obj;
+			row2.mouseover(function(){
+			 tbody.css('cursor', 'move');
+			});
+			//压下鼠标时选取行
+			row2.mousedown(function(){
+				$(this).addClass('selected');
+				selectedRow2 = this;
+				object=$(selectedRow2).html();
+				obj=$(selectedRow2).find('input').val();
+				return false;	//防止拖动时选取文本内容，必须和 mousemove 一起使用
+			});
+			//释放鼠标键时进行插入
+			row2.mouseup(function(){
+				if(selectedRow2)
+				{
+					$(this).removeClass('selected');
+					$(selectedRow2).removeClass('selected');
+					tbody.css('cursor', 'default');
+					selectedRow2 = null;						
+				}								
+			});
+			
+			//释放鼠标键时进行插入
+			row1.mouseup(function(){
+				if(selectedRow2)
+				{
+					if(selectedRow2 != this)
+					{   
+						if(obj==0)
+						$(this).html(""); //插入
+						else
+						$(this).html(object); //插入
+						$(selectedRow2).html(object);
+					}
+					$(this).removeClass('selected');
+					$(selectedRow2).removeClass('selected');
+					tbody.css('cursor', 'default');
+					selectedRow2 = null;						
+				}								
+			});
+			//标示当前鼠标所在位置
+			row1.hover(
+				function(){	
+				   			
+					if(selectedRow2 && selectedRow2 != this)
+					{
+						$(this).addClass('selected');	//区分大小写的，写成 'mouseover' 就不行						
+					}						
+				},
+				function(){
+					if(selectedRow2 && selectedRow2 != this)
+					{
+						$(this).removeClass('selected');
+					}	
+				}
+			);
+			tbody.mousemove(function(){
+				return false;	//防止拖动时选取文本内容，必须和 mousedown 一起使用
+			});
+			//当用户压着鼠标键移出 tbody 时，清除 cursor 的拖动形状，以前当前选取的 selectedRow			
+			tbody.mouseover(function(event){
+				event.stopPropagation(); //禁止 tbody 的事件传播到外层的 div 中
+			});	
+			
+		})
+		//表格排序
+		
+		
+		
+    </script>
+
+    

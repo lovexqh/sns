@@ -1,0 +1,21 @@
+<style type="text/css">
+.content{ margin:15px; width:400px;line-height:30px;}
+.content ul{}
+.content li{ float:left; width:100px;}
+.clean{ clear:both;}
+.sub{ margin-left:185px;}
+</style>
+<div class="content">
+	<form method="post" action="__URL__&act=doAddSubject" name="subject" id="subject" enctype="multipart/form-data">
+		<input name="classid" type="hidden" value="{$classid}" />
+        <div class="content">
+        	<ul>
+			<volist name="dictionary" id="vo">
+				<li><input type="checkbox" id="subjectid" name="subjectid[]" value="{$vo.datacode}"  <php>if(in_array($vo['datacode'],$subjectlist)){</php>checked="checked"<php>}</php> />{$vo.dataname}</li>
+			</volist>
+            </ul>
+			<div class="clean"></div>
+		</div> 
+		<input type="submit"  value="" class="refer_btn"/>
+	</form>
+</div>

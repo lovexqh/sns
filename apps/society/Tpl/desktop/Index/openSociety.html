@@ -1,0 +1,164 @@
+<script type="text/javascript">
+	$('html').css('height', '100%');
+	$('html').css('width', '100%');
+	$('html').css('overflow', 'hidden');
+	$('.close').click(function() {
+		$('html').css('height', '100%');
+		$('html').css('width', '100%');
+		$('html').css('overflow', 'auto');
+	});
+	function checkSocietyName(){
+		var societyName  = leftTrim(rightTrim($("input[name=societyName]").val()));
+		$.post(U('society/Index/checkSocietyName'),{
+			societyName : societyName
+			},function(data){
+			if(data==1){
+				$('#errors').html('名称已存在');
+				return false;
+			}else{
+				$('#errors').html('');
+				return true;
+			}
+		});
+	}
+	function check() {
+		var societyName  = leftTrim(rightTrim($("input[name=societyName]").val()));
+		var sign         = leftTrim(rightTrim($("textarea[name=sign]").val()));
+		var tags         = leftTrim(rightTrim($("input[name=tags]").val()));
+		var icon         = $("input[name=icon]").val();
+		var visitable    = $("input[name=visitable]:checked").val();
+		var joinable     = $("input[name=joinable]:checked").val();
+		var downloadable = $("input[name=downloadable]:checked").val();
+		if(!societyName){
+			ui.error("请填写圈子名称!");
+			return false;
+		}
+        if(!sign){
+            ui.error("请填写圈子签名!");
+            return false;
+        }
+		if( getBytesCount(societyName)>16 ){
+			ui.error("圈子名称不能超过16个字符!");
+			return false;
+		}
+		if( getBytesCount(sign)>160 ){
+			ui.error(getBytesCount(sign));
+			ui.error("圈子签名不能超过160个字符!");
+			return false;
+		}
+		if( !tags ){
+			ui.error("请填写圈子标签!");
+			return false;
+		}
+		tags = tags.replace(/，/g,',');
+		tags = tags.replace(/ /g,'');
+		tagsList = tags.split(',');
+		if(tagsList.length>5){
+			ui.error("圈子标签数最多5个！");
+			return false;
+		}
+		for(var i=0;i<tagsList.length;i++){
+			if(!tagsList[i]){
+				ui.error("标签中逗号与逗号之间不能为空！");
+				return false;
+			}
+			if(getBytesCount(tagsList[i])>8){
+				ui.error("标签中逗号与逗号之间长度不能超过8个字符！");
+				return false;
+			}
+		}
+		if( !visitable ){
+			ui.error("请选择浏览权限！");
+			return false;
+		}
+		if( !joinable ){
+			ui.error("请选择成员加入权限！！");
+			return false;
+		}
+		if( !downloadable ){
+			ui.error("请选择圈子共享权限！");
+			return false;
+		}
+		if(icon){
+			var lastword = icon.lastIndexOf(".");
+			var logotype = icon.substring(lastword,icon.length).toUpperCase();
+			if(logotype != ".BMP" && logotype != ".PNG" && logotype != ".GIF" && logotype != ".JPG" && logotype != ".JPEG"){ 
+				ui.error("图片限于bmp,png,gif,jpeg,jpg格式");
+				return false;
+		    }
+		}
+		$.post(U('society/Index/checkSocietyName'),{
+			societyName : societyName 
+			},function(data){
+			if(data==1){
+				$('#errors').html('名称已存在');
+				ui.error('名称已存在，请输入其他名称！');
+				return false;
+			}else{
+				$('#errors').html('');
+				$('#quanzi').submit();
+			}
+		});
+	}
+</script>
+	<div style="width: 770px;height:500px;overflow-Y: scroll;background-color: #F9F9F9;" class="open">
+		<div class="jiben"></div>
+		<div>
+			<form id="quanzi" action="{:U('society/Index/doOpenSociety')}" method="post" enctype="multipart/form-data">
+				<table style="margin-left: 25px; text-align: left;">
+					<tr>
+						<td><span class="red">*</span>圈子名称：</td>
+						<td><input type="text" name="societyName" style="width: 548px;" onblur="checkSocietyName();">
+						<span style="color: red;" id="errors"></span>
+						</td>
+					</tr>
+					<tr>
+						<td><span class="red">*</span>圈子签名：</td>
+						<td><textarea name="sign" style="resize: no;height: 50px;width: 548px;"></textarea></td>
+					</tr>
+					<tr>
+						<td><span class="red">*</span>圈子标签：</td>
+						<td><input type="text" name="tags" style="width: 548px;">
+							<div style="color: red; margin-top: 5px;">
+								标签最多设置5个，多个标签之间请用逗号做间隔。
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>圈子Logo：</td>
+						<td><input type="file" name="icon" id="societyIcon"></td>
+					</tr>
+					<tr>
+						<td><span class="red">*</span>浏览权限：</td>
+						<td><input type="radio" name="visitable" value="1">所有用户都可进入</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="radio" name="visitable" value="0">仅圈子成员可进入</td>
+					</tr>
+					<tr>
+						<td><span class="red">*</span>成员加入：</td>
+						<td><input type="radio" name="joinable" value="1">需要验证</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="radio" name="joinable" value="0">不需要验证</td>
+					</tr>
+					<tr>
+						<td><span class="red">*</span>圈子共享：</td>
+						<td><input type="radio" name="downloadable" value="1">允许所有用户下载圈子共享文档</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="radio" name="downloadable" value="0">仅圈子成员可下载圈子共享文档</td>
+					</tr>
+				</table>
+					<input type="reset" style="display: none;" >
+			</form>
+		</div>
+		<div style="clear: both; margin-top: 15px; text-align: center;">
+			<a class="kaiqi" onclick="check();"></a>
+			<a onclick="$('input[type=reset]').click();" class="chongzhi"></a>
+		</div>
+		<div style="clear: both;"></div>
+	</div>

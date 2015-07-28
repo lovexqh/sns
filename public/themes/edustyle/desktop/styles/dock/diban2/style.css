@@ -1,0 +1,17 @@
+/* dock条部分开始*/
+#dock_bottom { position:absolute;height:70px;bottom:0px;left:50%; z-index:10;}
+.dock_container{position:absolute;	z-index:-1;	bottom:0px;	height:50px;}
+.dock_bottom_back{
+	bottom:0px;
+        height:70px;
+        width:100%;
+	overflow:hidden;
+	background:url('thumb.jpg') repeat-x;
+}
+.dock_img{	display:none;}
+
+#dock_bottom .dock{height:70px;top:10px;}
+
+
+
+/* dock条部分结束*/

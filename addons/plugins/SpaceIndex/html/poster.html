@@ -1,0 +1,16 @@
+<!-- 资源列表 -->
+<if condition="($num neq 0)">
+    <div class="contc">
+        <div class="coltop">招贴 <span>截止目前为止：社区共有招贴{$num}个</span> <a href="{:U('poster/Index/index')}" title="招贴应用" target="_blank">>> 点击进入</a> </div>
+        <ul class="ccl relist" style="width: 878px; overflow: hidden; margin-right: 0px;border-right:1px solid #E4E4E4;">
+            <volist name="newlist" id="nl" key="i">
+            <li style="width:436px;float:left;overflow:hidden;clear:none;">
+                <div class="red1" style="width: 310px;"><a href="{:U('home/Space/index',array('uid'=>$nl['uid']))}" target="_blank">{$nl['uid']|getUserName}</a> 发布 <a target="_blank" href="{:U('poster/Index/posterDetail',array('id'=>$nl['id']))}" title="{$nl['title']}">{$nl['title']}</a> </div>
+                <div class="red2">{$nl['cTime']|date="Y.m.d",###}</div>
+            </li>
+            </volist>
+        </ul>    
+		<div class="c"></div>
+        <div class="cb"></div>
+    </div>
+</if>

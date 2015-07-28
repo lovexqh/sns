@@ -1,0 +1,45 @@
+<style type="text/css">
+.tbody{ width:300px; height:200px;}
+.tbody ul{ width:180px; margin:auto; padding:0; margin-top:20px;}
+.tbody li{ float:left;height:25px; line-height:25px;}
+</style>
+<div class="tbody">
+<form method="post" action="{:U('/Class/do_editCourse')}" name="do_monitor" enctype="multipart/form-data" onsubmit="return checkCourse(this);">
+   <input type="hidden" name="fid" value="{$data[fid]}" />
+   <input type="hidden" name="wid" value="{$data[wid]}" />
+   <input type="hidden" name="classid" value="{$classid}" />
+   <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td height="10" colspan="2"></td>
+    </tr>
+    <tr>
+     <td>选择学科：</td>
+     <td>
+       <select name="subjectid">
+         <option>请选择</option>
+         <volist name="list" id="vo">
+          <option value="{$vo.subjectid}">{$vo['subjectid']|getCourseName}</option>
+         </volist>
+       </select>
+     </td>
+    </tr>
+    <tr>
+     <td height="10" colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><input type="submit" name="submit"  value=" 提 交 "/></td>
+    </tr>
+    </table>
+    
+</form>
+</div>
+<script language="javascript" type="text/javascript">
+function checkCourse(obj){
+	if(obj.subjectid.value==''){
+		ui.error('请选择课程!');
+		obj.subjectid.focus();
+		return false;
+	}
+	return true;
+}
+</script>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/js/desktop/tbox/box.css" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/themes/dskui/ui.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/css/reset.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/css/list.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/css/detail.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/desktop/css/table.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/desktop/css/layout.css?{$verhash}{:time()}" />
+<link rel="stylesheet" type="text/css" href="__THEME__/form.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/css/index.css?{$verhash}{:time()}" />
+<link type="text/css" rel="stylesheet" href="__THEME__/square/css/blog.css?{$verhash}{:time()}" />
+
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/easyui/easyloader.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+<script src="__PUBLIC__/js/jquery.isotope.min.js"></script>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body style="background:none;">
+<div class="wrapper" style="margin-top:39px;">
+  <div class="header" style="display:none;">
+    <h1><a href="{:U('desktop/Index/index')}" style="color:#FFF;">道学·网络空间</a></h1>
+    
+    <session name="userInfo">
+    <div class="top_bar"><a href="#" class="avatar"><img src="{$mid|getUserFace='s'}" width="26" height="26"></a><span> {$mid|getUserName}</span>
+       <!--<div class="message"> <a href="{:U('home/message/index')}" >消息</a> 
+        <ul style="display:none;">
+          <li><a href="#"></a></li> 
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+        </ul>
+      </div>
+    <a href="{:U('home/Public/acount')}">设置</a><span>|</span>--><!-- <a href="{:U('home/Public/logout')}">退出</a> -->
+    </div>
+  
+  </session>
+  <nosession name="userInfo">  
+    <div class="top_bar"><a href="#" class="avatar">
+    <a href="{:U('home/Public/register')}">注册</a><span>|</span><a href="{:U('home/Public/login')}">登录</a></div>	
+  </nosession>
+  </div>
+</div>

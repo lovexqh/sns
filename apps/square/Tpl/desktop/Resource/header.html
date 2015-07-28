@@ -1,0 +1,83 @@
+
+<style type="text/css">
+.selects{ background:#1874B7;}
+</style>
+  <img width="960" height="113" src="__THEME__/square/images/resource_banner.jpg" style="margin:auto; display:block;" />
+  <div class="nav_wrapper">
+    <ul class="nav">
+      <li class="selects"><a href="{:U('square/Resource/index')}">首页</a></li>
+      
+      <volist name="ResourceType.top" id='vo'>
+            <li>
+               <div class="line"></div>
+            </li>
+            <li><a href="{:U('square/Resource/getList',array(type=>$vo['DataCode']))}">{$vo.DataName}</a></li>
+
+      </volist>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/Resource/chart')}">排行榜</a></li>
+    </ul>
+   <!-- <a href="#" class="map">
+        <img src="__THEME__/square/desktopimg/nav_sty.gif" />
+        <span>数据地图</span>
+    </a>-->
+  </div>
+  <div class="searchBar"> <strong>快速搜索您需要的资源</strong>
+    <div class="search">
+      <form id="form_search" action="__URL__&act=doSearch" method="get">
+        <input name="app" type="hidden" value="square" />
+        <input name="mod" type="hidden" value="resource" />
+        <input name="act" type="hidden" value="doSearch" />
+        <input name="type" type="hidden" value="" />
+         <div class="navigation">
+         <div class="course">
+         <span class="category">全部</span>
+         <img src="../Public/images/arrows.gif" width="23" height="13" style="float:right; margin:11px 5px 0 0;" />
+          <ul style="display:none;">
+            <volist name="ResourceType.all" id='vo'>
+            <li><a onclick="setSearchType('type','{$vo.DataCode}','{$vo.DataName}')">{$vo['DataName']}</a></li>
+            </volist>
+          </ul>
+          </div> <input type="text" name="tags" id="tags" class="input" value="<php>echo $keyword ? $keyword : '请输入您要搜索的资源关键词，例文学';</php>"/>
+          </div> 
+         
+        <input type="submit" class="btn" value="快乐易搜" />
+       <!-- <a href="#">高级搜索</a>-->
+      </form>
+    </div>
+  </div>
+    <script language="javascript" type="text/javascript">
+$(function() {
+	$(".course").mouseenter(function(){
+		$(this).find("ul").css("display","");
+	}).mouseleave(function(){
+		$(this).find("ul").css("display","none");
+	});
+	
+	$(".search input[name='tags']").focus(function(){
+		if($(this).val()=='请输入您要搜索的资源关键词，例小学语文') $(this).val('');
+	}).blur(function(){
+		if($(this).val()=='') $(this).val('请输入您要搜索的资源关键词，例小学语文');
+	});
+});
+function setSearchType(name, val, text) {
+	$("#form_search input[name='type']").val(val);
+	$("#form_search span.category").text(text);
+	$(".course ul").css("display","none");
+}
+</script>
+   <div class="navigate_info"> 
+   	<div>
+       <strong>您当前的位置：</strong>
+        <span><a href="{:U('square/Resource/index')}">资源中心首页</a></span>
+           <volist name="path" id="vo">
+           	 <span>&gt;&gt;<a href="{:U('square/Resource/getList',array(cateid=>$vo['id']))}">{$vo.cname}</a></span>
+           </volist>
+       <php>if($path['title']){</php>
+       		&gt;&gt;<a href="{:U('square/Resource/show',array(id=>$path['title']['id']))}">{$path['title']['cname']}</a>
+       <php>}</php>
+    </div>
+    <div class="clear"></div>
+   </div>

@@ -1,0 +1,59 @@
+<!--新功能上线引导区 - 把这个层，做成全站最高优先级，排在页面最顶端-->
+<div class="newFeatures-blackout" id="addon_new_feature_blackout" style="width:100%;height:100%;*height:1500px"></div>
+<div id="addon_new_feature_layer" class="wrap_newOnline" style="position:absolute;top:150px;*left:0;margin:0 auto;width:100%;">
+	<div class="main_newOnline">
+        <!--<div class="header"><div class="logo_new"><a href="{:U('home/Index')}"></a></div></div>-->
+        <div class="box_slides">
+		<div id="example">
+			<div id="slides">
+				<div class="slides_container">
+					<volist name="picdata" id="vo">
+					<a href="javascript:void(0)"><img src="{*UPLOAD_URL}/{$vo.savepath}{$vo.savename}" width="722" height="402" alt="Slide {$k+1}"></a>
+					</volist>
+				</div>
+				<a href="javascript:void(0)" class="prev hover"></a>
+				<a href="javascript:void(0)" class="next hover"></a>
+			</div>
+            <a class="del_guide" href="#" onclick="close_new_feature_layer();"></a>
+		</div>
+        </div>
+    </div>
+</div>
+<script>
+var isClose = false;
+$(function(){
+    var count = "<php>echo count($picdata);</php>";
+	//设置背景高度
+	$('#addon_new_feature_blackout').css('height',document.body.scrollHeight+200);
+	//设置图片滚动 - 可以根据效果简化，只是先左右移动
+	$('#slides').slides({
+		preload: true,
+		preloadImage: 'img/loading.gif',
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		animationStart:function(current){
+		    if(current == count){
+		        close_new_feature_layer();
+		        isClose = true;
+		    }
+		}
+	});
+});
+//关闭图层-记录已读
+function close_new_feature_layer(){
+    if(isClose) return;
+	//关掉层
+	$('#addon_new_feature_layer').hide();
+	$('#addon_new_feature_blackout').hide();
+	//设置cookie
+	var version = '{$version}';
+	$.post( '{:Addons::createAddonUrl('NewFeatures','setVersion',array('version'=>$version))}',{version:version},function(json){
+    	if( json ==-1 ){
+			//设置失败
+			alert(json);
+		}
+    });
+}
+</script>
+<!--/新功能上线引导区-->

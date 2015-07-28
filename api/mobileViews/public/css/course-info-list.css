@@ -1,0 +1,66 @@
+#wrapper{
+    background: #F3F4F6;
+}
+#thelist{
+    width: 100%;
+}
+#thelist li{
+    position: relative;
+    height: 145px;
+    border-bottom:1px solid #E2E3E5;
+    /*border-top:1px solid #fff;*/
+}
+#thelist div{
+    position: absolute;
+    /*height: 145px;*/
+    word-break:break-all;
+}
+.left,.middle,.right{
+    margin-top:5px;
+}
+.left{
+    width: 25%;
+    /*border: 1px solid red;*/
+}
+h3{
+    height: 145px;
+    padding-right: 3px;
+    font-size: 16px;
+}
+.middle{
+    left:25%;
+    width: 60%;
+    /*border: 1px solid yellow;*/
+}
+
+.info{
+    width: 100%;
+    height: 35px;
+}
+.jieci{
+    top:35px;
+}
+.week{
+    top:70px;
+}
+.address{
+    top:105px;
+}
+.info span{
+    display: block;
+    position: absolute;
+    top:13px;
+    left:35px;
+}
+.info div{
+    top:13px;
+    left:70px;
+}
+
+.right{
+    left:85%;
+    width: 15%;
+    /*border: 1px solid #0000ff;*/
+    font-size: 15px;
+    color: #ffa34f;
+}

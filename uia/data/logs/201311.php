@@ -1,0 +1,59 @@
+<?PHP exit;?>	administrator	172.16.169.41	1383289048	login	succeed
+<?PHP exit;?>		172.16.169.41	1383289241	logout	
+<?PHP exit;?>		172.16.169.41	1383289241	logout	
+<?PHP exit;?>	Administrator	172.16.169.175	1383550477	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.5	1383638043	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.5	1383704389	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.5	1383794101	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.5	1383876828	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.8	1384151619	login	succeed
+<?PHP exit;?>	administrator	172.16.169.220	1384152912	login	succeed
+<?PHP exit;?>		172.16.169.220	1384153731	logout	
+<?PHP exit;?>		172.16.169.220	1384153731	logout	
+<?PHP exit;?>	hao373738397hao@163.com	172.16.169.234	1384154476	login	error: user=hao373738397hao@163.com; password=haohao7700
+<?PHP exit;?>	administrator	172.16.169.220	1384156777	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384159949	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.8	1384237937	login	succeed
+<?PHP exit;?>	administrator	172.16.169.220	1384241854	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.8	1384310342	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384317098	login	succeed
+<?PHP exit;?>	administrator	172.16.202.101	1384329199	login	succeed
+<?PHP exit;?>	administrator	172.16.169.220	1384329930	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.8	1384392499	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384399154	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384411642	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384415003	login	succeed
+<?PHP exit;?>	Administrator	172.16.169.88	1384501451	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384504377	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384510097	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384563950	login	succeed
+<?PHP exit;?>	lhyfe@sohu.com	172.16.172.8	1384565491	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384567980	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384569973	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384582124	login	succeed
+<?PHP exit;?>	administrator	172.16.169.234	1384587544	login	succeed
+<?PHP exit;?>	Administrator	172.16.169.55	1384739946	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384740793	login	succeed
+<?PHP exit;?>	administrator	172.16.169.71	1384748716	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384823957	login	succeed
+<?PHP exit;?>	Administrator	172.16.169.55	1384825290	login	succeed
+<?PHP exit;?>	administrator	172.16.169.71	1384846726	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384909790	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384912656	login	succeed
+<?PHP exit;?>	administrator	172.16.169.183	1384917968	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384924069	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384930941	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384933032	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384937767	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384995709	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1384997901	login	succeed
+<?PHP exit;?>	administrator	172.16.169.183	1385000472	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1385003442	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1385008522	login	succeed
+<?PHP exit;?>	administrator	172.16.169.251	1385096910	login	succeed
+<?PHP exit;?>	administrator	172.16.169.207	1385348371	login	succeed
+<?PHP exit;?>	administrator	172.16.169.207	1385353585	login	succeed
+<?PHP exit;?>	administrator	172.16.169.36	1385368126	login	succeed
+<?PHP exit;?>	administrator	172.16.169.237	1385430019	login	succeed
+<?PHP exit;?>	administrator	172.16.169.237	1385517639	login	succeed
+<?PHP exit;?>	administrator	172.16.169.207	1385714354	login	succeed

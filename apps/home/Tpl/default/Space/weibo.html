@@ -1,0 +1,70 @@
+<include file="header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script>
+var weibo = $.weibo({
+      timeStep : 10000
+});
+</script>
+  <div class="content">
+    
+    
+    <div>
+      <div class="c_left">
+ 
+	 <div class="weibo_menu_tabs">
+          <ul>
+            <volist name="space_menu" id="vo">
+              <li><a id="feed_colleague_item" rel="colleague"
+             		 style="width:65px; text-align:center; color:#333" 
+             	   ><span>{$vo}</span>
+                  </a>
+              </li>
+            </volist>
+          </ul>
+        </div> 
+ 
+ 
+ 
+        <!-- 个人主页微广播分类 -->
+        <eq name="type" value="weibo">
+          <div class="weibo_menu_tag" id="MenuSub">
+            <volist name="weibo_menu" id="vo">
+              <ul>
+                <li><a id="feed_colleague_item" rel="colleague" class="<if
+              condition="$weibo_type eq $key">on
+                  </if>
+                  "
+                  href="{:U('home/Space/weibo',array('uid'=>$uid,'weibo_type'=>$key))}"><span>{$vo}</span></a> </li>
+              </ul>
+            </volist>
+          </div>
+        </eq>
+        <!-- 微博内容显示 -->
+        <div class="weibo_list"> 
+          <!-- /个人主页微广播分类 -->
+          <if condition="$list">
+            <div class="feedBox">{:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>0, 'hidden_user'=>1))}</div>
+            <div class="page">{$list.html}</div>
+            <else />
+            {:Addons::hook('home_space_list', array('uid'=>$uid,'type'=>$type))} </if>
+        </div>
+		
+   
+      </div>
+      <include file="right" />
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+ 
+<!-- 页面主体内容end -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+
+<script type="text/javascript">var is_relink=true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script type="text/javascript">replace_link('.task_list');</script>
+
+

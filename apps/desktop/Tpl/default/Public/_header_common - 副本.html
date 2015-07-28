@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title><neq name="ts['site']['page_title']" value="">{$ts['site']['page_title']} {$ts['site']['site_name']}<else/>{$ts['site']['site_name']}</neq></title>
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<!--[if IE 9]>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<![endif]-->
+<php>$agent = empty( $_SERVER["HTTP_USER_AGENT"] ) ? $HTTP_SERVER_VARS['HTTP_USER_AGENT'] : $_SERVER["HTTP_USER_AGENT"];
+if(strpos($agent, "MSIE 9.0")){</php>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+<php>}</php>
+<meta name="generator" content="GSN {VERSION}" />
+<meta name="author" content="GSN" />
+<meta name="copyright" content="2012-2013 gridinfo.com.cn." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<base href="__ROOT__" />
+
+ <!--{csstemplate}-->
+ 	<script type="text/javascript" src="../Public/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="../Public/js/jquery.json-2.3.js"></script>
+    <script type="text/javascript" src="../Public/js/common.js?{$verhash}"></script>
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/base.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/common.css?{$verhash}" />
+    
+    
+    <script language="javascript" type="text/javascript">
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _URL_   = '{:getSiteUrl()}';
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _APP_PUBLIC_ = '../Public';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	</script>
+    
+<if condition="$basescript eq 'dsk'" >
+    <script type="text/javascript" src="../Public/js/fonteffect.js?{$verhash}"></script>
+    <if condition="$curmodule eq 'dskindex'" >
+    <script type="text/javascript" src="__ROOT__/apps/desktop/Lang/zh-cn/common.js?{$verhash}"></script>
+    <script type="text/javascript" src="../Public/js/_config.js?{$verhash}"></script>
+    <script type="text/javascript" src="../Public/js/index.js?{$verhash}"></script>
+    
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/index.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/message/message.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/window/widget/widget.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/widget/_widget.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/menu/default/_menu.css?{$verhash}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/thame/{$space.thame.folder}/style.css?{$verhash}" id="css_thame_{$space.thame.folder}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/window/{$space.thame.window}/_Window.css?{$verhash}" id="css_window_{$space.thame.window}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/browser/{$space.thame.browser}/_Browser.css?{$verhash}" id="css_browser_{$space.thame.browser}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/navbar/{$space.thame.topbar}/_navbar.css?{$verhash}" id="css_topbar" />
+	<link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/member/{$space.thame.member}/_member.css?{$verhash}" id="css_memberbar" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/filemanage/{$space.thame.filemanage}/_filemanage.css?{$verhash}" id="css_filemanage_{$space.thame.filemanage}" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/dock/{$space.thame.dock}/style.css?{$verhash}" id="css_dock" />
+    <link rel="stylesheet" type="text/css" href="__THEME__/desktop/styles/openfile/window_jd/_file.css?{$verhash}" /> 
+    </if>
+</if>
+    <style>body{background:none}</style>
+	<script type="text/javascript">
+	var DZZSCRIPT="__ROOT__";
+	var STYLEID = '{$style.styleid}';
+	var STATICURL = '__THEME__';
+	var IMGDIR = '__THEME__/images/common';
+	var VERHASH = '{$verhash}';
+	var charset = 'utf-8';
+	var discuz_uid = '{$uid}';
+	var cookiepre = '{$config.cookie.cookiepre}';
+	var cookiedomain = '{$config.cookie.cookiedomain}';
+	var cookiepath = '{$config.cookie.cookiepath}';
+	var showusercard = '{$setting.showusercard}';
+	var attackevasive = '{$config.security.attackevasive}';
+	var disallowfloat = '{$setting.disallowfloat}';
+	var creditnotice = "<php>if($setting['creditnotice']){echo $setting['creditnames'];}</php>";
+	var defaultstyle = '{$style.defaultextstyle}';
+	var REPORTURL = '$_G[currenturl_encode]';
+	var SITEURL = '__ROOT__';
+	var JSPATH = '../Public/js/';
+	var IMGPATH = '../Public/images/';
+	</script>
+<script type="text/javascript" src="../Public/js/common.js?{$verhash}"></script>
+<!--[if lt IE 9]>
+<script src="../Public/js/html5.js"></script>
+<![endif]-->
+
+</head>
+<body id="nv_dsk" unselectable="on" onselectstart="return event.srcElement.type== 'text';">
+<div id="append_parent" style="z-index:9999;"></div><div id="ajaxwaitid" style="z-index:9999;"></div>

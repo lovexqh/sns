@@ -1,0 +1,33 @@
+<include file="../Public/_header_ajax" />
+<style type="text/css">
+#content_icos{
+	height:100%;
+	overflow:hidden;
+}
+</style>
+
+<script type="text/javascript" reload="1">
+var data=new Array();
+<!--<if condition="!empty($json_data1)">--> 
+	var data1={$json_data1};
+	_config.sourcedata.icos[data1.icoid]=data1;
+	_config.sourceids.icos.push(data1.icoid);
+<!--</if>-->
+<!--<if condition="!empty($json)">--> 
+	var data={$json};
+	for(var id in data){
+		_config.sourcedata.icos[id]=data[id];
+		_config.sourceids.icos.push(id);
+	}
+<!--</if>-->
+<!--<if condition="!empty($json_folder)">--> 
+	var folderdata={$json_folder};
+	for(var fid in folderdata){
+		_config.sourcedata.folder[fid]=folderdata[fid];
+	}
+<!--</if>-->
+	var obj=new _filemanage('{$sid}','{$winid}',data,'{$container}');
+
+obj.showIcos('{$winid}');
+</script>	
+<include file="../Public/_footer_ajax" />

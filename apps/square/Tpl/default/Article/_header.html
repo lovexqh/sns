@@ -1,0 +1,94 @@
+<include file="__THEME__/member/header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/article.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/jquery.treeview.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.treeview.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.cookie.js"></script>
+
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<div class="containerOuter">
+	<div class="container">
+		<div class="containerInner">
+<!-- header start-->
+<header>
+<!-- 大头标题 start-->
+       <div class="header_banners"> </div>
+		<div class="header_navs">
+			<ul class="navs">
+				<li>
+				<a href="{:U('/Article/index')}"  <php>if(!$sc){</php>style=" background:#B8DBF9; color:#0A2AEE;"<php>}</php> >首页</a></li>
+			
+				<volist name="titles" id="li">
+				  <li>
+	<a href="{:U('/Article/myblog',array(id=>$li['id']))}"  <php>if($sc['id']==$li['id']){</php>style="background:#B8DBF9; color:#0A2AEE;"<php>}</php>>			{$li.category_name}</a></li>
+				</volist>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		
+</header>
+<!-- 头二标题 start-->
+				<php>if($Squarec){</php>
+				<div class="header_drop">
+					<ul class="drop">
+						<volist name="Squarec" id="li">
+							  <li><a href="{:U('/Video/search',array(id=>$li['id'],scid=>$sc['id']))}">{$li.category_name}</a><li>
+						</volist>
+					</ul>
+				</div>
+				<php>}</php>
+<!-- header_banner end-->
+<!-- where start-->
+			<div class="wheres">
+                <ul>
+                    <li style="color:#333;">
+                    <div><img src="__THEME__/square/images/room.gif"/></div>
+                    您现在的位置：
+                    </li>
+                    <li><a href="{:U('/Article/index')}">博客中心</a></li>
+					<php>if($sc){</php>
+                    <li>>><a href="{:U('/Article/myblog',array(id=>$sc['id']))}">{$sc.category_name}</a></li>
+					<php>}if($vName){</php>
+					<li><a href="{:U('/Article/myblog',array(id=>$sc['id']))}">>>{$vName.name}</a></li>
+					<php>}</php>
+					<div class="crumbs_right">
+						 <form action="__URL__&act=myblog" method="post">
+						 <input name="tags" value="" style=" width:260px; height:18px; line-height:20px;background:url(__THEME__/square/images/mirror.gif) no-repeat right;" />
+						<input type="submit" value="搜索" />
+						<a href="{:U('/Article/myblog')}" onfocus="blur()">按栏目检索</a>
+						</form>
+					</div>
+                </ul>
+				<div class="clear"></div>
+            </div>
+<!-- where end-->
+
+

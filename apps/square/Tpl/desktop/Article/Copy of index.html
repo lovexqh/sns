@@ -1,0 +1,158 @@
+<include file="_header" />
+<style type="text/css">
+.book_list dl{ float:left; width:240px; margin-top:10px; margin-bottom:10px;}
+.book_list dl dt{ float:left; margin-right:10px;}
+</style>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <include file="_left" />
+    <div class="content" id="bloglist">
+      
+      <div class="so_left"> 
+        <!--最新热门资源-->
+        <div class="box">
+          <div class="title">
+            <h2>最新文章</h2>
+            <!--<a href="#" class="update">换一批</a>-->
+            <div class="clear"></div>
+          </div>
+          <dl class="book_list"> 
+          <volist name="blog_new" id="li">
+            <dl>
+                <dt> 
+                    <a href="@{li.uid}" style="float:left; display:block;">
+                        <space uid="li.uid">{uavatar=m}</space>
+                    </a>
+                </dt>
+                <dd><a href="{:U('/Article/context',array(id=>$li['id']))}">{$li.title|getshort='14'}</a></dd>
+                <dd>作者：
+				<space uid="li.uid" class="co">{uname}</space>
+				</dd>
+                <dd>{$li.readCount}人已读</dd>
+            </dl>
+            </volist>
+            <div class="clear">
+            </div>
+          </dl>
+        </div>
+        <!--基础资源-->
+        <volist name="titles" id="li">
+        <div class="box">
+          <div class="title">
+            <h2>{$li.category_name}</h2>
+            <a href="{:U('/Article/myblog',array(id=>$li['id']))}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          
+          
+          
+          <div class="news_box">
+            <div class="new_item">
+              <div class=new_icon>
+              </div>
+              <div class=new_main>
+                <div class=new_main_b>
+                  <div class="top_info">
+                    <a href="#">张晓明</a>
+                    <span class="top_info_time">2013-08-30</span>
+                  </div>
+                  <div class="new_title">
+                    PHP 二维数组排序PHP 二维数组排序
+                  </div>
+                  <div class="new_content">
+                  </div>
+                  <div class="bottom_info">
+                    <div class="bottom_info_read_all">
+                      <a href="#">未完，继续阅读 >></a>
+                    </div>
+                    <div class="new_tags">
+                      <a href="#">php</a>
+                      <a href="#">数字是</a>
+                      <a href="#">数组</a>
+                      <a href="#">二维数组</a>
+                    </div>
+                    <div class="new_reply">
+                      <a href="#">评论</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+
+          
+          
+          
+          
+          <ul class="source_list">
+           <volist name="part[$li['category_name']]" id="v">
+            <li>
+            <a href="{:U('/Article/context',array(id=>$v['id']))}">
+            {$v.title|text|getshort='14'} 
+            </a>
+            <span>{$v.cTime|friendlyDate}</span>
+            <span><space uid="v.uid" class="co">{uname}</space>发表于：</span>
+            </li>
+          </volist>
+          </ul>
+        </div>
+        </volist>
+      </div>
+      <div class="so_right">
+        <div class="rank">
+          <h4>贡献排行榜</h4>
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="80">姓名</th>
+              <th scope="col" width="60">上传数</th>
+            </tr>
+            <volist name="user_hot" id="vo">
+            <tr>
+              <td>
+                  <php>if($i==1){</php>
+                  <code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php>
+                  <code class="top2">{$i}</code>
+                  <php>}else{</php>
+                  <code>{$i}</code>
+                  <php>}</php>
+              </td>
+              <td><space uid="vo.uid" class="co">{uname}</space></td>
+              <td>{$vo.count}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+        <div class="rank">
+          <h4>文章排行榜</h4>
+          <table border="0" cellspacing="0" cellpadding="0" class="tl">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="100">文章</th>
+              <th scope="col">点击量</th>
+            </tr>
+            <volist name="blog_hot" id="li">
+            <tr>
+              <td>
+                  <php>if($i==1){</php>
+                  <code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php>
+                  <code class="top2">{$i}</code>
+                  <php>}else{</php>
+                  <code>{$i}</code>
+                  <php>}</php>
+              </td>
+              <td><a href="{:U('/Article/context',array(id=>$li['id']))}"> {$li.title|text|getshort=###,'6','…'}</a></td>
+              <td>{$li.readCount}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />

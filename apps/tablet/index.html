@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>ExamTeacher</title>
+    <style type="text/css">
+         /**
+         * Example of an initial loading indicator.
+         * It is recommended to keep this as minimal as possible to provide instant feedback
+         * while other resources are still being loaded for the first time
+         */
+        html, body {
+            height: 100%;
+            background-color: #00a8ec;
+            /*background:url("resources/images/login/loading.png") no-repeat center center fixed;*/
+            /*-moz-background-size: cover;*/
+            /*-webkit-background-size: cover;*/
+            /*-o-background-size: cover;*/
+            /*background-size: cover;*/
+        }
+
+        #logo{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -60px;
+            text-align: center;
+        }
+
+        #appName{
+            position: absolute;
+            top: 50%;
+            margin-top: -60px;
+            text-align: center;
+            width: 100%;
+            font:bold 39pt Arial;
+            color:#ffffff;
+            text-shadow:2px 2px 5px #000;
+        }
+
+        #appLoadingIndicator {
+            position: absolute;
+            top: 50%;
+            margin-top: 25px;
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            -webkit-animation-name: appLoadingIndicator;
+            -webkit-animation-duration: 0.5s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: linear;
+        }
+
+        #appLoadingIndicator > * {
+            background-color: #FFFFFF;
+            display: inline-block;
+            height: 30px;
+            -webkit-border-radius: 15px;
+            margin: 0 25px;
+            width: 30px;
+            opacity: 0.8;
+        }
+
+        #tree{
+            position:absolute;
+            bottom:0px;
+            right:0px;
+        }
+
+        @-webkit-keyframes appLoadingIndicator{
+            0% {
+                opacity: 0.8
+            }
+            50% {
+                opacity: 0
+            }
+            100% {
+                opacity: 0.8
+            }
+        }
+    </style>
+    <!-- The line below must be kept intact for Sencha Command to build your application -->
+    <script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
+    <!-- custom -->
+    <link rel="stylesheet" type="text/css" href="resources/css/teacher.css"/>
+    <!--<script type="text/javascript" src="ux/DateTimePicker.js"></script>-->
+    <!-- custom -->
+</head>
+<body>
+    <img src="resources/images/loading/cloud.png" id="logo" width="120" height="70"/>
+    <div id="appName">锐杰网格 在线考试系统</div>
+    <div id="appLoadingIndicator">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <img src="resources/images/loading/tree.png" id="tree" width="400" height="250"/>
+</body>
+</html>

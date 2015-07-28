@@ -1,0 +1,83 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+<include file="../Public/_movestate_leftmenu" />
+<div class="trunk_right_g">
+	<div class="navi_rtitle">
+		<img src="__THEME__/space/images/space.gif" class="move_glory" /><span
+			class="title">每周之星</span><span class="add"><a
+			href="{:U('space/weekStar/showByTime',array(classid=>$classid,control=>view))}">[按时间显示]</a></span>
+	</div>
+	<table width="500px;" style="margin: 10px 0 0 20px;">
+		<tr height="30">
+			<td width="60">学生姓名：</td>
+			<td width="80"><select id="stuname" name="" class='mon_boder mon_sel'>
+					<option value=0>请选择学生</option>
+					<volist name="studentList" id='student'> <if
+						condition="($student.xm eq $info['name'])">
+					<option value='{$student.identityid}' selected="selected">{$student.xm}</option>
+					<else />
+					<option value='{$student.identityid}'>{$student.xm}</option>
+					</if> </volist>
+			</select></td>
+			<td><a href="#" class="glory_conform" onclick="searchGlory()"></a></td>
+		</tr>
+	</table>
+	<div class="mon_detail" style="width: 650px; margin: 10px 0 0 20px;">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%"
+			align="left">
+			<tbody>
+				<tr>
+					<th width="110" height="35">姓名</th>
+					<th width="430">荣誉</th>
+					<th style="border-right: 0 none;">操作</th>
+				</tr>
+			</tbody>
+		</table>
+		<div class="clear"></div>
+		<div style="height: 500px; overflow-y: scroll; overflow-x: hidden">
+			<table border="0" cellpadding="0" cellspacing="0" class="mon_table"
+				align="left">
+				<tbody>
+				<volist name="result" id='vo'>
+					<tr>
+						<td width="110" height="35">{$vo['xm']}</td>
+						<td width="430">
+						<volist name="vo.pic" id='voPic'>
+							<img width="35" height="35"  src="{$picPath}{$voPic}">
+						</volist>
+						</td>
+						<td style="border-right: 0 none;"><a
+							href="javascript:void(0);" class="a_sel" onclick="viewGlory('{$vo['xm']}')">查看</a></td>
+					</tr>
+				</volist>
+				<!--  	<tr>
+						<td width="110" height="35">王宇</td>
+						<td width="430">青春导读</td>
+						<td style="border-right: 0 none;"><a
+							href="javascript:void(0);" class="a_sel" onclick="selMoney()" />查看</a></td>
+					</tr>-->
+				</tbody>
+			</table>
+			<div class="clear"></div>
+			<div class="page">
+                    {$show}
+            </div>
+		</div>
+	</div>
+</div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+//查询
+function searchGlory(){
+	var $where = '';
+	var $stuname = $("#stuname").find("option:selected").text();
+	if('请选择学生' != $stuname) {
+		$where = $where+'&name='+$stuname;
+	}
+	location.href = '__URL__&act=showByName&classid='+<php>if($control=='manage') {echo "'".$classid."&control=manage"."'";} else {echo "'".$classid."&control=view"."'";}</php>+$where;
+}
+//查看
+function viewGlory(name) {
+	location.href = '__URL__&act=showByTime&classid='+<php>if($control=='manage') {echo "'".$classid."&control=manage"."'";} else {echo "'".$classid."&control=view"."'";}</php>+'&'+"name="+name;
+}
+</script>

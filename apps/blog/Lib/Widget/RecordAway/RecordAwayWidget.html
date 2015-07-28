@@ -1,0 +1,24 @@
+<div class="date-list-box">
+            <dl>
+                <dt>
+                    <a href="javascript:;" class="arrow-date-left">上一年</a>
+                    <span>2013</span>
+                    <a href="javascript:;" class="arrow-date-right">下一年</a>
+                </dt>
+
+  <php>foreach($date as $k=>$vo){
+      if ($k == 2013){
+          for($i=1;$i<=12;$i++){
+              $currect = str_pad($i,2,"0",STR_PAD_LEFT);
+              if($vo[$currect]){
+  </php>
+  	<dd><a href="javascript:;" onclick="tabs.iframe('{$i}月归档', '{:U('blog/Index/my', array('date'=>$key))}');" title="{$vo['count']}条记录">{$i}月</a></dd>
+  <php>
+              } else {
+                    echo "<dd><span>".$i."月</span></dd>";
+              }
+          }
+      }
+  }</php>
+</dl>
+</div>

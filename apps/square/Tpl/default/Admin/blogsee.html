@@ -1,0 +1,180 @@
+<include file="../Public/_header" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<SCRIPT type="text/javascript">
+		var IDMark_A = "_a";
+		var setting = {
+			view: {
+				showLine: false,
+				showIcon: false,
+				selectedMulti: false,
+				dblClickExpand: false,
+				addDiyDom: addDiyDom
+				},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+		var sethid = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+
+		var zNodes =[
+			<volist name="datas['category']" id='obj'>
+				{ id:{$obj[id]}, pId:{$obj[p_id]}, name:"{$obj[category_name]}",iconOpen:"../Public/images/open.png",icon:"../Public/images/close.png",url:"", target:"_self", click:"noteClick({$obj['id']})"<volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist>},				
+			</volist>
+		];
+		function onClick(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("hidtree"),
+			nodes = zTree.getSelectedNodes(),
+			v = "";
+			nodes.sort(function compare(a,b){return a.id-b.id;});
+			for (var i=0, l=nodes.length; i<l; i++) {
+				v += nodes[i].id + ",";
+			}
+			if (v.length > 0 ) v = v.substring(0, v.length-1);
+			var cityObj = $("#square");
+			cityObj.attr("value", v);
+		}
+
+		function showMenu() {
+			var cityObj = $("#square");
+			var cityOffset = $("#square").offset();
+			$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+			$("body").bind("mousedown", onBodyDown);
+		}
+		function hideMenu() {
+			$("#menuContent").fadeOut("fast");
+			$("body").unbind("mousedown", onBodyDown);
+		}
+		function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+		function addDiyDom(treeId, treeNode) {
+			var aObj = $("#" + treeNode.tId + IDMark_A);
+			var id = treeNode.id;
+			var editStr = "<a style='color:#0066FF; margin-left:100px;float:right;' href='{:U('square/admin/modifycategory',array('id'=>'"+id+"'))}'>编辑</a>" +
+				"<a style='color:#0066FF; margin-left:100px;float:right;' href='javascript:void(0);' onclick='deleteAppGroup('"+id+"')'>删除</a>";
+			aObj.after(editStr);
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#navtree"), setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("navtree");
+			
+			$.fn.zTree.init($("#hidtree"), sethid, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("hidtree");
+		});
+		//-->
+	</SCRIPT>
+<style type="text/css">
+.ztree{ font-size:12px;}
+.ztree li,.ztree li ul { margin-top:10px;}
+</style>
+<div class="so_main">
+<div class="page_tit">文章编辑</div>
+	<div class="form2">
+		<form method="post" action="{:U('square/admin/doblogsee')}" onsubmit="return checkForm(this)" enctype="multipart/form-data">
+			<div class="page_btm">
+				<dl class="lineD">
+					<dt>用户：</dt>
+					<dd style="text-align:left;">
+					{$datas.uid|getweibouser}&nbsp;
+					</dd>
+				</dl>
+				
+				<dl class="lineD">
+					<dt>标题：</dt>
+					<dd style="text-align:left;">
+					{$datas.title}&nbsp;
+					</dd>
+				</dl> 
+				
+				<dl class="lineD">
+					<dt>分类：</dt>
+					<dd style="text-align:left;">
+					<input name="p_id" id="square" class="text mr5" type="text" readonly value="{$datas['square_id']|getcategory}" style="width:120px;"/>
+					<a id="menuBtn" href="#" onClick="showMenu(); return false;">选择</a>
+					</dd>
+				</dl> 
+				<div id="menuContent" class="menuContent" style=" display:none; position: absolute; background:#FFFFFF; border:#CCCCCC 1px solid;">
+					<UL id="hidtree" class="ztree" style="margin-top:0; width:160px;overflow-x: auto; overflow-y: hidden;"></UL>
+				</div>
+				<dl class="lineD">
+				<dt>状态：</dt>
+					<dd style="text-align:left;">
+					<select name="state" id="state" class="text mr5">
+					<php>if($datas['state']==0){</php><option value="0" selected="true">未审核</option><php>}</php>
+					<option value="1" <php>if($datas['state']==1){</php>selected="true"<php>}</php>>已审核</option>
+					<option value="2" <php>if($datas['state']==2){</php>selected="true"<php>}</php>>推选</option>
+					</select>
+					</dd>
+				</dl> 
+				<dl class="lineD">
+					<dt>阅读：</dt>
+					<dd style="text-align:left;">
+					{$datas.readCount}&nbsp;
+					</dd>
+				</dl> 
+				
+				<dl class="lineD">
+					<dt>评论：</dt>
+					<dd style="text-align:left;">
+					{$datas.commentCount}&nbsp;
+					</dd>
+				</dl> 
+				
+				<dl class="lineD">
+					<dt>评论回复：</dt>
+					<dd style="text-align:left;">
+					{$datas.recommentCount}&nbsp;
+					</dd>
+				</dl> 
+				
+				<dl class="lineD">
+					<dt>标签：</dt>
+					<dd style="text-align:left;">
+					{$datas.tags}&nbsp;
+					</dd>
+				</dl>
+				
+				<dl class="lineD">
+					<dt>创建时间：</dt>
+					<dd style="text-align:left;">
+					{$datas.cTime|friendlyDate}&nbsp;
+					</dd>
+				</dl> 
+				
+				<dl class="lineD">
+					<dt>修改时间：</dt>
+					<dd style="text-align:left;">
+					{$datas.mTime|friendlyDate}&nbsp;
+					</dd>
+				</dl>
+				<dl class="lineD">
+					<dt>内容：</dt>
+					<dd style="text-align:left;">
+					{$datas.content}&nbsp;
+					</dd>
+					<input type="hidden"  name="SquareBlogid" value="{$SquareBlogid}" />
+				</dl>
+				
+				<input type="submit" class="btn_b" value="保存" />
+			</div>
+		</form>
+	</div>  
+</div>  

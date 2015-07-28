@@ -1,0 +1,113 @@
+<include file="__THEME__/desktop/_header" />
+<script type="text/javascript"
+	src="__PUBLIC__/js/flexpaper/js/flexpaper.js"></script>
+<script type="text/javascript" src="../Public/js/verification.js"></script>
+<link rel="stylesheet" href="../Public/css/tool.css" type="text/css">
+<script type="text/javascript" charset="utf-8">
+    var ctr = function(){}
+       ctr.prototype = 
+	   {
+		 down:function(id)
+		  {
+	       ui.box.load('__URL__&act=downdetil&id='+id,{title:"下载提示"});
+	      }
+  		}
+    var l = null;
+</script>
+
+<!-- 右侧主要内容栏 start -->
+<div region="center" border="false">
+	<!-- 右侧主要内容 start -->
+	<div class="panel-cmain">
+		<div class="dlBox">
+			<div class="meg">
+				<div class="tips">
+					<div class="th" style="margin-top:5px;">
+						<h1>{$result['title']}</h1>
+						<div style="float:right;margin-right:20px;margin-top:12px;">
+						{:W('Weibo',array('tpl_name'=>'tool_share_weibo','button_title'=>'分享','addon_info'=>'<h4>工具：'.$result['title'].'</h4><h5>来自：'.getUserName($result['uid']).'</h5>'))}
+						<php> $tpl_data =array('author'=>getUserName($result['uid']),'title'=>$result['title'],'tool'=>getUserName($result['uid']).'的工具','url'=>U('tool/Index/showtool',array('id'=>$result['id'],'uid'=>$result['uid'])),'type'=>1);
+						$tpl_data = urlencode(serialize($tpl_data)); </php>
+						<em> <a class="link-act" href="javascript:void(0);"
+							onclick="l.down({$result['id']})"> <i class="icon-down-rank link-act"></i>下载
+						</a>
+						</em> <em> <a class="link-act"
+							onclick="_widget_weibo_start('', '{$tpl_data}');" href="javascript:void(0);"><i class="icon-share"></i>分享</a>
+						</em> <em> <php>if($uid != $result['uid']){</php>
+							{:W('Favorite',array('type'=>'detail', 'fid'=>$result['id']))} <php>}</php>
+
+						</em> <em> <php>if($uid == $result['uid']){</php> <a
+							class="link-act" href="javascript:void(0);"
+							onclick="delResource({$result['id']});"> <i
+								class="icon-delete"></i>删除
+						</a> <php>}</php>
+						</em> <em> <php>if($uid == $result['uid']){</php> <a
+							href="javascript:void(0);" class="link-act"
+							onclick="parent.tabs.redirect('编辑-{$result['title']}', '{:U('tool/Index/edit',array('id'=>$result['id'],'iframe'=>'yes'))}');"><i
+								class="icon-edit"></i>编辑</a> <php>}</php>
+						</em>
+					</div>
+					</div>
+					
+				<div style="width:900px;">
+					<div style="width:500px;float:left;">
+					<div><span style="font-size:15px;background:none repeat scroll 0 0 #F5F5F5">详细信息：</span>{$result['content']}</div>
+					 <div >
+				{:W('Comment',array('type'=>'tool','appid'=>$result['id'], 'author_uid'=>$result['uid'], 'title'=>$result['title'], 'url'=>U('square/Tool/show',array('id'=>$result['id'])), 'table'=>'tool','id_field'=>'id','comment_count_field'=>'commentCount'))}
+					</div>  
+					</div>
+					<div style="float:right;margin-top:5px;margin-right:145px;">
+					<ul class="mList">
+						<li>上传者：{$result['uid']|getUsername}</li>
+						<li class="l1">整理日期：{$result['time']|date="Y-m-d",###}</li>
+						<li>所属类别： {$result['category']}</li>
+						<li class="l1">所需积分：{$result['price']}</li>
+						<li>软件大小：{$result['toolsize']|getSize}</li>
+						<!-- <li class="l1">版本号：{$result['version']}</li> -->
+						<li class="l1">浏览次数：{$result['readCount']}</li>
+						<li >下载次数：{$result['downCount']}</li>
+						<!-- <li>关 键 字：{$result['tags']}</li> -->
+
+					</ul>
+					</div>
+				</div>
+				</div>
+			</div>
+			<!--  <div class="ad">
+       <div style="width：250px; margin-right:20px;">
+       					<span style=" font-size:14px; font-weight:bold; line-height:50px;">{$result['title']}</span>
+						{:W('Weibo',array('tpl_name'=>'tool_share_weibo','button_title'=>'分享','addon_info'=>'<h4>工具：'.$result['title'].'</h4><h5>来自：'.getUserName($result['uid']).'</h5>'))}
+						<php> $tpl_data =array('author'=>getUserName($result['uid']),'title'=>$result['title'],'tool'=>getUserName($result['uid']).'的工具','url'=>U('toole/Index/showtool',array('id'=>$result['id'],'uid'=>$result['uid'])),'type'=>1);
+						$tpl_data = urlencode(serialize($tpl_data)); 
+						</php>
+
+						<em> <a class="link-act" href="javascript:void(0);"
+							onclick="l.down({$result['id']})"> <i class="icon-down-rank"></i>下载
+						</a>
+						</em> <em> <a class="link-act"
+							onclick="_widget_weibo_start('', '{$tpl_data}');"><i
+								class="icon-share"> </i>分享</a>
+						</em> <em> <php>if($uid != $result['uid']){</php>
+							{:W('Favorite',array('type'=>'detail', 'fid'=>$result['id']))} <php>}</php>
+
+						</em> <em> <php>if($uid == $result['uid']){</php> <a
+							class="link-act" href="javascript:void(0);"
+							onclick="delResource({$result['id']});"> <i
+								class="icon-delete"></i>删除
+						</a> <php>}</php>
+						</em> <em> <php>if($uid == $result['uid']){</php> <a
+							href="javascript:void(0);" class="link-act"
+							onclick="parent.tabs.redirect('编辑-{$result['title']}', '{:U('tool/Index/edit',array('id'=>$result['id'],'iframe'=>'yes'))}');"><i
+								class="icon-edit"></i>编辑</a> <php>}</php>
+						</em>
+					</div>
+         </div>  -->
+		</div>
+
+	</div>
+</div>
+<!-- 右侧内容end -->
+<script type="text/javascript">
+l = new ctr();
+</script>
+<include file="__THEME__/desktop/_footer" />

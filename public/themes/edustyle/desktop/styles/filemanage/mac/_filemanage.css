@@ -1,0 +1,817 @@
+.mac_filemanage .file-icoitem{
+	float:left;
+	margin:5px 10px;
+	border:1px solid #FFF;
+	cursor:pointer;
+	position:relative;
+}
+.mac_filemanage .icosContainer{
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.mac_filemanage .filemanage-ltdrager{
+	left:180px;top:0px;
+	position:absolute;
+	overflow:hidden;
+	cursor:e-resize;
+	width:5px;
+	height:100%;
+	border-left:1px solid #9d9d9d;
+}
+
+.mac_filemanage .filemanage-left{
+	left:0px;top:0px;padding:0px;height:100%; width:180px;overflow:auto;position:absolute;
+}
+.mac_filemanage .filemanage-right{
+	left:0px;top:0px;padding:0px;height:100%; position:relative;overflow:hidden;
+	margin-left:180px;
+}
+
+.mac_filemanage .detail_header_tr{
+	background:url(images/header.gif) repeat-x;
+}
+.mac_filemanage .detail_header{
+	border-left:1px solid #eee;
+	border-right:1px solid #d0d0d0;
+	overflow:visible;
+}
+.mac_filemanage .detail_header_asc{
+	display: inline-block;
+	vertical-align:middle;
+	height: 4px;
+	width: 13px;
+	margin-left: 3px;
+	background-repeat:no-repeat;
+	_margin-top:10px;
+}
+.mac_filemanage .detail_header_asc_0{
+	background:url(images/sort_desc.gif) no-repeat;
+}
+.mac_filemanage .detail_header_asc_1{
+	background:url(images/sort_asc.gif) no-repeat;
+}
+.mac_filemanage .detail_header:hover,.mac_filemanage .detail_header_hover{
+	background:url(images/header-over.gif) 0 2px repeat-x;
+	border-left:1px solid #aaccf6;
+	border-right:1px solid #aaccf6;
+}
+.mac_filemanage .detail_header_td_div{
+	overflow:hidden;
+	line-height:22px;
+	height:22px;
+	margin:0 0px 0 8px;
+	overflow:visible;
+	position:relative;
+}
+.mac_filemanage .detail_header_drag{
+	position:absolute;
+	width:10px;
+	height:22px;
+	
+	top:0px ;
+	right:-5px;
+	z-index:10;
+}
+.detail_item_name_icon{
+	width:16px;
+	height:16px;
+	display:inline;
+	vertical-align:middle;
+}
+.mac_filemanage .detail_item_name_text{
+	margin-left:5px;
+	cursor:pointer;
+	
+}
+.mac_filemanage .detail_text{
+	color:#000;
+	
+}
+.mac_filemanage .detail_tr{
+	height:24px;
+}
+.mac_filemanage .detail_tr:hover{
+	background:url(images/row-over.gif) repeat-x;
+}
+
+.mac_filemanage .detail_item_td_div{
+	
+	white-space:nowrap;
+	overflow:hidden;
+	
+	height:22px;
+	margin:0 8px;
+	overflow:hidden;
+}
+.mac_filemanage .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 28px;
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/ltop3_1.png', sizingMethod='image');
+	background-image:url(images/ltop3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.mac_filemanage .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/topbg3_1.png', sizingMethod='scale');
+	background-image:url(images/topbg3_1.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+
+.mac_filemanage .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 28px;
+	height: 69px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/rtop3_1.png', sizingMethod='image');
+	background-image:url(images/rtop3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.mac_filemanage .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/rbg.png', sizingMethod='scale');
+	background-image:url(images/rbg.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+.mac_filemanage .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 29px;
+	height: 39px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/rbottom1.png', sizingMethod='image');
+	background-image:url(images/rbottom1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.mac_filemanage .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 39px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/bottombg.png', sizingMethod='scale');
+	background-image:url(images/bottombg.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+.mac_filemanage .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 29px;
+	height: 39px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/lbottom1.png', sizingMethod='image');
+	background-image:url(images/lbottom1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+
+.mac_filemanage .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 15px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/lbg.png', sizingMethod='scale');
+	background-image:url(images/lbg.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+
+/* 功能区样式 */
+.mac_filemanage .RESIZE
+{
+	width: 15px;
+	height: 15px;
+	right: 0px;
+	bottom: 0px;
+	z-index:10;
+}
+.mac_filemanage .RESIZE-X
+{
+	width: 15px;
+	height:100%;
+	right: 0px;
+	top: 0px;
+	z-index:9;
+}
+.mac_filemanage .RESIZE-Y
+{
+	width:100%;
+	height: 15px;
+	bottom: 0px;
+	left:0px;
+	z-index:9;
+}
+
+.mac_filemanage .CLOSE
+{
+    width: 18px;
+    height: 18px;
+	margin:4px 1px;
+    float:right;
+   	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/CLOSE.png', sizingMethod='scale');
+	background-image:url(images/CLOSE.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.mac_filemanage .CLOSE:hover
+{
+   
+    float:right;
+   	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/CLOSE1.png', sizingMethod='scale');
+	background-image:url(images/CLOSE1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .MIN
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 1px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/MIN.png', sizingMethod='scale');
+	background-image:url(images/MIN.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .MIN:hover
+{
+    
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/MIN1.png', sizingMethod='scale');
+	background-image:url(images/MIN1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.mac_filemanage .MAX
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 1px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/MAX.png', sizingMethod='scale');
+	background-image:url(images/MAX.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .MAX:hover
+{
+    
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/MAX1.png', sizingMethod='scale');
+	background-image:url(images/MAX1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+	
+}
+.mac_filemanage .RESTORE
+{
+    width: 18px;
+    height: 18px;
+    float:right;
+	margin:4px 1px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/RESTORE.png', sizingMethod='scale');
+	background-image:url(images/RESTORE.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .RESTORE:hover
+{
+   
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/RESTORE1.png', sizingMethod='scale');
+	background-image:url(images/RESTORE1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+/* 目录标志*/
+.mac_filemanage .folderimg
+{
+    width: 18px;
+    height: 18px;
+    float:left;
+	margin:4px;
+}
+.mac_filemanage .folderimg img
+{
+    width: 18px;
+    height: 18px;
+}
+/* 逻辑区样式 */
+.mac_filemanage .CONTENT
+{
+	/* 请不要定义padding/margin属性 */
+	/* 请定义left = -(border-left),top = -(border-top) */
+	left: 0px;
+	top: 0px;
+    background:#FFF;
+	overflow:hidden;
+	font-size:12px;
+	
+	
+}
+.mac_filemanage .CONTENT .FORM
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 12px;
+}
+.mac_filemanage .CONTENT .FORM_NOTITLE
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+}
+.mac_filemanage .TITLE
+{
+	/* 请不要定义margin属性 */
+   overflow:hidden;
+   left:15px;
+   top:15px;
+   height:54px;
+}
+.mac_filemanage .TITLE .titleBar{
+	margin:1px;
+	clear:both;
+	
+}
+.mac_filemanage .TITLE .titleBar .titleButtonBar{
+	margin:0;
+	padding:0;
+}
+.mac_filemanage .TITLE .titleBar .titleText{
+	text-align:left;
+	height:25px;font-size:12px; color:black;line-height: 25px;overflow: hidden;	
+	color:#000;
+	font-weight:bold;
+    text-shadow: 1px 1px 0px #CCC;
+	_filter:Glow(color=white,Strength=1);
+}
+
+/*目录头部工具栏*/
+.mac_filemanage .TITLE .folderBar{/*工具条层*/
+	margin:0px 16px;
+	height:25px;
+	clear:both;
+}
+
+.mac_filemanage .TITLE .folderBar .folderButtonBar{/*工具条工具层*/
+	margin:0;
+	padding:0;
+}
+
+
+.mac_filemanage .TITLE .folderBar .BACK1
+{
+	float:left;
+	width:27px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/back.png' , sizingMethod='image');
+	background-image:url(images/back.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .BACK2
+{
+	float:left;
+	width:27px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/back2.png', sizingMethod='image');
+	background-image:url(images/back2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .NEXT1
+{
+	float:left;
+	width:26px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/next.png', sizingMethod='image');
+	background-image:url(images/next.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.mac_filemanage .TITLE .folderBar .NEXT2
+{
+	float:left;
+	width:26px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/next2.png', sizingMethod='image');
+	background-image:url(images/next2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.mac_filemanage .TITLE .folderBar .filemanage_view0_1
+{
+	float:left;
+	width:28px;
+	height:23px;
+	margin-left:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu1.png', sizingMethod='image');
+	background-image:url(images/icomenu1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view0_2
+{
+	float:left;
+	width:28px;
+	height:23px;
+	margin-left:30px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu1_1.png', sizingMethod='image');
+	background-image:url(images/icomenu1_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat;
+
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view1_1
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu2.png', sizingMethod='image');
+	background-image:url(images/icomenu2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view1_2
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu2_1.png', sizingMethod='image');
+	background-image:url(images/icomenu2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view2_1
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu3.png', sizingMethod='image');
+	background-image:url(images/icomenu3.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view2_2
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu3_1.png', sizingMethod='image');
+	background-image:url(images/icomenu3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view3_1
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu4.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view3_2
+{
+	float:left;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu4_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view4_1
+{
+	float:left;
+	width:27px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu5.png', sizingMethod='image') ;
+	background-image:url(images/icomenu5.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_view4_2
+{
+	float:left;
+	width:27px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu5_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu5_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_search
+{
+	float:right;
+	margin-right:10px;
+	
+
+}
+.mac_filemanage .TITLE .folderBar .filemanage_search .searchInputContainer {
+	width:184px;
+	height:23px;
+	/*_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/search.png', sizingMethod='image');*/
+	background-image:url(images/search.png);
+	
+	background-repeat: no-repeat;
+	position:relative
+}
+
+.mac_filemanage .TITLE .folderBar .filemanage_search .searchInput {
+	background:transparent;
+	border:0;
+	outline:0;
+	color:#a0a0a0;
+	font-size:12px;
+	height:20px;
+	margin:0 0 0 7px;
+	_margin-top:-2px;
+	line-height:2;
+	width:155px;
+}
+.mac_filemanage .TITLE .folderBar .filemanage_search  .searchBtn {
+	border:0;
+	display:block;
+	position:absolute;
+	top:3px;
+	right:5px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+	outline:0;
+	
+	background-image:url(images/search_1.png);
+
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .filemanage_search  .searchBtn:hover {
+	
+	background-image:url(images/search_2.png);
+	
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp1
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/paixu.png', sizingMethod='image');
+	background-image:url(images/paixu.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp2
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/paixu1.png', sizingMethod='image');
+	background-image:url(images/paixu1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+
+}
+
+
+/*.mac_filemanage .TITLE .folderBar .filemanage_disp1_1
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu2.png', sizingMethod='image');
+	background-image:url(images/icomenu2.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp1_2
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu2_1.png', sizingMethod='image');
+	background-image:url(images/icomenu2_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp2_1
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu3.png', sizingMethod='image');
+	background-image:url(images/icomenu3.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp2_2
+{
+	float:right;
+	width:28px;
+	height:23px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu3_1.png', sizingMethod='image');
+	background-image:url(images/icomenu3_1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp3_1
+{
+	float:right;
+	width:27px;
+	height:23px;
+	margin-right:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu4.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+	
+}
+.mac_filemanage .TITLE .folderBar .filemanage_disp3_2
+{
+	float:right;
+	width:27px;
+	height:23px;
+	margin-right:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/icomenu4_1.png', sizingMethod='image') ;
+	background-image:url(images/icomenu4_1.png) !important;
+	background-image:none;
+	background-repeat:no-repeat
+	
+}*/
+.mac_filemanage .TITLE .folderBar .UPLOAD
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/upload.png', sizingMethod='scale');
+	background-image:url(images/upload.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .UPLOAD_disable
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/upload1.png', sizingMethod='scale');
+	background-image:url(images/upload1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .NEWFOLDER
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/newfolder.png', sizingMethod='scale');
+	background-image:url(images/newfolder.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .NEWFOLDER_disable
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/newfolder1.png', sizingMethod='scale');
+	background-image:url(images/newfolder1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .filemanage_other1
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/other.png', sizingMethod='scale');
+	background-image:url(images/other.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .filemanage_other2
+{
+	float:left;
+	width:44px;
+	height:23px;
+	margin-left:10px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/other1.png', sizingMethod='scale');
+	background-image:url(images/other1.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+/*.mac_filemanage .TITLE .folderBar .NEWDOC
+{
+	float:left;
+	width:44px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/newdoc.png', sizingMethod='scale');
+	background-image:url(images/newdoc.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.mac_filemanage .TITLE .folderBar .NEWDOC_disable
+{
+	float:left;
+	width:44px;
+	height:23px;
+	
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/mac/images/newdoc.png', sizingMethod='scale');
+	background-image:url(images/newdoc.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}*/
+.mac_filemanage .BUTTON
+{
+	/* 请不要定义margin属性 (暂不支持:width:100%;bottom:0px;) */
+	padding: 0px 20px 25px 0px;
+	text-align:right;
+}
+.mac_filemanage .BUTTON button
+{
+	width:87px;
+	height:28px;
+	border:0px;
+	padding:0px;
+	margin:0px 7px 0px 7px;
+	background-color: transparent;
+	background-repeat:no-repeat;
+}
+.mac_filemanage .BUTTON .DISABLED
+{
+	_filter:alpha(opacity=36);
+	opacity:0.36;
+}
+
+/* 各种按钮样式 */
+.mac_filemanage .BUTTON .OK
+{
+	background-image:url(images/OK.gif);
+}
+.mac_filemanage .BUTTON .CANCEL
+{
+	background-image:url(images/CANCEL.gif);
+}
+/* 窗口最大化时隐藏的阴影 */
+.mac_filemanage .SHADOW_TOP
+{
+	height:15px;
+}
+.mac_filemanage .SHADOW_LEFT
+{
+	width:15px;
+}
+.mac_filemanage .SHADOW_RIGHT
+{
+	width:15px;
+}
+.mac_filemanage .SHADOW_BOTTOM
+{
+	height:38px;
+}
+/* ---- X 样式 ---- */

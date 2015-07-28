@@ -1,0 +1,8 @@
+<div class="page_tit">{$ts['app']['app_alias']}</div>
+<div class="tit_tab">
+<ul>
+	<li><a <eq name="blog" value="blog">class="on"</eq> href="{:U('square/admin/blog',array(state=>0,cate=>'blog'))}">审核管理</a></li>
+	<li><a <eq name="blog" value="blog_admin">class="on"</eq> href="{:U('square/admin/blog',array(state=>1,cate=>'blog_admin'))}">文章管理</a></li>
+	<li><a <eq name="blog" value="blog_elect">class="on"</eq>href="{:U('square/admin/blog',array(state=>2,cate=>'blog_elect'))}"}">推选管理</a></li>
+</ul>
+</div>

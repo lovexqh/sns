@@ -1,0 +1,18 @@
+<div class="c_right main_friend">
+  <div class="main_friend_pho"> {:Addons::hook('home_space_right_bottom', array('uid'=>$uid))}</div>
+  <div class="clear"></div>
+  <div class="main_friend_more">我关注的人共({$spaceCount.following|intval})</div>
+</div>
+<script language="javascript">
+<!-- 
+$('.main_friend_pho').find('h2').each(function(i, e) {
+	var title = $(this).text().replace($(this).find('a').text(),"");
+	var href = $(this).find('a').attr('href');
+	$(this).on('click','a',function(){
+		top.OpenWindow('url',href,title,'','titlebutton=close,width=1035,height=600');
+		return false;
+	});
+	$(this).find('a').attr('href','javascript:;');
+});
+//-->
+</script>

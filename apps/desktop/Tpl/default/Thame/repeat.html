@@ -1,0 +1,57 @@
+<include file="../Public/_header_common" />
+<link rel="stylesheet" type="text/css" href="../Public/css/thame.css?{$verhash}" />
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+<tr>
+<td width="136" valign="top" class="thame_sidebar">
+    <include file="_sidebar" />
+</td>
+<td valign="top">
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	var el=jQuery('.color_block');
+	el.bind('mouseover',function(){
+		jQuery(this).addClass('active');
+	});
+	el.bind('mouseout',function(){
+		jQuery(this).removeClass('active');
+	});
+	el.bind('click',function(){
+		jQuery('.color_block').removeClass('active1');
+		jQuery(this).addClass('active1');
+		top._config.setback(jQuery(this).attr('backimg'),2,'','backimg');
+	});
+	el.each(function(){
+		if(jQuery(this).attr('backimg')==top._config.thame.custom.custom_backimg) jQuery(this).addClass('active1');
+	});
+});
+</script>
+<if condition="$class">
+<div class="bm_c cl">
+	<a class="classitem<if  condition='!$classid'> current</if>" href="{:U('desktop/Thame/repeat')}" >{:L('all')}</a>
+    <volist name="class" id="value">
+	<a class="classitem<if condition='$value[classid] eq $classid'> current</if>" href="{:U('desktop/Thame/repeat',array('classid'=>$value[classid]))}" >{$value[classname]}</a>
+	</volist>
+</div>
+</if>
+<div class="bm_c cl">
+<if condition="$data">
+    <ul class="xl cl mlp">
+    <volist name="data" id="value">
+        <li backimg="{$value[val]}" class="color_block backgound_radius">
+            <table width="100%" height="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed">
+                <tr><td align="center"><img class="backgound_radius" src="{$value[thumbpic]}" width="100" height="75" /></td></tr>
+                <tr><td align="center"><div style="width:120px;height:20px; margin:0 auto;">{$value[title]}</div></td></tr>
+            </table>
+        </li>
+    </volist>
+    </ul>
+    <div class="cl">{$html}</div>
+<else />
+    {:L('no_result')}
+</if>
+</div>
+</td>
+</tr>
+</table>
+<include file="../Public/_footer" />

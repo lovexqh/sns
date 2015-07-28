@@ -1,0 +1,155 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+	 
+	 $("#AddSubmitBtn").click(function(){ 
+		$.post('admin.php?m=familymember&a=AddSubmit',$('#AddSubmit').serialize(),function(data){
+				if(data.code==1){
+					window.location.href="admin.php?m=family&a=ShowFamily&familyid=$familyid";
+				}else{
+					$('#errmesg').addClass("errormsg");
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+					$('#errmesg').focus();
+				}
+
+	    },'json');	
+     }); 
+	 
+	 $("#EditSubmitBtn").click(function(){ 
+		$.post('admin.php?m=familymember&a=EditSubmit',$('#EditSubmit').serialize(),function(data){
+				if(data.code==1){
+					window.location.href="admin.php?m=family&a=ShowFamily&familyid=$familyid";
+				}else{
+					$('#errmesg').addClass("errormsg");
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+					$('#errmesg').focus();
+				}
+
+	    },'json');	
+     });
+	 
+});  
+</script> 
+
+	<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+		function switchbtn(btn) {
+			_GET('srchuserdiv').style.display = btn == 'srch' ? '' : 'none';
+			_GET('srchuserdiv').className = btn == 'srch' ? 'tabcontentcur' : '' ;
+			_GET('srchuserbtn').className = btn == 'srch' ? 'tabcurrent' : '';
+		
+			_GET('readexceldiv').style.display = btn == 'read' ? '' : 'none';
+			_GET('readexceldiv').className = btn == 'read' ? 'tabcontentcur' : '';
+			_GET('readexcelbtn').className = btn == 'read' ? 'tabcurrent' : '';
+		}
+	</script>
+
+	<div class="container" >
+    <div class="" id="errmesg"></div>
+    
+		<!--{if $status}-->
+			<div class="{if $status > 0}correctmsg{else}errormsg{/if}"><p>{if $status < 0}<em>{lang user_add_failed}:</em> {/if}{if $status == 2}{lang user_delete_succeed}{elseif $status == 1}{lang user_add_role_succeed}{elseif $status == 3}{lang roster_add_succeed}{elseif $status == -1}{lang user_add_role_ignore}{elseif $status == -2}{lang user_add_role_exists}{elseif $status == -3}{lang uc_roster_failed}{elseif $status == -4}{lang uc_role_check_icon_exits}{elseif $status == -5}{lang uc_role_check_icon_type_failed}{/if}</p></div>
+		<!--{/if}-->
+		
+
+		<!--{if $adduser}--><script type="text/javascript">switchbtn('add');</script><!--{/if}-->
+          <br />
+          
+          
+		<h3>家庭成员信息    <a href="admin.php?m=family&a=Edit&identityid=$familyid" class="sgbtn">返回</a></h3>
+		<div class="mainbox">
+			<!--{if $onAdd}-->
+				<form  id="AddSubmit">
+                <input type="hidden" name="familyid" value="$familyid">
+			<!--{else}-->
+                <form  id="EditSubmit">
+               <input type="hidden" name="identityid" value="$familymember[identityid]">
+               <input type="hidden" name="familyid" value="$familyid">
+            <!--{/if}-->	
+                
+                <input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+                  <tr>
+                   <td>姓名</td>
+                   <td><input  type="text" name="xm" value="$familymember[xm]" class="Atxt" maxlength="20" /></td>
+                   <td>家庭关系码</td>
+                   <td><input  type="text" name="jtgxm" value="$familymember[jtgxm]" class="Atxt" maxlength="2" /></td>
+                </tr>
+                <tr>
+                   <td>联系电话</td>
+                   <td><input  type="text" name="lxdh" value="$familymember[lxdh]" class="Atxt" maxlength="20" /></td>
+                   <td>电子信箱</td>
+                   <td><input  type="text" name="dzxx" value="$familymember[dzxx]" class="Atxt" maxlength="40" /></td>
+                </tr>
+                <tr>
+                   <td>通信地址</td>
+                   <td><input  type="text" name="txdz" value="$familymember[txdz]" class="Atxt" maxlength="100" /></td>
+                   <td>邮政编码</td>
+                   <td><input  type="text" name="yzbm" value="$familymember[yzbm]" class="Atxt" maxlength="6" /></td>
+                </tr>
+                <tr>
+                   <td>家庭住址</td>
+                   <td><input  type="text" name="jtzz" value="$familymember[jtzz]" class="Atxt" maxlength="100" /></td>
+                   <td>现住址</td>
+                   <td><input  type="text" name="xzz" value="$familymember[xzz]" class="Atxt" maxlength="100" /></td>
+                </tr>
+                <tr>
+                   <td>英文姓名</td>
+                   <td><input  type="text" name="ywxm" value="$familymember[ywxm]" class="Atxt" maxlength="20" /></td>
+                   <td>姓名拼音</td>
+                   <td><input  type="text" name="xmpy" value="$familymember[xmpy]" class="Atxt" maxlength="40" /></td>
+                </tr>
+                <tr>
+                   <td>性别码</td>
+                   <td><input  type="text" name="xbm" value="$familymember[xbm]" class="Atxt" maxlength="1" /></td>
+                   <td>家庭成员职业码</td>
+                   <td><input  type="text" name="jtcyzym" value="$familymember[jtcyzym]" class="Atxt" maxlength="3" /></td>
+                </tr>
+                <tr>
+                   <td>所在单位</td>
+                   <td><input  type="text" name="szdw" value="$familymember[szdw]" class="Atxt" maxlength="100" /></td>
+                   <td>政治面貌码</td>
+                   <td><input  type="text" name="zzmm" value="$familymember[zzmm]" class="Atxt" maxlength="2" /></td>
+                </tr>
+                <tr>
+                   <td>身份证件类型码</td>
+                   <td><input  type="text" name="sfzjlxm" value="$familymember[sfzjlxm]" class="Atxt" maxlength="2" /></td>
+                   <td>身份证件号</td>
+                   <td><input  type="text" name="sfzjh" value="$familymember[sfzjh]" class="Atxt" maxlength="20" /></td>
+                </tr>
+                <tr>
+                   <td>婚姻状况码</td>
+                   <td><input  type="text" name="hyzkm" value="$familymember[hyzkm]" class="Atxt" maxlength="1" /></td>
+                   <td>港澳台侨外码</td>
+                   <td><input  type="text" name="gatqwm" value="$familymember[gatqwm]" class="Atxt" maxlength="2" /></td>
+                </tr>
+
+						
+                <tr class="nobg">
+                    
+                    <!--{if $onAdd}-->
+                       <td><input type="button" value="{lang submit}" class = "btn" id="AddSubmitBtn" /></td>
+                    <!--{else}-->
+                      <td><input type="button" value="{lang submit}" class = "btn" id="EditSubmitBtn" /></td>
+                    <!--{/if}-->	
+                    
+                </tr>
+			</table>
+		</form>
+			
+		</div>
+	</div>
+
+
+{template footer}

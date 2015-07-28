@@ -1,0 +1,119 @@
+﻿body, html{width: 100%;height: 100%;overflow: hidden;margin:0;}
+html,body,ul,li,dl,dd,dt,p,div,img,a,h3{ padding:0px; margin:0px; border:0px;}
+body{padding:35px 0px 0px 90px;}
+#map{ background: none !important; }
+#allmap {margin-right: 0px;height: 100%;overflow: hidden;}
+.anchorBL{ display:none;}
+dl,dt,dd,ul,li{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+p{font-size:12px;}
+dt{
+    font-size:14px;
+    font-family:"微软雅黑";
+    font-weight:bold;
+    border-bottom:1px dotted #000;
+    padding:5px 0 5px 5px;
+    margin:5px 0;
+}
+dd{
+    padding:5px 0 0 5px;
+}
+li{
+    line-height:28px;
+}
+
+/*指南针的样式*/    
+#zhinanzhen
+{
+     position:absolute;  /*设置其为absolute就可以让其置顶显示了。*/
+     width:61px; 
+     height:61px; 
+     float:right; 
+     right:20px;
+     top:20px;
+    }    
+    
+/*搜索框样式*/    
+#searchBox
+{
+    margin-top:10px;    
+    margin-bottom:10px;
+    width:270px; 
+    height:40px; 
+    z-index:200;
+    line-height:40px;
+    }
+    
+#inputer
+{
+    margin-left:5px;
+    padding-left:5px;
+    width:190px; 
+    height:25px;
+    line-height:25px; 
+    border:1px solid #EFEFEF;
+    }
+    
+#searchBox img
+{
+    z-index:500;
+    width:25px; 
+    height:25px;
+    border:none;
+    margin-left:10px;
+    vertical-align:middle;  /*html元素居中显示*/
+    }   
+
+#newStudent
+{
+    width:270px;
+    height:60px;
+    margin-left:15px;
+    font-size:12px;
+    }
+    
+#newStudent a
+{
+    color:Red;
+    } 
+       
+#newStudent div
+{
+    width:265px;
+    height:28px;
+    line-height:28px;
+    padding-top:10px;
+    }
+   
+#newStudent div img
+{
+    width:20px; 
+    height:20px;
+    vertical-align:middle;
+}
+
+#newStudent div select
+{
+    width:100px; 
+    height:20px;
+    text-align:center;
+    line-height:20px;
+    vertical-align:middle;
+    background-color:#EFEFEF;
+}
+	
+	
+.Bmap_nav{ width:280px;}
+.Bmap_subnav{ border-radius:4px; border:1px #ccc solid; margin-top:5px;}
+.Bmap_title{ position:relative; padding-left:30px; height:30px; border-radius:4px; border:1px #fff solid; background:#f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; font-size:14px; cursor:pointer; }
+.Bmap_title a{color: #1c94c4; text-decoration:none;}
+.Bmap_title span{ position:absolute; top:50%; left:10px; margin-top:-8px; background-image:url(images/ui-icons_ef8c08_256x240.png); background-repeat:no-repeat; background-position:-32px -16px; display: block; width:16px; height:16px;}
+.Bmap_title.hover,.Bmap_title.click{  background:#fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x;}
+.Bmap_title.click span{background-position:-64px -16px;}
+.Bmap_item{ display:none; max-height: 300px; border-radius:4px; background:#eeeeee url(images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x; overflow: auto;}
+.Bmap_item li { padding-left:40px; color:#333; font-size:13px; line-height:28px;}
+.Bmap_item li a{ color:#333; text-decoration:none; font-size:13px;}
+.Bmap_item li a:hover{color: #00f; text-decoration: underline;}

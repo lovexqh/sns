@@ -1,0 +1,248 @@
+{template header}
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<link rel="stylesheet" href="js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
+<style type="text/css">
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f5f5f5;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}
+</style>
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$.fn.zTree.init($("#parentTree"), setting, zNodes);
+});
+</script>
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+	 
+
+	$("#AddSubmitBtn").click(function(){
+		//alert($('#AddSubmit').serialize());
+		$.post('admin.php?m=dept&a=AddSubmit',$('#AddSubmit').serialize(),function(data){
+				$('#errmesg').addClass("errormsg");
+				$('#errmesg').html("<span>"+data.msg+"</span>");
+				$('#errmesg').focus();
+				//alert(data.code == '1');
+				if(data.code == '1'){
+					 parent.add(data);
+				}				
+
+
+	    },'json');
+     }); 
+	
+	$("#EditSubmitBtn").click(function(){ 
+		$.post('admin.php?m=dept&a=EditSubmit',$('#EditSubmit').serialize(),function(data){
+			
+				$('#errmesg').addClass("errormsg");
+				$('#errmesg').html("<span>"+data.msg+"</span>");
+				$('#errmesg').focus();
+				
+	    },'json');	
+     }); 
+	 
+});  
+
+var setting = {
+	view: {
+		dblClickExpand: false,
+		selectedMulti: false,
+		showIcon: false
+	},
+	data: {
+		simpleData: {
+			enable: true,
+			idKey: "id",
+			pIdKey: "pid",
+			rootPId: 0
+		},
+		key: {
+			name: "name"
+		}
+	},
+	callback: {
+		onClick: onClick
+	}
+};
+
+
+var zNodes =[
+	<!--{loop $deptlist $r}-->
+	{id:$r['deptID'], pid:$r['UpDeptID'], name:"$r['DepartName']"},
+	<!--{/loop}-->
+];
+
+
+function reDirc(){
+	parent.location="admin.php?m=dept&a=lsDept";
+	
+}
+
+function onClick(e, treeId, treeNode) {
+	$("#parentid").val(treeNode.id);
+	var cityObj = $("#selectDeptTree");
+	cityObj.attr("value", treeNode.name);
+}
+
+function showSelectDept() {
+	var cityObj = $("#selectDeptTree");
+	var cityOffset = $("#selectDeptTree").offset();
+	$("#deptMenuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).show();
+	$("body").bind("mousedown", onBodyDown);
+}
+function hideSelectDept() {
+	$("#deptMenuContent").fadeOut();
+	$("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+	if(event.target.id=='parentTree'){
+		return;
+	}
+	if(event.target.id.indexOf('switch')>0){
+		return;
+	}
+	hideSelectDept();
+}
+
+</script>
+<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+	</script>
+<div class="container" >
+  <div class="" id="errmesg"></div>
+  <div class="hastabmenu">
+    <ul class="tabmenu">
+      <li id="srchdeptbtn" class="tabcurrent"><a href="javascript:;" onclick="switchbtn('srchdept')" onfocus="blur()">{lang dept_search}</a></li>
+    </ul>
+    <div id="srchdeptdiv" class="tabcontentcur">
+      <form action="admin.php?m=dept&a=search" method="post">
+        <input type="hidden" name="formhash" value="{FORMHASH}">
+        <table width="100%">
+          <tr>
+            <td>{lang dept_name}:</td>
+            <td><input type="text" name="srcDepartName" value="$srcDepartName" class="txt" /></td>
+            <td>{lang DeptManager}:</td>
+            <td><input type="text" name="srcDeptManager" value="$srcDeptManager" class="txt" /></td>
+            <td><input type="submit" value="{lang submit}"  class="btn" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+  
+  <!--{if $search==false}-->
+  <!--{if $init}-->
+  <h3> 部门管理 </h3>
+  <!--{else}-->
+  <h3> 当前部门 : $dept[departName] <A class=sgbtn href="admin.php?m=dept&a=AddLowDept" style="margin-left:0px">添加下级部门</A>
+    <!--{if $deepL!="school" }-->
+    <A class=sgbtn href="admin.php?m=dept&a=AddDept" style="margin-left:0px">添加同级部门</A>
+    <!--{/if}-->
+  </h3>
+  <div class="mainbox">
+    <!--{if $onAdd}-->
+    <form  id="AddSubmit">
+    <input type="hidden" name="UpDeptID" value="$UpDeptID">
+    <input type="hidden" name="schoolid" value="$schoolid">
+    <input type="hidden" id="level" name="level" value="{$level}" />
+    <!--{else}-->
+    <form  id="EditSubmit">
+      <input type="hidden" name="depid" value="$dept[deptID]">
+      <input type="hidden" name="schoolid" value="$dept[schoolid]">
+      <!--{/if}-->
+      <input type="hidden" name="formhash" value="{FORMHASH}">
+      <table class="datalist fixwidth" style="width:870px;">
+        <tr>
+          <td width="9%" style="color:#9EBECB;">部门名:</td>
+          <td width="35%">
+          	<!--{if $deepL!="school" }-->
+            <input type="text" name="DepartName" value="$dept[departName]" class="txt" maxlength="50" />
+            <!--{else}-->
+            <input type="text" name="DepartName" value="$dept[departName]" class="txt" maxlength="50" readonly='true'/>
+            <!--{/if}-->
+          </td>
+          <td width="9%" style="color:#9EBECB;">部门编码:</td>
+          <td width="35%"><input type="text" name="deptCode" style="width:265px;" value="$dept[deptCode]" class="txt" maxlength="500"/></td>
+        </tr>
+         <tr>
+          <th colspan="4" style="color:#9EBECB;">部门简介:</th>
+        </tr>
+        <tr>
+          <td colspan="4"><textarea name="DeptComment" rows="4" class="txt" >$dept[DeptComment]</textarea></td>
+        </tr>
+        <tr>
+          <th colspan="4">部门负责人:</th>
+        </tr>
+        <tr>
+          <td colspan="4"><input type="text" name="DeptManager" value="$dept[DeptManager]" class="txt" maxlength="100"/></td>
+        </tr>
+        <tr>
+          <th colspan="4">部门联系电话:</th>
+        </tr>
+        <tr>
+          <td colspan="4"><input type="text" name="DeptPhone" value="$dept[DeptPhone]" class="txt" maxlength="50"/></td>
+        </tr>
+        <!--{if $onAdd or $deepL=="school"}-->
+        <tr>
+          <td colspan="4"><input type="button" value="{lang submit}" class = "btn" id="AddSubmitBtn" /></td>
+        </tr>
+        <!--{else}-->
+        <tr>
+          <th colspan="4">上级部门:</th>
+        </tr>
+        <tr>
+          <td colspan="4"><input type="hidden" id="parentid" name="UpDeptID" value="{$dept[UpDeptID]}" />
+            <input id="selectDeptTree" name="selectDeptTree" type="text" readonly style="width:120px; margin-right:0px;" class="txt" onClick="showSelectDept();" value="{$parentdeptname}" />
+            <input type="button" onClick="showSelectDept();" class="btn" value="选择" /></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+          	<input type="button" value="{lang submit}" class = "btn" id="EditSubmitBtn" />
+          </td>
+        </tr>
+        <!--{/if}-->       
+      </table>
+    </form>
+    <div id="deptMenuContent" class="deptMenuContent" style="display:none; position: absolute;">
+      <ul id="parentTree" class="ztree" style="margin-top:0; width:180px; height: 300px;">
+      </ul>
+    </div>
+  </div>
+</div>
+<!--{/if}-->
+<!--{else}-->
+<div class="mainbox">
+  <!--{if $dept_list }-->
+  <table class="datalist fixwidth">
+    <tr>
+      <th>学校名称</th>
+      <th>{lang dept_name}</th>
+      <th>{lang DeptManager}</th>
+      <th>{lang edit}</th>
+    </tr>
+    <!--{loop $dept_list $dept}-->
+    <tr>
+      <td align="left">$dept[schoolName]</td>
+      <td align="left">$dept[departName]</td>
+      <td>$dept[DeptManager]</td>
+      <td><a href="admin.php?m=dept&a=EditDept&DeptID=$dept[deptID]&schoolid=$dept[schoolid]&UpDeptID=$dept[UpDeptID]"> {lang edit}</a></td>
+    </tr>
+    <!--{/loop}-->
+    <tr class="nobg">
+      <td align="left" class="tdpage" colspan="3">$multipage</td>
+    </tr>
+  </table>
+  <!--{else}-->
+  <div class="note">
+    <p class="i">{lang list_empty}</p>
+  </div>
+  <!--{/if}-->
+</div>
+<!--{/if}-->
+{template footer}

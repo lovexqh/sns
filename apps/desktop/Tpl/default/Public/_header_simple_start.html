@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--{if $_G['config']['output']['iecompatible']}-->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE{$_G['config']['output']['iecompatible']}" />
+<!--{/if}-->
+<title><!--{if !empty($navtitle)}-->$navtitle -<!--{/if}--><!--{if !empty($sysconfig[sitename])}-->$sysconfig[sitename] -<!--{/if}-->Powered by DzzDesktop</title>
+<meta name="keywords" content="{if !empty($metakeywords)}{echo htmlspecialchars($metakeywords)}{/if} $sysconfig[sitename]" />
+<meta name="description" content="{if !empty($metadescription)}{echo htmlspecialchars($metadescription)} {/if},$sysconfig[sitename]" />
+<meta name="generator" content="DzzDesktop {DZZ_VERSION}" />
+<meta name="author" content="DzzDesktop" />
+<meta name="copyright" content="2011-2012 dzz.cc." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<base href="{$_G['siteurl']}" />
+<!--{csstemplate}-->

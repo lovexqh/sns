@@ -1,0 +1,248 @@
+<include file="../Public/_header_ajax" />
+<div style="position:relative;padding:0px 15px 15px 15px;">
+	<h3 class="flb">
+		<em id="return_{$_GET['handlekey']}"><if condition="empty($widget)">{:L('widget_new')}<else />{:L('widget_edit')}</if></em> 
+		<if condition="$_REQUEST['inajax']"><span><a href="javascript:;" onclick="hideWindow('{$_GET['handlekey']}');return false;" class="flbc" title="{:L('close')}">{:L('close')}</a></span></if> 
+	</h3>
+	<ul class="x_tb mtm cl">
+		<li <if condition="!empty($widget) and $widget['type'] eq 'image'">class="a"</if> id="tab_default_{$_GET[handlekey]}" onclick="switchtab_{$_GET[handlekey]}('default');"> <a >{:L('widget_tab_image')}</a></li>
+		<li <if condition="!empty($widget) and $widget['type'] eq 'link'">class="a"</if> id="tab_feature_{$_GET[handlekey]}" onclick="switchtab_{$_GET[handlekey]}('feature');"> <a >{:L('widget_tab_link')}</a></li>
+		<li <if condition="!empty($widget) and $widget['type'] eq 'flash'">class="a"</if> id="tab_mypic_{$_GET[handlekey]}" onclick="switchtab_{$_GET[handlekey]}('mypic');"> <a>{:L('widget_tab_flash')}</a></li>
+	</ul>
+	<div id="icos_{$_GET[handlekey]}" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;">
+		<div id="default_{$_GET[handlekey]}" style="<if condition="empty($widget) or $widget['type'] eq 'image'">display:block<else />display:none</if>"> 
+		<form id="image_form" name="widget_image" method="post" autocomplete="off" action="{:U('desktop/System/doWidget')}"  onsubmit="if(validate(this,'image')){ ajaxpost(this.id, 'return_{$_GET[handlekey]}','return_{$_GET[handlekey]}','',$E('imagesubmit_btn')); }else{ return false };">
+			<input type="hidden" name="referer" value="{$refer}}" />
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="uid" value="{$mid}" />
+			<input type="hidden" name="imagesubmit" value="true" />
+			<input type="hidden" name="gid" value="{$gid}" />
+			<input type="hidden" name="ukey" value="{$ukey}" />
+			<input type="hidden" name="container" value="{$container}" />
+			<input type="hidden" name="type" value="image" />
+			<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+			<p class="mbm"><em>{:L('widget_imageurl')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" id="image_url" name="url"  value="{$widget[url]}" onchange="Imagesize(this.value)" />
+			</p>
+			<p class="mtn mbm"><em>{:L('widget_border')}:</em>
+				<select  name="classname" style="margin: 0px;">
+				  <option value="" <if condition="empty($widget[classname])">selected="selected"</if>>{:L('no_border')}</option>
+				  <option value="simple" <if condition="$widget[classname] eq 'simple'">selected="selected"</if>>{:L('simple_border')}</option>
+				  <option value="trans_black" <if condition="$widget[classname] eq 'trans_black'">selected="selected"</if>>{:L('trans_black')}</option>
+				  <option value="tv_black" <if condition="$widget[classname] eq 'tv_black'">selected="selected"</if>>{:L('tv_black')}</option>
+				  <option value="brown_wood" <if condition="$widget[classname] eq 'brown_wood'">selected="selected"</if>>{:L('brown_wood')}</option>
+				 </select>
+			</p>
+			<!--p class="mbm"><em>{:L('widget_width_height')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="10" class="px" id="width" name="width"  value="{$widget[width]}" onchange="resizeWidth('width',this.value)" /> X <input type="text" size="10" class="px" id="height" name="height"  value="{$widget[height]}" onchange="resizeWidth('height',this.value)" /><input id="raito" name="raito" value="0" type="hidden" />
+			</p-->
+			<p class="mbm"><em>{:L('widget_linkurl')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" name="href"  value="{$widget[href]}" /> 
+			</p>
+			
+			<p class="mbm"><em>{:L('method_open')}:</em></p>
+			<p class="mbm">
+				<label>{:L('method_open_0')}<input name="open" type="radio" value="0" <if condition="$widget[open] eq 0"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_1')}<input name="open" type="radio" value="1" <if condition="$widget[open] eq 1"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_2')}<input name="open" type="radio" value="2" <if condition="$widget[open] eq 2"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_3')}<input name="open" type="radio" value="3" <if condition="$widget[open] eq 3"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+			</p>
+			<p class=" pns" style="text-align:center;margin-top:10px;">
+				<button type="submit" id="imagesubmit_btn" name="imagesubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+			</p>
+		</form>
+		</div>
+		<div id="feature_{$_GET[handlekey]}" style=" <if condition="$widget[type] eq 'link'">display:block<else />display:none</if>" >
+		<form id="link_form" name="widget_link" method="post" autocomplete="off" action="{:U('desktop/System/doWidget')}" onsubmit="if(validate(this,'link')){ ajaxpost(this.id, 'return_{$_GET[handlekey]}','return_{$_GET[handlekey]}','',$E('linksubmit_btn')); }else{ return false };">
+			<input type="hidden" name="referer" value="{$referer}" />
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="uid" value="{$mid}" />
+			<input type="hidden" name="linksubmit" value="true" />
+			<input type="hidden" name="gid" value="{$gid}" />
+			<input type="hidden" name="ukey" value="{$ukey}" />
+			<input type="hidden" name="container" value="{$container}" />
+			<input type="hidden" name="type" value="link" />
+			<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+			<p class="mbm"><em>{:L('widget_url')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" name="url"  value="{$widget[url]}" />
+			</p>
+			<p class="mtn mbm"><em>{:L('widget_border')}:</em>
+				<select  name="classname" style="margin: 0px;">
+				  <option value="" <if condition="empty($widget[classname])">selected="selected"</if>>{:L('no_border')}</option>
+				  <option value="simple" <if condition="$widget[classname] eq 'simple'">selected="selected"</if>>{:L('simple_border')}</option>
+				  <option value="trans_black" <if condition="$widget[classname] eq 'trans_black'">selected="selected"</if>>{:L('trans_black')}</option>
+				  <option value="tv_black" <if condition="$widget[classname] eq 'tv_black'">selected="selected"</if>>{:L('tv_black')}</option>
+				  <option value="brown_wood" <if condition="$widget[classname] eq 'brown_wood'">selected="selected"</if>>{:L('brown_wood')}</option>
+				 </select>
+			</p>
+			<!--p class="mbm"><em>{:L('widget_width_height')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="10" class="px" name="width"  value="{$widget[width]}"  /> X <input type="text" size="10" class="px" name="height"  value="{$widget[height]}"  />
+			</p-->
+			<p class="mbm"><em>{:L('widget_linkurl')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" name="href"  value="{$widget[href]}" /> 
+			</p>
+			
+			<p class="mbm"><em>{:L('method_open')}:</em></p>
+			<p class="mbm">
+				<label>{:L('method_open_0')}<input name="open" type="radio" value="0" <if condition="$widget[open] eq 0"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_1')}<input name="open" type="radio" value="1" <if condition="$widget[open] eq 1"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_2')}<input name="open" type="radio" value="2" <if condition="$widget[open] eq 2"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_3')}<input name="open" type="radio" value="3" <if condition="$widget[open] eq 3"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+			</p>
+			<p class=" pns" style="text-align:center;margin-top:10px;">
+				<button type="submit" id="linksubmit_btn" name="linksubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+			</p>
+		</form>
+		</div>
+		<div id="mypic_{$_GET[handlekey]}" style="<if condition="$widget[type] eq 'flash'">display:block<else />display:none</if>">
+		<form id="flash_form" name="widget_flash" method="post" autocomplete="off" action="{:U('desktop/System/doWidget')}"  onsubmit="if(validate(this,'flash')){ ajaxpost(this.id, 'return_{$_GET[handlekey]}','return_{$_GET[handlekey]}','',$E('flashsubmit_btn')); }else{ return false };">
+			<input type="hidden" name="referer" value="{$referer}" />
+			<input type="hidden" name="formhash" value="{FORMHASH}" />
+			<input type="hidden" name="uid" value="{$mid}" />
+			<input type="hidden" name="flashsubmit" value="true" />
+			<input type="hidden" name="gid" value="{$gid}" />
+			<input type="hidden" name="ukey" value="{$ukey}" />
+			<input type="hidden" name="container" value="{$container}" />
+			<input type="hidden" name="type" value="flash" />
+			<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+			<p class="mbm"><em>{:L('widget_flash')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" name="url"  value="{$widget[url]}" />
+			</p>
+			
+			<p class="mtn mbm"><em>{:L('widget_border')}:</em>
+				<select  name="classname" style="margin: 0px;">
+				  <option value="" <if condition="empty($widget[classname])">selected="selected"</if>>{:L('no_border')}</option>
+				  <option value="simple" <if condition="$widget[classname] eq 'simple'">selected="selected"</if>>{:L('simple_border')}</option>
+				  <option value="trans_black" <if condition="$widget[classname] eq 'trans_black'">selected="selected"</if>>{:L('trans_black')}</option>
+				  <option value="tv_black" <if condition="$widget[classname] eq 'tv_black'">selected="selected"</if>>{:L('tv_black')}</option>
+				  <option value="brown_wood" <if condition="$widget[classname] eq 'brown_wood'">selected="selected"</if>>{:L('brown_wood')}</option>
+				 </select>
+			</p>
+			<!--p class="mbm"><em>{:L('widget_width_height')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="10" class="px" name="width"  value="{$widget[width]}" /> X <input type="text" size="10" class="px" name="height"  value="{$widget[height]}" />
+			</p-->
+			<p class="mbm"><em>{:L('widget_linkurl')}:</em></p>
+			<p class="mtn mbm">
+				<input type="text" size="65" class="px" name="href"  value="{$widget[href]}" /> 
+			</p>
+			
+			<p class="mbm"><em>{:L('method_open')}:</em></p>
+			<p class="mbm">
+				<label>{:L('method_open_0')}<input name="open" type="radio" value="0" <if condition="$widget[open] eq 0"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_1')}<input name="open" type="radio" value="1" <if condition="$widget[open] eq 1"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_2')}<input name="open" type="radio" value="2" <if condition="$widget[open] eq 2"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+				<label>{:L('method_open_3')}<input name="open" type="radio" value="3" <if condition="$widget[open] eq 3"> checked="checked" </if>></label> &nbsp;  &nbsp;  
+			</p>
+			<p class=" pns" style="text-align:center;margin-top:10px;">
+				<button type="submit" id="flashsubmit_btn" name="flashsubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+			</p>
+		</form>
+		</div>
+	</div>
+</div>
+<if condition="$_REQUEST['inajax']"> 
+<script type="text/javascript" reload="1">
+if(document.getElementById('image_url').value!=''){
+	Imagesize(document.getElementById('image_url').value);
+}
+
+function resizeWidth(name,value){
+	var raito=(document.getElementById('raito').value);
+	if(raito>0){
+		if(name=='width'){
+			document.getElementById('height').value=Math.round(value/raito);
+		}else{
+			document.getElementById('width').value=Math.round(value*raito);
+		}
+	}
+}
+function Imagesize(src){
+	var loadCheck = function (obj) {
+		if(obj.complete) {
+			var imgw = image.width;
+			var imgh = image.height;
+		/*	var r = imgw / imgh;
+			var w =this.bodyWidth-20;
+			w = imgw > w ? w : imgw;
+			var h = w / r;
+			if(h > maxh) {
+				h = maxh;
+				w = h * r;
+			}*/
+			
+			if(imgw>0 && imgh>0){
+			<!--<if condition="empty($widget[open])">-->
+				document.getElementById('width').value=imgw;
+				document.getElementById('height').value=imgh;
+			<!--</if>-->
+				document.getElementById('raito').value=imgw/imgh;
+			}
+		} else {
+			setTimeout(function () { loadCheck(image); }, 50);
+		}
+	};
+	var image = new Image();
+	setTimeout(function () { loadCheck(image); }, 100);
+	image.src = src;
+}
+function succeedhandle_{$_GET[handlekey]}(url, msg, values) {
+	_config.sourcedata.widgets[values['gid']]=values;
+	var obj=_widget.CWidget(values['gid']);
+}
+function validate(form,type) {
+	var url = form.url.value;
+	var ext=url.substr(url.lastIndexOf('.')).toLowerCase();
+	if(type=='image'){
+		var imageext=['.jpg','.jpeg','.png','.gif','.bmp'];
+		if(!in_array(ext,imageext)) {
+			alert("{:L('error_image_ext')}");
+			return false;
+		}
+	}else if(type=='flash'){
+		var flashext=['.swf','.flv'];
+		if(!in_array(ext,flashext)){
+			 alert("{:L('error_flash_ext')}");
+			return false;
+		}
+	}
+	return true;
+}
+  
+function switchtab_{$_GET[handlekey]}(id){
+	if(id=='feature'){
+		$E('tab_default_{$_GET[handlekey]}').className='';
+		$E('default_{$_GET[handlekey]}').style.display='none';
+		$E('tab_mypic_{$_GET[handlekey]}').className='';
+		$E('mypic_{$_GET[handlekey]}').style.display='none';
+		$E('tab_feature_{$_GET[handlekey]}').className='a';
+		$E('feature_{$_GET[handlekey]}').style.display='block';
+		if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=folder&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+	}else if(id=='default'){
+		$E('tab_feature_{$_GET[handlekey]}').className='';
+		$E('feature_{$_GET[handlekey]}').style.display='none';
+		$E('tab_mypic_{$_GET[handlekey]}').className='';
+		$E('mypic_{$_GET[handlekey]}').style.display='none';
+		$E('tab_default_{$_GET[handlekey]}').className='a';
+		$E('default_{$_GET[handlekey]}').style.display='block';
+	}else if(id=='mypic'){
+		$E('tab_default_{$_GET[handlekey]}').className='';
+		$E('default_{$_GET[handlekey]}').style.display='none';
+		$E('tab_feature_{$_GET[handlekey]}').className='';
+		$E('feature_{$_GET[handlekey]}').style.display='none';
+		$E('tab_mypic_{$_GET[handlekey]}').className='a';
+		$E('mypic_{$_GET[handlekey]}').style.display='block';
+		if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+	}
+	
+}
+</script> 
+</if> 		
+<include file="../Public/_footer_ajax" />

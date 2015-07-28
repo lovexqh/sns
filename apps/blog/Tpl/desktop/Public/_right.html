@@ -1,0 +1,26 @@
+<div class="blogright">
+    <div class="blogrtop">
+        <span class="btpinfo">相关热门博客</span>
+    </div>
+    <ul class="btprlist">
+        <volist name="newblog" id="li">
+            <li><a href="{:U('blog/Index/show',array(id=>$li['id']))}" title="{$li.title}" target="_blank">{$li['title']}</a> </li>
+        </volist>
+        <li></li>
+    </ul>
+    <div class="blogrtop">
+        <span class="btpinfo">贡献排行榜</span>
+    </div>
+    <ul class="rightlist">
+        <volist name="hot_user" id="vo" key="i">
+        <li class="rln">
+            <span class="spnum <php>if($i <= 3){echo ' tp'.$i;}else{echo ' tp';}</php>"><php>if($i < 10){echo '0';}</php>{$i}</span>
+            <span class="sptit">
+                <a style="float:left;" href="{:U('blog/Index/usercate',array('uid'=>$vo['uid']))}" title="{$vo['uid']|getUserName}">{$vo['uid']|getUserName}</a>
+            </span>
+            <span class="sphit">{$vo.count}</span>
+        </li>
+        </volist>
+        </ul>
+    </ul>
+</div>

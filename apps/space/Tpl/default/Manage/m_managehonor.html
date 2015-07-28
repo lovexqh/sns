@@ -1,0 +1,107 @@
+<include file="../Public/_header" />
+<include file="__THEME__/editor" />
+<script>
+var ctrl = function(){
+}
+ctrl.prototype = {
+	del:function(id){
+		if(id=='' || id==0){
+			ui.error('数据错误');return false;
+		}
+		if( confirm("是否删除该荣誉？") ){
+ 			$.post( '__URL__&act=doDeleteHonor',{id:id,classid:<php> echo $classid;</php>},function(text){
+      			if( text == 1 ){
+    	 		 	ui.success( "删除成功" );
+    	  		 	$('#honor_'+id).remove();
+      			}else{
+    	  			ui.error( "删除失败" );
+     			}
+  			});
+		}
+	}
+}
+var c = null;
+</script>
+<include file="../Public/_tab" />
+     <include file="../Public/_manage_leftmenu" />
+     <div class="trunk_right_r">
+       <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_honor" /><span class="title">荣誉榜</span></div>
+       <div class="clear10"></div>
+       <div class="trunk_right_inner">
+          <div class="right_contents" id="add_announce">
+          	<form action="__URL__&act=doManageHonor" method="POST" onsubmit="return checkData();" enctype="multipart/form-data">
+          		 <table  width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <th  height="30" nowrap="nowrap" class="addannounce">选择人：</th>
+                      <td><div style="width:400px;">{:W('SelectClass',array('uid'=>$_GET['uid'],'classid'=>$classid))}</div></td>
+                    </tr>
+                    <tr>
+                        <th  height="30" nowrap="nowrap" width="50" class="addannounce">标&nbsp;&nbsp;&nbsp;&nbsp;题：</th>
+                        <td class="con_input"><input type="text" id="title" name="title" class="text_input"/></td>
+                     </tr>
+                     <tr>
+                        <th  valign="top" width="50" class="addannounce">内&nbsp;&nbsp;&nbsp;&nbsp;容：</th>
+                        <td class="con_input">
+                         <textarea id="content" name="content" style="height:200px;" ></textarea>
+                        </td>
+                     </tr>
+                     <tr>
+                           <td height="10">&nbsp;</td>
+                     </tr>
+                     <tr>
+                            <input type="hidden" name="classid" value="{$classid}" />
+                        <td colspan="2" align="center"><input type="submit" value="" class="sub_save"></td>
+                     </tr>
+                   </table>
+         	</form>
+       	  </div>
+          <div class="right_content">
+           <volist name="data" id="vo">
+              <ul id="honor_{$vo['id']}">
+                  <li><span class="honortitle"><a href="{:U('space/Class/showHonor',array(hid=>$vo['id'],classid=>$classid))}">{$vo.title}</a></span></li>
+                  <li class="headpic">{$vo['id']|getHonorList}</li>
+                  <li class="honor_content">{$vo.content|getShort="110"}<span class="honor_detil">>><a href="{:U('space/Class/showHonor',array(hid=>$vo['id'],classid=>$classid))}">详情</a></span></li>
+              	  <li><span class="blue_time">[{$vo.hTime|date="Y-m-d H:i:s",###}]</span></span><span  id="honormanage"><a href="javascript:void(0)" onclick="c.del({$vo['id']})">删除</a></span></li>
+              	  <div class="clear"></div>
+              </ul>
+          </volist>
+          <div class="clear10"></div>
+          <div class="page">{$html}</div>
+          <div class="clear10"></div>
+       </div>
+          <div class="clear10"></div>
+       </div>
+     </div>
+<include file="../Public/_footer" />
+<script type="text/javascript">
+var c = new ctrl();
+</script>           
+<script type="text/javascript">
+$(document).ready(function(e) {
+	loadEditor("content");//加载文本编辑器
+});
+function checkData(){
+	var title = $("#title").val();
+	var content = $("#content").val();
+	if( !title || getLength(title.replace(/\s+/g,"")) == 0){
+		ui.error("标题不能为空！");
+		$("#title").focus();
+		return false;
+	}else if(getEditorContent('content') == '' || checkPostContent(getEditorContent('content')) == 0){
+			ui.error("文章内容不能为空");
+			$("#content").focus();
+			return false;
+	}
+	
+	// 过滤html，字串检测长度
+	function checkPostContent(content)
+	{
+		content = content.replace(/&nbsp;/g, "");
+		content = content.replace(/<br>/g, "");
+		content = content.replace(/<p>/g, "");
+		content = content.replace(/<\/p>/g, "");
+		return getLength(content);
+	}
+	
+}
+</script>

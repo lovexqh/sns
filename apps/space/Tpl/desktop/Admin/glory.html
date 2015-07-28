@@ -1,0 +1,75 @@
+<include file="_header" />
+<div class="so_main">
+	<!-- <div class="Toolbar_inbox">
+    <div class="page right">{$html}</div>
+    <a href="javascript:void(0);" class="btn_a" onclick="add();"><span>添加荣誉类型</span></a> 
+  </div> -->
+	<div class="list">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<!--     <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+-->
+				<th class="line_l">ID</th>
+				<th class="line_l">名称</th>
+				<th class="line_l">类型</th>
+				<th class="line_l">标志</th>
+				<th class="line_l">描述</th>
+				<th class="line_l">操作</th>
+			</tr>
+			<volist name="weekStarType.data" id="vo">
+			<tr overstyle='on' id="resource_{$vo['id']}">
+				<!-- <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$key}"></td> -->
+				<td>{$vo['id']}</td>
+				<td>{$vo['name']}</td>
+				<td>{$vo['type']}</td>
+				<td><img width="35" height="35" src="{$picPath}{$vo['pic']}"></td>
+				<td>{$vo['comment']}</td>
+				<td><a href="javascript:void(0);" onclick="edit({$vo['id']});">编辑</a>
+					<a href="javascript:void(0);" onclick="del({$vo['id']});">删除</a></td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+	<div class="clear"></div>
+	<div class="page">{$weekStarType.html}</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">{$html}</div>
+		<a href="javascript:void(0);" class="btn_a" onclick="add();"><span>添加荣誉类型</span></a>
+	</div>
+</div>
+<include file="_footer" />
+<script>
+
+	//添加分类
+	function add() {
+		ui.box.load("__URL__&act=saveGlory", {title:'添加荣誉'});
+	}
+	
+	//编辑分类
+	function edit(gid) {
+		if(!gid) return false;
+		ui.box.load("__URL__&act=saveGlory&gloryid="+gid, {title:'编辑荣誉'});
+	}
+	
+	//删除分类
+	function del(gid) {
+		if(!gid) return false;			
+		//用户确认删除
+		if(!confirm('删除成功后将无法恢复，确认继续？')) return false;
+		//检查分类是否为空
+		$.post("__URL__&act=typeDel&gloryid="+gid, function(res){
+			var JSONObject=jQuery.parseJSON(res);
+			if(JSONObject.status=='1') {
+				$("#resource_"+rid).remove();
+				var data = JSONObject.data;
+				ui.success('删除成功');
+				ui.box.close();
+			}else {
+				ui.error(JSONObject.info);
+			}
+		});
+	}
+</script>

@@ -1,0 +1,992 @@
+.MODAL
+{
+	background-color:#fff;
+	filter:alpha(opacity=5);
+	opacity:0.05;
+}
+/* ---- dzz 样式 ---- */
+.openfile{
+	font-size: 0px;	
+	color:#000;
+}
+
+.openfile .file-icoitem{
+	float:left;
+	margin:5px 10px;
+	border:1px solid #FFF;
+	cursor:pointer;
+	position:relative;
+}
+.openfile .icoitem-selected{
+	float:left;
+	margin:5px 10px;
+	border:1px solid #3399ff;
+	background:#eee;
+	-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;
+	cursor:pointer;
+	position:relative;
+}
+
+
+.openfile .openfile-left{
+	left:0px;top:0px;padding:0px;height:100%; width:100px;overflow:auto;position:absolute;
+	background:#d4d0c8;
+}
+.openfile .openfile-left .left-inner{
+	left:5px;top:5px;padding:0px; position:absolute;overflow:hidden;
+	background:#808080;
+	width:85px;
+	bottom:5px;
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+}
+.openfile .openfile-left .left-inner .left-content{
+	background:#808080;
+	border-left:1px solid #404040;
+	border-top:1px solid #404040;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	position:relative;
+	height:100%;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.openfile .left-content .left-item{
+	text-align:center;
+	border:1px solid #808080;
+	padding:5px;
+}
+.openfile .left-content .current{
+	background:#808080;
+	border-left:1px solid #404040;
+	border-top:1px solid #404040;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+}
+.openfile .left-content .hover{
+	background:#808080;
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #404040;
+	border-bottom:1px solid #404040;
+}
+
+.openfile .left-content .left-item-img{
+	padding:2px;
+}
+.openfile .left-content .left-item-img img{
+	width:32px; height:32px;
+}
+.openfile .left-content .left-item-text{
+	height:24px;
+	line-height:24px;
+	font-size:14px;
+	color:#FFF;
+	
+}
+.openfile .openfile-right{
+	left:0px;top:0px;padding:0px;height:100%; position:relative;overflow:hidden;
+	margin-left:100px;
+	background:#d4d0c8;
+
+}
+.openfile .openfile-right .right-top{
+	
+}
+.openfile .openfile-right .right-top-inner{
+	position:absolute;
+	left:0px;
+	top:5px; 
+	bottom:5px;
+	right:5px;
+	_width:100%;
+	_height:98%;
+	_bottom:0px;
+	_right:0px;
+	overflow:hidden;
+	background:#FFF;
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+}
+.openfile .openfile-right .right-top-inner .right-list{
+	left:0px;top:0px;padding:0px; position:absolute;overflow:auto;
+	bottom:0px;right:0px;
+	_width:100%;
+	_height:100%;
+	background:#FFF;
+	border-left:1px solid #404040;
+	border-top:1px solid #404040;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+}
+.openfile .openfile-right .right-bottom .file-ok,.openfile .openfile-right .right-bottom .file-cancel{
+	width:50px;
+	color:#000;
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #404040;
+	border-bottom:1px solid #404040;
+}
+
+.openfile .detail_header_tr{
+	background:url(images/header.gif) repeat-x;
+}
+.openfile .detail_header{
+	border-left:1px solid #eee;
+	border-right:1px solid #d0d0d0;
+	overflow:visible;
+}
+.openfile .detail_header_asc{
+	display: inline-block;
+	vertical-align:middle;
+	height: 4px;
+	width: 13px;
+	margin-left: 3px;
+	background-repeat:no-repeat;
+	_margin-top:10px;
+}
+.openfile .detail_header_asc_0{
+	background:url(images/sort_desc.gif) no-repeat;
+}
+.openfile .detail_header_asc_1{
+	background:url(images/sort_asc.gif) no-repeat;
+}
+.openfile .detail_header:hover,.openfile .detail_header_hover{
+	background:url(images/header-over.gif) 0 2px repeat-x;
+	border-left:1px solid #aaccf6;
+	border-right:1px solid #aaccf6;
+}
+.openfile .detail_header_td_div{
+	overflow:hidden;
+	line-height:22px;
+	height:22px;
+	margin:0 0px 0 8px;
+	overflow:visible;
+	position:relative;
+}
+
+.openfile .detail_item_td_name_selected .detail_text{
+	background:#39F;
+	color:#FFF
+}
+.openfile .detail_header_drag{
+	position:absolute;
+	width:10px;
+	height:22px;
+	top:0px ;
+	right:-5px;
+	z-index:10;
+}
+.openfile .detail_item_name_icon{
+	width:16px;
+	height:16px;
+	display:inline;
+	vertical-align:middle;
+}
+.openfile .detail_item_name_text{
+	margin-left:5px;
+	cursor:pointer;
+	
+}
+.openfile .detail_text{
+	color:#000;
+	
+}
+.openfile .detail_tr{
+	height:24px;
+}
+.openfile .detail_tr_hover{
+	background:url(images/row-over.gif) repeat-x;
+}
+
+.openfile .detail_item_td_div{
+	
+	white-space:nowrap;
+	overflow:hidden;
+	
+	height:22px;
+	margin:0 8px;
+	overflow:hidden;
+}
+
+/* 边框样式 */
+.openfile .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 4px;
+	height: 51px;
+	background:#d4d0c8;
+
+}
+.openfile .LEFT_TOP .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	left:1px;
+	top:1px;
+	width: 3px;
+	height: 50px;
+	border-top:1px solid #FFF;
+	border-left:1px solid #FFF;
+
+}
+.openfile .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 51px;
+	background:#d4d0c8;
+	
+}
+.openfile .TOP .inner
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	left:0;
+	top:1px;
+	border-top:1px solid #FFF;
+	height: 50px;
+	width:100%;
+	border-bottom:1px solid #808080;
+	background:#d4d0c8;
+	
+}
+.openfile .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	right:0px;
+	top:0px;
+	width: 5px;
+	height: 5px;
+	border-right:1px solid #404040;
+	background:#d4d0c8;
+
+}
+.openfile .RIGHT_TOP .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	top:1px;
+	right:0px;
+	_right:-1px;
+	width: 4px;
+	height: 50px;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+
+}
+
+.openfile .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 5px;
+	background:#d4d0c8;
+	border-right:1px solid #404040;
+	
+}
+.openfile .RIGHT .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	top:0px;
+	right:0px;
+	_right:-1px;
+	width: 4px;
+	height: 100%;
+	border-right:1px solid #808080;
+
+}
+
+.openfile .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 5px;
+	height: 5px;
+	background:#d4d0c8;
+	border-right:1px solid #404040;
+	border-bottom:1px solid #404040;
+}
+.openfile .RIGHT_BOTTOM .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	bottom:0px;
+	_bottom:-1px;
+	right:0px;
+	_right:-1px;
+	width: 4px;
+	height: 4px;
+	border-bottom:1px solid #808080;
+	border-right:1px solid #808080;
+
+}
+.openfile .RIGHT_BOTTOM_BY_BUTTON
+{
+	/* 右下(有按钮时)：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	height: 0;
+	
+}
+.openfile .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 5px;
+	background:#d4d0c8;
+	border-bottom:1px solid #404040;
+	
+}
+.openfile .BOTTOM .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	bottom:0px;
+	_bottom:-1px;
+	left:0px;
+	width:100%;
+	height: 4px;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .BOTTOM_BY_BUTTON
+{
+	/* 下边(有按钮时)：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 28px;
+	background:url(images/TOP.jpg);
+	background-repeat: repeat-x;
+	-moz-border-radius:0 0 5px 5px ;-webkit-border-radius: 0 0 5px 5px;border-radius:0 05px 5px ;
+	
+}
+.openfile .LEFT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 4px;
+	height: 5px;
+	background:#d4d0c8;
+	border-bottom:1px solid #404040;
+}
+.openfile .LEFT_BOTTOM .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	bottom:0px;
+	_bottom:-1px;
+	left:1px;
+	width: 3px;
+	height: 4px;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+
+}
+.openfile .LEFT_BOTTOM_BY_BUTTON
+{
+	/* 左下(有按钮时)：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 0;
+	height: 0;
+	
+}
+.openfile .LEFT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 4px;
+	background:#d4d0c8;
+	
+}
+.openfile .LEFT .inner
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	top:0px;
+	left:1px;
+	width:3px;
+	height: 100%;
+	border-left:1px solid #FFF;
+
+}
+
+
+/* 功能区样式 */
+.openfile .RESIZE
+{
+	width: 15px;
+	height: 15px;
+	right: -8px;
+	bottom: -8px;
+	z-index:10;
+}
+.openfile .RESIZE-X
+{
+	width: 15px;
+	right: -8px;
+	height:100%;
+	z-index:9;
+}
+.openfile .RESIZE-Y
+{
+	height: 15px;
+	width:100%;
+	bottom: -8px;
+	z-index:9;
+}
+
+.openfile .CLOSE
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 2px;
+    float:right;
+   	background:#d4d0c8 url(images/ico.gif) 0 0 no-repeat;
+	 border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+
+.openfile .MIN
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 0px;
+    float:right;
+   	background:#d4d0c8 url(images/ico.gif) 0 -42px no-repeat;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+
+.openfile .MAX
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 0px;
+    float:right;
+   	background:#d4d0c8 url(images/ico.gif) 0 -14px no-repeat;
+	  border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+.openfile .MAX:hover
+{
+  
+}
+.openfile .RESTORE
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 0px;
+    float:right;
+   	background:#d4d0c8 url(images/ico.gif) 0 -28px no-repeat;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+.openfile .RESTORE:hover
+{
+  
+}
+
+
+.openfile .HOME
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 2px 1px 5px;
+    float:left;
+   	background:#d4d0c8 url(images/ico.gif) 0 -70px no-repeat;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+.openfile .HOME1
+{
+  	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+	border-left:1px solid #808080;
+}
+.openfile .REFRESH
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 2px;
+    float:left;
+   	background:#d4d0c8 url(images/ico.gif) 0 -84px no-repeat;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+
+.openfile .DETAIL
+{
+    width: 16px;
+    height: 14px;
+	margin:1px 2px;
+    float:left;
+   	background:#d4d0c8 url(images/ico.gif) 0 -98px no-repeat;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	border-left:1px solid #FFF;
+}
+.openfile .DETAIL1
+{
+  	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+	border-left:1px solid #808080;
+}
+
+
+
+/* 逻辑区样式 */
+.openfile .CONTENT
+{
+	/* 请不要定义padding/margin属性 */
+	/* 请定义left = -(border-left),top = -(border-top) */
+	left: 0px;
+	top: 0px;
+    background:#d4d0c8;
+	overflow:visible;
+	font-size:12px;
+}
+
+.openfile .CONTENT .FORM
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 12px;
+}
+.openfile .CONTENT .FORM_NOTITLE
+{
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px;
+}
+.openfile .TITLE
+{
+	/* 请不要定义margin属性 */
+   left:4px ;
+   top:4px;
+   height:47px;
+   
+}
+.openfile .TITLE .titleBar{
+	margin-left:1px;
+	height:18px;
+	background:-webkit-gradient(linear, 0 0, 100% 100%, from(#0a246a), to(#a6caf0));
+  	background:-moz-linear-gradient(left,#0a246a,#a6caf0);
+  	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=1,startColorStr=#0a246a,endColorStr=#a6caf0);
+}
+.openfile .TITLE .titleBar .titleButtonBar{
+	margin:0;
+	padding:0;
+	
+}
+.openfile .TITLE .titleBar .titleText{
+	text-align:left;
+	padding-left:5px;
+	height:18px;font-size:12px; color:black;line-height: 18px;overflow: hidden;	
+	color:#FFF;
+	font-weight:bold;
+}
+.openfile .TITLE .titleBar .titleText a{
+	color:#FFF;
+}
+
+/*目录头部工具栏*/
+.openfile .TITLE .folderBar{/*工具条层*/
+	margin-top:2px;
+	height:29px;
+	
+	position:relative;
+	width:100%;
+	left:0px;
+	right:-2px;	
+}
+
+.openfile .TITLE .folderBar .folderButtonBar{/*工具条工具层*/
+	margin:0;
+	padding:0;
+	position:absolute;
+		
+	left:0px;
+	right:0px;
+	
+	bottom:0px;
+	_bottom:-1px;
+	
+	height:28px;
+}
+
+
+.openfile .TITLE .folderBar .BACK1
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8; 
+	background:url(images/windows_ico.gif)  0 0 no-repeat;
+	
+}
+.openfile .TITLE .folderBar .BACK2:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+}
+.openfile .TITLE .folderBar .BACK2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8; 
+	background:url(images/windows_ico.gif) 0 -48px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .NEXT1
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8; 
+	background:url(images/windows_ico.gif)  0 -24PX no-repeat;
+	
+}
+.openfile .TITLE .folderBar .NEXT2:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+}
+.openfile .TITLE .folderBar .NEXT2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8; 
+	background:url(images/windows_ico.gif) 0 -72px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_view0_1,.openfile .TITLE .folderBar .filemanage_view0_2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8;
+	margin-left:10px; 
+	background:url(images/windows_ico.gif) 0 -96px no-repeat;
+
+}
+.openfile .TITLE .folderBar .filemanage_view0_2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_view0_1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_view1_1,.openfile .TITLE .folderBar .filemanage_view1_2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -120px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_view1_2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_view1_1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_view2_1,.openfile .TITLE .folderBar .filemanage_view2_2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -144px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_view2_2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_view2_1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_view3_1,.openfile .TITLE .folderBar .filemanage_view3_2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -168px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_view3_2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_view3_1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_view4_1,.openfile .TITLE .folderBar .filemanage_view4_2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -192px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_view4_2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_view4_1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_search
+{
+	float:right;
+	margin-right:2px;
+
+	margin-top:2px;
+	
+
+}
+.openfile .TITLE .folderBar .filemanage_search .searchInputContainer {
+	width:200px;
+	height:22px;
+	/*_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/filemanage/dzz/images/search.png', sizingMethod='image');*/
+	background-image:url(images/search.gif);
+	
+	background-repeat: no-repeat;
+	position:relative
+}
+
+.openfile .TITLE .folderBar .filemanage_search .searchInput {
+	background:transparent;
+	border:0;
+	outline:0;
+	color:#a0a0a0;
+	font-size:12px;
+	height:20px;
+	margin:0 0 0 7px;
+	_margin-top:-2px;
+	line-height:2;
+	width:170px;
+}
+.openfile .TITLE .folderBar .filemanage_search  .searchBtn {
+	border:0;
+	display:block;
+	position:absolute;
+	top:3px;
+	right:5px;
+	height:14px;
+	width:16px;
+	cursor:pointer;
+	outline:0;
+	background:url(images/ico.gif) 0 -56px no-repeat;
+}
+.openfile .TITLE .folderBar .filemanage_disp1,.openfile .TITLE .folderBar .filemanage_disp2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	margin-left:10px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -216px no-repeat;
+	
+}
+.openfile .TITLE .folderBar .filemanage_disp2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_disp1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+
+.openfile .TITLE .folderBar .UPLOAD,.openfile .TITLE .folderBar .UPLOAD_disable
+{
+	float:left;
+	width:24px;
+	height:24px;
+	margin-left:10px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -264px no-repeat;
+}
+.openfile .TITLE .folderBar .UPLOAD_disable
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .UPLOAD:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .NEWFOLDER,.openfile .TITLE .folderBar .NEWFOLDER_disable
+{
+	float:left;
+	width:24px;
+	height:24px;
+	margin-left:10px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -240px no-repeat;
+}
+.openfile .TITLE .folderBar .NEWFOLDER_disable
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .NEWFOLDER:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+.openfile .TITLE .folderBar .filemanage_other1,.openfile .TITLE .folderBar .filemanage_other2
+{
+	float:left;
+	width:24px;
+	height:24px;
+	margin-left:10px;
+	border:1px solid #d4d0c8;
+	background:url(images/windows_ico.gif) 0 -288px no-repeat;
+}
+.openfile .TITLE .folderBar .filemanage_other2
+{
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #FFF;
+	border-bottom:1px solid #FFF;
+
+}
+.openfile .TITLE .folderBar .filemanage_other1:hover
+{
+	border-left:1px solid #FFF;
+	border-top:1px solid #FFF;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+
+}
+
+
+.openfile .BUTTON
+{
+	/* 请不要定义margin属性 (暂不支持:width:100%;bottom:0px;) */
+	padding: 0px 20px 25px 0px;
+	text-align:right;
+}
+.openfile .BUTTON button
+{
+	width:87px;
+	height:28px;
+	border:0px;
+	padding:0px;
+	margin:0px 7px 0px 7px;
+	background-color: transparent;
+	background-repeat:no-repeat;
+}
+.openfile .BUTTON .DISABLED
+{
+	_filter:alpha(opacity=36);
+	opacity:0.36;
+}
+
+/* 各种按钮样式 */
+.openfile .BUTTON .OK
+{
+	background-image:url(images/OK.gif);
+}
+.openfile .BUTTON .CANCEL
+{
+	background-image:url(images/CANCEL.gif);
+}
+/* 窗口最大化时隐藏的阴影 */
+.openfile .SHADOW_TOP
+{
+	height:0
+}
+.openfile .SHADOW_LEFT
+{
+	width:0
+}
+.openfile .SHADOW_RIGHT
+{
+	width:0
+}
+.openfile .SHADOW_BOTTOM
+{
+	height:0
+}
+/* ---- X 样式 ---- */

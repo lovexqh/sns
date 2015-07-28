@@ -1,0 +1,278 @@
+<style>
+label{float:left;width:70px;height:29px;line-height:29px;padding:0 10px;cursor:default;}
+.list_vote li, .list_vote dl{height:35px;clear:both;}
+</style>
+<script>
+function changeType(_this){
+	if('mul'==_this.val()){
+		$('#mul_option').show('fast');
+	}
+	else{
+		$('#mul_option').hide('');
+	}
+}
+</script>
+<div class="pollBox">
+<form id='voteForm{$rand}'>
+	<div class="layer_vote">
+		<ul id="list_vote{$rand}" class="list_vote lineS_btm">
+                <li>
+                    <label>{:L('vote_topic')}</label>
+                    <div class="c1"><input id="title{$rand}" name="" type="text" class="txt_vote"/></div>
+                </li>
+                <!--候选项-->
+                <div id="opt_list{$rand}"  class="lineS_top pt10 mt10">
+                    <php>for($i=1;$i<=$count;$i++){</php>
+                    <dl>
+                        <label class="vote_num{$rand}">{:L('option')}{$i}:</label>
+                        <div class="c1">
+                      <input name="" type="text" class="txt_vote vote_opt{$rand}"/><a href="javascript:void(0)" class="vote_delete hover del icon-delete" style="display:none;"></a>
+                        </div>
+                        <div class="c"></div>
+                    </dl>
+                    <php>}</php>
+                </div>
+                <!--//候选项-->
+                <li>
+                <label>{:L('vote_setting')}</label>
+                <div class="c1">
+                    <select class="easyui-combobox" style="height:29px;" id="type{$rand}" name="type" class="mr5 ml5" onchange="changeType(this)">
+                        <option value="0">{:L('single')}</option>
+                      <option value="mul">多选</option>			
+                    </select>
+                </div>
+                <div class="c"></div>
+                </li>
+                <li id="mul_option" style="display:none">
+                    <label>可多选</label><!-- 更改为多选 -->
+                    <div class="c1">                    
+					<input id="mul_val" name="mul_val" class="easyui-validatebox" comboname="mul_val" type="text" hideFocus style="width:50px;" value="">项
+					</div>
+                    
+    
+                    <div class="c"></div>
+                </li>
+                <div class="c"></div>
+			</ul>
+            <!--begin设置新选项-->
+			<dl class="list_send_vote">
+            <dt style="padding:0px 0px 5px;"><span style="display:inline-block; width:84px;"><a href="javascript:void(0)" onclick="Vote.more(this)" class="easyui-linkbutton small-normal ml5" id="ops">增加新选项</a></span><a href="javascript:;" onclick="Vote.showMore()" class="easyui-linkbutton small-normal ml5">{:L('advance_setting')}</a></dt><!--高级设置-->
+            <!--选项-->
+            <!--提交选项-->
+			<div class="moreSet{$rand}" style="display:none;overflow:hidden;*zoom:1">
+				<dd>
+                <label>{:L('dead_line')}</label>
+                <div class="c1">
+                <select name="date" class="easyui-combobox" style="height:29px;" onchange="Vote.customDeadLine($(this))" class="ml5 mt5 left" id="date{$rand}">
+					<option value='7' selected>{:L('a_week')}</option>
+					<option value='30' >{:L('a_month')}</option>
+					<option value='180' >{:L('half_year')}</option>
+					<option value='365' >{:L('a_year')}</option>
+					<!-- <option value='custom'>{:L('custom')}</option> -->
+				</select>
+                </div>
+				</dd>
+                <dd class="mt5" style="margin-top:10px;">
+                <label>描述:</label>
+                <div class="c1">
+                  <textarea name="explain" id="explain{$rand}" rows="5" class="text ml5"  style="width:70%" onfocus="this.className='text2 ml5';" onblur="this.className='text ml5';"></textarea></div>
+                <div class="c1">
+                </dd>
+			</div>
+            <dd class="mt10">
+                <label style="float:left">&nbsp;</label>
+                <div style="margin-left:90px">
+                <a href="javascript:void(0);" class="easyui-linkbutton medium-primary" onclick="Vote.check_vote();" class="btn_b ml5">{:L('confirm')}</a>
+                </div>
+             </dd>
+            </dl>
+            <!--end设置新选项-->
+		</div>
+</form>
+</div>
+
+<script>
+
+var Vote = (function(){
+	var flag  = 1,
+	num_limit = 10,
+	moreDiv   = '.moreSet{$rand}';
+	return {
+		date :function(){
+		},
+		check_vote : function(){
+			var title = $.trim($("#title{$rand}").val());			
+		var mytype = $( 'input:hidden[name="type"]' ).val();
+			//alert(mytype);
+			var data ={};
+			var mul_val=parseInt($('#mul_val').val());
+			//alert(mul_val);
+			if(mytype=='mul'){
+				if(!mul_val){
+					ui.error("多选项不能为空或者填写的不是数字!");
+					return false;
+				}	
+				if(mul_val==1){
+					ui.error("请选择单选!");
+					return false;
+				}
+						
+			}
+			
+			if(!title){
+				ui.error("标题不能为空！");
+				return false;
+			}
+			if(getLength(title) >50){
+				ui.error("标题长度不大于100个字符");
+				return false;
+			}
+			var flag = 0;
+				$(".vote_opt{$rand}").each(function (i) {
+						if($.trim($(this).val())) flag++;									
+				})
+			if(flag<2){
+				ui.error("{:L('least_two_options')}");
+				return false;
+			}
+		
+	var type = $( 'input:hidden[name="type"]' ).val();
+			//alert(type);
+			if(type=='mul'){
+				type = mul_val-1;
+			}
+			if( type > flag-1 ){
+				var optLimit = parseInt(type)+1;
+				ui.error("最少填写"+optLimit+"个选项") ;
+				return false;
+			}
+			data.opt =[];
+			data.title = $('#title{$rand}').val();
+			var mustReturn = false;
+			$(".vote_opt{$rand}").each(function(i){
+				data.opt[i] = $.trim($(this).val());
+				if(getLength(data.opt[i]) > 50){
+					ui.error("候选项名称不能大于100个字符");//选项最多20个字符
+					mustReturn = true;
+					return false;
+				}
+				if(data.opt[i] == '' || getLength(data.opt[i].replace(/\s+/g,"")) == 0){
+					ui.error("请填写完整候选项内容");
+					mustReturn = true;
+					return false;
+				}
+			});
+			if(mustReturn) return;
+			
+		//	data.type = $('#type{$rand}').combobox('getValue');
+data.type=type;//
+			data.date = $("#date{$rand}  option:selected").val();
+			if(data.date == 'custom'){
+				data.deadline={year:null,month:null,hour:null};
+				var deadlineValue = $("#deadline{$rand}").val();
+				var deadline = deadlineValue.split('-');
+				data.deadline.year = deadline.shift();
+				data.deadline.month = deadline.shift();
+				data.deadline.day = deadline.shift();
+				data.deadline.hour = $("#hour{$rand}").val();
+			}
+			
+			data.explain = $('#explain{$rand}').val();
+			$.post(U('Vote/Index/add'),data,function(result){
+				var res = eval('('+result+")");
+				if(res.status){
+					<php>if($inner){</php>
+					ui.success(res.info);
+					window.location.href = res.data.url;
+					<php>}else{</php>
+					CallBack.Vote.addSuccess(res.data,result);
+					ui.success(res.info);
+					<php>}</php>
+				}else{
+					ui.error(res.info);
+				}
+			});
+			
+		},
+		exit:function(){
+		$('.vote_dealtime_custom{$rand}').hide();
+		<php>if($inner){</php>
+			document.getElementById("voteForm{$rand}").reset()
+		<php>}else{</php>
+			CallBack.Vote.exit();
+		<php>}</php>
+		},
+		showMore : function(){
+			$(moreDiv).toggle();
+			if(typeof(iframe)!='undefined'){ //配合大桌面写的给父级iframe增加高度
+			  var iframeheight = $('iframe', parent.document).height()+70;
+			  $('iframe', parent.document).height(iframeheight);
+			}
+		},
+		more:function(obj){
+			var new_vote = $($('#opt_list{$rand}').children().get(0)).clone();
+			var flag = $('#opt_list{$rand}').children('dl').size();
+			new_vote.children( 'span' ).html( "{:L('option')}"+flag+":" );
+			new_vote.find( 'input' ).val( '' );
+			new_vote.attr('id','');
+			new_vote.show();
+			$( '#opt_list{$rand}' ).append( new_vote );
+			
+			this.removeNode();
+			this.resort();
+			flag++;
+			
+			if(typeof(iframe)!='undefined'){ //配合大桌面写的给父级iframe增加高度
+				var iframeheight = $('iframe', parent.document).height()+35;
+				$('iframe', parent.document).height(iframeheight);
+			}
+			
+			if( num_limit <= flag ){
+				$(obj).hide();
+				return;
+			}
+			
+		},
+		customDeadLine:function(obj){
+			if(obj.val()=="custom"){
+				$('.vote_dealtime_custom{$rand}').show();
+			}else{
+				$('.vote_dealtime_custom{$rand}').hide();
+			}
+		},
+		resort:function(){
+			var size = $('#opt_list{$rand}').children('dl').size();
+			if(size <= 2){ //最少保留2个
+				$('.vote_delete').hide();
+			}else{
+				$('.vote_delete').show();
+			}
+			$('.vote_num{$rand}').each(function(key){
+				$(this).html("{:L('option')}"+(key+1)+":");
+			});
+		},
+		removeNode:function(){
+			var self =this;
+			$('.vote_delete').click(function(){
+				$(this).parent().parent().remove();
+				self.resort();
+				var size = $('#opt_list{$rand}').children('dl').size();
+				if(size < num_limit){
+					$('#ops').show();
+				}
+			});
+			
+		},
+		init:function(month,today){
+			var self = this;
+			//截止时间
+			this.date();
+			if($('#date{$rand}').val() == 'custom') this.customDeadLine($('#date{$rand}'));
+			$("#day{$rand} option[value='{$date.day|intval}']").attr('selected',true);
+			$("#hour{$rand} option[value='{$date.hour|intval}']").attr('selected',true);
+			this.removeNode();
+		}
+	}
+})();
+Vote.init({$time.mon},{$time.mday});
+</script>

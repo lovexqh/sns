@@ -1,0 +1,13 @@
+/*导航下拉框共用样式*/
+.header .nav ul li .dropmenu,.header .person li .dropmenu{display:none;z-index: 9000;top: 31px;right:0;position: absolute;}
+.header .nav ul li.hover .dropmenu,.header .person li.hover .dropmenu{background-color: #fff;z-index: 9000;top: 31px;right:-1px;_right:-2px;position: absolute;text-align: left; display: block;font-size: 12px;border: 1px solid #666;border-top:0 none;white-space:nowrap;box-shadow:1px 1px 3px rgba(0, 0, 0, 0.3);border-radius:0px 0px 3px 3px}
+
+.header .nav ul li .ip-dropmenu,.header .person li .ip-dropmenu{display:none;z-index: 9000;top: 50px;right:0;position: absolute;}
+.header .nav ul li.hover .ip-dropmenu,.header .person li.hover .ip-dropmenu{background-color: #fff;z-index: 9000;top: 43px;right:-1px;_right:-2px;position: absolute;text-align: left; display: block;font-size: 12px;border: 1px solid #666;border-top:0 none;white-space:nowrap;box-shadow:1px 1px 3px rgba(0, 0, 0, 0.3);border-radius:0px 0px 3px 3px}
+
+.header .person li.hover .dropmenu a {line-height: 30px;font-size: 12px;background-color:#fff;font-weight: normal;display: block;padding: 0px 7px;color:#143149}
+.header .person li.hover .dropmenu a:hover,.header .nav ul li.hover .dropmenu a:hover{background-color: #e8e8e8;text-decoration: none}
+.header .nav ul li.hover .dropmenu a{line-height: 30px;font-size: 12px;background-color:#fff;font-weight: normal;display: block;padding: 0px 7px;color:#143149}
+.header .person li.hover,.header .nav ul li.hover {background: url(images/current_bg.png) repeat scroll 0 0 #fff;border-bottom: 0;-moz-border-radius-topright: 3px;-webkit-border-top-right-radius: 3px;
+-moz-border-radius-topleft: 3px;-webkit-border-top-left-radius: 3px;border-top-left-radius: 3px;border-top-right-radius: 3px;-moz-box-shadow: 1px -2px 3px rgba(0,0,0,.3);
+-webkit-box-shadow: 1px -2px 3px rgba(0,0,0,.3);box-shadow: 1px -2px 3px rgba(0,0,0,.3);margin-top:2px}

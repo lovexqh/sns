@@ -1,0 +1,163 @@
+<include file="_header" />
+<style type="text/css">
+.book_list dl{ float:left; width:240px; margin-top:10px; margin-bottom:10px;}
+.book_list dl dt{ float:left; margin-right:10px;}
+</style>
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	$(window).scroll(function(){
+		var bot=100;
+		if ((bot + $(window).scrollTop()) >= ($(document).height() - $(window).height())) {
+			var url=$("#index_page").children("span").next().attr('url');
+			if (!url) return;
+			if ($('.feed-layout-wraper.hove').length > 0) return;
+			$('.feed-layout-wraper').addClass('hove');
+			$('.tip-content').html('正在加载内容，请稍侯...');
+			$.ajax({ 
+				url: url,
+				timeout: 29000,
+				success: function(html){
+				    $('#index_page').remove();
+					$("#blog_list").append(html);
+					$('.feed-layout-wraper').removeClass('hove');
+					$('.tip-content').html('此处精彩已尽收眼底');
+					},
+				error : function(){
+					$('.feed-layout-wraper').removeClass('hove');
+					$('.tip-content').html('加载数据失败');
+				},
+			});
+		}
+	})
+});
+//-->
+</script>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <div class="content" style="width:960px;" id="bloglist">
+      
+      
+      <div class="so_left" style="width:733px;"> 
+        <!--最新热门资源-->
+        <div class="box" style="border:0px;width:733px;">
+          <div class="title">
+            <h2>最新文章</h2>
+            <!--<a href="#" class="update">换一批</a>-->
+            <div class="clear"></div>
+          </div>
+          <div class="news_box" id="blog_list" style="margin-top:10px;">
+           	<!-- Rickeryu Add -->
+           	
+           	
+           	<volist name="blog_class['data']" id="li">
+            <div class="new_item">
+              <div class="fl new_icon">
+                <a href="@{li.uid}" style="float:left; display:block;">
+                    <space uid="li.uid">{uavatar=m}</space>
+                </a>
+              </div>
+              <div class="fl new_main" style="width:675px;">
+                <div class="new_main_t" style="width:675px;">
+                <div class="new_main_b" style="width:640px;">
+                  <div class="top_info">
+                    <space uid="li.uid" class="co">{uname}</space>
+                    <span class="top_info_time">{$li.cTime|friendlyDate}</span>
+                  </div>
+                  <div class="new_title">
+                    <a href="{:U('/Article/context',array(id=>$li['id']))}">《{$li.title|getshort='30'}》</a>
+                  </div>
+                  <div class="new_content">
+                    {$li.content}
+                  </div>
+                  <div class="bottom_info">
+                    <div class="bottom_info_read_all">
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}">未完，继续阅读 >></a>
+                    </div>
+                    <div class="new_tags">
+                      <volist name="li.tags" id="vo"> 
+                      <a href="{:U('square/Article/myblog',array(tags=>$vo))}">#{$vo}</a>
+                      </volist>
+                    </div>
+                    <div class="new_reply">
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}#reply_box">评论</a>
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}">阅读({$li.readCount})</a>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            </volist>
+            <div style="display:none;" id="index_page">{$blog_class['html']}</div>
+           	
+           	
+           	
+           	
+           	<!-- Rickeryu End -->
+			
+
+          </div>
+          <div class="feed-layout-wraper"><div class="loading-icon"></div><div class="tip-content">此处精彩已尽收眼底</div></div>
+        </div>
+        
+      </div>
+      <div class="so_right">
+        <div class="rank">
+          <h4>贡献排行榜</h4>
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="80">姓名</th>
+              <th scope="col" width="60">上传数</th>
+            </tr>
+            <volist name="user_hot" id="vo">
+            <tr>
+              <td>
+                  <php>if($i==1){</php>
+                  <code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php>
+                  <code class="top2">{$i}</code>
+                  <php>}else{</php>
+                  <code>{$i}</code>
+                  <php>}</php>
+              </td>
+              <td><space uid="vo.uid" class="co">{uname}</space></td>
+              <td>{$vo.count}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+        <div class="rank">
+          <h4>文章排行榜</h4>
+          <table border="0" cellspacing="0" cellpadding="0" class="tl">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="100">文章</th>
+              <th scope="col">点击量</th>
+            </tr>
+            <volist name="blog_hot" id="li">
+            <tr>
+              <td>
+                  <php>if($i==1){</php>
+                  <code class="top">{$i}</code>
+                  <php>}elseif($i==2){</php>
+                  <code class="top2">{$i}</code>
+                  <php>}else{</php>
+                  <code>{$i}</code>
+                  <php>}</php>
+              </td>
+              <td><a href="{:U('/Article/context',array(id=>$li['id']))}"> {$li.title|text|getshort=###,'6','…'}</a></td>
+              <td>{$li.readCount}</td>
+            </tr>
+            </volist>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />

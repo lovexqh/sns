@@ -1,0 +1,134 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<div class="divcenter">
+    <div class="uploadtop">照片上传</div>
+    <form class="uploadcnt" method="post" id="photoForm" action="{:U('/Upload/save_upload_photos')}" name="save_upload_photos">
+        <div class="c1">选择照片相册：</div>
+        <div class="c2" style="text-align:left;">
+            {:W('AlbumList',array( 'uid'=>$mid , 'form_name'=>'albumId' , 'selected'=>intval($_GET['albumId']) ) )}
+            <a href="javascript:create_album_tab({$mid});" style="color:#1A5FAC;">[创建相册]</a>
+        </div>
+        <div class="clear"></div>
+        <div class="uplist">
+            <div class="nopic">请先选择要上传的照片 </div>
+            <div id="picForm">
+                <!--
+                <div class="pic">
+                    <p><img src="" width="208" height="208"></p>
+                    <p style="color: #666666; line-height: 20px;">标题：<input type="text" name="name[]" id="name_1" value=""></p>
+                    <p style="color: #666666; line-height: 30px;">简介：<textarea name="info[]" id="info_1"></textarea></p>
+                </div>
+                -->
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="uploadbtn">
+            <div class="selpic">
+                <div id="flash_upload_select_picture"></div>
+            </div>
+            <a id="startupload" style="display: none;" href="javascript:;" onclick="javascript:checkTitle();">提交照片</a>
+        </div>
+    </form>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="../Public/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="../Public/js/swfupload/handlers.js"></script>
+<script>
+var swfu;
+window.onload = function() {
+    var settings = {
+        upload_url: "{:U('/Upload/upload_single_pic')}",	// Relative to the SWF file (or you can use absolute paths)
+        post_params: {"PHPSESSID" : "<?php echo session_id(); ?>"},
+        file_size_limit : "20048",	// 2MB
+        file_types : "<php> echo "*.".implode(";*.",explode(",",$photo_file_ext));</php>",
+            file_types_description : "<php> echo "*.".implode(";*.",explode(",",$photo_file_ext));</php>",
+            file_upload_limit	:	"{$max_flash_upload_num}",	//最多上传30张
+            file_queue_limit	:	"{$max_flash_upload_num}",	//最多选择30张
+            file_dialog_start_handler :		fileDialogStart,
+            file_queued_handler :			fileQueued,
+            file_queue_error_handler :		fileQueueError,
+            file_dialog_complete_handler :	fileDialogComplete,
+            upload_start_handler :			uploadStart,
+            upload_progress_handler :		uploadProgress,
+            upload_error_handler :			uploadError,
+            upload_success_handler :		uploadSuccess,
+            upload_complete_handler :		uploadComplete,
+            queue_complete_handler :		queueComplete,
+            button_image_url : "../Public/js/swfupload/add_photo.png",	// Relative to the SWF file
+            button_placeholder_id : "flash_upload_select_picture",
+            button_width:	74,
+            button_height:	25,
+            flash_url : "../Public/js/swfupload/swfupload.swf",
+            debug: false
+};
+swfu = new SWFUpload(settings);
+};
+
+//开始上传
+function start_upload(){
+    albumId	=	$('#albumlist').val();
+    if(albumId>0){
+        var uploadStatus = $('#btnUpload').attr('readonly');
+        if(uploadStatus != true) {
+            swfu.addPostParam('albumId',albumId);
+            swfu.startUpload();
+            // $('#btnUpload').attr('disabled',true).removeClass('btn5').val("上传中...");
+            if(enableUploadButton){
+                $('#btnUpload').attr('readonly', false).removeClass('btn5');
+            }
+
+            return true;
+        }
+    }else{
+        alert('照片相册未选择，请添加新相册或者刷新页面重试！');
+        return false;
+    }
+    return false;
+}
+
+//单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success(serverData){
+    var data	=	eval('('+serverData+')');
+    if(data.status==true){
+        return true;
+    }else{
+        alert(data.info);
+        return false;
+    }
+}
+
+//当文件队列有文件时
+function enableUploadButton(file){
+    // $('#btnUpload').attr('disabled',false).addClass('btn5').val("开始上传");
+    //$('#btnUpload').attr('readonly', false).addClass('btn5').val("开始上传");
+    return true;
+}
+//全部上传完成
+function queueComplete(numFilesUploaded) {
+    $("#up_num").val(numFilesUploaded);
+    ( numFilesUploaded > 0 ) && $("#muti_edit_photos").submit();
+}
+
+function checkTitle(){
+    var isT=true;
+    $('.photoname input').each(function(i,n){
+        var obj = $(n)
+
+        var name =obj.val();
+        if(!name || getLength(name.replace(/\s+/g,"")) == 0){
+            alert("照片标题不能为空");
+            obj.focus();
+            isT=false;
+            return false;
+        };
+    });
+    if(isT){
+        $('#photoForm').submit();
+    }
+
+}
+
+</script>
+<include file="Public:_footer" />
+
+

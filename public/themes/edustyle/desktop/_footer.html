@@ -1,0 +1,61 @@
+<include file="__THEME__/_public_foot" />
+<!--tab-main右键菜单 start-->
+<div id="tabs-header-contextmenu" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px; display:none">  
+	<div data-options="name:'closeall'">关闭全部选项卡</div> 
+	<div data-options="name:'closeother'">关闭其他选项卡</div> 
+</div> 
+<!--tab-main右键菜单 end-->
+
+<!--tab-main标题列表 start-->
+<div id="tabs-header-list" class="easyui-menu"></div>
+<!--tab-main标题列表 end-->
+
+<!--UI Dialog start-->
+<div id="ui-dialog"></div>
+<!--UI Dialog end-->
+<!-- Ricker Yu add 2013-9-3 ajax得到视频反馈信息操作
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery.get('{:U("video/Index/ajaxVideo")}',
+			{time:new Date().getTime()},
+			function(data){
+				
+			});
+});
+</script>
+-->
+<php>$redirect = base64_decode($_GET['redirect']);</php>
+<php>$title = $_GET['title'];</php>
+<script type="text/javascript">
+<!--
+//执行动态打开新tab
+$(function(){
+	title = "<php>echo empty($_GET['title'])?'内容详情':$_GET['title'];</php>";
+	url = "{$redirect}";
+	if((url.indexOf('app')!=-1 && url.indexOf('mod')!=-1 && url.indexOf('act')!=-1) || url.indexOf('/app/')!=-1){
+        if ($('#tabs-main').tabs('exists',title)){
+            $('#tabs-main').tabs('select', title);
+            tabs.refresh(title,url);
+        } else {
+            var content = '<iframe scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:100%;"></iframe>';
+            $('#tabs-main').tabs('add',{
+                title:title,
+                content:content,
+                closable:true
+            });
+        }
+		try{
+			if(typeof(iframe)!='undefined'){
+				parent.mask.show();	
+			}else{
+				mask.show();
+			}
+		}catch(e){}
+	}
+});
+//-->
+</script>
+
+<!-- Ricker Yu add 2013-9-3 ajax得到视频反馈信息操作 － end -->
+</body>
+</html>

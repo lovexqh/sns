@@ -1,0 +1,270 @@
+<include file="__THEME__/member/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.autocomplete.js"></script>
+<script src="../Public/js/slides.min.jquery.js"></script>
+
+<div class="containerOuter">
+	<include file="__THEME__/member/banner" />
+    <div class="container">
+        <div class="containerInner">
+          <include file="__THEME__/member/apps" />
+          <div class="mainbox">
+          	<div class="mainbox_R">
+            
+            	<volist name="ts['ad']['right_top']" id="vo">
+                <div class="ke-post setskinbox lineS_btm">
+                    {$vo['content']}
+                </div>
+                </volist>
+                
+                <!-- 右侧插件开始 -->
+                {:Addons::hook('home_index_right_top')}
+          		<!-- 右侧插件结束 -->
+                
+                <!--{:Addons::hook('home_index_right_qiandao')}-->
+                
+                <div class="msg_center boxitem pt10">
+                	<div class="box_title">
+                    	<h2>消息中心</h2>
+                    </div>
+                    <div class="box_content">
+                    	<div class="msg_important notebox mt10">
+                        	<a href="#" class="close" style="display:none">×</a>
+                        	<strong>重要信息</strong>
+                            <p>
+                            	{$announce['content']|formatUrl}
+                            </p>
+                        </div>
+                    	<ul>
+                        	<li><span>个人消息：</span><gt name="userCount['message']" value="0"><a href="{:U('home/message/index')}"></gt>{$userCount.message}条<gt name="userCount['message']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                            <li><span>提到我的：</span><gt name="userCount['atme']" value="0"><a href="{:U('home/user/atme')}"></gt>{$userCount.atme}条<gt name="userCount['atme']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                            <li><span>评论消息：</span><gt name="userCount['comment']" value="0"><a href="{:U('home/user/comments')}"></gt>{$userCount.comment}条<gt name="userCount['comment']" value="0"><img src="__THEME__/member/images/new.gif" /></a></li></gt></li>
+                            <li><span>系统消息：</span><gt name="userCount['notify']" value="0"><a href="{:U('home/message/notify')}"></gt>{$userCount.notify}条<gt name="userCount['notify']" value="0"><img src="__THEME__/member/images/new.gif" /></a></li></gt></li>
+                            <li><span>应用消息：</span><gt name="userCount['appmessage']" value="0"><a href="{:U('home/message/appmessage')}"></gt>{$userCount.appmessage}条<gt name="userCount['appmessage']" value="0"><img src="__THEME__/member/images/new.gif" /></a></gt></li>
+                        </ul>
+                        <div class="clear pb10"></div>
+                    </div>
+                </div><!-- /msg_center -->
+                
+                <div class="clear lineD_btm"></div>
+                
+                <!-- 推荐话题 /-->
+                {:W('HotTopic', array('type'=>'recommend','limit'=>5))}
+                
+                <php>if(ACTION_NAME == "index"){</php>
+                {:W('HotTopic', array('type'=>'auto','limit'=>5))}
+                <php>}</php>
+                
+                {:Addons::hook('home_index_right_visitor')}
+                
+                <php>if(!empty($my_group_list)){</php>
+                <div class="my_group boxitem pt10">
+                	<div class="box_title">
+                    	<h2>我的社团</h2>
+                        <a href="{:U('group/Index/newIndex');}" class="more">更多</a>
+                    </div>
+                    <div class="box_content">
+                    	<ul>
+                        	<php>
+                            	$show_group = $my_group_list[array_rand($my_group_list,1)];
+                                $group = getGroupInfo($show_group['id']);
+                            </php>
+                            <php>if($show_group){</php>
+                        	<li><span>社团名称：</span><a href="{:U('group/group/index',array('gid'=>$group['id']))}" title="{$group['intro']}">{$group['name']}</a></li>
+                            <li><span>社团主席：</span><space uid="group.uid">{uname}</space></li>
+                            <li><span>新入成员：</span>
+                            	<div class="o_active">
+                                <ul>
+                                <volist name="group.member" id="vo" key='k'>
+                                	<php>if($k<=3){</php>
+                                	<li>
+                                        <space uid="vo.uid">{uavatar=m}</space>
+                                        <space uid="vo.uid" class="fn">{uname}</space>
+                                        <span>{$vo.ctime|date='m月d日',###}</span>
+                                    </li>
+                                    <php>}</php>
+                                </volist>
+                                </ul>
+                                <div class="clear"></div>
+                                </div>
+                            </li>
+                            <php>}</php>
+                            <li><span>已加入社团：</span>
+                            	<div class="o_group">
+                                <php>$moreGroup = false;</php>
+                                <php>
+                                foreach($my_group_list as $key=>$value){
+                                	if(empty($value['logo'])){
+                                		$picurl = __THEME__.'/member/images/group_default_min.png';
+                                	}else{
+                                		$picurl = __UPLOAD__.'/'.$value['logo'];
+                                	}
+                                </php>
+                                    <a href="{:U('group/group/index',array('gid'=>$value['id']))}"><img src="__ROOT__/thumb.php?w=16&t=f&url={$picurl}" />{$value['name']}</a>
+                                    <php>
+                                    if($key>=5){
+                                        $moreGroup = true;
+                                        break;
+                                    }
+                                    </php>
+                                <php>}</php>
+                                <php>if($moreGroup){</php><a href="{:U('group/SomeOne')}" class="more">更多&raquo;</a><php>}</php>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+				<php>}</php>
+                
+            </div><!-- /mainbox_R -->
+            <div class="mainbox_C">
+            	<article class="main_content">
+                <php>if ($announcement['is_open'] && !empty($announcement['content'])) {</php>
+                <div class="mcbox pt10">
+                    <div id="announcement" class="system_msg notebox">
+                    	<a href="javascript:void(0);" onclick="close_announcement();" class="close">×</a>
+                        <aside>
+                            <img src="__THEME__/member/images/sound.gif" />
+                            <span>系统消息：</span>
+                            <a href="javascript:;">{$announcement['content']|formatUrl}</a>
+                        </aside>
+                        <div class="clear"></div>
+                    </div><!-- /sys_msg -->
+                </div>
+                <php>}</php>
+                    
+                <section>
+                	<a name="weibo"></a>
+                    <div class="dynaBox mcbox pt5 pb15">
+                    	<div class="mcboxitem pb10">
+                            <div class="box_title">
+                                <h2 class="ico_newvideo">提及到我的</h2>
+                            </div>
+                        </div><!-- /mcboxitem -->
+                    	<div class="listbox">
+                        	<div class="menubox">
+                            	<h2 id="follow" class="on" onclick="tab_show(this);">@我的</h2>
+                                
+                                <div class="clear"></div>
+                            </div>
+                            
+                            <div id="cont-follow" class="contentbox weibo_box" style="min-height:1200px">
+                            	<div id="countNew"></div>
+                                <php>if($gid){</php>
+                                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>2))}
+                                <php>}else{</php>
+                                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>3))}
+                                <php>}</php>
+                                
+                                <div class="page">{$list['html']}</div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div><!-- /dynaBox -->
+                <section>
+
+                </article>
+            </div><!-- /mainbox_C -->
+          </div><!-- /mainbox -->
+          <div class="clear"></div>          
+        </div><!-- /containerInner -->
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+<script language="javascript" type="text/javascript">
+var weibo = $.weibo({
+      sinceId: parseInt('{$sinceId}'),
+      
+	  <php>if(ACTION_NAME=="index"){</php>
+      timeStep : 30000,
+      initForm:true,
+      <php>}</php>
+
+      lastId:parseInt('{$lastId}'),
+      show_feed:parseInt('{$show_feed}'),
+      follow_gid:parseInt('{$follow_gid}'),
+      gid:parseInt('{$gid}'),
+      weiboType:'{$weibo_type}',
+      type:parseInt('{$type}'),
+      typeList:{
+          WEIBO:parseInt(<php>echo UserAction::INDEX_TYPE_WEIBO;</php>),
+          GROUP:parseInt(<php>echo UserAction::INDEX_TYPE_GROUP;</php>),
+          ALL:parseInt(<php>echo UserAction::INDEX_TYPE_ALL;</php>)
+      }
+});
+function close_announcement() {
+	$('#announcement').hide('slow');
+	$.post("{:U('home/User/closeAnnouncement')}",{},function(res){});
+}
+
+/*标签切换函数*/
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().find('h2').removeClass('on');
+	$(obj).parent().parent().find('.contentbox').hide();
+	$(obj).addClass('on');
+	$("#cont-"+id).show();	
+}
+
+/*载入更多的微广播信息*/
+function loadweibo(obj){
+	var count = $(obj).parent().find('ul>li').length;
+	$.ajax({
+		url	:	"{:U('home/User/getWeiboList')}",
+		type:	"POST",
+		data:	{count:count},
+		timeout	:	50000,
+		dataType:"json",
+		beforeSend: function(){
+			// Handle the beforeSend event
+			$(obj).find('#loadsuccess').hide();
+			$(obj).find('#loading').show();
+		},
+		success: function(result){
+			var length = result.length;
+			if (typeof(length) == "undefined") 
+			{ 
+				loadweibo(obj); //如果未返回任何值，则重新请求这个方法
+				return;
+			} 
+			if(length==0){
+				$(obj).find('#loadsuccess').html('没有更多数据了');
+			}
+			var html = "";
+			for(i=0;i<length;i++){
+				html += "<li>";
+				html += "<dl>";
+				html += "<dt><a class=\"userface\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\"><img src=\""+result[i].face+"\"></a></dt>";
+				html += "<dd><p><a class=\"fn\" href=\""+_ROOT_+"/@"+result[i].uid+"\" rel=\"face\" target=\"_self\" uid=\""+result[i].uid+"\">"+result[i].name+"</a>说："+result[i].content+"</p><span>["+result[i].time+"]</span></dd>";
+				html += "<div class=\"clear\"></div>";
+				html += "</dl>";
+				html += "</li>";
+			}
+			$(obj).parent().find('ul').append(html);
+		},
+		complete: function(){
+			// Handle the complete event
+			$(obj).find('#loading').hide();
+			$(obj).find('#loadsuccess').show();
+			$(obj).find('#retract').show();
+		}
+		// ...
+	});
+}
+//微广播收起功能
+function retract(obj){
+	 var length = $(obj).parent().find('ul>li').length;
+	 if(length>5){
+		 $(obj).parent().find('ul>li').each(function(i, e) {
+            if(i>=5){
+				$(this).remove();	
+			}
+        });
+		weibo.sinceId = parseInt('{$sinceId}');
+	 }
+	 $(obj).find('#loadMoreDiv').html('<span class="ico_morefoot"></span>更多');
+}
+</script>
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/member/footer" />

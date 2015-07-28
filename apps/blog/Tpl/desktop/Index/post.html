@@ -1,0 +1,89 @@
+<include file="Public:_header" />
+<include file="Public:header" />
+<include file="__THEME__/desktop/_editor" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../Public/js/blog.js"></script>
+<script type="text/javascript">
+    <!--其他视频分类的树-->
+    var settingother = {
+        data: {
+            simpleData: {
+                enable:true,
+                idKey: "id",
+                pIdKey: "pId",
+            }
+        }
+    };
+
+    var zNodesother =[
+        <volist name="square_category" id="vo" key="k">
+        { id:"{$vo['id']}", pId:"{$vo['p_id']}", name:"{$vo['category_name']}", click:"noteClick({$vo['id']})",open:"true"},
+        </volist>];
+    function noteClick(id){
+        $("input[name='square']").val(id);
+    }
+    $(window).ready(function(){
+        setTimeout(function(){
+            $.fn.zTree.init($("#navtreeother"), settingother, zNodesother);
+            <php>if($blog['square_id'] != ''){</php>
+            var treeObj = $.fn.zTree.getZTreeObj("navtreeother");
+            var node = treeObj.getNodeByParam("id",{$blog['square_id']}, null);
+            treeObj.selectNode(node);
+            <php>}</php>
+        },300);
+
+    });
+</script>
+<div class="divcenter post">
+    <form id="blog_form" name="blog_form" method="post" action="{:U('blog/Index/doupdate')}" onsubmit="return addBlog(this);return false;" style="font-size:14px;">
+        <table width="922" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="58" height="45" align="left"><em>*</em>标题：</td>
+                <td width="155" align="left">
+                    <select name="category" id="category" style="width: 145px;" onChange="changeCategory(this)">
+                        <php>if(count($blog_category) == 0){</php>
+                        <option value="-1">请先添加分类</option>
+                        <php>}</php>
+                        <volist name="blog_category" id="value">
+                            <option value="{$value['id']}" <if condition="($value['id'] == $category)">selected</if> title="{$value['name']}">{$value['name']|getShort=8}</option>
+                        </volist>
+                        <option value="0"> +添加分类</option>
+                    </select></td>
+                <td width="419" align="left">
+                    <input type="text" name="title" id="title" class="title" value="{$blog['title']}" /></td>
+                <td width="70" align="right">访问：</td>
+                <td width="220" align="left">
+                    <select onchange="checkprivate(this.value);" name="private" id="private" style="width: 215px;">
+                        <option value="0" <if condition="(0 == $blog['private'])">selected</if>>所有人可见</option>
+                        <option value="4" <if condition="(4 == $blog['private'])">selected</if>>仅自己可见</option>
+                    </select>
+                </select></td>
+            </tr>
+            <tr>
+                <td align="left" valign="top"><em>*</em>内容：</td>
+                <td colspan="2" rowspan="2" align="left" valign="top">
+                    <textarea name="content" id="content" style="width: 575px; height: 387px;">{$blog['content']|stripslashes}</textarea>
+                </td>
+                <td align="right" valign="top">标签：</td>
+                <td height="105" align="left" valign="top">
+                    <textarea name="tags" id="tags" class="tags">{$blog['tags']}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">&nbsp;</td>
+                <td align="right" valign="top"><span id="fby" <php>if($blog['private'] != 0){ echo 'style="display:none;"';}</php>><em>*</em>发表于：</span></td>
+                <td height="315" align="left" valign="top">
+                    <div style=" height: 313px; overflow-y:auto; <php>if($blog['private'] != 0){ echo 'display:none;';}</php>" class="contentbox" ><ul id="navtreeother" class="ztree"></ul></div>
+                    <input type="hidden"  value="{$blog['square_id']}" name="square" id="square">
+                    <input type="hidden"  value="{$blog['id']}" name="id" id="id">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="divcenter dosave"><a href="javascript:;" onclick="javascript:$('#blog_form').submit();"><img src="../Public/images/dosave.jpg" ></a></div>
+<script type="text/javascript">
+    loadEditor("content");
+</script>
+<include file="../Public/_footer" />

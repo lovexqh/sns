@@ -1,0 +1,77 @@
+<include file="__THEME__/header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<body>
+<div class="containerOuter">
+	<div class="container">
+		<div class="containerInner">
+<!-- header start-->
+			<header>
+<!-- 大头标题 start-->
+				<div class="header_link">
+					<div class="header_link left">
+						<span><a href="{:U('home/User/index')}" class="red">社区首页</a></span>|
+                        <span><a href="{:U('square/Resource/index')}">资源中心</a></span>|
+                        <span><a href="{:U('square/Video/index')}">视频中心</a></span>|
+					</div>
+					<div class="header_link right">
+						<span><a href="{:U('home')}">首页</a></span>|
+                        <nosession name="userInfo">
+                        <span><a href="{:U('home/Public/login')}">登录</a></span>|
+                        <span><a href="{:U('home/Public/register')}">注册</a></span>|
+                        </nosession>
+                        <session name="userInfo">
+                        <span><a href="{:U('home/Public/logout')}">退出</a></span>|
+                        </session>
+                        <span><a href="#">联系我们</a></span>|
+                        <span><a href="#">帮助</a></span>
+					</div>
+				</div>
+				<div class="header_banner">
+					<div class="header_logo"></div>
+					<div class="header_search">
+						<input class="search_input"/>
+						<div class="search_button"></div>
+					</div>
+				</div>
+				<div class="header_nav">
+					<ul class="nav">
+					
+						<li <php>if(!$sc){</php>style=" background:#B8DBF9;"<php>}</php>><a href="{:U('/Video/sun')}">首页</a></li>
+					
+						<volist name="titles" id="li">
+                      	  <li <php>if($sc['id']==$li['id']){</php>style=" background:#B8DBF9;"<php>}</php>><a href="{:U('/Video/ted',array(id=>$li['id']))}">{$li.category_name}</a></li>
+						</volist>
+					</ul>
+				</div>
+</header>
+<!-- 头二标题 start-->
+				<php>if($Squarec){</php>
+				<div class="header_drop">
+					<ul class="drop">
+						<volist name="Squarec" id="li">
+							  <li><a href="{:U('/Video/search',array(id=>$li['id'],scid=>$sc['id']))}">{$li.category_name}</a><li>
+						</volist>
+					</ul>
+				</div>
+				<php>}</php>
+<!-- header_banner end-->
+<!-- where start-->
+			<div class="where">
+                <ul>
+                    <li style="color:#333;">
+                    	<div style="float:left;"><img src="__THEME__/square/images/room.gif"/></div>
+                    	您现在的位置：
+                    </li>
+                    <li>首页</li>
+                    <li>>>视频中心</li>
+					<php>if($sc){</php>
+                    <li>>>{$sc.category_name}</li>
+					<php>}if($vName){</php>
+					<li><a href="#">>>{$vName.name}</a></li>
+					<php>}</php>
+                </ul>
+            </div>
+<!-- where end-->

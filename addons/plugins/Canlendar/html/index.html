@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$visitor_title}</title>
+<link href="{:getSiteUrl()}/__ROOT__/addons/plugins/Canlendar/html/images/index.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.7.2.min.js"></script>
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/desktop/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="kctop">{$weekname}</div>
+<if condition="($total neq 0)">
+<ul class="kccnt">
+	<volist name="courseList" id="course">
+		<li><span class="kccbd"><img src="{:getSiteUrl()}/__ROOT__/addons/plugins/Canlendar/html/images/kcbdl.jpg" width="5" height="26" /></span><span class="kccnt1" title="{$course['kcm']}">{$course['kcm']}</span><span title="{$course['jsm']}_{$course['jxlm']}" class="kccnt2">{$course['jsm']}_{$course['jxlm']}</span><span class="kccnt3">第 {$course['skjc']} 节</span><span class="kccbd"><img src="{:getSiteUrl()}/__ROOT__/addons/plugins/Canlendar/html/images/kcbdr.jpg" width="5" height="26" /></span></li>
+	</volist>
+</ul>
+<else />
+<div class="kccnt"><img src="{:getSiteUrl()}/__ROOT__/addons/plugins/Canlendar/html/images/noclass.jpg" /></div>
+</if>
+<div class="kcbottom"></div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[name]MAC经典[/name] 	/*主题名称；*/
+[folder]mac[/folder]/*主题文件目录名*/
+[btype]1[/btype]  	/* 0:为html背景（必须定义[url]标签）; 1:拉伸；2：平铺；3：适应；4：居中；*/
+[url][/url] 		/*当btype为0时必须设定此值*/
+[dock]dock6[/dock]	/*dock风格目录名*/
+[window]mac[/window]	/*窗体风格目录名*/
+[browser]mac[/browser]	/*浏览器风格目录名*/
+[topbar]mac[/topbar]	/*顶部导航风格目录名*/
+[filemanage]mac[/filemanage]	/*顶部导航风格目录名*/

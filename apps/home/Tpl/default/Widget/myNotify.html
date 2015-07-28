@@ -1,0 +1,352 @@
+<include file="__THEME__/desktop/_widget_header" />
+<style type="text/css">
+/*消息通知样式*/
+.notifyBox{
+	width:260px;
+	height:320px;
+}
+.notifyBox h2{
+	width:100%;
+	height:45px;
+	display:block;
+	margin:0;
+	padding:0;
+	text-indent:-9999px;
+	background:url(../Public/images/widget/msg_01.png) no-repeat left center;
+}
+.notifyNav{
+	height:32px;
+	line-height:32px;
+	background:url(../Public/images/widget/msg_03.png) left center repeat-x;
+}
+.notifyNav ul{
+	margin:0 0 0 5px;
+	padding:0;
+	list-style:none;
+	list-style-type:none;
+}
+.notifyNav ul li{
+	margin-top:6px;
+	float:left;
+	height:19px;
+	line-height:19px;
+	font-size:12px;
+}
+.notifyNav ul li span{
+	display:block;
+	height:16px;
+	overflow:hidden;
+	color:#666;
+	vertical-align:middle;
+}
+.notifyNav ul li a{
+	color:#333;
+}
+.notifyNav a{
+	display:inline-block;
+	height:19px;
+	line-height:19px;
+	text-align:center;
+	font-family:宋体;
+	font-size:12px;
+	margin:0 5px;
+	text-decoration:none;
+}
+.notifyNav a:hover{
+	text-decoration:none;
+}
+.notifyNav a.on{
+	width:65px;
+	color:#fff;
+	background:url(../Public/images/widget/msg_06.png) no-repeat;	
+}
+.notifyNav a.on:hover{
+	color:#fff;
+}
+.notifyLine{
+	height:5px;
+	background:url(../Public/images/widget/msg_09.png) no-repeat left center;
+}
+.content{
+	height:194px;
+	background:url(../Public/images/widget/msg_16.png) left center;
+}
+.c_data{
+	width:245px;
+	height:190px;
+	overflow:hidden;
+}
+.c_data ul{
+	margin-left:5px;
+	width:240px;
+}
+.c_data ul li{
+	padding-left:8px;
+	background:url(../Public/images/widget/widget-art.gif) no-repeat left 10px;
+	margin-top:5px;
+}
+.notifyBottom{
+	background:url(../Public/images/widget/msg_19.png) no-repeat left center;
+	height:45px;
+	line-height:40px;
+}
+.notifyBottom a{
+	float:right;
+	margin-right:20px;
+}
+
+/*滚动条样式*/
+.content { position: relative; }
+.content .c_data { margin-right: 20px; height: 194px; }
+.content .c_data > div { }
+.content .scrollbar { position: absolute; top: 5px; right: 7px; height: 185px; border:0; width:5px; background-color:transparent; }
+.content .scrollbar .handle { background-color:#b07a53 }
+</style>
+<div class="container">
+	<div class="notifyBox">
+		<h2>消息提醒</h2>
+		<div class="notifyNav">
+			<ul>
+				<li><a href="javascript:;" onclick="javascript:;" class="on">私信</a></li>
+				<!--li><span>|</span></li>
+				<li><a href="javascript:;">通知</a></li>
+				<li><span>|</span></li>
+				<li><a href="javascript:;">应用消息</a></li-->
+			</ul>
+		</div>
+		<div class="notifyLine"></div>
+		<div id="sections">
+			<div id="vertical" class="clearfix">
+				<div class="content slyWrap">
+				<volist name="data" id="c" key="k">
+					<div class="c_data sly" data-options="{ 'scrollBy': 100, 'startAt': 0 }">
+					  <div>
+						<ul>
+							<volist name="c" id="vo">
+							<li>
+							  <switch name="vo.type">
+								<case value="1">
+								<if condition="$vo['last_message']['from_uid'] eq $mid ">
+								  <space uid="vo['last_message']['from_uid']" target="_blank">您</space> 对
+								  <space uid="vo['last_message']['to_uid'][0]" target="_blank">{uname}</space> 说：
+								<else />
+								  <space uid="vo['last_message']['from_uid']" target="_blank">{uname}</space> 对
+								  <space uid="vo['last_message']['to_uid'][0]" target="_blank">您</space> 说：
+								</if>
+								{$vo.last_message.content|htmlspecialchars_decode|getShort=###, 200|formatUrl=###,'链接'}
+								<if condition="$vo['new']"><span class="message_new">&nbsp;</span></if>
+								</case>
+								<case value="2">
+								<a href="{:U('home/Message/detail', array('id'=>$vo['list_id'],'type'=>$vo['type']))}">{$vo.title}<if condition="$vo['new']"><span class="message_new">&nbsp;</span></if></a>
+								<space uid="vo.last_message.from_uid" target="_blank">{uname}</space>
+								{$vo.last_message.content|htmlspecialchars_decode|getShort=###, 200|formatUrl=###,'链接'}
+								</case>
+							  </switch>
+							</li>
+							</volist>
+						</ul>
+					  </div>
+					</div>
+					<div class="scrollbar">
+						<div class="handle"></div>
+					</div>
+				</volist>
+				</div>
+			</div>
+		</div>
+		<div class="notifyBottom">
+			<a href="{:U('home/Message/index')}">查看更多消息...</a>
+		</div>
+	</div>
+</div><!-- end .container -->
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery.sly.js"></script>
+<script language="javascript">
+jQuery(function($){
+
+	// -----------------------------------------------------------------------------------
+	//   Examples
+	// -----------------------------------------------------------------------------------
+
+	// Function for populating lists with placeholder items
+	function populate( container, count, offset ){
+
+		var output = '';
+
+		offset = isNaN(offset) ? 0 : offset;
+
+		for( var i = 0; i<count; i++ ){
+			output += '<li>'+(offset+i)+'</li>';
+		}
+
+		return $(output).appendTo(container);
+
+	}
+
+	// Populate list items
+	$('ul[data-items]').each(function(i,e){
+
+		var items = parseInt( $(e).data('items'), 10 );
+
+		populate( e, items );
+
+	});
+
+	// Activate section (it misbehaves when sly is called on hidden sections)
+	$(document).on('activated', function( event, sectionId ){
+
+		var $section = $('#'+sectionId);
+
+		if( $section.data('examplesLoaded') ){
+
+			return;
+
+		}
+
+		switch( sectionId ){
+
+			case 'infinite':
+
+				var $frame = $section.find('.frame'),
+					$ul = $frame.find('ul').eq(0),
+					$scrollbar = $section.find('.scrollbar'),
+					$buttons = $section.find('.controlbar [data-action]');
+
+				populate( $ul, 10 );
+
+				$frame.on('sly:move', function( e, pos ){
+
+					if( pos.cur > pos.max - 100 ){
+
+						populate( $ul, 10, $ul.children().length-1 );
+
+						$frame.sly('reload');
+
+					}
+
+				}).sly({ itemNav: 'basic', scrollBy: 1, scrollBar: $scrollbar });
+
+				// Controls
+				$buttons.on('click', function(e){
+
+					var action = $(this).data('action');
+
+					switch(action){
+
+						case 'reset':
+							$frame.sly('toStart');
+							setTimeout(function(){
+								$ul.find('li').slice(10).remove();
+								$frame.sly('reload');
+							}, 200);
+						break;
+
+						default:
+							$frame.sly(action);
+					}
+
+				});
+
+			break;
+
+			default:
+
+				// Call sly instances
+				$section.find(".slyWrap").each(function(i,e){
+					//if( i != 3 ) return;
+					var cont = $(this),
+						frame = cont.find(".sly"),
+						slidee = frame.find("ul"),
+						scrollbar = cont.find(".scrollbar"),
+						pagesbar = cont.find(".pages"),
+						options = frame.data("options"),
+
+						controls = cont.find(".controls"),
+						prevButton = controls.find(".prev"),
+						nextButton = controls.find(".next"),
+						prevPageButton = controls.find(".prevPage"),
+						nextPageButton = controls.find(".nextPage");
+
+					options = $.extend( {}, options, {
+						scrollBar: scrollbar,
+						pagesBar: pagesbar,
+
+						prev: prevButton,
+						next: nextButton,
+						prevPage: prevPageButton,
+						nextPage: nextPageButton,
+						disabledClass: 'btn-disabled'
+					});
+
+					// Call sly
+					frame.sly( options );
+
+					// Bind controls
+					cont.find("button").click(function(){
+
+						var action = $(this).data('action'),
+							arg = $(this).data('arg');
+
+						switch(action){
+
+							case 'add':
+								slidee.append( slidee.children().slice(-1).clone().removeClass().text(function(i,text){ return text/1 + 1; }) );
+								frame.sly('reload');
+							break;
+
+							case 'remove':
+								slidee.find("li").slice(-1).remove();
+								frame.sly('reload');
+							break;
+
+							default:
+								frame.sly(action, arg);
+
+						}
+
+					});
+
+				});
+
+		}
+
+		$section.data('examplesLoaded', true);
+
+	});
+
+
+	// -----------------------------------------------------------------------------------
+	//   Page navigation
+	// -----------------------------------------------------------------------------------
+
+	// Navigation
+	var $sections = $('#sections').children(),
+		activeClass = 'active';
+
+	// Activate a section
+	function activate( sectionID, initial ){
+
+		sectionID = sectionID && $sections.filter('#'+sectionID).length ? sectionID : $sections.eq(0).attr('id');
+		$sections.hide().filter('#'+sectionID).show();
+
+		if( !initial ){
+			window.location.hash = '!' + sectionID;
+		}
+
+		$(document).trigger('activated', [ sectionID ] );
+
+	}
+
+	// Activate initial section
+	activate( window.location.hash.match(/^#!/) ? window.location.hash.substr(2) : 0, 1 );
+
+
+	// -----------------------------------------------------------------------------------
+	//   Additional plugins
+	// -----------------------------------------------------------------------------------
+
+	// Trigger prettyPrint
+	//prettyPrint();
+
+});
+</script>
+<include file="__THEME__/desktop/_widget_footer" />

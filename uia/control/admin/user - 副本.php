@@ -1,0 +1,1079 @@
+<?php
+
+
+/*
+	[RuiJie-Grid] (C)2011-2014 Ruijie-Grid Inc.
+	This is NOT a freeware, use is subject to license terms
+
+	$Id: user.php 1096 2011-05-13 11:26:36Z svn_project_zhangjie $
+*/
+
+!defined('IN_UC') && exit ('Access Denied');
+
+define('UC_USER_CHECK_USERNAME_FAILED', -1);
+define('UC_USER_USERNAME_BADWORD', -2);
+define('UC_USER_USERNAME_EXISTS', -3);
+define('UC_USER_EMAIL_FORMAT_ILLEGAL', -4);
+define('UC_USER_EMAIL_ACCESS_ILLEGAL', -5);
+define('UC_USER_EMAIL_EXISTS', -6);
+
+define('UC_LOGIN_SUCCEED', 0);
+define('UC_LOGIN_ERROR_FOUNDER_PW', -1);
+define('UC_LOGIN_ERROR_ADMIN_PW', -2);
+define('UC_LOGIN_ERROR_ADMIN_NOT_EXISTS', -3);
+define('UC_LOGIN_ERROR_SECCODE', -4);
+define('UC_LOGIN_ERROR_FAILEDLOGIN', -5);
+
+define('UC_USER_CHECK_REALNAME_FAILED', -7);
+define('UC_USER_CHECK_ROLEID_FAILED', -8);
+define('UC_USER_CHECK_DEPTID_FAILED', -9);
+define('UC_USER_CHECK_USERNO_FAILED', -10);
+define('UC_USER_CHECK_USERNO_EXISTS', -11);
+
+class control extends adminbase {
+
+	function __construct() {
+		$this->control();
+	}
+
+	function control() {
+		
+		parent :: __construct();
+		if (getgpc('a') != 'login' && getgpc('a') != 'logout') {
+			if (!$this->user['isfounder'] && !$this->user['allowadminuser']) {
+				$this->message('no_permission_for_this_module');
+			}
+		}
+		$this->load('user');
+	}
+	
+	function onls(){
+		$this->view->display('admin_user');
+	}
+	
+	/**
+	 *
+	 * @Title: onuserList
+	 * @Description: 获取用户信息
+	 * @return 用户信息集合
+	 * @author 肖萌
+	 */
+// 	function onuserList(){
+// 		$this->clearSession();
+// 		$data["eid"] = $_GET['eid'];
+// 		$data["ss"] = $_GET['ss'];
+// 		$data["schoolid"] = $_GET['schoolid'];
+// 		$this->view->assign('data',$data);
+// 		$this->view->display('admin_user_list');
+// 	}
+	
+	function ongetUserList(){
+		$this->clearSession();
+		$keyvalue = $_POST['key'];
+		$pageSize = $_POST['pageSize'];
+		$pageIndex = $_POST['pageIndex'];
+		$userlist = $_ENV['user']->get_user_list_grid($keyvalue,$pageIndex,$pageSize);
+		$num = count($userlist['data']);
+		for($i=0; $i<$num; $i++){
+			$identityType = $userlist['data'][$i]['identityType'];
+			$identity = $_ENV['user']->getIdentityById($identityType);
+			$userlist['data'][$i]['identityname'] = $identity['IdentityName'];
+		}
+		$jsonstr = json_encode($userlist);
+		print_r($jsonstr);
+	}
+	
+	/**
+	 *
+	 * @Title: onuserAdd
+	 * @Description: 点击添加，显示用户添加页面
+	 * @author 肖萌
+	 */
+	function onuserAdd(){
+		$userid = isset($_GET['userid']) ? $_GET['userid'] : 0;
+		$this->view->assign('uid',$userid);
+		$this->view->display("admin_user_add");
+	}
+	
+	
+	/**
+	 *
+	 * @Title: ongetRole
+	 * @Description: 获取角色信息
+	 * @return 角色集合
+	 * @author 肖萌
+	 */
+	function ongetRole(){
+		$this->load('role');
+		$rolelist = $_ENV['role']->getRoleList();
+		print_r(json_encode($rolelist));
+	}
+	
+	/**
+	 *
+	 * @Title: ongetIdentityname
+	 * @Description: 获取身份信息
+	 * @return 身份集合
+	 * @author 肖萌
+	 */
+	function ongetIdentityname(){
+		$this->load('identity');
+		$identitylist = $_ENV['identity']->getIdentity();
+		print_r(json_encode($identitylist));
+	}
+	
+	/**
+	 * 更改社区用户信息
+	 * @return unknown_type
+	 */
+	function onupdate_userinfo(){
+		
+		$userjson = $_POST['data'];
+		$userjson = stripslashes($userjson);
+		$user = json_decode($userjson,true);
+		$uid = $user[0]['uid'];
+		$userinfo = array();//$user[0];
+		$salt = $_ENV['user']->get_user_by_uid($uid);
+
+		if($user[0]['newpassword'])
+			$userinfo['password'] = md5(md5($user[0]['newpassword']).$salt['salt']);
+
+		$userinfo['email'] = $user[0]['email'];
+		$userinfo['RealName'] = $user[0]['RealName'];
+		$userinfo['username'] = $user[0]['username'];
+		$userinfo['identityType'] = $user[0]['identityType'];
+
+		
+		$_ENV['user']->m_update_userinfo($uid,$userinfo);
+	}
+	/**
+	 *
+	 * @Title: onupUserByUid
+	 * @Description: 获取admin_user_add页面post的值，并完成添加或修改操作
+	 * @return 
+	 * @author 肖萌
+	 */
+	function onupUserByUid(){
+		//$uid = isset($_GET['uid']) ? $_GET['uid'] : 0;
+		$userjson = $_POST['data'];
+		$userjson = stripslashes($userjson);
+		$user = json_decode($userjson,true);
+		$uid = $user[0]['uid'];
+		if(!$uid){
+			$uid = 0;
+		}
+// 		print_r($user);
+// 		exit;
+		$role = $user[0]['role'];
+// 		echo $role."~~~~~~~~~~~~~~";
+// 		exit;
+		unset($user[0]['role']);
+// 		print_r($user);
+// 		exit;
+		$userlist = $user[0];
+		if($userlist['password']){
+			$data['pass_s'] = 1;
+		}
+		$data['name_s'] = $this->_check_username($userlist['username'],$uid);
+		$data['email_s'] = $this->_check_email($userlist['email'],$uid);
+		$data['real_s'] = $this->_check_realname($userlist['RealName']);
+		$_ENV['user']->upUserByArray($userlist,$role,$data);
+	}
+	/**
+	 * 匹配用户密码
+	 * @param $uid
+	 * @param $checkpass
+	 * @return unknown_type
+	 */
+	function checkuserpassword($uid,$checkpass){
+		
+		$userarr = $_ENV['user']->get_user_by_uid($uid);
+		return (md5($checkpass) == $userarr['password']) ? true : false;
+	}
+	
+	function ongetUserByUid(){
+		$uid = isset($_GET['userid']) ? $_GET['userid'] : 0;
+// 		echo $uid;
+// 		exit;
+		$userlist = $_ENV['user']->get_user_by_uid($uid);
+		$identityType = $userlist['identityType'];
+		$identity = $_ENV['user']->getIdentityById($identityType);
+		$userlist['IdentityName'] = $identity['IdentityName'];
+		print_r(json_encode($userlist));
+	}
+	
+	/**
+	 *
+	 * @Title: ongetUseridByUser
+	 * @Description: 点击用户名称，获取用户id，并将id值传入admin_usr_role页面
+	 * @return
+	 * @author 肖萌
+	 */
+	function ongetUseridByUser(){
+		$userid = isset($_GET['userid']) ?  $_GET['userid'] : 0;
+		$this->view->assign('uid',$userid);
+		$this->view->display('admin_user_role');
+	}
+	
+	/**
+	 *
+	 * @Title: ongetRoleByUser
+	 * @Description: 获取选中用户的已添加角色
+	 * @return
+	 * @author 肖萌
+	 */
+	function ongetRoleByUser(){
+		$userid = isset($_GET['userid']) ? $_GET['userid'] : 0;
+		$pageSize = $_POST['pageSize'];
+		$pageIndex = $_POST['pageIndex'];
+		$this->load('role');
+		$role = $_ENV['role']->getRoleByUser($userid,$pageIndex,$pageSize);
+		print_r(json_encode($role));
+	}
+	
+	/**
+	 *
+	 * @Title: ongetRoleByNoUser
+	 * @Description: 获取选中用户的未添加角色
+	 * @return
+	 * @author 肖萌
+	 */
+	function ongetRoleByNoUser(){
+		$userid = isset($_GET['userid']) ? $_GET['userid'] : 0;
+		$pageSize = $_POST['pageSize'];
+		$pageIndex = $_POST['pageIndex'];
+		$this->load('role');
+		$norole = $_ENV['role']->getRoleByNoUser($userid,$pageIndex,$pageSize);
+		print_r(json_encode($norole));
+	}
+	
+	/**
+	 *
+	 * @Title: onaddRole
+	 * @Description: 给选中用户添加角色
+	 * @return
+	 * @author 肖萌
+	 */
+	function onaddRole(){
+		$uid = isset($_POST['userid']) ? $_POST['userid'] : 0;
+		$roleid = isset($_POST['roleid']) ? $_POST['roleid'] : 0;
+		$this->load('role');
+		if($uid != 0){
+			foreach($roleid as $value){
+				$_ENV['role']->addRoleByUser($uid,$value);
+			}
+		}
+	}
+	
+	/**
+	 *
+	 * @Title: ondelRole
+	 * @Description: 删除选中用户已有角色
+	 * @return
+	 * @author 肖萌
+	 */
+	function  ondelRole(){
+		$uid = isset($_POST['userid']) ? $_POST['userid'] : 0;
+		$roleid = isset($_POST['roleid']) ? $_POST['roleid'] : 0;
+		$this->load('role');
+		if($uid != 0){
+			foreach($roleid as $value){
+				$_ENV['role']->delRoleByUser($uid,$value);
+			}
+		}
+	}
+	
+	/**
+	 *
+	 * @Title: ongetAppByUser
+	 * @Description: 获取当前角色的功能
+	 * @author 夏伟
+	 */
+	function ongetAppByUser(){
+		$uid = isset($_GET['userid']) ? $_GET['userid'] : 0;
+		$app = $_ENV['user']->getAppByUser($uid);
+		$apps = $app['data'];
+		$num = count ( $apps );
+		$app ['total'] = $num;
+		for($i = 0; $i < $num; $i ++) {
+			$limit = explode ( ",", $apps [$i] ['RoleExtend'] );
+			$limitResult = array_unique ( $limit );
+			// $limitResult = array_values($limitResult);
+			$str = "";
+			foreach ( $limitResult as $value ) {
+				if ($value == "I") {
+					$str .= "增加" . ",";
+				}
+				if ($value == "D") {
+					$str .= "删除" . ",";
+				}
+				if ($value == "U") {
+					$str .= "修改" . ",";
+				}
+				if ($value == "S") {
+					$str .= "查看" . ",";
+				}
+				if ($value == "C") {
+					$str .= "跨校" . ",";
+				}
+				if ($value == "A") {
+					$str .= "审核" . ",";
+				}
+			}
+			if($str != ""){
+				$len = strlen($str);
+				$str1 = substr($str, 0, $len-1);
+			}else{
+				$str1 = "";
+			}
+			$apps [$i] ['RoleExtend'] = $str1;
+		}
+		$app ['data'] = $apps;
+		print_r ( json_encode ( $app ) );
+	}
+	
+	/**
+	 *
+	 * @Title: ongetAppByUser
+	 * @Description: 获取当前角色的功能
+	 * @return
+	 * @author 肖萌
+	 */
+	function ondelUser(){
+		$uid = $_POST['uid'];
+		if(!$uid){
+			$uid = 0;
+		}
+		$_ENV['user']->delUserById($uid);
+	}
+
+	
+	/**
+	 *
+	 * @Title: ongetIdentityname
+	 * @Description: 验证用户名
+	 * @return 0||1||-3
+	 * @author 肖萌
+	 */
+	function  oncheckUsername(){
+		$username = $_POST['username'];
+		$userid = $_POST['userid'];
+		$result = $this->_check_username($username,$userid,$pageIndex,$pageSize);
+		echo $result;
+	}
+	
+	/**
+	 *
+	 * @Title: oncheckPassword
+	 * @Description: 验证密码
+	 * @return 0||1
+	 * @author 肖萌
+	 */
+	function oncheckPassword(){
+		$password = $_POST['password'];
+		if($password){
+			$result = 1;
+		}
+		echo $result;
+	}
+	
+	/**
+	 *
+	 * @Title: oncheckEmail
+	 * @Description: 验证Email
+	 * @return -4||-5||-6||1
+	 * @author 肖萌
+	 */
+	function oncheckEmail(){
+		$email = $_POST['email'];
+		$userid = $_GET['userid'];
+		$result = $this->_check_email($email,$userid);
+		echo $result;
+	}
+	
+	/**
+	 *
+	 * @Title: oncheckRealname
+	 * @Description: 验证Realname
+	 * @return -7||1
+	 * @author 肖萌
+	 */
+	function oncheckRealname(){
+		$realname = $_POST['realname'];
+		$result = $this->_check_realname($realname);
+		echo $result;
+	}
+	
+	
+	
+	function _check_username($username,$userid) {
+		$username = addslashes(trim(stripslashes($username)));
+		if (!$_ENV['user']->check_username($username)) {
+			return 0;
+		}
+		elseif ($_ENV['user']->check_usernameexists($username,$userid)) {
+			return UC_USER_USERNAME_EXISTS;
+		}
+		return 1;
+	}
+	
+	function _check_email($email,$userid) {
+		if (!$_ENV['user']->check_emailformat($email)) {
+			return UC_USER_EMAIL_FORMAT_ILLEGAL;	//-4
+		}
+		elseif (!$_ENV['user']->check_emailaccess($email)) {
+			return UC_USER_EMAIL_ACCESS_ILLEGAL;	//-5 验证email格式
+		}
+		elseif (!$this->settings['doublee'] && $_ENV['user']->check_emailexists($email,$userid)) {
+			return UC_USER_EMAIL_EXISTS;	//-6 验证email是否重复
+		} else {
+			return 1;
+		}
+	}
+	
+	function _check_realname($RealName) {
+		$RealName = trim($RealName);
+		if ($RealName == "") {
+			return UC_USER_CHECK_REALNAME_FAILED;	//-7
+		}
+		return 1;
+	}
+	
+	
+	function clearSession(){
+		
+	}
+	
+//---------------------------分割线--------------------------------------------------------
+	function onlogin() {
+
+		$authkey = md5(UC_KEY . $_SERVER['HTTP_USER_AGENT'] . $this->onlineip);
+
+		$this->load('user');
+		$username = getgpc('username', 'P');
+		$password = getgpc('password', 'P');
+		$iframe = getgpc('iframe') ? 1 : 0;
+		$isfounder = intval(getgpc('isfounder', 'P'));
+
+		/*
+		echo $sid = $this->sid_encode('admin');
+		echo $this->sid_decode($sid);
+		*/
+		$rand = rand(100000, 999999);
+		$seccodeinit = rawurlencode($this->authcode($rand, 'ENCODE', $authkey, 180));
+		$errorcode = 0;
+		if ($this->submitcheck()) {
+			$failedlogin = $this->db->fetch_first("SELECT * FROM " . UC_DBTABLEPRE . "failedlogins WHERE ip='$this->onlineip'");
+			if ($failedlogin['count'] > 4) {
+				if ($this->time - $failedlogin['lastupdate'] < 15 * 60) {
+					$errorcode = UC_LOGIN_ERROR_FAILEDLOGIN;
+				} else {
+					$expiration = $this->time - 15 * 60;
+					$this->db->query("DELETE FROM " . UC_DBTABLEPRE . "failedlogins WHERE lastupdate<'$expiration'");
+				}
+			} else {
+
+				$seccodehidden = urldecode(getgpc('seccodehidden', 'P'));
+				$seccode = strtoupper(getgpc('seccode', 'P'));
+				$seccodehidden = $this->authcode($seccodehidden, 'DECODE', $authkey);
+				require UC_ROOT . './lib/seccode.class.php';
+				seccode :: seccodeconvert($seccodehidden);
+				if (empty ($seccodehidden) || $seccodehidden != $seccode) {
+					$errorcode = UC_LOGIN_ERROR_SECCODE;
+				} else {
+					$errorcode = UC_LOGIN_SUCCEED;
+					$this->user['username'] = $username;
+
+					if ($isfounder == 1) {
+						$this->user['username'] = 'Administrator';
+						$md5password = md5(md5($password) . UC_FOUNDERSALT);
+						if ($md5password == UC_FOUNDERPW) {
+							$username = $this->user['username'];
+							$this->view->sid = $this->sid_encode($this->user['username']);
+						} else {
+							$errorcode = UC_LOGIN_ERROR_FOUNDER_PW;
+						}
+					} else {
+						/*
+						 * 新的登录效果处理
+						*/
+						$sysadmin = $this->db->fetch_first("SELECT * FROM ". UC_DBTABLEPRE ."sysadmin  WHERE username = '$username'");
+
+						if($sysadmin){
+							$adminType = $sysadmin['adminType'];
+							if($adminType == 1){
+								$memberInfo = $this->db->fetch_first("SELECT * FROM ". UC_DBTABLEPRE ."members  WHERE email = '$username'");
+								$salt = $memberInfo['salt'];
+								$md5password = md5(md5($password).$salt);
+							}else{
+								$md5password = md5($password);
+							}
+							
+							if ($sysadmin['password'] == $md5password) {
+								$this->view->sid = $this->sid_encode($sysadmin['username']);
+							} else {
+								$errorcode = UC_LOGIN_ERROR_ADMIN_PW;
+							}
+						
+						}else{
+							$errorcode = UC_LOGIN_ERROR_ADMIN_NOT_EXISTS;
+						}
+							
+					}
+					if ($errorcode == 0) {
+						$this->setcookie('sid', $this->view->sid, 86400);
+						$pwlen = strlen($password);
+						$this->user['admin'] = 1;
+						$this->writelog('login', 'succeed');
+						//exit();
+						if ($iframe) {
+							header('location: admin.php?m=frame&a=main&iframe=1' . ($this->cookie_status ? '' : '&sid=' . $this->view->sid));
+							exit;
+						} else {
+							//header('location: admin.php' . ($this->cookie_status ? '' : '?sid=' . $this->view->sid));
+							header('location: admin.php?sid=' . $this->view->sid);
+							exit;
+						}
+					} else {
+						$this->writelog('login', 'error: user=' . $this->user['username'] . '; password=' . ($pwlen > 2 ? preg_replace("/^(.{" . round($pwlen / 4) . "})(.+?)(.{" . round($pwlen / 6) . "})$/s", "\\1***\\3", $password) : $password));
+						if (empty ($failedlogin)) {
+							$expiration = $this->time - 15 * 60;
+							$this->db->query("DELETE FROM " . UC_DBTABLEPRE . "failedlogins WHERE lastupdate<'$expiration'");
+							$this->db->query("INSERT INTO " . UC_DBTABLEPRE . "failedlogins SET ip='$this->onlineip', count=1, lastupdate='$this->time'");
+						} else {
+							$this->db->query("UPDATE " . UC_DBTABLEPRE . "failedlogins SET count=count+1,lastupdate='$this->time' WHERE ip='$this->onlineip'");
+						}
+					}
+				}
+			}
+		}
+
+		$username = htmlspecialchars($username);
+		$password = htmlspecialchars($password);
+		$this->view->assign('seccodeinit', $seccodeinit);
+		$this->view->assign('username', $username);
+		$this->view->assign('password', $password);
+		$this->view->assign('isfounder', $isfounder);
+		$this->view->assign('errorcode', $errorcode);
+		$this->view->assign('iframe', $iframe);
+		$this->view->display('admin_login');
+	}
+
+	function onlogout() {
+		$this->writelog('logout');
+		$this->setcookie('sid', '');
+		setcookie('TS_LOGGED_UIA_USER', '',-3600*24 ,'/','.jliae.edu.cn');
+		header('location: admin.php');
+	}
+
+	function onadd() {
+		if (!$this->submitcheck('submit')) {
+			exit;
+		}
+		$username = getgpc('addname', 'P');
+		$password = getgpc('addpassword', 'P');
+		$email = getgpc('addemail', 'P');
+
+		if (($status = $this->_check_username($username)) < 0) {
+			if ($status == UC_USER_CHECK_USERNAME_FAILED) {
+				$this->message('user_add_username_ignore', 'BACK');
+			}
+			elseif ($status == UC_USER_USERNAME_BADWORD) {
+				$this->message('user_add_username_badwords', 'BACK');
+			}
+			elseif ($status == UC_USER_USERNAME_EXISTS) {
+				$this->message('user_add_username_exists', 'BACK');
+			}
+		}
+		if (($status = $this->_check_email($email)) < 0) {
+			if ($status == UC_USER_EMAIL_FORMAT_ILLEGAL) {
+				$this->message('user_add_email_formatinvalid', 'BACK');
+			}
+			elseif ($status == UC_USER_EMAIL_ACCESS_ILLEGAL) {
+				$this->message('user_add_email_ignore', 'BACK');
+			}
+			elseif ($status == UC_USER_EMAIL_EXISTS) {
+				$this->message('user_add_email_exists', 'BACK');
+			}
+		}
+		$uid = $_ENV['user']->add_user($username, $password, $email);
+		$this->message('user_add_succeed', 'admin.php?m=user&a=ls');
+	}
+
+// 	function onls() {
+
+// 		include_once UC_ROOT . 'view/default/admin.lang.php';
+// 		include_once UC_ROOT . 'lib/class_tree.php';
+// 		$status = 0;
+// 		if (!empty ($_POST['addname']) && $this->submitcheck()) {
+// 			$this->check_priv();
+// 			$username = getgpc('addname', 'P');
+// 			$password = getgpc('addpassword', 'P');
+// 			$email = getgpc('addemail', 'P');
+
+// 			$RealName = getgpc('addRealName', 'P');
+// 			$RoleID = getgpc('addRoleID', 'P');
+// 			$DeptID = getgpc('addDeptID', 'P');
+// 			$UserNO = getgpc('addUserNO', 'P');
+
+// 			if (($status = $this->_check_username($username)) >= 0) {
+// 				if (($status = $this->_check_email($email)) >= 0) {
+// 					if (($status = $this->_check_realname($RealName)) >= 0) {
+// 						if (($status = $this->_check_roleid($RoleID)) >= 0) {
+// 							if (($status = $this->_check_deptid($DeptID)) >= 0) {
+// 								if (($status = $this->_check_userno($UserNO)) >= 0) {
+// 									$_ENV['user']->add_user($username, $password, $email, $RealName, $RoleID, $DeptID, $UserNO);
+// 									$status = 1;
+// 									$this->writelog('user_add', "username=$username");
+// 								}
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 		$this->view->assign('status', $status);
+
+// 		if (!empty ($_POST['delete'])) {
+// 			$_ENV['user']->delete_user($_POST['delete']);
+// 			$status = 2;
+// 			$this->writelog('user_delete', "uid=" . implode(',', $_POST['delete']));
+// 		}
+
+// 		$srchname = getgpc('srchname', 'R');
+// 		$srchemail = trim(getgpc('srchemail', 'R'));
+// 		$srchrealname = trim(getgpc('srchrealname', 'R'));
+// 		$srchUserNO = trim(getgpc('srchUserNO', 'R'));
+
+// 		$sqladd = '';
+
+// 		if ($srchname) {
+// 			$sqladd .= " AND username LIKE '%$srchname%'";
+// 			$this->view->assign('srchname', $srchname);
+// 		}
+
+// 		if ($srchrealname) {
+// 			$sqladd .= " AND RealName LIKE '%$srchrealname%'";
+// 			$this->view->assign('srchrealname', $srchrealname);
+// 		}
+
+// 		if ($srchUserNO) {
+// 			$sqladd .= " AND UserNO LIKE '%$srchUserNO%'";
+// 			$this->view->assign('srchUserNO', $srchUserNO);
+// 		}
+
+// 		if ($srchemail) {
+// 			$sqladd .= " AND email LIKE '%$srchemail%'";
+// 			$this->view->assign('srchemail', $srchemail);
+// 		}
+
+
+
+
+// 		$sqladd = $sqladd ? " WHERE 1 $sqladd" : '';
+
+// 		$num = $_ENV['user']->get_total_num($sqladd);
+
+// 		//$start = $this->page_get_start($page, $ppp, $totalnum);
+// 		//$userlist = $this->db->fetch_all("SELECT * FROM ".UC_DBTABLEPRE."members m LEFT JOIN ".UC_DBTABLEPRE."role r ON m.RoleID=r.RoleID LEFT JOIN ".UC_DBTABLEPRE."dept d ON m.DeptID=d.DeptID WHERE 1 $sqladd");
+
+// 		$userlist = $_ENV['user']->get_list($_GET['page'], UC_PPP, $num, $sqladd);
+// 		foreach ($userlist as $key => $user) {
+// 			$user['smallavatar'] = '<img src="avatar.php?uid=' . $user['uid'] . '&size=small">';
+// 			$userlist[$key] = $user;
+// 		}
+// 		$multipage = $this->page($num, UC_PPP, $_GET['page'], 'admin.php?m=user&a=ls&srchname=' . $srchname . '&srchregdate=' . $srchregdate);
+
+// 		$this->_format_userlist($userlist);
+// 		$this->view->assign('userlist', $userlist);
+// 		//$this->view->assign('apps', $this->cache['apps']);
+// 		$adduser = getgpc('adduser');
+// 		$a = getgpc('a');
+// 		$this->view->assign('multipage', $multipage);
+// 		$this->view->assign('adduser', $adduser);
+// 		$this->view->assign('lang', $lang);
+// 		$this->view->assign('a', $a);
+
+// 		$this->load('role');
+// 		$rolelist = $_ENV['role']->get_role_list();
+// 		foreach ($rolelist as $key => $role) {
+// 			$rolelist[$key] = $role;
+// 		}
+// 		$this->view->assign('rolelist', $rolelist);
+
+// 		$this->load('dept');
+// 		$list = array ();
+// 		$tree = new tree();
+// 		$get_dept_list = $_ENV['dept']->get_dept_list();
+
+// 		foreach ($get_dept_list as $key => $list_dept_get) {
+// 			$tree->setNode($list_dept_get['DeptID'], $list_dept_get['UpDeptID'], $list_dept_get);
+// 		}
+// 		$values = $tree->getChilds();
+
+// 		foreach ($values as $key => $vid) {
+
+// 			$one = $tree->getValue($vid);
+// 			$one['level'] = $tree->getLayer($vid);
+
+// 			while ($one['level'] > 0) {
+// 				$one['postion'] .= "&nbsp;&nbsp;&nbsp;";
+// 				$one['level'] = $one['level'] - 1;
+// 			}
+// 			$uplevel = $one['level'];
+// 			$list[] = $one;
+// 		}
+// 		$this->view->assign('list', $list);
+// 		$this->view->display('admin_user');
+
+// 	}
+
+	function onedit() {
+		$uid = getgpc('uid');
+		$status = 0;
+
+		if (!$this->user['isfounder']) {
+			$isprotected = $this->db->result_first("SELECT COUNT(*) FROM " . UC_DBTABLEPRE . "protectedmembers WHERE uid = '$uid'");
+			if ($isprotected) {
+				$this->message('user_edit_noperm');
+			}
+		}
+
+		if ($this->submitcheck()) {
+			$username = getgpc('username', 'P');
+			$newusername = getgpc('newusername', 'P');
+			$password = getgpc('password', 'P');
+			$email = getgpc('email', 'P');
+			$identityID = getgpc('newIdentityID', 'P');
+			$delavatar = getgpc('delavatar', 'P');
+			$rmrecques = getgpc('rmrecques', 'P');
+
+			$newRealName = getgpc('newRealName', 'P');
+			$newRoleID = getgpc('newRoleID', 'P');
+			$newDeptID = getgpc('newDeptID', 'P');
+
+			$sqladd = '';
+
+
+			if ($username != $newusername) {
+				if ($_ENV['user']->get_user_by_username($newusername)) {
+					$this->message('admin_user_exists');
+				}
+				$sqladd .= "username='$newusername', ";
+				$this->load('note');
+				$_ENV['note']->add('renameuser', 'uid=' . $uid . '&oldusername=' . urlencode($username) . '&newusername=' . urlencode($newusername));
+			}
+
+			if($_ENV['user']->get_user_by_email($email)){
+				$this->message('admin_email_exists');
+			}else{
+
+
+
+			if ($password) {
+				$salt = substr(uniqid(rand()), 0, 6);
+				$orgpassword = $password;
+				$password = md5(md5($password) . $salt);
+				$sqladd .= "password='$password', salt='$salt', ";
+				$this->load('note');
+				$_ENV['note']->add('updatepw', 'username=' . urlencode($username) . '&password=');
+			}
+			if ($rmrecques) {
+				$sqladd .= "secques='', ";
+			}
+			if ($newRealName) {
+				$sqladd .= "RealName='$newRealName',";
+			}
+			if ($newRoleID) {
+				$sqladd .= "RoleID='$newRoleID',";
+			}
+			if (!empty ($delavatar)) {
+				$_ENV['user']->delete_useravatar($uid);
+			}
+
+
+
+
+			if(!$uid){
+				$adduser = "INSERT INTO uc_members(username, password, email, RealName, RoleId, identityId) VALUES('$newusername','$password','$email','$newRealName','$newRoleID','$identityID')";
+				$this->db->query($adduser);
+			}else{
+				$this->db->query("UPDATE " . UC_DBTABLEPRE . "members SET $sqladd email='$email', identityID='$identityID' WHERE uid='$uid'");
+				$status = $this->db->errno() ? -1 : 1;
+			}
+			}
+		}
+		$user = $this->db->fetch_first("SELECT * FROM " . UC_DBTABLEPRE . "members WHERE uid='$uid'");
+		$user['bigavatar'] = '<img src="avatar.php?uid=' . $uid . '&size=big">';
+		$user['bigavatarreal'] = '<img src="avatar.php?uid=' . $uid . '&size=big&type=real">';
+		$this->view->assign('uid', $uid);
+		$this->view->assign('user', $user);
+		$this->view->assign('status', $status);
+
+		$this->load('role');
+		$rolelist = $_ENV['role']->get_role_list();
+		foreach ($rolelist as $key => $role) {
+			$rolelist[$key] = $role;
+		}
+		$this->view->assign('rolelist', $rolelist);
+
+		include_once UC_ROOT . 'lib/class_tree.php';
+		$this->load('dept');
+		$list = array ();
+		$tree = new tree();
+		$get_dept_list = $_ENV['dept']->get_dept_list();
+
+		foreach ($get_dept_list as $key => $list_dept_get) {
+			$tree->setNode($list_dept_get['DeptID'], $list_dept_get['UpDeptID'], $list_dept_get);
+		}
+		$values = $tree->getChilds();
+
+		foreach ($values as $key => $vid) {
+
+			$one = $tree->getValue($vid);
+			$one['level'] = $tree->getLayer($vid);
+
+			while ($one['level'] > 0) {
+				$one['postion'] .= "&nbsp;&nbsp;&nbsp;";
+				$one['level'] = $one['level'] - 1;
+			}
+			$uplevel = $one['level'];
+			$list[] = $one;
+		}
+
+
+		$findIdentity = "select * from uc_identity";
+		$identity = $this->db->fetch_all($findIdentity);
+		$this->view->assign('identity', $identity);
+
+		$this->view->assign('list', $list);
+
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->view->assign('userRoleList', $userRoleList);
+		$this->view->assign('userOptionalRoleList', $rolelist);
+
+		$userIdentity = $_ENV['user']->get_user_identity($uid);
+		$this->view->assign('userIdentity', $userIdentity);
+
+		$this->view->display('admin_userEdit');
+
+	}
+
+
+	//用户基本信息
+	function ondetail(){
+		$uid = $_GET['uid'];
+		$status = 0;
+		$user = $this->db->fetch_first("SELECT * FROM uc_members WHERE uid=$uid");
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->view->assign('userRoleList', $userRoleList);
+		//print_r($userRoleList);
+		$userIdentity = $_ENV['user']->get_user_identity($uid);
+		$this->view->assign('userIdentity', $userIdentity);
+		//print_r($userIdentity);
+		$a = getgpc('a');
+		$this->view->assign('a', $a);
+		$this->view->assign('user', $user);
+		$this->view->display('admin_user');
+	}
+
+	function onAddUserRole() {
+		$this->load('user');
+		$uid = getgpc('userID'); //获得页面传递的参数 uid
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->loadUserInfo($uid);
+		$this->view->display('admin_userEdit');
+	}
+
+	function onajaxAddRole(){
+		$this->load('user');
+		$uid = getgpc('userID'); //获得页面传递的参数 uid
+		if (!empty ($_POST['addRoleList'])) {
+			$rolelist = explode(',',$_POST['addRoleList']);
+			//print_r($rolelist);
+			//var_dump($uid);
+			if (is_array($rolelist)) { //获得要添加的角色列表
+				$_ENV['user']->add_user_roleList($uid, $rolelist); //给用户添加角色列表
+			}
+		}
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->outRoleTable($userRoleList);
+
+	}
+
+
+	function onajaxDelRole(){
+		$this->load('user');
+		$uid = getgpc('userID'); //获得页面传递的参数 uid
+		if (!empty ($_POST['delRoleList'])) {
+
+			$_ENV['user']->del_user_role($uid, $_POST['delRoleList']); //给用户删除角色列表
+		}
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->outRoleTable($userRoleList);
+
+	}
+
+	function onajaxRoleList(){
+		$this->load('role');
+		$uid = getgpc('userID'); //获得页面传递的参数 uid
+		$userRoleList =  $_ENV['role']->get_nouser_role($uid);
+		$this->onAddRoleList($userRoleList);
+
+	}
+
+	function outRoleTable($userRoleList){
+			$out = '<table class="datalist fixwidth">';
+			$out .= '<tr>';
+			$out .= '<th><input type="checkbox" name="chkall" id="chkall" class="checkbox" /><label for="chkall">All</label></th>';
+			$out .= ' <th>角色名</th>';
+			$out .= ' <th>description</th>';
+			$out .= '</tr>';
+			foreach ($userRoleList as $key => $val) {
+				$out .= '<tr>';
+				$out .= '	<td class="option" align="left"><input type="checkbox" name="delete[]" value="' . $val['RoleID'] . '" class="checkbox" /></td>';
+				$out .= '   <td>' . $val['RoleName'] . '</td>';
+				$out .= '	<td></td>';
+				$out .= '</tr>';
+			}
+			$out .= '<tr class="nobg">';
+			$out .= '	<td colspan="3"><input type="button" onclick="javascript:delRole();" value="删除" class="btn" /></td>';
+			$out .= '	<td class="tdpage" colspan="6"></td>';
+			$out .= '</tr>';
+			$out .= '</table>';
+			echo $out;
+	}
+
+	function onAddRoleList($userRoleList)
+	{
+		$out = '<table class="datalist fixwidth">';
+		$out .= '<tr>';
+		$out .= '<th><input type="checkbox" name="chkall" id="chkall" class="checkbox" /><label for="chkall">All</label></th>';
+		$out .= ' <th>角色名</th>';
+		$out .= ' <th>description</th>';
+		$out .= '</tr>';
+		foreach ($userRoleList as $key => $val) {
+			$out .= '<tr>';
+			$out .= '	<td class="option" align="left"><input type="checkbox" name="addRoleList[]" value="' . $val['RoleID'] . '" class="checkbox" /></td>';
+			$out .= '   <td>' . $val['RoleName'] . '</td>';
+			$out .= '	<td></td>';
+			$out .= '</tr>';
+		}
+		$out .= '<tr class="nobg">';
+		$out .= '	<td colspan="3"><input type="button" onclick="javascript:addRole();" value="提交" class="btn" /></td>';
+		$out .= '	<td class="tdpage" colspan="6"></td>';
+		$out .= '</tr>';
+		$out .= '</table>';
+		echo $out;
+	}
+
+	/*
+	 * 加载用户信息主程序
+	 */
+	function loadUserInfo($uid) {
+		$this->loadUserBasiInfo($uid); //加载用户基本信息
+		$this->loadDepInfo(); //加载用户部门信息
+		$this->loadUserRoleInfo($uid); //加载用户角色信息
+		$this->loadUserAppList($uid); //加载用户应用功能点列表
+
+	}
+
+	/*
+	 * 加载用户基本信息
+	 */
+	function loadUserBasiInfo($uid) {
+		$user = $this->db->fetch_first("SELECT * FROM " . UC_DBTABLEPRE . "members WHERE uid='$uid'");
+		$user['bigavatar'] = '<img src="avatar.php?uid=' . $uid . '&size=big">';
+		$user['bigavatarreal'] = '<img src="avatar.php?uid=' . $uid . '&size=big&type=real">';
+		$this->view->assign('uid', $uid);
+		$this->view->assign('user', $user);
+	}
+
+	function loadUserRoleInfo($uid) {
+		$userRoleList = $_ENV['user']->get_user_roleList($uid);
+		$this->view->assign('userRoleList', $userRoleList);
+
+		$this->load('role');
+		$rolelist = $_ENV['role']->get_nouser_role($uid);
+		$this->view->assign('userOptionalRoleList', $rolelist);
+
+	}
+	function loadDepInfo() {
+		include_once UC_ROOT . 'lib/class_tree.php';
+		$this->load('dept');
+		$list = array ();
+		$tree = new tree();
+		$get_dept_list = $_ENV['dept']->get_dept_list();
+
+		foreach ($get_dept_list as $key => $list_dept_get) {
+			$tree->setNode($list_dept_get['DeptID'], $list_dept_get['UpDeptID'], $list_dept_get);
+		}
+		$values = $tree->getChilds();
+
+		foreach ($values as $key => $vid) {
+
+			$one = $tree->getValue($vid);
+			$one['level'] = $tree->getLayer($vid);
+
+			while ($one['level'] > 0) {
+				$one['postion'] .= "&nbsp;&nbsp;&nbsp;";
+				$one['level'] = $one['level'] - 1;
+			}
+			$uplevel = $one['level'];
+			$list[] = $one;
+		}
+		$this->view->assign('list', $list);
+	}
+
+	/*
+	 * 加载用户应用功能点列表
+	 */
+	function loadUserAppList($uid) {
+		$appList = $_ENV['user']->get_user_appList($uid);
+		$this->view->assign('appList', $appList);
+	}
+
+	
+
+	
+	function _check_roleid($RoleID) {
+		$RoleID = trim($RoleID);
+		if ($RoleID == 0) {
+			return UC_USER_CHECK_ROLEID_FAILED;
+		}
+		return 1;
+	}
+
+	function _check_deptid($DeptID) {
+		$DeptID = trim($DeptID);
+		if ($DeptID == 0) {
+			return UC_USER_CHECK_DEPTID_FAILED;
+		}
+		return 1;
+	}
+	function _check_userno($UserNO) {
+		$UserNO = trim($UserNO);
+
+		if ($UserNO == "") {
+			return UC_USER_CHECK_USERNO_FAILED;
+
+		}
+		elseif ($_ENV['user']->check_usernoexists($UserNO)) {
+			return UC_USER_CHECK_USERNO_EXISTS;
+			echo $UserNO;
+		}
+		return 1;
+	}
+
+	
+
+	function _format_userlist(& $userlist) {
+		if (is_array($userlist)) {
+			foreach ($userlist AS $key => $user) {
+				$userlist[$key]['regdate'] = $this->date($user['regdate']);
+			}
+		}
+	}
+
+}
+?>

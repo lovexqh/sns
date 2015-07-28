@@ -1,0 +1,27 @@
+<include file="__THEME__/desktop/_header" />
+<link rel="stylesheet" href="../Public/poster.css" type="text/css" media="screen" charset="utf-8" />
+<!-- 头部 end -->
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <div class="summary-list">
+      <div class="boxL poster_boxL"><!-- 好友文章 begin  -->
+  		<ul class="search">
+  		<volist name="posterType" id="vo" mod="3">
+       	  <div class="bx1 <eq name='mod' value='0' >last</eq>" >
+   		   <a width="228px;" height="228px;" href="javascript:void(0);" onclick="parent.tabs.iframe('发布-{$vo.name}','{:U('poster/index/addPoster/',array('typeId'=>$vo['id']))}')">
+   		   <img title="{$vo.name}" src="../Public/images/ico/{$vo.ico}">
+   		   </a>
+          </div>
+        </volist>
+        </ul>
+  </div>
+  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+  </div>
+  </div>
+  </div>
+</div>
+  <!-- 内容 end -->
+<include file="__THEME__/desktop/_footer" /> 

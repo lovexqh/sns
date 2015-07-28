@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+    <neq name="ts['site']['page_title']" value="">
+        {$ts['site']['page_title']} {$ts['site']['site_name']}
+        <else/>
+        {$ts['site']['site_name']}
+    </neq>
+</title>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+<link rel="stylesheet" type="text/css" href="../Public/css/spaceindex.css"/>
+</head>
+
+<body>
+<div class="divc" style="margin-top:40px;background:white;">
+    <div class="contl">
+        <div class="cotnum sder">
+            <div class="coltop">社区概况</div>
+            <div class="cninfo">
+                截止到今天 <span class="c000000"> <php>echo date('Y-m-d');</php></span> 日，青岛理工大学 • 网络空间 已经迎来了 <span class="cff7800 bold">{$usercount}</span> 名用户，欢迎您的加入 ！
+            </div>
+            <div class="cntable">
+                <table width="195" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th height="28" colspan="4" align="left" style="padding-left: 10px;"> 共 <span class="cff0000 bold">{$allnum}</span> 个资源</th>
+                    </tr>
+                    <tr>
+                        <td width="58" height="24" align="center" valign="middle">文章资源</td>
+                        <td width="48" align="left" valign="middle" class="c0072c6">{$blognum}</td>
+                        <td width="34" align="center" valign="middle">社团</td>
+                        <td align="left" valign="middle" class="c0072c6">{$groupnum}</td>
+                    </tr>
+                    <tr>
+                        <td width="58" height="24" align="center" valign="middle">图片素材</td>
+                        <td width="48" align="left" valign="middle" class="c0072c6">{$photonum}</td>
+                        <td width="34" align="center" valign="middle">动态</td>
+                        <td align="left" valign="middle" class="c0072c6">{$weibonum}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="notice sder">
+            <div class="coltop">社区公告</div>
+            <ul class="ntlist">
+                <volist name="annocontent" id="an" key="i">
+                <li <if condition="$i == 1">class="bf7f7f7"</if>>
+                    <a href="javascript:;">[{$an['mtime']|friendlyDate}]  {$an['content']|getShort=###,16,"..."}</a>
+                    <div class="info">
+                        <div class="jt1" style="position: relative;margin-left: 60px;"><img src="../Public/images/jt2.png" alt=""></div>
+                        <div class="infocnt">{$an['content']}</div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+        <div class="newmember">
+            <img src="../Public/images/memtop.jpg" alt="最新成员">
+            <ul class="nmlist">
+                <volist name="newuser" id="nu">
+                <li>热列欢迎 <a href="{:U('home/Space/index',array('uid'=>$nu['uid'],'iframe'=>'yes'))}" target="_blank" class="c0072c6">{$nu['uid']|getUserName}</a> 加入到{$ts['site']['site_name']}大家庭中...</li>
+                </volist>
+
+            </ul>
+        </div>
+        <div class="c"></div>
+    </div>
+
+    {:Addons::hook('home_spaceindex_index',array())}
+
+    <div class="contl">
+        <!-- 微博列表  -->
+        <div class="wblist">
+            <div class="coltop">原创微博动态 <span>截止目前为止：社区共有微博信息{$weibonum}条</span> </div>
+            <ul class="wbcnt">
+                <volist name="weibos" id="wb" key="i">
+                <li <if condition="$i == 1">class="bf7f7f7"</if>>[{$wb['cTime']|friendlyDate}] <a href="{:U('home/Space/index',array('uid'=>$wb['uid']))}" target="_blank">{$wb['uid']|getUserName}</a> 在微博中说：<span class="c000000">{$wb['content']|formatUrl|format}</span></li>
+                </volist>
+            </ul>
+            <div class="c"></div>
+            <div class="cb"></div>
+        </div>
+
+        <div class="tolist">
+            <div class="coltop">最新工具 <span> <a href="{:U('square/Tool/index')}" target="_blank" title="工具广场">>> 点击进入</a> </div>
+            <ul class="tocnt">
+                <volist name="tool" id="tl">
+                <li>
+                    <a href="{:U('square/Tool/show',array('id'=>$tl['id']))}" target="_blank" title="{$tl['title']}">
+                        <img src="{$tl['thumb']|logo_path_to_url}">
+                    </a>
+                    <p><a href="{:U('square/Tool/show',array('id'=>$tl['id']))}" target="_blank" title="{$tl['title']}">{$tl['title']|getShort=###,12}</a></p>
+                    <p><a href="{:U('square/Tool/getList',array('cateid'=>$tl['section']))}" target="_blank">[{$tl['category']}]</a></p>
+                    <p class="xp"><a href="{:U('square/Tool/show',array('id'=>$tl['id']))}" target="_blank" title="{$tl['title']}"> 下载</a></p>
+                </li>
+                </volist>
+            </ul>
+            <div class="c"></div>
+            <div class="cb"></div>
+        </div>
+        <div class="c"></div>
+    </div>
+
+    <div class="contc">
+        <div class="coltop2">社区排行榜</div>
+        <div class="meminfo">
+            <div class="memtop"><div>粉丝·明星榜</div></div>
+            <ul class="memlist">
+                <volist name="hot_user" id="hu" key="i">
+                <li><span class="sp1 <php>if($i <=3){echo 'sp1h';}</php>">{$i}</span><a href="{:U('home/Space/index',array('uid'=>$hu['uid']))}" title="{$hu['uid']|getUserName}" target="_blank" class="img"><img src="{$hu['uid']|getUserFace}" width="30" height="30" alt="{$hu['uid']|getUserName}"></a> <a class="name" title="{$hu['uid']|getUserName}" href="{:U('home/Space/index',array('uid'=>$hu['uid']))}" target="_blank">{$hu['uid']|getUserName|getShort=###,6}</a> <span class="num">{$hu['count']}</span> </li>
+                </volist>
+            </ul>
+            <div class="c"></div>
+        </div>
+
+        <div class="meminfo">
+            <div class="memtop"><div>博客·排行榜</div></div>
+            <ul class="memlist">
+                <volist name="hotblog" id="hb" key="i">
+                    <li><span class="sp1 <php>if($i <=3){echo 'sp1h';}</php>">{$i}</span><a ref="main" title="{$hb['uid']|getUserName}" href="{:U('blog/Index/usercate',array('uid'=>$hb['uid']))}" target="_blank" class="img"><img src="{$hb['uid']|getUserFace}" width="30" height="30" alt="{$hb['uid']|getUserName}"></a> <a class="name" title="{$hb['uid']|getUserName}" href="{:U('blog/Index/usercate',array('uid'=>$hb['uid']))}" target="_blank">{$hb['uid']|getUserName|getShort=###,6}</a> <span class="num">{$hb['count']}</span> </li>
+                </volist>
+            </ul>
+            <div class="c"></div>
+        </div>
+
+        <div class="c"></div>
+        <div class="cb"></div>
+    </div>
+
+	<div class="c"></div>
+    <script language="javascript" src="../Public/js/format.js?{$verhash}"></script>
+    <include file="__THEME__/desktop/_footer" />
+    <div class="c"></div>
+</div>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function(){
+        $('.ntlist li').hover(function(){
+            $('.info').hide();
+            $(this).children('.info').show();
+        },function(){
+            $('.info').hide();
+        });
+    });
+</script>
+

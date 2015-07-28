@@ -1,0 +1,339 @@
+<include file="../Public/_header_ajax" />
+<h3 class="flb"> <em id="return_{$_GET['handlekey']}">{:L('edit')}</em> 
+<if condition="$_GET['inajax']"><span><a href="javascript:return false;" onclick="hideWindow('{$_GET['handlekey']}');return false;" class="flbc" title="{:L('close')}">{:L('close')}</a></span></if> 
+</h3>
+<if condition="$type eq 'folder'">
+<div style="position:relative;width:560px;padding:0px 15px 15px 15px;">
+	<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+		<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+			<tr> 
+				<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_{$_GET['handlekey']}"  src="{$icoarr['img']}" border="0"  onload="fixpng(this)" /></td>
+				
+			</tr>
+		</table>
+	</div>
+	<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{:U('/System/doEdit')}"  onsubmit="ajaxpost(this.id, 'return_{$_GET['handlekey']}','return_{$_GET['handlekey']}','',$E('editsubmit_btn'));">
+		<input type="hidden" name="referer" value="{$_GET[referer]}" />
+		<input type="hidden" name="editsubmit" value="true" />
+		<input id="select_mypic_{$_GET['handlekey']}" type="hidden" name="mypic" value="0" />
+		<input type="hidden" name="formhash" value="{$FORMHASH}" />
+		<input type="hidden" name="uid" value="{$uid}" />
+		<input type="hidden" name="ukey" value="{$ukey}" />
+		<input type="hidden" name="icoid" value="{$icoid}" />
+		<input type="hidden" name="type" value="{$type}" />
+		<if condition="$_GET['inajax']">
+		<input type="hidden" name="handlekey" value="{$_GET['handlekey']}" />
+		</if>
+		<input id="img_{$_GET['handlekey']}" type="hidden"  name="img" value="{$icoarr['img']}" />
+		<p class="mtn mbm">
+			<input type="text" size="65" class="px" name="name"  id="edit_name" value="{$icoarr['name']}" />
+		</p>
+		<p class="mbm"><em>{:L('privacy_settings')}:</em></p>
+		<p class="mbm">
+		<label>{:L('friend_0')}<input name="friend" type="radio" value="0" <if condition="$folder['friend'] eq 0"> checked="checked" </if>></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+		<label>{:L('friend_1')}<input name="friend" type="radio" value="1"<if condition="$folder['friend'] eq 1"> checked="checked" </if> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+		<label>{:L('friend_2')}<input name="friend" type="radio" value="2" <if condition="$folder['friend'] eq 2">checked="checked" </if> ></label>
+		</p>
+		<ul class="x_tb mtm cl">
+			<li class="a" id="tab_default_{$_GET['handlekey']}" onclick="switchtab_{$_GET['handlekey']}('default');"> <a >{:L('current_icon')}</a></li>
+			<li  id="tab_feature_{$_GET['handlekey']}" onclick="switchtab_{$_GET['handlekey']}('feature');"> <a >{:L('sys_icon')}</a></li>
+			<li id="tab_mypic_{$_GET['handlekey']}" onclick="switchtab_{$_GET['handlekey']}('mypic');"> <a>{:L('my_icon')}</a></li>
+		</ul>
+		<div id="icos_{$_GET['handlekey']}" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;overflow-y:auto;overflow-x:hidden;height:170px;width:540px;">
+			<div id="default_{$_GET['handlekey']}" > 
+				<img class="icon_max_64_64" src="{$icoarr['img']}" onclick="$E('pre_{$_GET['handlekey']}').src=this.src;$E('img_{$_GET['handlekey']}').value=this.src;" style="padding:3px;cursor:pointer" /> 
+			</div>
+			<div id="feature_{$_GET['handlekey']}" style="display:none" ></div>
+			<div id="mypic_{$_GET['handlekey']}" style="display:none"></div>
+		</div>
+		<p class=" pns" style="text-align:center;margin-top:10px;">
+			<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+		</p>
+	</form>
+</div>
+	<if condition="$_GET['inajax'] and ($type eq 'folder')"> 
+	<script type="text/javascript" reload="1">
+		function succeedhandle_{$_GET['handlekey']}(url, msg, values) {
+			_config.sourcedata.icos[values['icoid']]=values;
+			var obj=_ico.reCIco(values['icoid']);
+		}
+	
+		function switchtab_{$_GET[handlekey]}(id){
+			if(id=='feature'){
+				$E('tab_default_{$_GET[handlekey]}').className='';
+				$E('default_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='';
+				$E('mypic_{$_GET[handlekey]}').style.display='none';
+				$E('tab_feature_{$_GET[handlekey]}').className='a';
+				$E('feature_{$_GET[handlekey]}').style.display='block';
+				if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=folder&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+			}else if(id=='default'){
+				$E('tab_feature_{$_GET[handlekey]}').className='';
+				$E('feature_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='';
+				$E('mypic_{$_GET[handlekey]}').style.display='none';
+				$E('tab_default_{$_GET[handlekey]}').className='a';
+				$E('default_{$_GET[handlekey]}').style.display='block';
+			}else if(id=='mypic'){
+				$E('tab_default_{$_GET[handlekey]}').className='';
+				$E('default_{$_GET[handlekey]}').style.display='none';
+				$E('tab_feature_{$_GET[handlekey]}').className='';
+				$E('feature_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='a';
+				$E('mypic_{$_GET[handlekey]}').style.display='block';
+				if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+			}
+			
+		}
+
+	</script> 
+	</if>
+</if>  
+<if condition="$type eq 'link'"> 
+<div style="position:relative;width:560px;padding:0px 15px 15px 15px;">
+	<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+		<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+			<tr> 
+				<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_{$_GET['handlekey']}"  src="{$icoarr['img']}" border="0"  onload="fixpng(this)" /></td>
+				
+			</tr>
+		</table>
+	</div>
+	<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{:U('/System/doEdit')}"  onsubmit="ajaxpost(this.id, 'return_{$_GET['handlekey']}','return_{$_GET['handlekey']}','',$E('editsubmit_btn'));">
+		<input type="hidden" name="referer" value="{$_GET['referer']}" />
+		<input type="hidden" name="editsubmit" value="true" />
+		<input id="select_mypic_{$_GET['handlekey']}" type="hidden" name="mypic" value="0" />
+		<input type="hidden" name="formhash" value="{$FORMHASH}" />
+		<input type="hidden" name="uid" value="{$uid}" />
+		<input type="hidden" name="ukey" value="{$ukey}" />
+		<input type="hidden" name="icoid" value="{$icoid}" />
+		<input type="hidden" name="type" value="{$type}" />
+		<if condition="$_GET['inajax']">
+		<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+		</if>
+		<input id="img_{$_GET['handlekey']}" type="hidden"  name="img" value="{$icoarr['img']}" />
+		<input id="did_{$_GET['handlekey']}" type="hidden"  name="did" value="{$icoarr['did']}" />
+		<p class="mtm">
+			<input type="text" size="65" class="px" name="name"  id="edit_name" value="{$icoarr['name']}"  />
+		</p>
+		 <p class="mtm"><input type="text" size="65" class="px" name="url"  id="edit_name" value="{$icoarr['url']}" onfocus="this.select();"  style="background:#EBEBEB" readonly />
+		 </p>
+		<p class="mtm">
+		<label>{:L('friend_0')}<input name="friend" type="radio" value="0" <if condition="$icoarr[friend] eq 0"> checked="checked" </if> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+		<label>{:L('friend_1')}<input name="friend" type="radio" value="1"<if condition="$icoarr[friend] eq 1"> checked="checked" </if> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+		<label>{:L('friend_2')}<input name="friend" type="radio" value="2" <if condition="$icoarr[friend] eq 2">checked="checked" </if> ></label>
+		</p>
+		<p class="mtm">
+		<label>{:L('method_open_0')}<input name="open" type="radio" value="0" <if condition="$icoarr[open] eq 0"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_1')}<input name="open" type="radio" value="1" <if condition="$icoarr[open] eq 1"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_2')}<input name="open" type="radio" value="2" <if condition="$icoarr[open] eq 2"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_3')}<input name="open" type="radio" value="3" <if condition="$icoarr[open] eq 3"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		</p>
+		<p class="mtm ">
+			{:L('window_width')}&nbsp;<input name="width" value="{$icoarr['wwidth']}" size="5" class="px" />&nbsp;X&nbsp;<input name="height" value="{$icoarr['wheight']}" size="5" class="px" />&nbsp;{:L('window_height')}
+		</p>
+		<ul class="x_tb mtm cl">
+			<li class="a" id="tab_feature_{$_GET['handlekey']}" onclick="switchtab_{$_GET[handlekey]}('feature');"> <a >{:L('feature_icon')}</a></li>
+			<li id="tab_mypic_{$_GET['handlekey']}" onclick="switchtab_{$_GET[handlekey]}('mypic');"> <a>{:L('my_icon')}</a></li>
+			<li class='y'><div style="margin-left:20px;margin-right:20px;"> {:L('feature_link')} $host</div></li> 
+			<li class='y'><div style="margin-left:20px;margin-right:20px;"> {:L('relative_feature_link')} <img src="dzz/images/selected.png" onclick="if($E('relation_{$_GET[handlekey]}').value=='1'){this.src='dzz/images/select.png';$E('relation_{$_GET[handlekey]}').value='0';}else{this.src='dzz/images/selected.png';$E('relation_{$_GET[handlekey]}').value='1';}" /> <input id="relation_{$_GET['handlekey']}" name="relationship" type="hidden" value="1"/></div></li> 
+		</ul>
+		<div id="icos_{$_GET['handlekey']}" class="cl" style="border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;">
+			<div id="feature_{$_GET['handlekey']}">
+				<volist name="domainlist" id="value">
+					 <div style="margin:auto;float:left;padding:5px;width:66px;height:66px;">
+					 <table cellpadding="0" cellspacing="0"><tr><td width="66" height="66" valign="middle" align="center" style="cursor:pointer;" onclick="$E('pre_{$_GET['handlekey']}').src='$value[pic]';$E('img_{$_GET['handlekey']}').value='$value[pic]';$E('did_{$_GET['handlekey']}').value='{$value[did]}';" ><img class="icon_max_64_64" src="{$value['pic']}" onload="fixpng(this);"  /></td></tr></table></div>
+				 </volist>
+			</div>
+			<div id="mypic_{$_GET['handlekey']}" style="display:none"></div>
+		</div>
+		<p class=" pns" style="text-align:center;margin-top:10px;">
+			<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+		</p>
+	</form>
+</div>
+	<if condition="$_GET['inajax'] and $type eq 'link'"> 
+	<script type="text/javascript" reload="1">
+		function succeedhandle_{$_GET['handlekey']}(url, msg, values) {
+			_config.sourcedata.icos[values['icoid']]=values;
+			var obj=_ico.reCIco(values['icoid']);
+			jQuery("#jstree_area").jstree('refresh',-1);
+		}
+	
+		function switchtab_{$_GET[handlekey]}(id){
+			if(id=='feature'){
+				
+				$E('tab_mypic_{$_GET[handlekey]}').className='';
+				$E('mypic_{$_GET[handlekey]}').style.display='none';
+				$E('tab_feature_{$_GET[handlekey]}').className='a';
+				$E('feature_{$_GET[handlekey]}').style.display='block';
+				
+			}else if(id=='mypic'){
+				
+				$E('tab_feature_{$_GET[handlekey]}').className='';
+				$E('feature_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='a';
+				$E('mypic_{$_GET[handlekey]}').style.display='block';
+				if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+			}
+			
+		}
+
+	</script> 
+	</if> 
+</if>
+<if condition="$type eq 'app'"> 
+<div style="position:relative;width:620px;padding:0px 15px 15px 15px;">
+	<div style="position:absolute;right:15px;top:0px;width:104px;height:104px;">
+		<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+			<tr> 
+				<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_{$_GET['handlekey']}"  src="{$icoarr['img']}" border="0"  onload="fixpng(this)" /></td>
+				
+			</tr>
+		</table>
+	</div>
+	<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{:U('/System/doEdit')}"  onsubmit="ajaxpost(this.id, 'return_{$_GET['handlekey']}','return_{$_GET['handlekey']}','',$E('editsubmit_btn'));">
+		<input type="hidden" name="referer" value="{$_GET['referer']}" />
+		<input type="hidden" name="editsubmit" value="true" />
+		<input id="select_mypic_{$_GET['handlekey']}" type="hidden" name="mypic" value="0" />
+		<input type="hidden" name="formhash" value="{$FORMHASH}" />
+		<input type="hidden" name="uid" value="{$uid}" />
+		<input type="hidden" name="ukey" value="{$ukey}" />
+		<input type="hidden" name="icoid" value="{$icoid}" />
+		<input type="hidden" name="type" value="{$type}" />
+		<input type="hidden" name="ismyapp" value="{$ismyapp}" />
+		<if condition="$_GET['inajax']">
+		<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+		</if>
+		<input id="img_{$_GET['handlekey']}" type="hidden"  name="img" value="{$icoarr['img']}" />
+		<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+		<tr height="35"><td width="60" >{:L('appname')}:&nbsp;</td><td ><input type="text" size="65" class="px" name="name"  id="edit_name" value="{$icoarr['name']}"  /></td></tr>
+		<tr height="35"><td width="60" >{:L('appurl')}:&nbsp;</td><td ><input type="text" size="65" class="px" name="url"  id="edit_name" value="{$icoarr['url']}" onfocus="this.select();"  <if condition="!$ismyapp">style="background:#EBEBEB" readonly</if> /></td></tr>
+	 <if condition="$ismyapp">
+	  <tr height="30"><td  >{:L('appclass')}:&nbsp;</td><td>
+		<select id="classid" name="classid" style="margin: 0px;">
+			<volist name="appclass" id="value" key="key">
+			<option value="{$key}" <if condition="$app[classid] eq $value[classid]">select="selected"</if>>$value[classname]</option>
+			</volist>
+		 </select>
+		</td></tr>
+		</if>
+		 <tr height="30"><td width="60" >{:L('privacy_settings')}:&nbsp;</td><td >
+		<label>{:L('friend_0')}<input name="friend" type="radio" value="0" <if condition="$icoarr[friend] eq 0"> checked="checked" </if> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+		<label>{:L('friend_1')}<input name="friend" type="radio" value="1"<if condition="$icoarr[friend] eq 1"> checked="checked" </if> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+		<label>{:L('friend_2')}<input name="friend" type="radio" value="2" <if condition="$icoarr[friend] eq 2">checked="checked" </if> ></label>
+		</td></tr>
+		 <tr height="30"><td width="60" >{:L('method_open')}:&nbsp;</td><td >
+		<label>{:L('method_open_0')}<input name="open" type="radio" value="0" <if condition="$icoarr[open] eq 0"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_1')}<input name="open" type="radio" value="1" <if condition="$icoarr[open] eq 1"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_2')}<input name="open" type="radio" value="2" <if condition="$icoarr[open] eq 2"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		<label>{:L('method_open_3')}<input name="open" type="radio" value="3" <if condition="$icoarr[open] eq 3"> checked="checked" </if>></label> &nbsp; &nbsp;  
+		</td></tr>
+		<tr height="30"><td width="60" >{:L('window_size')}:&nbsp;</td><td >
+			{:L('window_width')}&nbsp;<input name="width" value="{$app['width']}" size="5" class="px" />&nbsp;X&nbsp;<input name="height" value="{$app[height]}" size="5" class="px" />&nbsp;{:L('window_height')}
+		</td></tr>
+		 <if condition="$ismyapp">
+		 <tr height="60"><td >{:L('appdesc')}:&nbsp;</td><td><textarea id="appdesc" name="appdesc" style="height:60px;width:100%;border:1px solid #CCC;">{$app['appdesc']}</textarea></td></tr>
+		 </if>
+		  <tr height="110"><td >{:L('appico')}:&nbsp;</td><td>
+		<ul class="x_tb mtm cl">
+			<li class="a" id="tab_default_{$_GET['handlekey']}" onclick="switchtab_{$_GET[handlekey]}('default');"> <a >{:L('current_icon')}</a></li>
+			<li  id="tab_feature_{$_GET['handlekey']}" onclick="switchtab_{$_GET[handlekey]}('feature');"> <a >{:L('sys_icon')}</a></li>
+			<li id="tab_mypic_{$_GET['handlekey']}" onclick="switchtab_{$_GET[handlekey]}('mypic');"> <a>{:L('my_icon')}</a></li>
+		</ul>
+		<div id="icos_{$_GET['handlekey']}" class="cl" style="position:relative;border-bottom:#CCC solid 1px;border-left:#CCC solid 1px; border-right:#CCC solid 1px;padding:10px;overflow-y:auto;overflow-x:hidden;height:170px;width:540px;">
+			<div id="default_{$_GET['handlekey']}" > 
+				<img class="icon_max_64_64" src="{$icoarr['img']}" onclick="$E('pre_{$_GET['handlekey']}').src=this.src;$E('img_{$_GET['handlekey']}').value=this.src;" style="padding:3px;cursor:pointer" /> 
+			</div>
+			<div id="feature_{$_GET['handlekey']}" style="display:none" ></div>
+			<div id="mypic_{$_GET['handlekey']}" style="display:none"></div>
+		</div>
+		</td></tr></table>
+		<p class=" pns" style="text-align:center;margin-top:10px;">
+			<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+		</p>
+	</form>
+</div>
+	<if condition="$_GET['inajax'] and $type eq 'app'"> 
+	<script type="text/javascript" reload="1">
+		function succeedhandle_{$_GET['handlekey']}(url, msg, values) {
+			_config.sourcedata.icos[values['icoid']]=values;
+			var obj=_ico.reCIco(values['icoid']);
+		}
+	
+		function switchtab_{$_GET[handlekey]}(id){
+			if(id=='feature'){
+				$E('tab_default_{$_GET[handlekey]}').className='';
+				$E('default_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='';
+				$E('mypic_{$_GET[handlekey]}').style.display='none';
+				$E('tab_feature_{$_GET[handlekey]}').className='a';
+				$E('feature_{$_GET[handlekey]}').style.display='block';
+				if($E('feature_{$_GET[handlekey]}').innerHTML=='')	ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=url&uid=$uid&handlekey={$_GET[handlekey]}', 'feature_{$_GET[handlekey]}');
+			}else if(id=='default'){
+				$E('tab_feature_{$_GET[handlekey]}').className='';
+				$E('feature_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='';
+				$E('mypic_{$_GET[handlekey]}').style.display='none';
+				$E('tab_default_{$_GET[handlekey]}').className='a';
+				$E('default_{$_GET[handlekey]}').style.display='block';
+			}else if(id=='mypic'){
+				$E('tab_default_{$_GET[handlekey]}').className='';
+				$E('default_{$_GET[handlekey]}').style.display='none';
+				$E('tab_feature_{$_GET[handlekey]}').className='';
+				$E('feature_{$_GET[handlekey]}').style.display='none';
+				$E('tab_mypic_{$_GET[handlekey]}').className='a';
+				$E('mypic_{$_GET[handlekey]}').style.display='block';
+				if($E('mypic_{$_GET[handlekey]}').innerHTML=='') ajaxget('{DZZSCRIPT}?mod=system&op=ajax&do=geticon&type=mypic&uid=$uid&handlekey={$_GET[handlekey]}', 'mypic_{$_GET[handlekey]}');
+			}
+			
+		}
+
+	</script> 
+	</if> 
+</if>
+<if condition="($type eq 'video') or ($type eq 'music') or ($type eq 'image') or ($type eq 'attach')"> 
+<div style="position:relative;width:460px;padding:0px 15px 15px 15px;">
+	<div style="position:absolute;right:15px;top:-10px;width:104px;height:104px;">
+		<table cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;" width="100%" height="100%">
+			<tr> 
+				<td valign="middle" align="center"><img class="icon_max_100_100" id="pre_{$_GET['handlekey']}"  src="{$icoarr['img']}" border="0"  onload="fixpng(this)" /></td>
+				
+			</tr>
+		</table>
+	</div>
+	<form id="editform_{$icoid}" name="editform_{$icoid}" method="post" autocomplete="off" action="{:U('/System/doEdit')}"  onsubmit="ajaxpost(this.id, 'return_{$_GET['handlekey']}','return_{$_GET['handlekey']}','',$E('editsubmit_btn'));">
+		<input type="hidden" name="referer" value="{$_GET['referer']}" />
+		<input type="hidden" name="editsubmit" value="true" />
+		<input id="select_mypic_{$_GET['handlekey']}" type="hidden" name="mypic" value="0" />
+		<input type="hidden" name="formhash" value="{$FORMHASH}" />
+		<input type="hidden" name="uid" value="{$uid}" />
+		<input type="hidden" name="ukey" value="{$ukey}" />
+		<input type="hidden" name="icoid" value="{$icoid}" />
+		<input type="hidden" name="type" value="{$type}" />
+		<if condition="$_GET['inajax']">
+		<input type="hidden" name="handlekey" value="{$_GET[handlekey]}" />
+		</if>
+		<input id="img_{$_GET['handlekey']}" type="hidden"  name="img" value="{$icoarr['img']}" />
+		<p class="mtn mbm"><input type="text" size="60" class="px" name="name"  id="edit_name" value="{$icoarr['name']}" /></p>
+		<p class="mbm"><em>{:L('privacy_settings')}:</em></p>
+		<p class="mtm">
+		<label>{:L('friend_0')}<input name="friend" type="radio" value="0" <if condition="$icoarr[friend] eq 0"> checked="checked" </if> ></label> &nbsp; &nbsp; &nbsp; &nbsp;  
+		<label>{:L('friend_1')}<input name="friend" type="radio" value="1"<if condition="$icoarr[friend] eq 1"> checked="checked" </if> ></label>&nbsp; &nbsp; &nbsp; &nbsp;   
+		<label>{:L('friend_2')}<input name="friend" type="radio" value="2" <if condition="$icoarr[friend] eq 2">checked="checked" </if> ></label>
+		</p>
+	   <p class="o pns" style="text-align:center;margin-top:10px;">
+			<button type="submit" id="editsubmit_btn" name="editsubmit_btn" value="{:L('submit')}" class="pn pnc"><strong>{:L('submit')}</strong></button>
+		</p>
+	</form>
+</div>
+	<if condition="$_GET['inajax']"> 
+	<script type="text/javascript" reload="1">
+		function succeedhandle_{$_GET['handlekey']}(url, msg, values) {
+			_config.sourcedata.icos[values['icoid']]=values;
+			var obj=_ico.reCIco(values['icoid']);
+		}
+	</script> 
+	</if> 
+</if> 
+<include file="../Public/_footer_ajax" />

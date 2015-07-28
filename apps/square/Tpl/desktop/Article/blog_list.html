@@ -1,0 +1,42 @@
+         <volist name="blog_class['data']" id="li">
+            <div class="new_item">
+              <div class="fl new_icon">
+                <a href="@{li.uid}" style="float:left; display:block;">
+                    <space uid="li.uid">{uavatar=m}</space>
+                </a>
+              </div>
+              <div class="fl new_main">
+                <div class="new_main_t">
+                <div class="new_main_b">
+                  <div class="top_info">
+                    <space uid="li.uid" class="co">{uname}</space>
+                    <span class="top_info_time">{$li.cTime|friendlyDate}</span>
+                  </div>
+                  <div class="new_title">
+                    <a href="{:U('/Article/context',array(id=>$li['id']))}">《{$li.title|getshort='30'}》</a>
+                  </div>
+                  <div class="new_content">
+                    {$li.content}
+                  </div>
+                  <div class="bottom_info">
+                    <div class="bottom_info_read_all">
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}">未完，继续阅读 >></a>
+                    </div>
+                    <div class="new_tags">
+                      <volist name="li.tags" id="vo"> 
+                      <a href="{:U('square/Article/myblog',array(tags=>$vo))}">#{$vo}</a>
+                      </volist>
+                    </div>
+                    <div class="new_reply">
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}#reply_box">评论</a>
+                      <a href="{:U('/Article/context',array(id=>$li['id']))}">阅读({$li.readCount})</a>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            </volist>
+            <div style="display:none;" id="index_page">{$blog_class['html']}</div>

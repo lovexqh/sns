@@ -1,0 +1,38 @@
+<!--<div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>-->
+<div id="wrapper">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon"></span><span class="pullDownLabel"> 刷新...</span>
+        </div>
+
+        <ul id="thelist">
+            <?php
+            foreach ($data as $v) {
+                ?>
+                <li class="listView-title"><?php echo date('Y-m-d',$v['ctime']).' '.$v['title'];?></li>
+                <li class="listView-content"><?php echo $v['content'];?></li>
+            <?php
+            }
+            ?>
+        </ul>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span><span class="pullUpLabel"> 加载更多...</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="<?php echo API_PUBLIC_PATH;?>js/iscroll.js"></script>
+<!--<div id="footer"></div>-->
+<script type="text/javascript">
+    var url = "<?php echo $url;?>";
+    iscroll()
+    $(function(){
+        $(".listView-title").hammer({}).on("tap",listViewTap)
+        $(".listView-title").hammer({ drag_lock_to_axis: true }).on("drag left",action)
+    })
+    function action(ev){
+        console.log($(this).height());
+        ev.gesture.preventDefault();
+        $(this).append('<li>new html</li>')
+    }
+</script>
+

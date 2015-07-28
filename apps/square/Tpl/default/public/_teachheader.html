@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(function() {
+	$("#searchform input[name='category']").val('teaching');
+	$(".course").mouseenter(function(){
+		$(this).find("ul").css("display","");
+	}).mouseleave(function(){
+		$(this).find("ul").css("display","none");
+	});
+});
+function setSearchType(text,val) {
+	$("#searchform input[name='category']").val(val);
+	$("#searchform span.category").text(text);
+	$(".course ul").css("display","none");
+}
+</script>
+
+  <img width="960" height="113" src="__THEME__/square/images/teachbanner.gif" style="margin:auto; display:block;" />
+  <div class="nav_wrapper">
+    <ul class="nav">
+      <li><a href="{:U('square/teaching/index')}"{:getMenuState('index')}>首页</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/teaching/teachList')}"{:getMenuState('teachList')}>教研活动</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/teaching/resList')}"{:getMenuState('resList')}>教研资源</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/teaching/groupList')}"{:getMenuState('groupList')}>教研组</a></li>
+      <li>
+        <div class="line"></div>
+      </li>
+      <li><a href="{:U('square/teaching/charts')}"{:getMenuState('charts')}>排行榜</a></li>
+    </ul>
+   </div>
+  <div class="searchBar"> <strong>快速搜索您需要的</strong>
+    <div class="search">
+      <form action="{:U('square/teaching/search')}"  method="post" name="searchform"  id="searchform">
+        <div class="navigation"><div class="course"><span class="category">教研</span><img src="__THEME__/square/images/arrows.gif" width="23" height="13" style="float:right; margin:11px 5px 0 0;" />
+          <ul style="display:none;">
+            <li><a onclick="setSearchType('资源','resource')" href="javascript:void(0)">资源</a></li>
+            <li><a onclick="setSearchType('协作组','group')" href="javascript:void(0)">协作组</a></li>
+            <li><a onclick="setSearchType('活动','teaching')" href="javascript:void(0)">活动</a></li>
+          </ul>
+          </div>
+         	<input name="category" type="hidden" value="" />
+          <input type="text" class="input" value="请输入您要搜索的关键词" name="keyword" onclick="$(this).val('');" />
+        </div>
+        <input type="submit" class="btn" value="搜索" />
+
+       
+      </form>
+    </div>
+  </div>
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>

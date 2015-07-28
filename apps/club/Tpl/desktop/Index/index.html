@@ -1,0 +1,337 @@
+<include file="../Public/_header" />
+<script>
+	window.onload=startClock;
+	window.onunload=stopClock;
+</script>
+<div class="content_holder">
+	<div class="content">
+		<!-- 内容 begin  -->
+		<php>
+			$num = rand(1,10);
+		</php>
+		<div class="main_banner" style="background-image: url('../Public/bgimg/{$num}.jpg');">
+		<!-- 
+			<div class="club_main_banner" 
+				onmouseout="$(this).css('background-image','url(\'../Public/images/chg_bg.png\')');" 
+				onmouseover="$(this).css('background-image','url(\'../Public/images/chg_bg_hover.png\')');"
+				onclick="showBanner();">
+			</div>
+		 -->
+			<div class="club_main_title"></div>
+			<div class="club_main_count">共入驻 <span style="color: #FFE505;">{$num|getClubCount}</span> 社团 &nbsp;&nbsp;&nbsp;&nbsp;共入驻 <span style="color: #FFE505;">{$num|getMemberCount}</span> 人</div>
+			<div class="club_main_notice" style="z-index: 1;background-color: black;"></div>
+			<div class="club_main_notice" style="z-index: 2;opacity:1;border: none;">
+				<p class="club_main_notice_title">&nbsp;&nbsp;&nbsp;最新公告</p>
+				<php>if(count($noticeList)>4){</php>
+				<div id="scrollNews" style="height:110px;position:relative;overflow:hidden;">
+					<ul>
+						<volist name="noticeList" id="notice">
+						<li><a style="color:#FFFFFF;" href="{:U('club/Notice/index', array('id'=>$notice['clubid'],'nid'=>$notice['id']))}">{$notice.name}:{$notice.content|text|mStr=20}</a></li>
+						</volist>
+					</ul>
+				</div>
+				<php>}else{</php>
+				<ul>
+					<volist name="noticeList" id="notice">
+					<li><a style="color:#FFFFFF;" href="{:U('club/Notice/index', array('id'=>$notice['clubid'],'nid'=>$notice['id']))}">{$notice.name}:{$notice.content}</a></li>
+					</volist>
+				</ul>
+				<php>}</php>
+			</div>
+		</div>
+		<!-- 
+		<div class="show_banner" style="display: none;">
+			<div class="banner_show_btn_l" onclick="nextBanner('left');"></div>
+			<div class="banner_content">
+				<div class="banner_content_sum" style="margin-top: 0px;">
+				<php>
+					$array = array();
+					for($i=1;$i<=18;$i++){
+						$array[$i] = $i;
+					}
+				</php>
+				<volist name='array' id='vo'>
+					<div class="banner_content_per" banner_name="{$vo}">
+					<php>if($num==$vo){</php>
+						<div class="banner_content_select" style="display: block;"></div>
+					<php>}else{</php>
+						<div style="display: none;"></div>
+					<php>}</php>
+						<img onclick="banner_select({$vo});" src="../Public/bgimg/{$vo}.jpg" style="height: 80px;" />
+					</div>
+				</volist>
+				</div>
+			</div>
+			<div class="banner_show_btn_r" onclick="nextBanner('right');"></div>
+			<div class="banner_opera">
+				<div class="banner_opera_queren" onclick="banner_opera_queren();"></div>
+				<div class="banner_opera_quxiao" onclick="banner_opera_quxiao();"></div>
+			</div>
+		</div>
+		 -->
+		<div class="main">
+			<div class="mainbox">
+				<div class="mainbox_W">
+					<div class=myClub_index>
+						<div class="myClub_title">
+							<span class="my_club">我的社团</span>
+							<div class="hotClub_title_pic">
+								<span><a class="clubIndex_a"
+									href="{:U('club/Index/allClub')}">所有社团></a></span>
+							</div>
+							<php>if(ext_check_power('I')){</php>
+							<a class="crt_club_btn" onclick="creatNewClub();"></a>
+							<php>}</php>
+							<div class="c"></div>
+						</div>
+						<!-- 没加入任何社团提示 -->
+						<php>if(count($myClub) == 0){</php>
+						<div style="height: 20px; text-align: center; font-size: 15px;">
+							<span>您还没有加入任何社团，请点击<a href="{:U('club/Index/allClub')}">查看所有社团</a>查看您喜欢的社团，开始自己的社团之旅吧...
+							</span>
+						</div>
+						<php>}</php>
+						<volist name="myClub" id="vo"> <!-- MyClub循环开始 -->
+						<div class="myClub_one">
+							<div class="myClub_one_info">
+								<div class="myClub_one_info_table">
+									<table class="myClub_one_info_table_one">
+										<tr>
+											<td rowspan="2" class="myClub_one_info_table_td_one" >
+											<div style="overflow: hidden;width: 68px;height: 48px;">
+												<a href="{:U('club/Topic/index',array('id'=>$vo['id']))}"><img
+													style="margin-top: 3px;max-width: 68px;max-height: 48px;"
+													src="{$vo['logo']|get_photo_url}" /></a>
+											</div>
+											</td>
+											<td colspan="3" class="myClub_one_info_table_td_two"><span>
+													<a class="clubIndex_a"
+													href="{:U('club/Topic/index',array('id'=>$vo['id']))}">{$vo.title}
+												</a>
+											•{$vo.description}
+											</span> <if condition="$vo.type eq 1">
+												<span class="club_school_icon"></span></if> <if
+													condition="$vo.type eq 2">
+												<span class="club_academy_icon"></span></if> <if
+													condition="$vo.type eq 3">
+												<span class="club_student_icon"></span></if></td>
+										</tr>
+										<tr>
+											<td id="myClub_one_info_table_td"
+												class="myClub_one_info_table_td_two">成员：{$vo.membercount}</td>
+											<if condition="$vo.isManager eq 1"><td width="130px"> 等待审核： <a
+													class="label_num" style="color: #FF6633;"
+													href="{:U('club/Member/auditMember', array('id'=>$vo['id']))}">
+													{$vo.applyMember}</a>人</td></if>
+											<td class="myClub_one_info_table_td_two">主题：{$vo.topicNum}</td>
+										</tr>
+									</table>
+								</div>
+								<table style="margin-left: 14px;" class="myClub_one_info_pic" >
+									<tr>
+									<volist name="vo.hotTopicPic" id="pic">
+										<if condition="$i lt 5">
+											<td id="myClub_one_info_pic_{$vo.id}_{$i}"	class="myClub_one_info_pic_one" style="overflow: hidden;"
+												onmouseover="openWindow({$vo.id},{$i});"
+												onmouseout="cancelWindow({$vo.id},{$i});">
+												<if condition="$pic['topicpic'] neq 'default'"> <a
+													href="{:U('club/Topic/topicDetail', array('id'=>$pic['clubid'], 'topicid'=>$pic['id']))}">
+													<img id="myClub_one_info_pic_img_{$vo.id}_{$i}"
+													class="myClub_one_info_pic_one_img" src="{$pic['topicpic']}" />
+												</a> <else /> <img id="myClub_one_info_pic_img_{$vo.id}_{$i}"
+													class="myClub_one_info_pic_one_img"	src="{$pic['topicpic']|get_photo_url_topic}" />
+												</if>
+											</td>
+										</if>
+									</volist>
+									</tr>
+								</table>
+							</div>
+							<div class="myClub_one_topic">
+								<div class="myClub_one_topic_title">
+								<div class="club_tiezi">新帖</div>
+										<a class="clubIndex_a" href="{:U('club/Topic/index', array('id'=>$vo['id']))}">
+											<span>更多》 </span>
+										</a>
+								</div>
+								<div class="myClub_one_topic_info">
+									<table>
+										<if condition="count($vo['hotTopic']) eq 0">
+										<tr>
+											<td>暂无社团热帖..</td>
+											<td></td>
+										</tr>
+										<else /> <volist name="vo.hotTopic" id="data">
+										<tr>
+											<td class="myClub_one_topic_info_td">
+												<a class="clubIndex_a black" title="{$data.title}" style="margin-left: 3px;"
+												href="{:U('club/Topic/topicDetail', array('id'=>$vo['id'], 'topicid'=>$data['topicid']))}"
+												>{$i}.{$data.title}</a></td>
+											<td class="myClub_one_topic_info_td_time">{$data.ctime}</td>
+										</tr>
+										</volist> </if>
+									</table>
+								</div>
+							</div>
+						</div>
+						</volist>
+						<!-- MyClub循环结束 -->
+					</div>
+					<div class="clubEvent">
+						<div class="clubEvent_title">
+						<span class="my_club">社团风采</span>
+						</div>
+						<div class="clubEvent_show">
+							<div id="clubEventLeftBtn" class="clubEvent_show_btn_l"
+								onclick="showHotTopic('right');"></div>
+							<div class="clubEvent_show_window">
+								<div class="clubEvent_show_window_inner">
+									<!-- 记录风采总数量 -->
+									<input id="eventCLubCount" type="hidden" value="{$eventCount}">
+									<volist name="eventShow" id="vo">
+									<div class="clubEvent_show_info">
+										<table>
+											<tr>
+												<td class="clubEvent_show_info_clubname"><a
+													class="clubIndex_a"
+													href="{:U('club/Event/index',array('id'=>$vo['clubid']))}"
+													title="{$vo.clubname}">{$vo.clubname|text|mStr=6}</a><span>&nbsp;&nbsp;第{$vo.issue}期</span></td>
+												</td>
+											</tr>
+											<tr>
+												<td class="clubEvent_show_info_title"><a
+													class="clubIndex_a"  
+													href="{:U('club/Event/eventDetail', array('id'=>$vo['clubid'], 'topicid'=>$vo['topicid']))}">{$vo.title}</a><span>{$vo.ctime}</span>
+												</td>
+											</tr>
+											<tr style="display:block; height:120px;">
+												<if condition="$vo.topicpic eq null">
+												<td class="clubEvent_show_info_content_text">{$vo.content|text|mStr=76}</td>
+												<else />
+												<td style="text-align: center;overflow: hidden;"
+													class="clubEvent_show_info_content">
+													<img style="max-width: 196px;max-height: 112px;" src="{$vo['topicpic']}" /></td>
+												</if>
+											</tr>
+										</table>
+									</div>
+									</volist>
+								</div>
+							</div>
+							<div id="clubEventRightBtn" class="clubEvent_show_btn_r"
+								onclick="showHotTopic('left');"></div>
+						</div>
+					</div>
+					<div class="hotClub">
+						<div class="hotClub_title">
+							<span class="my_club">热门社团</span>
+							<div class="hotClub_title_pic">
+								<span><a class="clubIndex_a"
+									href="{:U('club/Index/allClub')}">所有社团></a></span>
+							</div>
+							<div class="hotClub_getClubByTitle">
+								<a onclick="searchClub();" >搜索</a>
+							</div>
+							<div class="hotClub_title_input">
+								<input id="allClub_condition" type="text" name=""
+									value="请输入您要查找的社团名称" onblur="searchCondition();"
+									onfocus="inputCondition();" onkeypress="EnterPress(event);"
+									onkeydown="EnterPress();" />
+							</div>
+						</div>
+						<div class="hotClub_info">
+							<volist name="hotClub" id="vo" key="key"> <if
+								condition="$key%2 eq 1">
+							<div class="hotClub_info_one_l">
+								<div class="hotClub_info_one_title_l">
+									<table>
+										<tr>
+											<td class="hotClub_info_one_title_table_title"><span>
+													<a class="clubIndex_a"
+													href="{:U('club/Topic/index',array('id'=>$vo['clubid']))}"
+													title="{$vo.title}">{$vo.title|text|mStr=12} </a>
+											</span> <if condition="$vo.type eq 1">
+												<span class="icon club_school_icon"></span></if> <if
+													condition="$vo.type eq 2">
+												<span class="icon club_academy_icon"></span></if> <if
+													condition="$vo.type eq 3">
+												<span class="icon club_student_icon"></span></if></td>
+											<td class="hotClub_info_one_title_table_count">成员：{$vo.membercount}</td>
+											<td class="hotClub_info_one_title_table_more">
+												<div>
+													<a class="clubIndex_a" href="{:U('club/Topic/index', array('id'=>$vo['clubid']))}">更多》</a>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<div class="hotClub_info_one_pic" style="text-align: center;">
+										<a href="{:U('club/Topic/index',array('id'=>$vo['clubid']))}"><img style="max-width: 68px;max-height: 43px;"
+											src="{$vo['logo']|get_photo_url}" /></a>
+									</div>
+								</div>
+								<div class="hotClub_info_one_table">
+									<table>
+										<volist name="vo.topic" id="data">
+										<tr>
+											<td class="hotClub_info_one_table_title"><a
+												class="clubIndex_a black"
+												href="{:U('club/Topic/topicDetail', array('id'=>$vo['clubid'], 'topicid'=>$data['topicid']))}"
+												title="{$data.title}">{$i}.{$data.title}</a></td>
+											<td class="hotClub_info_one_table_ctime">{$data.ctime}</td>
+										</tr>
+										</volist>
+									</table>
+								</div>
+							</div>
+							<else />
+							<div class="hotClub_info_one_r">
+								<div class="hotClub_info_one_title_r">
+									<table>
+										<tr>
+											<td class="hotClub_info_one_title_r_title"><span>
+													<a class="clubIndex_a"
+													href="{:U('club/Topic/index',array('id'=>$vo['clubid']))}"
+													title="{$vo.title}">{$vo.title|text|mStr=12}</a>
+											</span> <if condition="$vo.type eq 1">
+												<span class="icon club_school_icon"></span></if> <if
+													condition="$vo.type eq 2">
+												<span class="icon club_academy_icon"></span></if> <if
+													condition="$vo.type eq 3">
+												<span class="icon club_student_icon"></span></if></td>
+											<td class="hotClub_info_one_title_r_count">成员：{$vo.membercount}</td>
+											<td class="hotClub_info_one_title_r_pic">
+												<div>
+													<a class="clubIndex_a"  href="{:U('club/Topic/index', array('id'=>$vo['clubid']))}">更多》</a>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<div class="hotClub_info_one_r_pic" style="text-align: center;">
+										<a href="{:U('club/Topic/index',array('id'=>$vo['clubid']))}"><img style="max-width: 68px;max-height: 43px;"
+											src="{$vo['logo']|get_photo_url}" /></a>
+									</div>
+								</div>
+								<div class="hotClub_info_one_table_r">
+									<table>
+										<volist name="vo.topic" id="data">
+										<tr>
+											<td class="hotClub_info_one_table_r_title"><a
+												class="clubIndex_a black"
+												href="{:U('club/Topic/topicDetail', array('id'=>$vo['clubid'], 'topicid'=>$data['topicid']))}"
+												title="{$data.title}">{$i}.{$data.title}</a></td>
+											<td class="hotClub_info_one_table_r_ctime">{$data.ctime}</td>
+										</tr>
+										</volist>
+									</table>
+								</div>
+							</div>
+							</if> </volist>
+							<div class="c"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="../Public/_footer" />

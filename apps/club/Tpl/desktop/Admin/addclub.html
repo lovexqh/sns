@@ -1,0 +1,116 @@
+<div id="index" class="creat_club_page">
+	<form method="post" action="{:U('club/Index/doCreatClub')}" id="creatClubForm" enctype="multipart/form-data">
+		<table class="creat_club_tb">
+			<tr>
+				<td class="creat_td_1">名称:</td>
+				<td class="creat_td_2">
+					<input type="text" name="clubname" id="clubname" class="text" style="width:160px;" onkeyup="chkClubname()" />
+					<span style="color:#FF0000;margin-left:12px;" id="chk_name_rs"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>描述:</td>
+				<td><input type="text" name="clubdesc" id="clubdesc" class="text" style="width:260px;;" /></td>
+			</tr>
+			<tr>
+				<td>头像:</td>
+				<td><input type="file" name="logo" id="clublogo" /></td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>类型:</td>
+				<td>
+					<input type="radio" name="clubtype" value="1" />校社团&nbsp;&nbsp;
+					<input type="radio" name="clubtype" value="2" />院社团&nbsp;&nbsp;
+					<input type="radio" name="clubtype" value="3" checked="true"/>学生社团
+				</td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>发布帖子:</td>
+				<td>
+					<input type="radio" name="pubtopic" value="0" checked="checked" />社团成员&nbsp;&nbsp;
+					<input type="radio" name="pubtopic" value="1" />所有人
+				</td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>上传文档:</td>
+				<td>
+					<input type="radio" name="updoc" value="0" checked="checked" />仅管理员&nbsp;&nbsp;
+					<input type="radio" name="updoc" value="1" />社团成员
+				</td>
+			</tr>
+			<!--
+			<tr style="line-height:30px;">
+				<td>下载文档:</td>
+				<td>
+					<input type="radio" name="downdoc" value="0" checked="checked" />社团成员&nbsp;&nbsp;
+					<input type="radio" name="downdoc" value="1" />所有人
+				</td>
+			</tr>
+			-->
+			<tr class="creat_club_btn">
+				<td colspan="2">
+					<input type="button" onclick="creatClub();" value="确定" />
+   					<input type="button" onclick="ui.box.close();" value="取消">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+var enable = true;
+function chkClubname(){
+	var clubname = $('#clubname').val();
+	if( clubname != '' ){
+		$.post(U('club/Index/chkClubname'),{clubname:clubname},function(data){
+			if(data == 1){
+				$('#chk_name_rs').html('社团名已存在!');
+				enable = false;
+			}else{
+				$('#chk_name_rs').html('');
+				enable = true;
+			}
+		});
+	}
+}
+
+function creatClub(){
+	var clubname = $("#clubname").val().trim();
+	var clubdesc = $("#clubdesc").val();
+	var clublogo = $("#clublogo").val();
+	var clubtype = $("input[name='clubtype']:checked").val();
+	var url = $("#creatClubForm").attr("action");
+	if(!clubname){
+		alert("请填写社团名称!");
+		return false;
+	}
+	if( getLength(clubname)>16 ){
+		alert("社团名称不能超过16个字!");
+		return false;
+	}
+	if( getLength(clubdesc)>20 ){
+		alert("社团描述不能超过20个字!");
+		return false;
+	}
+	//判断选择的文件类型
+	if(clublogo){
+		var lastword = clublogo.lastIndexOf(".");
+		var logotype = clublogo.substring(lastword,clublogo.length).toUpperCase();
+		if(logotype != ".BMP" && logotype != ".PNG" && logotype != ".GIF" && logotype != ".JPG" && logotype != ".JPEG"){ 
+			alert("图片限于bmp,png,gif,jpeg,jpg格式");
+			return false;
+	    }
+	}
+	if(!clubtype){
+		alert("请选择社团类型!");
+		$('#clubname').focus();
+		return false;
+	}
+	if (enable==false){
+		alert('社团名已存在!');
+		return false;
+	}
+	$('#creatClubForm').submit();
+	
+}
+
+</script>

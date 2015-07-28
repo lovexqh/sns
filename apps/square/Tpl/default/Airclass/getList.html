@@ -1,0 +1,336 @@
+<include file="_header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/resource.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script type="text/javascript">
+ function getSelect(form,obj){
+	  
+     var edition=form.edition.value;
+	 var subject=form.subject.value;
+	 var grade=form.grade.value;
+	 if(obj.name=='edition'){
+		 
+	 	$(form.subject).find('option').remove();
+		$(form.grade).find('option').remove();
+		$(form.chapters).find('option').remove();
+		$(form.subject).append("<option value=''>请选择</option>");
+		$(form.grade).append("<option value=''>请选择</option>");
+		$(form.chapters).append("<option value=''>请选择</option>");
+		key='edition';
+		child=form.subject;
+	 }
+	 if(obj.name=='subject'){
+		$(form.grade).find('option').remove();
+		$(form.chapters).find('option').remove();
+		$(form.grade).append("<option value=''>请选择</option>");
+		$(form.chapters).append("<option value=''>请选择</option>");
+		key='subject';
+		child=form.grade;
+	 }
+	 if(obj.name=='grade'){
+	     $(form.chapters).find('option').remove();
+		 $(form.chapters).append("<option value=''>请选择</option>");
+		 key='grade';
+		 child=form.chapters;
+	 }
+	 $.post("{:U('resource/Index/doGetSelect');}",{key:obj.name,edition:edition,grade:grade,subject:subject},function(text){
+		var json = eval(text);
+		if(json==null){return;}
+		for(var i=0; i<json.length; i++)
+		{
+			$(child).append("<option value='"+json[i].cloumn+"'>"+json[i].text+"</option>");
+		}
+	 if(obj.name=='grade'){
+	   $(child).append("<option value='其他'>其他</option>");
+	 }
+		//为Select追加一个Option(下拉项)   
+	});
+   };
+</script>
+<div class="containerOuter">
+    <div class="container">
+       <div class="containerInner">
+          <header>
+           <!--<div class="header_link">
+             <div class="header_link left"><span>办公室</span>|<span>教师平台</span>|<span>互动社区</span>|<span>资源中心</span></div>
+             <div class="header_link right"><span>登录</span>|<span>注册</span>|<span>帮助</span>|<span>留言</span></div>
+           </div>-->
+           <div class="header_banner">
+             <div class="center_banner">
+               <php>if($get['classified']=='ElementaryEDU' || $get['classified']==''){</php>
+                 <div class="center_nav">
+                  <ul>
+                    <li><a href="{:U('square/Resource/index')}">首页</a></li>
+                    <li><a href="{:U('square/Resource/getList',array('stage'=>'small'))}" <php>if($get['stage']=='small' || $get['stage']==''){</php>class="cen_visited"<php>}</php>>小学</a></li>
+                    <li><a href="{:U('square/Resource/getList',array('stage'=>'middle'))}" <eq name="get['stage']" value="middle">class="cen_visited"</eq>>初中</a></li>
+                    <li><a href="{:U('square/Resource/getList',array('stage'=>'high'))}" <eq name="get['stage']" value="high">class="cen_visited"</eq>>高中</a></li>
+                  </ul>
+               </div>
+               <php>}</php>
+             </div>
+             <div class=""></div>
+           </div>
+           <div class="header_nav">
+              <ul class="nav">
+                <li><a href="{:U('square/Resource/getList',URLformat(array('classified'=>'ElementaryEDU','stage'=>'small')))}" <php>if($get['classified']=='' || $get['classified']=='ElementaryEDU'){</php>id="nav_visited"<php>}</php>>基础资源</a></li>
+                <li><a href="{:U('square/Resource/getList',URLformat(array('classified'=>'SpecialEDU')))}" <eq name="get['classified']" value="SpecialEDU">id="nav_visited"</eq>>专题资源</a></li>
+                <li><a href="{:U('square/Resource/getList',URLformat(array('classified'=>'OtherEDU')))}" <eq name="get['classified']" value="OtherEDU">id="nav_visited"</eq>>其他资源</a></li>
+              </ul>
+           </div>
+		  </header>
+		  <php>if($get['classified']=='ElementaryEDU' || $get['classified']==''){if($sub_top){</php>
+             <div class="nav_blank">
+             <ul>
+               <li><a href="{:U('square/Resource/getList',URLformat(array('classified'=>'ElementaryEDU','stage'=>'small')))}" <php>if($get['subject']==''){</php>id="navvisited"<php>}</php>>全部</a></li>
+               <volist name="sub_top" id="obj" key="k">
+                 <li><a href="{:U('square/Resource/getList',URLformat(array('subject'=>$obj['cloumn'])))}" <php>if($get['subject']==$obj['cloumn'] || $get['subject_r']==$obj['cloumn']){</php>id="navvisited"<php>}</php>>{$obj['text']}</a></li>
+               </volist>
+             </ul>
+           </div>
+		   <php>}}else if($get['classified']=='SpecialEDU'&&$attribute){</php>
+             <div class="nav_blank">
+             <ul>
+               <li><a href="{:U('square/Resource/getList',URLformat(array('classified'=>'SpecialEDU')))}" <php>if($get['attribute']==''){</php>id="navvisited"<php>}</php>>全部</a></li>
+               <volist name="attribute" id="obj" key="k">
+                 <li><a href="{:U('square/Resource/getList',URLformat(array('attribute'=>$obj['DataCode'])))}" <php>if($get['attribute']==$obj['DataCode']){</php>id="navvisited"<php>}</php>>{$obj['DataName']}</a></li>
+               </volist>
+             </ul>
+           </div>
+           <php>}</php>
+           <div class="crumbs">
+             <div class="crumbs_left">当前位置：<a href="{:U('square/Resource/index')}">资源中心</a>>><php>if($get['class']){</php>{$get['class']|getDictionary}>><php>}</php><php>if($get['edition']){</php>{$get['edition']|getDictionary}>><php>}</php>
+                           <php>if($get['subject']){</php>{$get['subject']|getDictionary}>><php>}</php>
+                           <php>if($get['grade']){</php>{$get['grade']|getDictionary}>><php>}</php>
+                           <php>if($get['course']){</php>{$get['course']|getCourse}<php>}</php></div>
+             <div class="crumbs_right">
+			 <form action="__URL__&act=doSearch" method="post">
+			 <input name="tags" value="" style=" width:260px; height:18px; line-height:20px;background:url(__THEME__/square/images/mirror.gif) no-repeat right;">
+			<!-- <input type="image" src="__THEME__/square/images/search_btn.gif" style="margin-left:10px; margin-top:2px;">-->
+			<input type="submit" value="搜索" />
+			<a href="javascript:;" onclick="searchmore('kai')" onfocus="blur()">高级搜索</a>
+			</form>
+			 </div>
+           </div>
+
+
+          <div class="middleOut">
+            <div class="middleInner">
+	<!--高级搜索显示-->
+		   <div id="searchmore" class="searchmore" <php>if(!$tags){</php>style=" display:none;"<php>}</php>>
+		   		<form action="__URL__&act=doSearch" method="post" style=" margin-left:15px;">
+				<table>
+				<tr><td> 资源类型：</td>
+				<td><select name="class" id="square">
+						<option value="{$tags.class}"><php>if($tags){</php>{$tags.class|getbyDC}<php>}else{</php>选择分类<php>}</php></option>
+						<volist name="hclassid" id="vo">
+						<option value="{$vo['DataCode']}">{$vo.DataName}</option>
+						</volist>
+				    </select></td>
+				<td> 版本：</td>
+				<td><select  name="edition"  style=" width:150px; height:22px; line-height:22px;">
+								<option value="{$tags.edition}"><php>if($tags){</php>{$tags.edition|getbyDC}<php>}else{</php>选择分类<php>}</php></option>
+								<volist name="hedition" id='obj'>
+							       <option value="{$obj.DataCode}">{$obj.DataName}</option>
+							    </volist>
+							    </select></td>
+				<td> 科目：</td>
+				<td><select  name="subject" class="subject"  style=" width:150px; height:22px; line-height:22px;">
+						<option value="{$tags.subject}"><php>if($tags){</php>{$tags.subject|getbyDC}<php>}else{</php>选择分类<php>}</php></option>
+						<volist name="hSubject" id='vo'>
+						   <option value="{$vo.DataCode}">{$vo.DataName}</option>
+						</volist>
+					</select></td>
+				 <td> 年级：</td>
+				 <td><select  name="grade"  class="grade" style=" width:150px; height:22px; line-height:22px;">
+						<option value="{$tags.grade}"><php>if($tags){</php>{$tags.grade|getbyDC}<php>}else{</php>选择分类<php>}</php></option>
+						<volist name="hGrade" id='obj'>
+						  <option value="{$obj.DataCode}">{$obj.DataName}</option>
+						</volist>
+					 </select></td>
+				</tr>
+				<tr><td></td>
+				<td></td>
+				<td> 形式：</td>
+				<td><select name="type" class="type" style=" width:150px; height:22px; line-height:22px;">
+						<option value="{$tags.type}"><php>if($tags){</php>{$tags.type|getbyDC}<php>}else{</php>选择分类<php>}</php></option>
+						<volist name="hRecourseType" id="obj">
+						  <option value="{$obj.DataCode}">{$obj.DataName}</option>
+						</volist>
+					</select></td>
+				<td>关键字：</td><td><input type="text" name="tags" value="{$tags.tags}"/></td>				   
+				<td></td>
+				<td><input type="submit" value="开始搜索" /><a href="javascript:;" onclick="searchmore('close')">取消</a></td></tr>
+				</table>
+				</form>
+		   </div>
+             <php>if($get['classified']=='' || $get['classified']=='ElementaryEDU' || $get['classified']=='SpecialEDU'){</php>
+              <div class="middle_left">
+                 <div class="middle_res">
+                   <div class="res_title">
+                     <h2>同步资源</h2>
+                   </div>
+                   <div class="res_content">
+                      <ul>
+                       <php>if($subject){</php>
+                       <volist name="subject" id="obj" key="k">
+                          <li><a href="{:U('square/Resource/getList',URLformat(array('subject'=>$obj['cloumn'],'judge'=>1)))}" <php>if($get['subject']==$obj['cloumn']){</php>id="res_visited"<php>}</php>>{$obj['text']}</a></li>
+                        </volist>
+                       <php>}else if($grade){</php>
+                         <volist name="grade" id="obj" key="k">
+                          <li><a href="{:U('square/Resource/getList',URLformat(array('grade'=>$obj['cloumn'])))}" <php>if($get['grade']==$obj['cloumn']){</php>id="res_visited"<php>}</php>>{$obj['text']}</a></li>
+                        </volist>
+                       <php>}else if($course){</php>
+                         <volist name="course" id="obj" key="k">
+                          <li><a href="{:U('square/Resource/getList',URLformat(array('course'=>$obj['CourseID'])))}" <php>if($get['course']==$obj['CourseID']){</php>id="res_visited"<php>}</php>>{$obj['Course']}</a></li>
+                        </volist>
+                       <php>}else{</php>
+                         <volist name="edition" id="obj" key="k">
+                          <li><a href="{:U('square/Resource/getList',URLformat(array('edition'=>$obj['cloumn'])))}" <php>if($get['edition']==$obj['cloumn']){</php>id="res_visited"<php>}</php>>{$obj['text']}</a></li>
+                        </volist>
+                       <php>}</php>
+                      </ul>
+                   </div>
+                 </div>
+              </div>
+             <php>}</php>
+             <php>if($get['classified']=='' || $get['classified']=='ElementaryEDU' || $get['classified']=='SpecialEDU'){</php>
+              <div class="middle_right">
+               
+                 <div class="detil_title">
+                   <ul>
+                      <li><a href="{:U('square/Resource/getList',URLformat(array('type'=>'')))}" <php>if($get['type']==''){</php>id="format"<php>}</php>>全部</a></li>
+					  <php>if($get['classified']=='ElementaryEDU' || $get['classified']==''){</php>
+						  <volist name="type" id="obj" key="k">
+							 <li><a href="{:U('square/Resource/getList',URLformat(array('type'=>$obj['DataCode'])))}" <php>if($get['type']==$obj['DataCode']){</php>id="format"<php>}</php>>{$obj['DataName']}</a></li>
+						  </volist>
+					  <php>}</php>
+					  <php>if($get['classified']=='SpecialEDU'){</php>
+						  <volist name="Specialtype" id="obj" key="k">
+							 <li><a href="{:U('square/Resource/getList',URLformat(array('type'=>$obj['DataCode'])))}" <php>if($get['type']==$obj['DataCode']){</php>id="format"<php>}</php>>{$obj['DataName']}</a></li>
+						  </volist>
+					  <php>}</php>
+                   </ul>
+                 </div>
+                 <div class="clear5"></div>
+                 <div class="detil_content">
+                   <div class="detil_head"><h2>资源列表</h2></div>
+                   <div class="clear5"></div>
+                   <div class="detil_list">
+                     <ul class="del_list">
+                       <volist name="data" id="vo">
+                       <li>
+                         <div class="res_title"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">{$vo['title']}</a></div>
+                         <div class="content">
+                           <span>
+                           <php>if($vo['class']){</php>{$vo['class']|getDictionary}/<php>}</php>
+                           <php>if($vo['edition']){</php>{$vo['edition']|getDictionary}/<php>}</php>
+                           <php>if($vo['subject']){</php>{$vo['subject']|getDictionary}/<php>}</php>
+                           <php>if($vo['grade']){</php>{$vo['grade']|getDictionary}/<php>}</php>
+                           <php>if($vo['chapters']){</php>{$vo['chapters']|getCourse}/<php>}</php>
+                           
+                           </span>
+                           <dl class="cont">
+                          <dt class="re_pic"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="{$vo['id']|getThumb}"></a></dt>
+                             <dd style=" float:left;width:560px; padding-left:10px;">
+                                <dl style=" height:76px;">
+                                   <dt style=" float:left;width:400px;color:#999; letter-spacing:1px; line-height:25px;">{$vo['info']}</dt>
+                                   <dd style=" float:left;width:120px; padding-left:40px;padding-top:25px;">
+                                     <ul>
+                                        <li>评分：
+                                          <php>for($i=1;$i<=5;$i++){</php>
+                                             <php>if($i<=getAVG($vo['id'])){</php>
+                                             <img src="__THEME__/square/images/fullpeach.png">
+                                             <php>}else{</php>
+                                             <img src="__THEME__/square/images/emptypeach.png">
+                                            <php>}</php>
+                                           <php>}</php>
+                                        </li>
+                                        <li style=" color:#0A8CCC; font-weight:bold;">在线阅读：<a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="__THEME__/square/images/arrow.gif"></a></li>
+                                     </ul>
+                                   </dd>
+                                </dl>
+                                <dl>
+                          <dt style=" text-align:right;">时间:{$vo['time']|date="Y-m-d H:i",###} 下载次数：21次 发布人：{$vo['uid']|getUserName=###}</dt>
+                                </dl>
+                             </dd>
+                          </dl>
+                         </div>
+                       </li>
+                       <div class="clear8"></div>
+                       </volist>
+                     </ul>
+                     <div class="pagelist">{$html}</div>
+                   </div>
+                   <div class="clear"></div>
+                 </div>
+              </div>
+             <php>}else{</php>
+                 <div class="ldetil_content">
+                   <div class="ldetil_head"><h2>资源列表</h2></div>
+                   <div class="clear5"></div>
+                   <div class="ldetil_list">
+                     <ul class="ldel_list">
+                       <volist name="data" id="vo">
+                       <li>
+                         <div class="lres_title"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">{$vo['title']}</a></div>
+                         <div class="lcontent">
+                           <span>
+                              <php>if($vo['class']){</php>{$vo['class']|getDictionary}<php>}</php>
+                           </span>
+                           <dl class="lcont">
+                          <dt class="lre_pic"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="{$vo['id']|getThumb}"></a></dt>
+                             <dd style=" float:left;width:88%; padding-left:10px;">
+                                <dl style=" height:76px;">
+                                   <dt style=" float:left;width:500px;color:#999; letter-spacing:1px; line-height:25px;">{$vo['info']}</dt>
+                                   <dd style=" float:right;width:120px; padding-left:40px;padding-top:25px;">
+                                     <ul>
+                                        <li>评分：
+                                          <php>for($i=1;$i<=5;$i++){</php>
+                                             <php>if($i<=getAVG($vo['id'])){</php>
+                                             <img src="__THEME__/square/images/fullpeach.png">
+                                             <php>}else{</php>
+                                             <img src="__THEME__/square/images/emptypeach.png">
+                                            <php>}</php>
+                                           <php>}</php>
+                                        </li>
+                                        <li style=" color:#0A8CCC; font-weight:bold;">在线阅读：<a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="__THEME__/square/images/arrow.gif"></a></li>
+                                     </ul>
+                                   </dd>
+                                </dl>
+                                <dl>
+                          <dt style=" text-align:right;">时间:{$vo['time']|date="Y-m-d H:i",###} 下载次数：21次 发布人：{$vo['uid']|getUserName=###}</dt>
+                                </dl>
+                             </dd>
+                          </dl>
+                         </div>
+                       </li>
+                       <div class="clear8"></div>
+                       </volist>
+                     </ul>
+                     <div class="pagelist">{$html}</div>
+                   </div>
+                   <div class="clear"></div>
+                 </div>
+             <php>}</php>
+              <div class="clear"></div>
+            </div>
+          </div>
+       </div>
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+<include file="../public/_footer" />
+<script language="javascript" type="text/javascript">
+function searchmore(str)
+{
+	if(str=='kai')
+		document.getElementById('searchmore').style.display='block';
+	else
+		document.getElementById('searchmore').style.display='none';
+}
+</script>
+</body>
+</html>

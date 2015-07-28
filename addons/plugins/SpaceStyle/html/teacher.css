@@ -1,0 +1,41 @@
+/* 
+    老师基础样式
+*/
+
+body{font-size:12px; background:#f4f8f9;}
+.containerOuter{
+	width:100%;
+	background:url(teacher/teacher_bg.jpg) no-repeat top center;
+}
+
+/*头部样式*/
+header h1{
+	position:absolute;
+	left:10px;
+	top:50px;
+	display:block;
+	height:38px;
+	line-height:38px;
+	font-size:220%;
+	font-family:微软雅黑;
+	color:#c47401;
+}
+header em{
+	position:absolute;
+	left:10px;
+	top:90px;
+	color:#c47401;
+}
+
+/*底部样式*/
+footer{
+	display:block;
+	clear:both;
+	width:960px;
+	margin:0 auto;
+	padding:10px 0px;
+	color:#c47401;
+}
+footer a{color:#c47401}
+footer a:hover{color:#c47401;text-decoration:underline}
+footer .menu{float:right}

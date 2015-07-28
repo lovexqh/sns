@@ -1,0 +1,118 @@
+<script language="javascript" type="text/javascript" src="../Public/js/datepicker/WdatePicker.js"></script>
+<script language="javascript" type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.8.6.custom.min.js"></script>
+<div style="width:320px; height:300px;margin: 0 0 0 0;">
+  <form action="{:U('space/Manage/doaddMoney')}" method="post" class="mon_search" style="border:0 none;width:300px;margin: 10px 0 0 20px;">
+    <table width="300">
+      <tr height="35">
+        <td width="60">学生姓名:</td>
+        <td><select id="stuname" name="stuname" class='mon_boder mon_sel'>
+					<option value=0>请选择学生</option>
+					<volist name="studentList" id='student'>
+						<if condition="($student.identityid eq $info['identityid'])" >
+						<option value='{$student.identityid}' selected="selected">{$student.xm}</option>
+						<else/>
+						<option value='{$student.identityid}'>{$student.xm}</option>
+						</if>
+					</volist>
+			</select></td>
+      </tr>
+      <tr height="35">
+        <td>荣誉名称:</td>
+        <td><select id="gloryid" name="" class='mon_boder mon_sel'>
+					<option value=0>请选择类型</option>
+					<volist name="weekStarType" id='type'>
+						<if condition="($type.id eq $info['gloryid'])" >
+						<option value='{$type.id}' id='{$type.pic}' selected="selected">{$type.name}</option>
+						<else/>
+						<option value='{$type.id}' id='{$type.pic}'>{$type.name}</option>
+						</if>
+					</volist>
+			</select></td>
+      </tr>
+      <tr height="35">
+        <td>授予时间:</td>
+        <td><input type="text" value="{$info['date']}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})" name="date" id="date"></td>
+      </tr>
+      <tr height="35">
+        <td valign="top">教师评语:</td>
+        <td><textarea id="comment" name="comment" style="width:200px; height:85px;">{$info['comment']}</textarea></td>
+      </tr>
+      <tr height="35">
+        <td colspan="2"><input id="savebtn" name="" style=" margin:0 10px 0 60px;" type="button" class="btn" value="保存" />
+          <input id="cancelbtn" name="" type="button" class="btn" value="取消" /></td>
+        <input id="rid" type="hidden" value="{$rid}" />
+        <input type="hidden" name="classid" value="{$classid}" />
+      </tr>
+    </table>
+  </form>
+</div>
+<script language="javascript" type="text/javascript">
+
+$(function(){  
+　　$("#cancelbtn").click(function(){  
+			ui.box.close();　　　　　
+　　　})  
+})  
+$(function(){  
+　　$("#savebtn").click(function(){
+		if($("#stuname").val()==0) {
+			ui.error("请选择学生");
+			return;
+		}
+		if($("#gloryid").val()==0) {
+			ui.error("请选择荣誉");
+			return;
+		}
+		if($("#date").val()=='') {
+			ui.error("请选择时间");
+			return;
+		}
+		if($("#comment").val().length>50) {
+			ui.error("评语不能超过50个字符");
+			return;
+		}
+		
+		$.post('__ROOT__/index.php?app=space&mod=weekStar&act=save', { <php> if(!empty($rid)) echo "rid: '".$rid."',";</php> classid:{$classid},identityid:$("#stuname").val(),gloryid:$("#gloryid").val(),date:$("#date").val(),comment:$("#comment").val()},function(res){
+			var JSONObject=jQuery.parseJSON(res);;
+		//	alert(res+"---"+JSONObject.status);
+			if(JSONObject.status=='1') {
+				//$('#name_{$rId}').text(name);
+				var data = JSONObject.data;
+				if($("#rid").val()==null||$("#rid").val()=="") {
+					add(data)
+				} else {
+					update(data);
+				}
+				ui.success('保存成功');
+				ui.box.close();
+			}else {
+				ui.error(JSONObject.info);
+			}
+		}); 
+　　　})  
+})
+//添加成功后改变界面
+function add(data) {
+	var tr='<tr id="resource_'+data['rid']+'">'+
+	'<td width="90" class="xm" id="xm_'+data['rid']+'">'+$("#stuname").find("option:selected").text()+'</td>'+
+	'<td width="90" class="name" id="name_'+data['rid']+'">'+$("#gloryid").find("option:selected").text()+'</td>'+
+	'<td width="90"><img width="35" height="35" id="pic_'+data['rid']+'"'+
+	'src="{$picPath}'+$("#gloryid").find("option:selected").attr("id")+'"></td>'+
+	'<td width="90" height="35" class="date" id="date_'+data['rid']+'">'+$("#date").val()+'</td>'+
+	'<td width="160" class="t_comment" id="comment_'+data['rid']+'">'+$("#comment").val()+'</td>'+
+	'<if condition="($adviser neq 0) and ($control eq manage)">'+
+	'<td style="border-right: 0 none;"><a href="javascript:;"'+
+	'class="a_edit" onClick="updateGlory('+data['rid']+')">编辑</a>'+
+	'<a href="javascript:;" class="a_del"'+
+	'onClick="del('+data['rid']+')">删除</a></td></if></tr>';
+	$("#resultlist").prepend(tr);
+}
+//更新成功后改变界面
+function update(data) {
+	$('#xm_'+$("#rid").val()).text($("#stuname").find("option:selected").text());
+	$('#name_'+$("#rid").val()).text($("#gloryid").find("option:selected").text());
+	$('#pic_'+$("#rid").val()).attr("src",'{$picPath}'+$("#gloryid").find("option:selected").attr("id"));
+	$('#date_'+$("#rid").val()).text($("#date").val());
+	$('#comment_'+$("#rid").val()).text($("#comment").val());
+}
+</script>

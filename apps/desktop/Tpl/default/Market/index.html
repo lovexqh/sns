@@ -1,0 +1,194 @@
+<include file="../Public/_header_common" />
+<link rel="stylesheet" type="text/css" href="../Public/css/appmarket.css?{$verhash}" /> 
+<style>
+html{overflow-x:hidden;overflow-y:scroll;}
+body{background:#FFF}
+</style>
+<script type="text/javascript">
+var wname = window.name;
+if (wname == "") throw Error("window name error!");
+wname=jQuery.evalJSON(decodeURIComponent(wname));
+var container='{$_GET[container]}';
+if(container.indexOf('icosContainer_')===-1) container='icosContainer_body_'+top._window.windows[wname.winid].desktop;
+function addapp(addid,appid){
+	//alert(appid+'====='+container);
+	jQuery('.'+addid).each(function(){
+				this.onclick=function(){}
+			});
+	//document.write(U('desktop/Market/ajax',['do=addapp&uid={$mid}&t='+new Date().getTime()])+'&container='+container+'&appid='+appid+'&uid='+wname.uid);
+	jQuery.ajax({
+		type:'post',
+		async: false,
+		url:U('desktop/Market/ajax',['do=addapp&uid={$mid}&t='+new Date().getTime()]),
+		data:{container:container,appid:appid,uid:wname.uid},
+		dataType:"json",
+		success:function(json){
+		if(json.msg=='do_success'){
+			//alert(json.name);
+			top._ico.createIco(json);
+			
+			jQuery('.'+addid).removeClass('appAddBtn').addClass('appOpenBtn');
+			jQuery('.'+addid).attr('onclick','top._ico.Open('+json.icoid+');');
+		 }else{
+			top.Alert(json.msg);
+		 }
+		},
+		error:function(){
+			top.Alert("{:L('network_error')}");
+		}
+	});	
+}
+	</script>
+<div id="topbarBg"></div>
+<div id="toolbar" class="region nav_container">
+	<div class="nav_body">
+		<div id="nav" style="display:block"> <a href="javascript:void(0);" class="nav_button home" cmd="home" id="nav_home" title="{:L('index')}" hidefocus onclick="control_click(jQuery('#cat_nav-2'),'main');">{:L('index')}</a> <a href="javascript:void(0);" class="nav_button back" cmd="backPage" id="nav_back" title="{:L('back')}" hidefocus>{:L('back')}</a> <a href="javascript:void(0);" class="nav_button forwardDisable" cmd="forwardPage" id="nav_forward" title="{:L('forward')}" hidefocus>{:L('forward')}</a> <a href="javascript:void(0);" class="nav_button refresh" cmd="refresh"id="nav_refresh" title="{:L('refresh')}" hidefocus onclick="nav_back_forword_click();">{:L('refresh')}</a></div>
+		<div id="searchbar">
+			<div class="searchInputContainer">
+				<input id="searchInput" value="{:L('app_search')}" onfocus="if(this.value=='{:L('app_search')}'){this.value='';}else{this.select();}" onblur="if(this.value==''){this.value='{:L('app_search')}';}"  onkeyup="autosearch();" onkeydown="if(event.keyCode==13){searchsubmit();}">
+				<a id="searchBtn" href="javascript:void(0);" onclick="searchsubmit();"></a> 
+			</div>
+			<ul id="searchSuggestList" class="searchSuggestList radius3"></ul>
+		</div>
+		<div id="tips" style="display:block">
+			<div class="tipContainer">{:L('total_has')}<a id="appsNumber" href="javascript:void(0);" cmd="all"  cat="-1" hidefocus onclick="control_click(jQuery('#cat_nav-1'),'all',-1,jQuery('#appTab_all_list_orderbyContainer .currentOrderBy').attr('orderby'));">{$all_app_count}</a>{:L('pice_app')}</div>
+			<a title="{:L('update_today')}" id="appsNotifyNumberContainer" <if condition="$today">style="display:block"</if> class="appsNotifyNumberContainer" href="javascript:void(0);" cmd="all" orderBy="1"  hidefocus onclick="control_click(jQuery('#cat_nav-1'),'all',-1,1);"> <span class="appsNotifyNumberLeft"></span> <span class="appsNotifyNumberMiddle"> <span id="appsNotifyNumberCount" class="appsNotifyNumberCount">$today</span> </span> <span class="appsNotifyNumberRight"></span> </a> </div>
+	</div>
+</div>
+<div id="container">
+	<div id="cat_nav" class="cat_nav">
+		<div id="cat_nav-2" class="catNavTrigger select" cmd="main" cat="-2" style="text-align:center">{:L('app_recomment')}</div>
+		<div id="cat_nav-1" class="catNavTrigger" cmd="all" cat="-1" style="text-align:center">{:L('app_all')}</div>
+		<volist name="app_group" id="vo">
+			<div id="cat_nav{$vo['group_id']}" class="catNavTrigger" cmd="all" cat="{$vo['group_id']}">{$vo['group_name']}</div>
+		</volist>
+		<div id="cat_nav0" class="catNavTrigger" cmd="all" cat="0">{:L('app_other')}</div>
+	</div>
+	<script type="text/javascript">
+	jQuery('#cat_nav>.catNavTrigger:not(.select)').bind('mouseover',function(){
+				jQuery(this).addClass('hover');
+			});
+	jQuery('#cat_nav>.catNavTrigger').bind('mouseout',function(){
+				jQuery(this).removeClass('hover');
+			});
+	jQuery('#cat_nav >.catNavTrigger').bind('click',function(){
+		var cat=parseInt(jQuery(this).attr('cat'));
+		var cmd=jQuery(this).attr('cmd');
+		var order=jQuery('#appTab_all_list_orderbyContainer .currentOrderBy').attr('orderby')||1;
+		control_click(jQuery(this),cmd,cat,order,0)
+	});
+	</script>
+	<div class="cat_nav_button cat_nav_up" id="cat_nav_up" style="display:none;"></div>
+	<div class="cat_nav_button cat_nav_down" id="cat_nav_down" style="display:none;"></div>
+	<div id="page_container" class="page_container">
+		<div id="main" class="page" style="display:none">
+			<div class="region region_r">
+				<div id="main_region_rt" class="region region_rt" style="border: medium none;"></div>
+				<div id="main_region_rm" class="region region_rm"></div>
+				<div id="main_region_rb" class="region region_rb"></div>
+			</div>
+			<div id="main_region_lt" class="region region_lt"></div>
+			<div id="main_region_lm" class="region region_lm"></div>
+			<div id="main_region_lm2" class="region region_lm2"></div>
+			<div id="main_region_lb" class="region region_lb"></div>
+		</div>
+		<div id="all" class="page" style="display:none">
+			<div id="all_region_l" class="region region_l">
+				<div class="appPanel appAllList">
+					<div id="appTab_all_list_orderbyContainer" class="orderbyContainer">
+						<div class="orderByBtns">
+                        	<a id="appTab_all_list_orderby_0" class="orderByBtn  currentOrderBy" href="javascript:void(0);" orderby="0">{:L('top_hotest')}</a>
+                            <a id="appTab_all_list_orderby_1" class="orderByBtn" href="javascript:void(0);" orderby="1">{:L('top_latest')}</a>
+                            <!--最受好评菜单 start <a id="appTab_all_list_orderby_2" class="orderByBtn" href="javascript:void(0);" orderby="2">{:L('top_rated')}</a> end-->
+                        </div>
+						<script type="text/javascript">
+							jQuery('#appTab_all_list_orderbyContainer .orderByBtn').bind('click',function(){
+								var order=jQuery(this).attr('orderby');
+								control_click(jQuery('#cat_nav .select'),'all',jQuery('#cat_nav .select').attr('cat'),order)
+							});
+						</script>
+						<div class="pageControlPanel"> <a href="javascript:void(0);" hidefocus="">
+							<div cmd="prev" id="all_list_controlPrev" class="controlPrev"></div>
+							</a> <a href="javascript:void(0);" hidefocus="">
+							<div cmd="next" id="all_list_controlNext" class="controlNext"></div>
+							</a> 
+						</div>
+					</div>
+					<div id="appPanel_all_list_body" class="appSheetContainer"></div>
+				</div>
+			</div>
+			<div id="all_region_rt" class="region region_rt"></div>
+			<div id="all_region_rb" class="region region_rb"></div>
+		</div>
+		<div id="album" class="page">
+			<div class="overLight" id="pmOverLight"></div>
+			<div id="album_region_lt" class="region region_lt"></div>
+	        <div id="album_region_lb" class="region region_lb"></div>
+	        <div id="album_region_rt" class="region region_rt"></div>
+	        <div id="album_region_rb" class="region region_r"></div>
+			<div class="publicityMarket">
+				<div class="pmHeader"></div>
+				<!--<div class="overLight" id="pmOverLight"></div>-->
+				<div id="pmBody" class="pmBody"> </div>
+				<div class="pmFooter"></div>
+			</div>
+		</div>
+		<div id="introduce" class="page" style="display:none">
+			<div class="region region_r">
+				<div id="introduce_region_rt" class="region region_r"></div>
+				<div id="introduce_region_rb" class="region region_rb"></div>
+			</div>
+			<div id="introduce_region_lt" class="region region_lt"></div>
+			<div id="introduce_region_lb" class="region region_lb"></div>
+		</div>
+		<div id="search" class="page">
+			<div id="search_region_l" class="region region_l"></div>
+			<div id="search_region_rt" class="region region_rt"></div>
+			<div id="search_region_rb" class="region region_rb"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../Public/js/market.js"></script>
+<script type="text/javascript">
+var resizeTimer=null;
+var ocmd='{$cmd}';
+var ocat='{$cat}';
+var oappid='{$appid}';
+var okeyword=encodeURI('{$keyword}');
+jQuery(document).ready(function(){
+	switch(ocmd){
+		case 'all':
+			if(ocat){
+				var Oorder=jQuery('#appTab_all_list_orderbyContainer .currentOrderBy').attr('orderby')||1;
+				control_click(jQuery('#cat_nav'+ocat),ocmd,ocat,0,0)
+			}
+			break;
+		case 'introduce':
+			control_click(null,ocmd,ocat,1,oappid);
+			break;
+		case 'search':
+			control_click(null,'search',null,null,null,1,null,okeyword);
+			break;
+		default:
+			control_click(jQuery('#cat_nav-2'),'main');
+	}
+	resetCatHeight();
+	window.onresize=function(){
+		if(resizeTimer==null)	resizeTimer=setTimeout(resetCatHeight,200);
+	}
+	jQuery('#cat_nav_down').bind('click',function(){
+			jQuery('#cat_nav').css('top',parseInt(jQuery('#cat_nav').css('top'))-37);
+			if(jQuery('#cat_nav').find('.catNavTrigger').length*37+10+parseInt(jQuery('#cat_nav').css('top'))<=(document.documentElement.clientHeight)) jQuery('#cat_nav_down').hide();
+			resetCatHeight();
+		});
+	jQuery('#cat_nav_up').bind('click',function(){
+			jQuery('#cat_nav').css('top',(parseInt(jQuery('#cat_nav').css('top'))+37)>35?35:(parseInt(jQuery('#cat_nav').css('top'))+37));
+			if(parseInt(jQuery('#cat_nav').css('top'))>=35) jQuery('#cat_nav_up').hide();
+			resetCatHeight();
+		});
+	
+});
+
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,78 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_mine_page">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_topicHeader" />
+			<div class="topic_page">
+				<php>if( empty($myTopic['data']) ){</php>
+				<div class="no_topic">还没有发布帖子哦!</div>
+				<php>}</php>
+				<div class="all_topic_table">
+					<volist name="myTopic.data" id="topic">
+					<div class="all_topic_line" id="topic_{$topic.id}">
+						<div class="topic_info">
+							<div class="topic_title_line">
+								<div class="topic_title">
+									<a href="{:U('club/Topic/topicDetail', array('id'=>$clubInfo['id'], 'topicid'=>$topic['id']))}">{$topic['title']}</a>
+									<php>if($topic['zding']==1){</php>
+									<img alt="置顶" src="../Public/images/zding.jpg">
+									<php>}</php>
+									<php>if($topic['tjian']==1){</php>
+									<img alt="推荐" src="../Public/images/tjian.jpg">
+									<php>}</php>
+								</div>
+								<div class="topic_author"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$topic['uid']))}', '{$topic['uid']|getUserName}的个人主页');" href="javascript:;">{$topic['uid']|getUserName}</a></div>
+								<div class="topic_count">{$topic['replycount']}</div>
+								<div class="topic_replytime"><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$topic['replyuid']))}', '{$topic['replyuid']|getUserName}的个人主页');" href="javascript:;">{$topic['replyuid']|getUserName}</a></div>
+								<php>if($member['type']==1 || $member['type']==2){</php>
+									<div class="manager_operate_top" topicid="{$topic.id}">
+										<ul class="manager_operate_menu" id="operate_menu_mine_{$topic.id}">
+											<li><php>if($topic['zding']==1){</php><a onclick="operateTopic({$topic.id}, 1, 0);">取消置顶</a><php>}else{</php><a onclick="operateTopic({$topic.id}, 1, 1);">置顶</a><php>}</php></li>
+											<li><php>if($topic['tjian']==1){</php><a onclick="operateTopic({$topic.id}, 2, 0);">取消推荐</a><php>}else{</php><a onclick="operateTopic({$topic.id}, 2, 1);">推荐</a><php>}</php></li>
+											<li><a onclick="delTopic({$topic.id});">删除</a></li>
+										</ul>
+									</div>
+								<php>}</php>
+								<div class="c"></div>
+							</div>
+							<div class="topic_content_line">		
+								<div class="topic_content">
+									<php>if(strlen($topic['content'])>110){</php>
+									<div class="topic_content_area">{$topic.content}</div>...
+									<php>}else{</php> <div class="topic_content_area">{$topic.content}</div> <php>}</php>
+								</div>
+								<div class="topic_author pub_time">{$topic['ctime']}</div>
+								<div class="topic_count click_count">{$topic['clickcount']}</div>
+								<div class="topic_replytime rep_time">{$topic['replytime']}</div>
+								<div class="c"></div>
+							</div>
+						</div>
+					</div>
+					</volist>
+					<php>if( !empty($myTopic['html']) ){</php>
+					<div class="page" style="text-align:center;margin-bottom:20px;">{$myTopic.html}</div>
+					<php>}</php>
+				</div>
+			</div>
+			<php>if($publish==1){</php>
+			<include file="addTopic" />
+			<php>}</php>
+			<div class="c"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	$('.manager_operate_top').mouseenter(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_mine_"+topicid).show();
+	})
+	$('.manager_operate_top').mouseleave(function() {
+		var topicid = $(this).attr('topicid');
+		$("#operate_menu_mine_"+topicid).hide();
+	})
+</script>
+<include file="../Public/_footer" />

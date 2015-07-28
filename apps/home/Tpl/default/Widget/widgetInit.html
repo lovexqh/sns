@@ -1,0 +1,22 @@
+$(document).find('a').each(function(i, e) {
+	if('undefined' != typeof($(this).attr('onclick'))){
+		//设置白名单
+		var func = new Array('ui','tabs','Alert','Confirm','Prompt');
+		//获取onclick的方法名
+		var fn = $(this).attr('onclick');
+		fn = fn.substr(0,fn.indexOf('('));
+		if(fn.indexOf('.')!=-1){
+			fn = fn.substr(0,fn.indexOf('.'));
+		}
+		//如果是白名单的函数则增加parent
+		if(func.in_array(fn))
+			$(this).attr('onclick','parent.' + $(this).attr('onclick'));
+	}else{
+		$(this).removeAttr('target');
+		var title = $(this).attr('title')?$(this).attr('title'):$(this).text();
+		if(title=='') title = '';
+		var url = $(this).attr('href');
+		$(this).attr('href','javascript:;');
+		$(this).attr('onclick',"{$open}");
+	}
+});

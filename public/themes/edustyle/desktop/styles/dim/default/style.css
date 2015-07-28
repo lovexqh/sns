@@ -1,0 +1,3964 @@
+/*webim*/
+
+.window_bg_container {
+    border: 0 none;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+.window_content {
+    border: 1px solid #999999;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+	color:#FFF;
+}
+.window_has_controlArea .window_content {
+    border-radius: 5px 5px 5px 5px;
+}
+.window_bodyOuter {
+    border-top: 1px solid #CCCCCC;
+    bottom: 0;
+    position: absolute;
+    top: 25px;
+    width: 100%;
+}
+.window_toolBar {
+    background: none repeat scroll 0 0 #E9E9E9;
+    border-bottom: 1px solid #B2C3CC;
+    display: none;
+    height: 28px;
+    position: relative;
+    z-index: 10;
+}
+.window_bodyArea {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.DIM_content a{
+	outline:none;
+	text-decoration:none;
+}
+.DIM_content{
+	font-size: 12px;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+	
+}
+.DIM_loading {
+	margin:auto;
+	padding:2px 0 2px 20px;
+	width:56px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	background:url(images/webim/loading.gif) 1px 2px no-repeat;
+	color:#ccc;
+	cursor:default
+}
+.clickable {
+	cursor:pointer
+}
+.clickable:hover {
+	cursor:pointer;
+	text-decoration:underline
+}
+.clickdisable {
+	cursor:default;
+	text-decoration:none
+}
+.clickdisable:hover {
+	cursor:default;
+	text-decoration:none
+}
+/*.DIM_mainBar {
+	display:none;
+	float:right;
+	margin:1px 5px 0 0;
+	height:auto;
+	width:30px
+}
+.DIM_startButton {
+	display:none;
+	margin:4px;
+	width:22px;
+	height:22px;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -25px -82px no-repeat;
+	cursor:pointer;
+	text-indent:-999em
+}
+.DIM_startButtonOnline {
+	margin:4px;
+	width:22px;
+	height:22px;
+	overflow:hidden;
+	cursor:pointer;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 3px -82px no-repeat;
+	text-indent:-999em
+}*/
+.DIM_infoShow {
+	display:inline;
+	display:none;
+	float:left;
+	margin:0 0 0 3px
+}
+.DIM_msgBoxButton {
+	display:none;
+	margin:4px;
+	width:22px;
+	height:22px;
+	overflow:hidden;
+	cursor:pointer;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 29px -239px no-repeat;
+	text-indent:-999em
+}
+.DIM_avatarInMsgBoxButton {
+	margin:0;
+	border:0;
+	padding:1px;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	background:white
+}
+.DIM_jumpUp .DIM_avatarInMsgBoxButton {
+	display:none
+}
+.unreadMsgInMsgBoxButton {
+	display:none;
+	margin:0 0 0 25px
+}
+.DIM_myPanel {
+	position:relative;
+	height:74px;
+	overflow:hidden;
+	margin:5px 5px 5px 10px;
+}
+.DIM_myPanel_noLogin {
+	margin:4px
+}
+.DIM_myAvatar {
+	display:inline;
+	position:relative;
+	float:left;
+	border:1px solid #999;
+	padding:1px;
+	width:64px;
+	height:64px;
+	overflow:hidden;
+	background:white;
+	zoom:1;
+	cursor:pointer;
+	box-shadow:1px 1px 3px #666;
+	-moz-box-shadow:1px 1px 3px #666;
+	-webkit-box-shadow:1px 1px 3px #666
+}
+.DIM_myAvatar_offline {
+	opacity:.5;
+	filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)
+}
+.DIM_myTitle {
+	margin:3px 0 0 74px;
+	height:20px;
+	line-height:20px;
+	font-weight:bold;
+	font-size:16px;
+	overflow:hidden;
+	zoom:1;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+}
+.DIM_myInfo {
+	margin:3px 0 0 74px;
+	height:16px;
+	overflow:hidden;
+	zoom:1
+}
+.DIM_myState {
+	display:none;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_myNick {
+	float:left;
+	/*width:170px;*/
+	height:18px;
+	overflow:hidden;
+	line-height:18px;
+	font-weight:bold;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+	cursor:default
+}
+.DIM_myService {
+	
+	margin:3px 5px 0 74px;
+	height:22px;
+	zoom:1
+}
+.eqq_mypanel_toolbar {
+	height:20px;
+	margin:2px 0 4px
+}
+.eqq_mypanel_toolbar_button {
+	float:left;
+	width:18px;
+	height:18px;
+	margin:0 4px 0 2px;
+	position:relative;
+	top:1px;
+	left:1px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.eqq_mypanel_toolbar_button:hover {
+	border:1px solid #b3b3b3;
+	top:0;
+	left:0;
+	margin-right:2px;
+	background:url('images/webim/hover.png') repeat-x
+}
+/*.eqq_mypanel_toolbar_icon {
+	float:left;
+	width:16px;
+	height:16px;
+	margin:1px;
+	background:url(images/webim/dim.png) -2px -352px no-repeat;
+	_background-image:url(images/webim/dim.gif)
+}*/
+/*.eqq_mypanel_toolbar_qzone {
+	background-position:-2px -352px
+}
+.eqq_mypanel_toolbar_mail {
+	background-position:-22px -352px
+}
+.eqq_mypanel_toolbar_weibo {
+	background-position:-42px -352px
+}
+.eqq_mypanel_toolbar_news {
+	background-position:-62px -352px
+}
+.eqq_mypanel_toolbar_money {
+	background-position:-82px -352px
+}
+.eqq_mypanel_toolbar_pengyou {
+	background-position:-102px -352px
+}
+.eqq_mypanel_toolbar_harddisk {
+	background-position:-122px -352px
+}*/
+.DIM_mySignature_wraper {
+	color:#FFF;
+	height:20px;
+	overflow:hidden;
+	position:relative;
+	top:1px;
+	left:1px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+#DIM_MySignature {
+	display:block;
+	height:20px;
+	outline:0;
+	line-height:20px;
+	border:0;
+	margin:0;
+	background:0;
+	cursor:pointer;
+	color:#FFF;
+	text-shadow:1px 1px 1px #000;
+	-webkit-appearance:none
+}
+input#DIM_MySignature {
+	width:100%
+}
+.DIM_MySignature_hover {
+	border:1px solid #b3b3b3;
+	top:0;
+	left:0;
+	background:url('images/webim/hover.png') repeat-x
+}
+.DIM_mySignature_wraper.DIM_MySignature_edit #DIM_MySignature {
+	cursor:text;
+	background:#fff;
+	color:#000;
+}
+
+.DIM_mainPanel {
+	position:relative;
+	overflow:hidden
+}
+.ie6 .DIM_mainPanel {
+	height:100%
+}
+.DIM_title {
+	display:none;
+	height:20px;
+	overflow:hidden
+}
+.DIM_Container .DIM_titleText {
+	display:block;
+	float:left;
+	padding:0 5px;
+	width:50px;
+	height:16px;
+	overflow:hidden;
+	font-family:Verdana;
+	color:#FFF;
+	font-weight:bold;
+	line-height:16px;
+	cursor:pointer
+}
+.DIM_titleText {
+	display:block;
+	float:left;
+	padding:0 5px;
+	width:50px;
+	height:16px;
+	overflow:hidden;
+	font-family:Verdana;
+	color:#FFF;
+	font-weight:bold;
+	line-height:16px;
+	cursor:pointer
+}
+.DIM_betaText {
+	float:left;
+	font-size:9px;
+	color:#FFF
+}
+.DIM_PinDownButton {
+	display:inline;
+	float:right;
+	margin:1px 2px 0 0;
+	width:15px;
+	height:15px;
+	overflow:hidden;
+	cursor:pointer;
+	text-indent:-999em
+}
+/*.DIM_pinUp {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -42px -60px no-repeat
+}
+.DIM_pinDown {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -42px -58px no-repeat
+}
+.DIM_feedbackButton {
+	float:left;
+	margin:0 0 0 6px;
+	height:16px;
+	overflow:hidden;
+	color:#FFF
+}
+.DIM_FeedbackButton2 {
+	display:inline;
+	display:none;
+	float:right;
+	margin:1px 5px 0 0;
+	width:26px;
+	height:15px;
+	overflow:hidden;
+	color:#FFF;
+	cursor:pointer;
+	line-height:15px;
+	text-decoration:underline
+}*/
+.DIM_myState {
+	display:none;
+	position:absolute;
+	width:30px;
+	height:16px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	top:50px;
+	left:40px;
+	margin:0;
+}
+.DIM_myStateShow {
+	float:left;
+	width:15px;
+	height:16px;
+	overflow:hidden;
+	text-indent:-999em;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_callme {
+	background:url(images/webim/dim.gif) -71px 3px no-repeat
+}
+.DIM_online {
+	background:url(images/webim/dim.gif) 1px 3px no-repeat
+}
+.DIM_away {
+	background:url(images/webim/dim.gif) -17px 3px no-repeat
+}
+.DIM_busy {
+	background:url(images/webim/dim.gif) -35px 3px no-repeat
+}
+.DIM_silent {
+	background:url(images/webim/dim.gif) -107px 3px no-repeat
+}
+.DIM_hidden {
+	background:url(images/webim/dim.gif) -53px 3px no-repeat
+}
+.DIM_offline {
+	background:url(images/webim/dim.gif) -90px 3px no-repeat
+}
+.DIM_qucikButton .quickPanelRunningAppState {
+	display:block
+}
+/*.DIM_qucikButton .DIM_callme {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -72px 0 no-repeat
+}
+.DIM_qucikButton .DIM_online {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 0 0 no-repeat
+}
+.DIM_qucikButton .DIM_away {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -18px 0 no-repeat
+}
+.DIM_qucikButton .DIM_busy {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -36px 0 no-repeat
+}
+.DIM_qucikButton .DIM_silent {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -108px 0 no-repeat
+}
+.DIM_qucikButton .DIM_hidden {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -54px 0 no-repeat
+}
+.DIM_qucikButton .DIM_offline {
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -90px 0 no-repeat
+}
+.appButton_appIcon .DIM_callme {
+	background:url(images/webim/dim_sprite.gif) -72px 0 no-repeat
+}
+.appButton_appIcon .DIM_online {
+	background:url(images/webim/dim_sprite.gif) 0 0 no-repeat
+}
+.appButton_appIcon .DIM_away {
+	background:url(images/webim/dim_sprite.gif) -18px 0 no-repeat
+}
+.appButton_appIcon .DIM_busy {
+	background:url(images/webim/dim_sprite.gif) -36px 0 no-repeat
+}
+.appButton_appIcon .DIM_silent {
+	background:url(images/webim/dim_sprite.gif) -108px 0 no-repeat
+}
+.appButton_appIcon .DIM_hidden {
+	background:url(images/webim/dim_sprite.gif) -54px 0 no-repeat
+}
+.appButton_appIcon .DIM_offline {
+	background:url(images/webim/dim_sprite.gif) -90px 0 no-repeat
+}*/
+.DIM_myStateDown {
+	float:left;
+	width:7px;
+	height:6px;
+	overflow:hidden;
+	background:url(images/dim/arrow_down.png) center no-repeat;
+	text-indent:-999em;
+	margin-top:5px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_DisableMyStateSelect {
+	width:16px;
+	cursor:default
+}
+.DIM_DisableMyStateSelect .DIM_myStateDown {
+	display:none
+}
+.DIM_statePanel {
+	display:none;
+	position:absolute;
+	z-index:10;
+	margin:0;
+	border:1px solid #666;
+	padding:0;
+	width:100px;
+	height:176px;
+	overflow:hidden;
+	background:white
+}
+.DIM_statePanel_warp {
+	display:none;
+	position:absolute;
+	right:57px;
+	top:20px;
+	z-index:10;
+	margin:0;
+	padding:0;
+	width:102px;
+	height:178px;
+	overflow:hidden
+}
+.DIM_statePanel_ul {
+	display:block;
+	position:static
+}
+.DIM_statePanel .DIM_statePanel_li {
+	display:block;
+	float:left;
+	margin:0;
+	padding:3px 0;
+	width:100px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	zoom:1;
+	cursor:default
+}
+.DIM_stateSelect_icon {
+	float:left;
+	margin:0 0 0 5px;
+	width:12px;
+	height:16px;
+	overflow:hidden
+}
+.DIM_stateSelect_text {
+	margin:0 0 0 22px
+}
+.DIM_SetSound {
+	border-top:solid 1px #c5c5c5
+}
+.statusBar_sound_mute .DIM_SetSound_icon {
+	background:url('images/webim/dim.png') no-repeat -162px 0px
+}
+.ie6 .statusBar_sound_mute .DIM_SetSound_icon {
+	background:url('images/webim/dim.gif') no-repeat -162px 0px
+}
+.statusBar_sound_open .DIM_SetSound_icon {
+	background:0
+}
+/*.DIM_YellowTips {
+	display:none;
+	height:20px;
+	overflow:hidden;
+	background:#ffc;
+	zoom:1
+}
+.DIM_YellowTips_CloseButton {
+	float:right;
+	margin:2px 2px 0 0;
+	width:12px;
+	height:16px;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -19px -186px no-repeat;
+	text-indent:-999em;
+	cursor:pointer
+}
+.DIM_YellowTips a.DIM_YellowTips_Link {
+	float:left;
+	margin:1px 0 0 2px;
+	padding:0;
+	width:173px;
+	height:18px;
+	overflow:hidden
+}*/
+.DIM_SearchBar {
+	display:block;
+	position:relative;
+	height:30px;
+	margin:0px 20px 5px ;
+	padding:0 13px 0 0;
+	overflow:visible;
+	-moz-border-radius:2px;
+	-khtml-border-radius:2px;
+	-webkit-border-radius:2px;
+	z-index:10;
+	background:url(images/dim/search_bg.png) center repeat-x transparent;
+}
+.DIM_FindBar {
+	display:block;
+	height:30px;
+	overflow:hidden
+}
+input.DIM_SearchBox {
+	border:0 solid #ccc;
+	padding:5px 0;
+	width:100%;
+	height:20px;
+	overflow:hidden;
+	margin:0;
+	line-height:20px;
+	color:#999;
+	font-size:12px;
+	background:none;
+}
+.ie6 input.DIM_SearchBox, .ie7 input.DIM_SearchBox {
+	margin-left:-13px;
+}
+input.DIM_SearchBoxHover {
+	border:0 solid #a2d0f1;
+	padding:5px 2px;
+	width:100%;
+	height:16px;
+	overflow:hidden;
+	line-height:16px;
+	color:#999;
+	font-size:12px
+}
+.ie6 input.DIM_SearchBoxHover, .ie7 input.DIM_SearchBoxHover {
+	float:left
+}
+input.DIM_SearchBoxFocus {
+	border:0 solid #a2d0f1;
+	padding:5px 2px;
+	width:100%;
+	height:16px;
+	overflow:hidden;
+	line-height:16px;
+	color:#333;
+	font-size:12px
+}
+.ie6 input.DIM_SearchBoxFocus, .ie7 input.DIM_SearchBoxFocus {
+	float:left
+}
+.DIM_Searchleft {
+	position:absolute;
+	display:block;
+	top:0px;
+	left:-13px;
+	width:13px;
+	height:29px;
+	overflow:hidden;
+	background:url(images/dim/search_bg_left.png) center no-repeat;
+	cursor:pointer;
+	z-index:11;
+	
+}
+.DIM_Searchright {
+	position:absolute;
+	display:block;
+	top:0px;
+	right:-13px;
+	width:13px;
+	height:29px;
+	overflow:hidden;
+	background:url(images/dim/search_bg_right.png) center no-repeat;
+	cursor:pointer;
+	z-index:11;
+}
+.DIM_SearchButton {
+	position:absolute;
+	display:block;
+	right:0px;
+	top:6px;
+	width:14px;
+	height:18px;
+	overflow:hidden;
+	background:url(images/dim/search_1.jpg) no-repeat;
+	cursor:pointer;
+	text-indent:-999em
+}
+.DIM_SearchButton:hover {
+	background:url(images/dim/search_2.jpg) no-repeat;
+}
+
+.ie8 .DIM_SearchButton {
+	height:22px
+}
+
+/*.DIM_SearchResultPanel_iframeWrap {
+	display:none;
+	position:absolute;
+	left:3px;
+	top:83px;
+	z-index:2;
+	height:auto;
+	width:182px;
+	overflow:hidden;
+	zoom:1
+}*/
+.DIM_SearchResultPanel-1 {
+	position:absolute;
+	display:none;
+	left:0px;
+	top:29px;
+	z-index:2;
+	height:auto;
+	width:100%;
+	overflow:hidden;
+	zoom:1;
+	z-index:12;
+	background:white;
+	border:1px solid #666
+}
+.DIM_SearchResultPanel {
+	position:relative;
+	display:none;
+	z-index:2;
+	height:auto;
+	width:182px;
+	overflow:hidden;
+	zoom:1;
+	background:white;
+	border:1px solid #666
+}
+/*.DIM_SearchResultPanel_iframe {
+	opacity:0;
+	filter:alpha(opacity = 0);
+	position:absolute;
+	z-index:-1;
+	border-style:none;
+	left:0;
+	top:0;
+	width:auto;
+	height:auto
+}*/
+.DIM_SearchResultItem {
+	display:block;
+	overflow:hidden;
+	padding:0 5px;
+	height:25px;
+	line-height:25px;
+	zoom:1;
+	cursor:pointer;
+	white-space:nowrap;
+	-o-text-overflow:ellipsis;
+	text-overflow:ellipsis
+}
+.DIM_SearchResultItemHover {
+	background:#3a92d2;
+	color:#fff
+}
+.DIM_SearchResultNo {
+	padding:5px 5px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	zoom:1;
+	color:#999
+}
+/*
+#DIM_Logining {
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-10px 0 0 -40px;
+	padding:2px 0 2px 20px;
+	width:60px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	background:url(images/webim/loading.gif) 1px 2px no-repeat;
+	color:#aaa;
+	cursor:default
+}
+.DIM_Logining {
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-10px 0 0 -40px;
+	padding:2px 0 2px 20px;
+	width:60px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	background:url(images/webim/loading.gif) 1px 2px no-repeat;
+	color:#aaa;
+	cursor:default
+}
+#DIM_Logining_feedback {
+	color:#aaa;
+	cursor:default;
+	height:16px;
+	left:50%;
+	line-height:16px;
+	margin:20px 0 0 -66px;
+	overflow:hidden;
+	padding:2px 0 2px 20px;
+	position:absolute;
+	top:50%;
+	width:90px
+}
+#DIM_ReLoginPanel {
+	display:none;
+	width:100%;
+	height:100px;
+	overflow:hidden;
+	color:#aaa
+}
+#DIM_ReLoginPanel_inner {
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-10px 0 0 -60px;
+	padding:2px 0 2px 20px;
+	width:100px;
+	height:16px;
+	line-height:16px;
+	overflow:hidden;
+	color:#aaa;
+	cursor:default
+}
+#DIM_ReLoginButton {
+	color:#226;
+	text-decoration:underline;
+	cursor:pointer
+}
+#DIM_LoginSuccess {
+	display:block;
+	height:0;
+	overflow:hidden;
+	padding:0;
+	margin:0;
+	zoom:1
+}*/
+.DIM_tab {
+	float:left;
+	margin:0;
+	width:100%;
+	height:40px;
+	overflow:hidden;
+}
+.DIM_tab li {
+	cursor:default;
+	background:url(images/dim/user_bg_1.png) repeat-x center;
+}
+.DIM_tab .current {
+	cursor:default;
+	background:url(images/dim/user_bg_2.png) repeat-x center;
+}
+.DIM_tabBuddyList {
+	text-align:center;
+	display:inline;
+	float:left;
+	width:33%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_tabBuddyList_icon {
+	margin:0 auto;
+	width:16px;
+	height:40px;
+	background:url('images/dim/user.png') no-repeat center
+}
+
+.DIM_tabmenu_icon {
+	background:url('images/dim/user_bg_xian.png') no-repeat center;
+	height:100%;
+	width:2px;
+	float:right;
+	cursor:pointer;
+	position:absolute;
+	top:0;
+	right:0
+}
+/*.DIM_tabmenu_tip {
+	float:right;
+	cursor:pointer;
+	position:absolute;
+	top:5px;
+	right:10px;
+	padding:2px;
+	display:inline-block;
+	text-align:center;
+	color:#FFF;
+	background:#F90;
+	-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;
+}
+*/
+.DIM_tabGroupList {
+	text-align:center;
+	display:inline;
+	float:left;
+	width:33%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_tabGroupList_icon {
+	margin:0 auto;
+	width:16px;
+	height:40px;
+	background:url('images/dim/users.png') no-repeat center;
+}
+
+.DIM_tabRecentList {
+	text-align:center;
+	float:left;
+	display:inline;
+	width:34%;
+	height:100%;
+	overflow:hidden;
+	cursor:pointer;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.documentMode_8 .DIM_tabRecentList {
+	width:34%
+}
+.DIM_tabRecentList_icon {
+	margin:0 auto;
+	width:16px;
+	height:40px;
+	background:url('images/dim/clock.png') no-repeat center;
+}
+
+#DIM_ListContainer {
+	position:relative;
+	float:left;
+	width:100%;
+	overflow:hidden;
+	height:100%
+}
+.DIM_ListBottom {
+	position:relative;
+	margin:0px 10px;
+	height:35px;
+	line-height:35px;
+	font-size:16px;
+	font-weight:bold;
+	overflow:hidden;
+	z-index:1;
+	color:#C4C4C6;
+	text-shadow:0px -1px 2px #000;
+}
+.DIM_ListBottom span{
+	color:#C4C4C6;
+	text-shadow:0px -1px 2px #000;
+}
+/*
+.DIM_mainPanel .accept {
+	display:inline;
+	float:left;
+	margin:6px 4px 4px;
+	text-indent:4px;
+	height:15px;
+	line-height:15px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_mainPanel .mask {
+	display:inline;
+	float:left;
+	margin:6px 4px 4px;
+	text-indent:4px;
+	height:15px;
+	line-height:15px;
+	overflow:hidden;
+	cursor:pointer
+}
+.DIM_mainPanel .accept_div, .DIM_mainPanel .mask_div {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden
+}
+.DIM_mainPanel .accept_div {
+	background:url('images/webim/dim.png') no-repeat -42px -82px
+}
+.DIM_mainPanel .mask_div {
+	background:url('images/webim/dim.png') no-repeat -62px -82px
+}
+.ie6 .accept_div, .ie7 .accept_div {
+	background:url('images/webim/dim.gif') no-repeat -42px -82px
+}
+.ie6 .mask_div, .ie7 .mask_div {
+	background:url('images/webim/dim.gif') no-repeat -62px -82px
+}
+.ie7 .DIM_mainPanel .accept, .ie7 .DIM_mainPanel .mask {
+	line-height:18px
+}
+*/
+.searchBuddy {
+	display:block;
+	float:right;
+	margin:6px 7px 10px;
+	text-indent:999px;
+	height:20px;
+	width:20px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	background:url(images/dim/user_add.png) no-repeat center;
+}
+.bigBuddy {
+	display:block;
+	float:right;
+	margin:6px 7px 10px;
+	text-indent:999px;
+	height:20px;
+	width:20px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	background:url(images/dim/user_big_1.png) no-repeat center;
+}
+.bigBuddy:hover,.bigBuddy.hover{
+	background:url(images/dim/user_big.png) no-repeat center;
+}
+.smallBuddy {
+	display:block;
+	float:right;
+	margin:6px 7px 10px;
+	text-indent:999px;
+	height:20px;
+	width:20px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	background:url(images/dim/user_small_1.png) no-repeat center;
+}
+.smallBuddy:hover,.smallBuddy.hover{
+	background:url(images/dim/user_small.png) no-repeat center;
+}
+.buddy_manage_icon {
+	height:16px;
+	line-height:16px;
+	float:left;
+	display:inline;
+	margin:5px;
+	text-indent:4px;
+	color:#333;
+	cursor:pointer
+}
+.buddy_manage_icon div {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	zoom:1;
+	background:url('images/webim/dim.png') no-repeat -82px -82px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.message_manage_icon {
+	height:16px;
+	line-height:16px;
+	float:left;
+	display:inline;
+	margin:5px;
+	text-indent:4px;
+	color:#333;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.message_manage_icon_div {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	zoom:1;
+	background:url('images/webim/dim.png') no-repeat -162px -82px
+}
+.ie6 .buddy_manage_icon div, .ie7 .buddy_manage_icon div, .ie6 .searchBuddy div, .ie7 .searchBuddy div, .ie6 .message_manage_icon_div, .ie7 .message_manage_icon_div {
+	background-image:url('images/webim/dim.gif')
+}
+.ie7 .searchBuddy, .ie7 .buddy_manage_icon {
+	line-height:18px
+}
+/*
+.DIM_mainPanel .createGroup {
+	color:#FFF;
+	display:inline;
+	float:left;
+	margin:6px 4px 4px;
+	text-indent:4px;
+	height:15px;
+	line-height:15px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_mainPanel .createGroup_div, .DIM_mainPanel .searchGroup_div {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden
+}
+.DIM_mainPanel .createGroup_div {
+	background:url('images/webim/dim.png') no-repeat -102px -82px
+}
+.DIM_mainPanel .searchGroup_div {
+	background:url('images/webim/dim.png') no-repeat -2px -82px
+}
+.DIM_mainPanel .searchGroup {
+	color:#333;
+	display:inline;
+	float:left;
+	margin:6px 4px 4px;
+	text-indent:4px;
+	height:15px;
+	line-height:15px;
+	overflow:hidden;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .createGroup_div, .ie7 .createGroup_div {
+	background:url('images/webim/dim.gif') no-repeat -102px -82px
+}
+.ie6 .searchGroup_div, .ie7 .searchGroup_div {
+	background:url('images/webim/dim.gif') no-repeat -2px -82px
+}
+.ie7 .createGroup, .ie7 .searchGroup {
+	line-height:20px
+}
+*/
+.ie6 #DIM_ListContainer {
+	height:100%;
+	overflow:visible;
+	zoom:1
+}
+.DIM_buddyListPanel {
+	width:100%;
+	overflow-x:hidden;
+	overflow-y:auto;
+	background:none
+}
+.DIM_buddyList {
+	position:relative;
+	display:block;
+	overflow-x:hidden;
+	overflow-y:auto;
+	width:100%;
+	height:auto
+}
+.ie7 .DIM_buddyList {
+	overflow-y:hidden;
+	height:100%
+}
+.ie7 .DIM_buddyList_noneFlash {
+	overflow-y:auto
+}
+.DIM_listClassHeadExpand, .DIM_onlineClassHeadExpand {
+	display:block;
+	border:0;
+	height:30px;
+	overflow:hidden;
+	line-height:30px;
+	cursor:pointer;
+	color:#FFF;
+	text-shadow: 1px 1px 1px #000;
+	margin:0 3px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_listClassHeadCollapsed, .DIM_onlineClassHeadCollapsed {
+	display:block;
+	border:0;
+	height:30px;
+	overflow:hidden;
+	line-height:30px;
+	cursor:pointer;
+	color:#FFF;
+	text-shadow: 1px 1px 1px #000;
+	margin:0 3px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_listClassHeadExpand.hover, .DIM_onlineClassHeadExpand.hover,.DIM_listClassHeadCollapsed.hover, .DIM_onlineClassHeadCollapsed.hover {
+	color:yellow;
+}
+.DIM_listClassHeadIcon {
+	float:left;
+	margin:12px 5px;
+	width:7px;
+	height:7px;
+	text-indent:-999em
+}
+.DIM_listClassHeadExpand .DIM_listClassHeadIcon {
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/dim/images/dim/arrow_down.png', sizingMethod='scale');
+	background-image:url(images/dim/arrow_down.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.DIM_listClassHeadCollapsed .DIM_listClassHeadIcon {
+	background:url(images/dim/arrow_right.png) center center no-repeat;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/dim/images/dim/arrow_right.png', sizingMethod='scale');
+	background-image:url(images/dim/arrow_right.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+.DIM_ClassList_RightContainer {
+	display:block;
+	overflow:hidden;
+	padding-left:2px
+}
+.DIM_flickerHideInBuddyList .DIM_ClassList_RightContainer {
+	display:none
+}
+.DIM_Class_className {
+	width:auto;
+	float:left
+}
+.DIM_listClassBody {
+	height:0;
+	overflow:hidden
+}
+.ie6 .DIM_listClassBody {
+	background:0
+}
+.DIM_callmeBuddy, .DIM_onlineBuddy, .DIM_awayBuddy, .DIM_busyBuddy, .DIM_silentBuddy, .DIM_offlineBuddy {
+	display:none
+}
+.DIM_BuddyList_Buddy {
+	display:block;
+	padding:4px 0 4px 8px;
+	height:20px;
+	overflow:hidden;
+	background:transparent;
+	cursor:pointer;
+	color:#FFF;
+	text-decoration:none;
+	position:relative;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_BuddyList_Buddy.hover{
+	background:url(images/dim/content_bg.png);
+}
+
+.DIM_BuddyList_AvatarContainer {
+	float:left;
+	width:22px;
+	height:22px;
+	overflow:hidden
+}
+.DIM_jumpUpInBuddyList {
+	margin:-2px 0 0 0
+}
+img.DIM_BuddyList_Avatar {
+	position:static;
+	display:block;
+	float:left;
+	border:0 solid #e1e1e1;
+	padding:1px;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	background:white;
+	zoom:1
+}
+img.DIM_GroupList_Avatar {
+	position:static;
+	display:block;
+	float:left;
+	border:0 solid #e1e1e1;
+	padding:1px;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	background:white;
+	zoom:1
+}
+.DIM_BuddyList_State {
+	display:inline;
+	float:left;
+	margin:11px 0 0 -11px;
+	width:10px;
+	height:10px;
+	overflow:hidden;
+	text-indent:-999em;
+	zoom:1
+}
+/*
+.DIM_BuddyList_ClientType, .DIM_RecentList_ClientType {
+	float:left;
+	width:16px;
+	height:22px;
+	overflow:hidden
+}
+.DIM_BuddyList_ClientType_WebQQ {
+	float:left;
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -4px -143px
+}
+.ie6 .DIM_BuddyList_ClientType_WebQQ, .ie7 .DIM_BuddyList_ClientType_WebQQ {
+	background:url('images/webim/dim.gif') no-repeat -4px -143px
+}
+.DIM_BuddyList_ClientType_QQforPad {
+	float:left;
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:16px;
+	background:url('images/webim/dim.png') no-repeat -80px -143px
+}
+.ie6 .DIM_BuddyList_ClientType_QQforPad, .ie7 .DIM_BuddyList_ClientType_QQforPad {
+	background:url('images/webim/dim.gif') no-repeat -80px -143px
+}
+.DIM_BuddyList_ClientType_PhoneQQ, .DIM_BuddyList_ClientType_Phone {
+	float:left;
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -24px -143px
+}
+.ie6 .DIM_BuddyList_ClientType_PhoneQQ, .ie7 .DIM_BuddyList_ClientType_PhoneQQ, .ie6 .DIM_BuddyList_ClientType_Phone, .ie7 .DIM_BuddyList_ClientType_Phone {
+	background:url('images/webim/dim.gif') no-repeat -24px -143px
+}
+.DIM_BuddyList_ClientType_PC {
+	float:left;
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px
+}
+.DIM_Group_ClientType_WebQQ {
+	float:left;
+	height:16px;
+	margin:5px 3px 0 0;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -4px -143px
+}
+.ie6 .DIM_Group_ClientType_WebQQ, .ie7 .DIM_Group_ClientType_WebQQ {
+	background:url('images/webim/dim.gif') no-repeat -4px -143px
+}
+.DIM_Group_ClientType_Phone {
+	float:left;
+	height:18px;
+	margin:3px 2px 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -24px -143px
+}
+.ie6 .DIM_Group_ClientType_Phone, .ie7 .DIM_Group_ClientType_Phone {
+	background:url('images/webim/dim.gif') no-repeat -24px -143px
+}
+.chatBox_clientType_WebQQ {
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -2px -142px
+}
+.ie6 .chatBox_clientType_WebQQ, .ie7 .chatBox_clientType_WebQQ {
+	background:url('images/webim/dim.gif') no-repeat -2px -142px
+}
+.chatBox_clientType_PhoneQQ, .chatBox_clientType_Phone {
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -22px -142px
+}
+.ie6 .chatBox_clientType_PhoneQQ, .ie7 .chatBox_clientType_PhoneQQ, .ie6 .chatBox_clientType_Phone, .ie7 .chatBox_clientType_PhoneQQ {
+	background:url('images/webim/dim.gif') no-repeat -22px -142px
+}
+.chatBox_clientType_QQforPad {
+	height:16px;
+	margin:5px 0 0 0;
+	overflow:hidden;
+	width:12px;
+	background:url('images/webim/dim.png') no-repeat -80px -144px
+}
+.ie6 .chatBox_clientType_QQforPad, .ie7 .chatBox_clientType_QQforPad {
+	background:url('images/webim/dim.gif') no-repeat -80px -144px
+}
+.chatBox_clientType_PC {
+	display:none
+}*/
+.DIM_callmeBuddy .DIM_BuddyList_State {
+	background:yellow url(images/webim/dim.gif) -72px 0 no-repeat
+}
+.DIM_onlineBuddy .DIM_BuddyList_State {
+	width:0;
+	height:0;
+	background:url(images/webim/dim.gif) 0 0 no-repeat
+}
+.DIM_awayBuddy .DIM_BuddyList_State {
+	background:yellow url(images/webim/dim.gif) -18px 0 no-repeat
+}
+.DIM_busyBuddy .DIM_BuddyList_State {
+	background:yellow url(images/webim/dim.gif) -36px 0 no-repeat
+}
+.DIM_silentBuddy .DIM_BuddyList_State {
+	background:yellow url(images/webim/dim.gif) -108px 0 no-repeat
+}
+.DIM_offlineBuddy .DIM_BuddyList_Avatar ,.DIM_hiddenBuddy .DIM_BuddyList_Avatar{
+	filter:Gray;
+	opacity:.5
+}
+.DIM_offlineBuddy .DIM_BuddyList_State,.DIM_hiddenBuddy .DIM_BuddyList_State {
+	width:0;
+	height:0;
+	background:url(images/webim/dim.gif) -90px 0 no-repeat
+}
+.DIM_GroupList_State {
+	display:inline;
+	float:left;
+	margin:9px 0 0 -11px;
+	width:0;
+	height:0;
+	overflow:hidden;
+	text-indent:-999em;
+	zoom:1;
+	background:url(images/webim/dim.gif) no-repeat scroll -107px 3px
+}
+.DIM_GroupMask_State {
+	width:11px;
+	height:15px
+}
+.DIM_BuddyList_RightContainer {
+	margin-right:10px;
+	overflow:hidden;
+	zoom:1
+}
+.ie6 .DIM_BuddyList_RightContainer {
+	margin-right:auto;
+	width:140px
+}
+.ie6 .DIM_recentListPanel .DIM_BuddyList_RightContainer {
+	width:130px
+}
+.DIM_BuddyList_Nick, .DIM_BuddyList_Sign, .DIM_GroupList_Bulletin {
+	margin:0 0 0 5px;
+	padding:2px 0;
+	height:16px;
+	overflow:hidden;
+	width:1000px;
+	line-height:16px;
+	text-shadow:1px 1px 1px #000;
+	text-decoration:none
+}
+.DIM_BuddyList_Sign, .DIM_GroupList_Bulletin {
+	display:none;
+	color:#FFF
+}
+.DIM_Vip_Nick {
+	color:red
+}
+/*
+.DIM_groupListPanel {
+	display:none;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	overflow-x:hidden
+}
+.DIM_groupTab {
+	height:28px;
+	position:absolute;
+	top:0;
+	width:100%;
+	margin:0;
+	padding:0;
+	list-style:none;
+	background-color:#e5f2f9;
+	border-top:solid 1px #fff;
+	border-bottom:solid 1px #c2e0f0
+}
+.DIM_groupTab li {
+	width:55px;
+	float:left;
+	list-style:none;
+	line-height:25px;
+	vertical-align:middle;
+	text-align:center;
+	cursor:pointer
+}
+.DIM_groupTab .seled {
+	background:url('images/webim/dim.gif') no-repeat -85px -211px;
+	color:#fff
+}
+.ie #DIM_groupTabDiscu {
+	line-height:28px
+}
+.DIM_groupBox {
+	overflow-y:auto;
+	overflow-x:hidden;
+	position:relative;
+	width:100%
+}
+.DIM_groupListOuter {
+	overflow:hidden;
+	position:relative;
+	
+}
+.DIM_groupListInner {
+	width:100%
+}
+.ie6 .DIM_groupListInner {
+	background:0
+}
+.DIM_Container .DIM_GroupList_Group {
+	display:block;
+	padding:4px 0 4px 10px;
+	height:20px;
+	overflow:hidden;
+	background:transparent;
+	cursor:pointer;
+	color:#FFF;
+	text-decoration:none
+}
+.DIM_GroupList_Group {
+	display:block;
+	padding:4px 0 4px 10px;
+	height:20px;
+	overflow:hidden;
+	background:transparent;
+	cursor:pointer;
+	color:#FFF;
+	text-decoration:none;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_GroupList_Group.hover{
+	background:url(images/dim/content_bg.png);
+}
+.DIM_GroupList_AvatarContainer {
+	float:left;
+	width:22px;
+	height:22px;
+	overflow:hidden
+}
+.DIM_jumpUpInGroupList .DIM_GroupList_AvatarContainer {
+	margin:-2px 0 0 0
+}
+.DIM_GroupList_RightContainer {
+	margin-right:10px;
+	overflow:hidden;
+	zoom:1
+}
+.ie6 .DIM_GroupList_RightContainer {
+	margin-right:auto;
+	width:170px
+}
+.ie6 .DIM_recentListPanel .DIM_GroupList_RightContainer {
+	width:130px
+}
+.DIM_GroupList_Name {
+	margin:0 0 0 5px;
+	padding:2px 0;
+	height:16px;
+	overflow:hidden;
+	width:1000px;
+	line-height:16px;
+	text-decoration:none
+}*/
+.DIM_recentListPanel {
+	display:none;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	overflow-x:hidden;
+}
+.DIM_friendrequestListPanel  {
+	display:none;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	overflow-x:hidden;
+}
+.DIM_recentList {
+	overflow:visible
+}
+.DIM_recentList .DIM_GroupList_Group {
+	display:block;
+	padding:4px 0 4px 24px;
+	height:20px;
+	overflow:hidden;
+	background:transparent;
+	cursor:pointer;
+	color:#FFF;
+	text-decoration:none
+}
+.DIM_List_BigHead .DIM_BuddyList_ClientType, .DIM_List_BigHead .DIM_RecentList_ClientType {
+	margin:10px 0 0
+}
+.DIM_List_BigHead .DIM_BuddyList_Buddy, .DIM_List_BigHead .DIM_GroupList_Group {
+	height:40px;
+	padding-top:6px;
+	padding-bottom:6px
+}
+.DIM_List_BigHead .DIM_BuddyList_State, .DIM_List_BigHead .DIM_GroupList_State {
+	margin:30px 0 0 -11px
+}
+.DIM_List_BigHead .DIM_BuddyList_AvatarContainer, .DIM_List_BigHead .DIM_GroupList_AvatarContainer {
+	height:42px;
+	width:42px
+}
+.DIM_List_BigHead img.DIM_BuddyList_Avatar, .DIM_List_BigHead img.DIM_GroupList_Avatar, .DIM_List_BigHead .DIM_discuList_Avatar {
+	width:40px;
+	height:40px
+}
+.DIM_List_BigHead .DIM_discuList_Avatar {
+	background-position:5px 5px
+}
+.DIM_List_BigHead .DIM_BuddyList_Sign, .DIM_List_BigHead .DIM_GroupList_Bulletin {
+	display:block
+}
+.DIM_taskBar {
+	float:left;
+	margin:1px 0 0 0;
+	_margin:0;
+	height:29px
+}
+.DIM_chatBuddyList {
+	float:left;
+	margin:0;
+	_height:0;
+	zoom:1
+}
+
+.DIM_line {
+	float:right;
+	margin:1px 0 0 0;
+	width:1px;
+	height:30px;
+	overflow:hidden;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 0 -239px no-repeat;
+	zoom:1;
+	text-indent:-999em
+}
+.DIM_chatbox {
+	display:none;
+	position:absolute;
+	right:220px;
+	bottom:40px;
+	border:1px solid #666;
+	width:290px;
+	height:270px;
+	overflow:hidden;
+	background:#e1e1e1
+}
+.DIM_chatboxTitle {
+	border-top:1px solid white;
+	padding:2px 3px;
+	height:35px;
+	overflow:hidden
+}
+.DIM_chatboxControler {
+	float:right;
+	width:40px;
+	height:16px;
+	overflow:hidden
+}
+.DIM_chatboxCloseButton {
+	float:right;
+	width:15px;
+	height:15px;
+	background:blue url(images/webim/dim_sprite.gif?t=20111011001) -18px -60px no-repeat;
+	cursor:pointer
+}
+.DIM_chatboxMinButton {
+	float:right;
+	margin:0 3px 0 0;
+	width:15px;
+	height:15px;
+	background:blue url(images/webim/dim_sprite.gif?t=20111011001) 0 -60px no-repeat;
+	cursor:pointer
+}
+.avatarInChatbox {
+	display:block;
+	position:static;
+	float:left;
+	border:1px solid #cacaca;
+	padding:1px;
+	width:30px;
+	height:30px;
+	overflow:hidden;
+	background:white
+}
+.stateInChatbox {
+	display:block;
+	float:left;
+	margin:22px 0 0 -12px;
+	width:10px;
+	height:10px;
+	overflow:hidden;
+	text-indent:-999em
+}
+.callmeBuddyInChatbox .stateInChatbox {
+	background:yellow url(images/webim/dim.gif) -72px 0 no-repeat
+}
+.onlineBuddyInChatbox .stateInChatbox {
+	display:none
+}
+.awayBuddyInChatbox .stateInChatbox {
+	background:yellow url(images/webim/dim.gif) -18px 0 no-repeat
+}
+.busyBuddyInChatbox .stateInChatbox {
+	background:yellow url(images/webim/dim.gif) -36px 0 no-repeat
+}
+.silentBuddyInChatbox .stateInChatbox {
+	background:yellow url(images/webim/dim.gif) -108px 0 no-repeat
+}
+.offlineBuddyInChatbox .avatarInChatbox {
+filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+	opacity:.5
+}
+.offlineBuddyInChatbox .stateInChatbox {
+	display:none
+}
+.chatBox_buddyAvatarArea {
+	float:left;
+	width:34px;
+	height:34px
+}
+.chatBox_groupAvatarArea {
+	float:left;
+	width:34px;
+	height:34px
+}
+.window_current .chatBox_groupAvatarArea {
+	box-shadow:0 0 3px white;
+	-moz-box-shadow:0 0 3px white;
+	-webkit-box-shadow:0 0 3px white
+}
+.DIM_chatboxNameLine {
+	margin:0 0 0 38px;
+	height:16px;
+	overflow:hidden;
+	line-height:16px
+}
+.DIM_chatboxName {
+	display:block;
+	float:left;
+	height:16px;
+	line-height:16px;
+	color:#333;
+	cursor:default
+}
+.DIM_chatboxName .mainName {
+	font-weight:bold;
+	color:#222
+}
+.DIM_chatOutline {
+	height:138px;
+	overflow:hidden
+}
+.chatContentInChatbox {
+	display:block;
+	margin:0 auto;
+	border-top:1px solid #a3a3a3;
+	border-bottom:1px solid #cacaca;
+	width:100%;
+	height:138px;
+	overflow:auto;
+	background:white
+}
+.DIM_yellowTips {
+	padding-left:6px;
+	color:#000;
+	border:1px solid #ccc;
+	border-top:0;
+	background:#ffc;
+	height:24px;
+	line-height:24px
+}
+.chatBox_myMsg {
+	display:block;
+	margin:0;
+	padding:5px
+}
+.chatBox_myMsg .msgHead {
+	color:#008000;
+	overflow:hidden;
+	zoom:1
+}
+.chatBox_myMsg .msgBody {
+	margin:0 0 0 13px;
+	color:#000;
+	word-wrap:break-word
+}
+.chatBox_buddyMsg {
+	display:block;
+	margin:0;
+	padding:5px
+}
+.chatBox_buddyMsg .msgHead {
+	color:#00f
+}
+.chatBox_buddyMsg .msgBody {
+	margin:0 0 0 13px;
+	color:#000;
+	word-wrap:break-word
+}
+.chatBox_buddyMsg .msgBody .chatLink, .chatBox_myMsg .msgBody .chatLink {
+	font:inherit
+}
+.optionInChatbox {
+	margin:0 auto;
+	padding:1px 0;
+	width:282px;
+	height:20px;
+	overflow:hidden;
+	zoom:1
+}
+.chatLogOptionPanel {
+	display:none;
+	position:absolute;
+	border:1px solid #666;
+	width:100px;
+	height:48px;
+	overflow:hidden;
+	background:white
+}
+.chatLogOptionPanelEx {
+	height:72px
+}
+.exportCurrentChatLogIframe {
+	display:none
+}
+.sendOptionPanel {
+	display:none;
+	position:absolute;
+	border:1px solid #666;
+	width:150px;
+	overflow:hidden;
+	background:white
+}
+.groupMaskPanel {
+	display:none;
+	position:absolute;
+	border:1px solid #666;
+	width:160px;
+	overflow:hidden;
+	background:white
+}
+.settingPanel {
+	display:none;
+	position:absolute;
+	border:1px solid #666;
+	width:120px;
+	overflow:hidden;
+	background:white
+}
+.settingPanel a {
+	display:block;
+	color:black;
+	height:24px;
+	line-height:24px;
+	overflow:hidden;
+	padding:0 10px 0 5px
+}
+.settingPanel a:hover {
+	display:block;
+	color:black;
+	height:24px;
+	line-height:24px;
+	overflow:hidden;
+	padding:0 10px 0 5px;
+	background:#d6e9f8
+}
+a.simpleMenuItem {
+	display:block;
+	padding:0 10px 0 5px;
+	height:24px;
+	overflow:hidden;
+	color:black;
+	line-height:24px;
+	text-decoration:none;
+}
+a.simpleMenuItem:hover {
+	background:#d6e9f8;
+	cursor:default
+}
+.selectedIcon {
+	float:left;
+	margin:4px 4px 4px 0;
+	width:16px;
+	height:16px;
+	overflow:hidden
+}
+.simpleMenuItemSelected .selectedIcon {
+	background:url(images/webim/dim.gif) 5px -33px no-repeat
+}
+.sendFilePanel {
+	display:none;
+	position:absolute;
+	border:1px solid #666;
+	width:100px;
+	height:49px;
+	overflow:hidden;
+	background:white;
+	background:url('images/webim/bg_sendfile.gif?t=20111011001') no-repeat 0 0
+}
+/*
+.sendFilePanelEx {
+	width:1px;
+	height:1px;
+	border:0
+}
+.panel_sendOffFileButton, .panel_sendFileButton {
+	float:left;
+	width:100%;
+	height:25px;
+	cursor:pointer;
+	overflow:hidden;
+	outline:0
+}
+.sendFilePanel a.panel_sendOffFileButton:hover {
+	background:url('images/webim/bg_sendfile.gif?t=20111011001') no-repeat 0 -60px
+}
+.sendFilePanel a.panel_sendFileButton:hover {
+	background:url('images/webim/bg_sendfile.gif?t=20111011001') no-repeat 0 -144px
+}
+*/
+.panelSendForm {
+	margin:0;
+	padding:0;
+	height:25px;
+	overflow:hidden;
+	width:100px
+}
+.panelSendForm .f {
+	width:440px;
+	font-size:30px;
+	margin-left:-340px;
+	height:25px;
+	overflow:hidden;
+	cursor:pointer;
+	opacity:0;
+	filter:alpha(opacity=0)
+}
+.chatBox_titleBar {
+	height:37px;
+	overflow:hidden;
+	cursor:default
+}
+.chatBox_groupAvatar {
+	display:block;
+	position:static;
+	float:left;
+	border:1px solid #999;
+	padding:1px;
+	width:30px;
+	height:30px;
+	overflow:hidden;
+	background:white
+}
+.chatBox_groupType {
+	display:block;
+	float:left;
+	margin:22px 0 0 -12px;
+	width:10px;
+	height:10px;
+	overflow:hidden;
+	text-indent:-999em
+}
+.chatBox_nameArea {
+	margin-left:38px;
+	height:16px;
+	overflow:hidden;
+	line-height:16px
+}
+.chatBox_allName {
+	display:block;
+	float:left;
+	height:16px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3);
+	line-height:16px
+}
+.ie6 .chatBox_allName .chatBox_mainName {
+	word-break:break-all
+}
+.chatBox_moreInfoArea {
+	margin:0 0 0 38px;
+	height:18px;
+	overflow:hidden;
+	line-height:18px
+}
+/*a.DIM_chatboxQzoneIcon {
+	display:block;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	background:url('images/webim/portal_all_png.png?t=20111011001') no-repeat -62px -62px;
+	text-indent:-999em;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 a.DIM_chatboxQzoneIcon, .ie7 a.DIM_chatboxQzoneIcon {
+	background:url('images/webim/portal_all_gif.gif?t=20111011001') no-repeat -62px -62px
+}
+a.DIM_chatboxGspaceIcon {
+	display:inline;
+	float:left;
+	margin:-2px 0 0 -2px;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	text-indent:-999em
+}
+.DIM_gspaceLevel {
+	background:url('images/webim/dim.png') no-repeat 0 -100px
+}
+.ie6 a.DIM_gspaceLevel, .ie7 a.DIM_gspaceLevel {
+	background:url('images/webim/dim.gif') no-repeat 0 -100px
+}
+.DIM_gspaceLevel_1 {
+	background:url('images/webim/dim.png') no-repeat -20px -100px
+}
+.ie6 a.DIM_gspaceLevel_1, .ie7 a.DIM_gspaceLevel_1 {
+	background:url('images/webim/dim.gif') no-repeat -20px -100px
+}
+.DIM_gspaceLevel_2 {
+	background:url('images/webim/dim.png') no-repeat -40px -100px
+}
+.ie6 a.DIM_gspaceLevel_2, .ie7 a.DIM_gspaceLevel_2 {
+	background:url('images/webim/dim.gif') no-repeat -40px -100px
+}
+.DIM_gspaceLevel_3 {
+	background:url('images/webim/dim.png') no-repeat -60px -100px
+}
+.ie6 a.DIM_gspaceLevel_3, .ie7 a.DIM_gspaceLevel_3 {
+	background:url('images/webim/dim.gif') no-repeat -60px -100px
+}
+.DIM_gspaceLevel_4 {
+	background:url('images/webim/dim.png') no-repeat -80px -100px
+}
+.ie6 a.DIM_gspaceLevel_4, .ie7 a.DIM_gspaceLevel_4 {
+	background:url('images/webim/dim.gif') no-repeat -80px -100px
+}
+.DIM_gspaceLevel_5 {
+	background:url('images/webim/dim.png') no-repeat -100px -100px
+}
+.ie6 a.DIM_gspaceLevel_5, .ie7 a.DIM_gspaceLevel_5 {
+	background:url('images/webim/dim.gif') no-repeat -100px -100px
+}
+.DIM_gspaceLevel_6 {
+	background:url('images/webim/dim.png') no-repeat -120px -100px
+}
+.ie6 a.DIM_gspaceLevel_6, .ie7 a.DIM_gspaceLevel_6 {
+	background:url('images/webim/dim.gif') no-repeat -120px -100px
+}
+.DIM_gspaceLevel_7 {
+	background:url('images/webim/dim.png') no-repeat -140px -100px
+}
+.ie6 a.DIM_gspaceLevel_7, .ie7 a.DIM_gspaceLevel_7 {
+	background:url('images/webim/dim.gif') no-repeat -140px -100px
+}
+.DIM_gspaceLevel_8 {
+	background:url('images/webim/dim.png') no-repeat -160px -100px
+}
+.ie6 a.DIM_gspaceLevel_8, .ie7 a.DIM_gspaceLevel_8 {
+	background:url('images/webim/dim.gif') no-repeat -160px -100px
+}
+.DIM_gspaceLevel_9 {
+	background:url('images/webim/dim.png') no-repeat -180px -100px
+}
+.ie6 a.DIM_gspaceLevel_9, .ie7 a.DIM_gspaceLevel_9 {
+	background:url('images/webim/dim.gif') no-repeat -180px -100px
+}
+
+.chatBox_announcementArea {
+	display:block;
+	margin:0 0 0 18px;
+	height:16px;
+	overflow:hidden;
+	line-height:16px;
+	font-weight:normal
+}
+.chatBox_announcementArea span {
+	cursor:text
+}
+.ie6 .chatBox_announcementArea span {
+	word-break:break-all
+}
+.chatBox_announcementArea a {
+	color:#000
+}
+*/
+.chatBox_sideBar {
+	position:absolute;
+	right:0;
+	top:0;
+	bottom:0;
+	width:190px;
+	overflow:hidden;
+}
+.chatBox_sideBar2 {
+	position:absolute;
+	right:0;
+	top:0;
+	bottom:0;
+	height:100%;
+	width:20px;
+	overflow:hidden;
+	background:#e3f1f7;
+	border-bottom-right-radius:5px 5px
+}
+.chatBox_sideBar_trigger {
+	height:90px;
+	width:22px;
+	color:#fff;
+	line-height:1;
+	margin-top:-60px;
+	text-align:center;
+	cursor:pointer;
+	position:absolute;
+	top:50%
+}
+.chatBox_sideBar_trigger .online_member_count {
+	color:#ff6c00;
+	display:block;
+	padding-top:3px;
+	font-family:Helvetica
+}
+.chatBox_sideBar2_expand .chatBox_groupSpace2 {
+	display:none
+}
+.chatBox_sideBar_trigger .unexpand {
+	display:none;
+	height:50px;
+	width:9px;
+	background:url(images/webim/sprite.png) 0 0 no-repeat
+}
+.ie6 .chatBox_sideBar_trigger .unexpand {
+	background:url(images/webim/sprite.gif) 0 0 no-repeat
+}
+.chatBox_sideBar_trigger .expand {
+	display:block;
+	color:#1c4b64;
+	height:68px;
+	padding-top:22px;
+	width:22px;
+	background:url(images/webim/sprite.png) 0 -260px no-repeat
+}
+.ie6 .chatBox_sideBar_trigger .expand {
+	background-image:url(images/webim/sprite.gif)
+}
+.chatBox_sideBar2_expand .chatBox_sideBar_trigger {
+	height:50px;
+	width:9px;
+	margin-top:-25px
+}
+.chatBox_sideBar2_expand .chatBox_sideBar_trigger .unexpand {
+	display:block
+}
+.chatBox_sideBar2_expand .chatBox_sideBar_trigger .expand {
+	display:none
+}
+/*
+.chatBox_groupSpace2 {
+	padding-left:3px
+}
+.chatBox_groupSpace2 a {
+	display:block;
+	height:16px;
+	width:16px;
+	margin-bottom:6px;
+	background:url("images/webim/dim.png") no-repeat scroll 0 0 transparent
+}
+.ie6 .chatBox_groupSpace2 a, .ie7 .chatBox_groupSpace2 a {
+	background-image:url("images/webim/dim.gif")
+}
+.chatBox_groupSpace_titleBar {
+	padding:0 0 0 5px;
+	height:20px;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 0 -527px no-repeat;
+	color:#666
+}
+
+.chatBox_settingButton {
+	float:left;
+	margin:2px;
+	width:16px;
+	height:16px;
+	background:url('images/webim/dim.png') no-repeat -2px -122px;
+	cursor:pointer
+}
+.ie6 .chatBox_settingButton, .ie7 .chatBox_settingButton {
+	background:url('images/webim/dim.gif') no-repeat -2px -122px
+}
+.chatBox_groupSpace_mainArea {
+	height:70px;
+	background:#e9f6fc
+}
+.chatBox_groupSpace_mainArea .chatBox_groupSpace_mainArea_a {
+	display:block;
+	padding:3px 0 3px 5px;
+	width:100%;
+	height:17px;
+	overflow:hidden
+}
+.chatBox_groupDetail, .chatBox_groupCard {
+	float:left;
+	margin:1px 2px 0;
+	width:16px;
+	height:16px;
+	overflow:hidden
+}
+.chatBox_groupSpace_groupShare_div {
+	background:url('images/webim/dim.png') no-repeat -42px -122px
+}
+.ie6 .chatBox_groupSpace_groupShare_div, .ie7 .chatBox_groupSpace_groupShare_div {
+	background:url('images/webim/dim.gif') no-repeat -42px -123px
+}
+.chatBox_groupSpace_groupForum_div {
+	background:url('images/webim/dim.png') no-repeat -22px -122px
+}
+.ie6 .chatBox_groupSpace_groupForum_div, .ie7 .chatBox_groupSpace_groupForum_div {
+	background:url('images/webim/dim.gif') no-repeat -22px -122px
+}
+.chatBox_groupSpace_groupAlbum_div {
+	background:url('images/webim/dim.png') no-repeat -62px -122px
+}
+.ie6 .chatBox_groupSpace_groupAlbum_div, .ie6 .chatBox_groupSpace_groupAlbum_div {
+	background:url('images/webim/dim.gif') no-repeat -62px -122px
+}
+.chatBox_groupDetail {
+	background:url('images/webim/dim.png') no-repeat -25px -214px
+}
+.ie6 .chatBox_groupDetail {
+	background:url('images/webim/dim.gif') no-repeat -25px -214px
+}
+.ie7 .chatBox_groupDetail {
+	background:url('images/webim/dim.gif') no-repeat -25px -215px
+}
+.chatBox_groupCard {
+	background:url('images/webim/dim.png') no-repeat -54px -214px
+}
+.ie6 .chatBox_groupCard {
+	background:url('images/webim/dim.gif') no-repeat -54px -214px
+}
+.ie7 .chatBox_groupCard {
+	background:url('images/webim/dim.gif') no-repeat -54px -215px
+}
+.chatBox_groupMember_titleBar {
+	padding:0 0 0 5px;
+	height:20px;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 0 -527px no-repeat;
+	color:#666
+}
+.chatBox_groupMember_mainArea {
+	position:absolute;
+	top:20px;
+	bottom:0;
+	width:100%;
+	overflow:auto;
+	overflow-x:hidden;
+	background:#e8f6fb;
+	border-bottom-right-radius:5px 5px
+}
+.chatBox_groupMember_buddy {
+	display:block;
+	padding:2px 0;
+	height:20px;
+	overflow:hidden;
+	background:transparent;
+	cursor:pointer;
+	color:#000;
+	text-decoration:none;
+	position:relative
+}
+.chatBox_groupMember_avatarArea {
+	float:left;
+	width:22px;
+	height:20px;
+	overflow:hidden;
+	margin-left:18px;
+	_margin-left:10px
+}
+img.chatBox_groupMember_avatar {
+	position:static;
+	display:block;
+	float:left;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	zoom:1
+}
+.chatBox_groupMember_state {
+	display:inline;
+	float:left;
+	margin:10px 0 0 -10px;
+	width:10px;
+	height:10px;
+	overflow:hidden;
+	text-indent:-999em;
+	zoom:1
+}
+.chatBox_groupMember_callmeArea, .chatBox_groupMember_onlineArea, .chatBox_groupMember_awayArea, .chatBox_groupMember_busyArea, .chatBox_groupMember_silentArea, .chatBox_groupMember_hiddenArea, .chatBox_groupMember_offlineArea {
+	display:none;
+	display:block;
+	padding:0
+}
+.chatBox_groupMember_callmeArea .chatBox_groupMember_state {
+	background:yellow url(images/webim/dim_sprite.gif?t=20111011001) -72px 0 no-repeat
+}
+.chatBox_groupMember_awayArea .chatBox_groupMember_state {
+	background:yellow url(images/webim/dim_sprite.gif?t=20111011001) -18px 0 no-repeat
+}
+.chatBox_groupMember_busyArea .chatBox_groupMember_state {
+	background:yellow url(images/webim/dim_sprite.gif?t=20111011001) -36px 0 no-repeat
+}
+.chatBox_groupMember_silentArea .chatBox_groupMember_state {
+	background:yellow url(images/webim/dim_sprite.gif?t=20111011001) -108px 0 no-repeat
+}
+.chatBox_groupMember_hiddenArea .chatBox_groupMember_state {
+	background:yellow url(images/webim/dim_sprite.gif?t=20111011001) -54px 0 no-repeat
+}
+.chatBox_groupMember_offlineArea .chatBox_groupMember_avatar {
+filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+	opacity:.5
+}
+.chatBox_groupMember_offlineArea .chatBox_groupMember_state {
+	display:none
+}
+.chatBox_groupMember_nameArea {
+	float:left;
+	overflow:hidden;
+	zoom:1;
+	width:130px
+}
+.chatBox_groupMember_nick {
+	padding:0;
+	height:16px;
+	line-height:16px;
+	text-decoration:none;
+	word-break:break-all;
+	width:2000px;
+	width:auto\9;
+	line-height:20px\9
+}
+.chatBox_discuMember_mainArea .chatBox_groupMember_nameArea {
+	width:70px
+}
+.chatBox_discuMember_mainArea .chatBox_groupMember_avatarArea {
+	margin-left:5px
+}
+.groupMember_icon {
+	width:18px;
+	height:18px;
+	overflow:hidden;
+	position:absolute;
+	left:0;
+	top:2px
+}
+.groupMaster .groupMember_icon {
+	background:url('images/webim/dim.png') no-repeat -62px -141px;
+	_background-image:url('images/webim/dim.gif');
+	_background-color:transparent
+}
+.groupManager .groupMember_icon {
+	background:url('images/webim/dim.png') no-repeat -42px -141px;
+	_background-image:url('images/webim/dim.gif');
+	_background-color:transparent
+}
+*/
+.chatBox_adsorbSize {
+	width:350px;
+	height:350px
+}
+.group_chatBox_adsorbSize {
+	width:430px;
+	height:350px
+}
+.chatBox_mainArea {
+	position:relative;
+	margin:0;
+	height:100%;
+	background:transparent
+}
+.group_chatBox_mainArea {
+	position:relative;
+	margin:0 22px 0 0;
+	height:100%
+}
+.chatBox_chatBoard {
+	position:absolute;
+	left:0;
+	top:0;
+	bottom:143px;
+	width:100%;
+	overflow:hidden
+}
+/*.chatBox_moreMsgTip {
+	background:#e0f1fe;
+	display:block;
+	left:0;
+	padding-top:3px;
+	height:22px;
+	position:absolute;
+	width:100%;
+	top:0;
+	color:#000;
+	z-index:1;
+	display:none
+}
+.chatBox_moreMsgTip .linkBtn:hover {
+	text-decoration:underline
+}
+.chatBox_moreMsgTip .tipIcon {
+	background:url('images/webim/dim.png') no-repeat -82px -2px;
+	height:16px;
+	width:16px;
+	display:inline-block;
+	margin:0 3px 0 5px;
+	vertical-align:middle
+}
+.ie6 .chatBox_moreMsgTip .tipIcon {
+	background-image:url('images/webim/dim.gif')
+}*/
+.chatBox_msgList {
+	display:block;
+	position:absolute;
+	top:0;
+	bottom:0;
+	margin:0 auto;
+	width:100%;
+	overflow:auto
+}
+.chatBox_msgList_backToBottom {
+	background:url('images/webim/dim.png') no-repeat -142px -215px;
+	display:none;
+	position:absolute;
+	right:20px;
+	height:16px;
+	width:16px;
+	bottom:2px;
+	cursor:pointer
+}
+a:hover .chatBox_msgList_backToBottom {
+	background:url('images/webim/dim.png') no-repeat -160px -215px
+}
+.ie6 .chatBox_msgList_backToBottom {
+	background-image:url('images/webim/dim.gif')
+}
+.ie6 a:hover .chatBox_msgList_backToBottom {
+	background:url('images/webim/dim.gif') no-repeat -160px -215px
+}
+.chatBox_yellowTipsBar {
+	display:none;
+	position:absolute;
+	bottom:0;
+	border-top:1px solid #ccc;
+	padding-left:6px;
+	width:100%;
+	height:24px;
+	background:#ffc;
+	overflow:hidden;
+	color:#000;
+	line-height:24px
+}
+.chatBox_myMsg {
+	display:block;
+	margin:0;
+	padding:5px
+}
+.chatlog_delete{
+	width: 20px;
+    height: 20px;
+	display:inline-block;
+   	background:url(./images/webim/op.png) no-repeat 0 0;
+}
+.chatlog_delete:hover{
+	background-position:0 -20px;
+}
+
+.chatBox_myMsg .msgBody {
+	margin:0 0 0 13px;
+	color:#000;
+	word-wrap:break-word
+}
+.chatBox_buddyMsg {
+	display:block;
+	margin:0;
+	padding:5px
+}
+.chatBox_buddyMsg .msgBody {
+	margin:0 0 0 13px;
+	color:#000;
+	word-wrap:break-word
+}
+.msgBody .parse_img{
+	margin:5px;
+	padding:2px;
+	border:1px solid #CCC;
+	 max-width: 340px;
+}
+* html .msgBody .parse_img{
+	width: expression(this.width > 340? 340 : true);
+}
+.chatBox_buddyMsg .defaultFontStyle, .chatBox_myMsg .defaultFontStyle {
+	font-family:宋体;
+	font-size:10pt;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	color:#000
+}
+.msgLink {
+	text-decoration:none
+}
+.chatBox_buddyMsg .msgBody .msgLink {
+	text-decoration:underline
+}
+.chatBox_speechButton {
+	height:30px;
+	width:22px;
+	outline:0;
+	cursor:pointer;
+	color:transparent;
+	background:transparent;
+	float:left;
+	font-size:16px;
+	border:0 solid;
+	display:none
+}
+.chatBox_toolBar_top {
+	zoom:1;
+	position:absolute;
+	left:0;
+	bottom:138px;
+	margin:0 auto;
+	width:100%;
+	height:5px;
+	font-size:0;
+	line-height:5px;
+	cursor:n-resize;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:#d3e8f3
+}
+.chatBox_toolBar {
+	position:absolute;
+	left:0;
+	bottom:115px;
+	margin:0 auto;
+	width:100%;
+	height:25px;
+	overflow:hidden;
+	zoom:1;
+	background:#d3e8f3
+}
+.chatBox_toolBar a {
+	display:block;
+	height:20px;
+	width:20px;
+	margin:0 2px;
+	border:#d3e8f3 1px solid;
+	float:left
+}
+
+.chatBox_toolBar a:hover {
+	display:block;
+	border:#848f97 1px solid;
+	background:url(./images/webim/hover.png);
+	-moz-border-radius:2px;
+	-khtml-border-radius:2px;
+	-webkit-border-radius:2px;
+	border-radius:1px
+}
+.chatBox_toolBar a.hover {
+	display:block;
+	border:#848f97 1px solid;
+	background:url(./images/webim/hover.png);
+	-moz-border-radius:2px;
+	-khtml-border-radius:2px;
+	-webkit-border-radius:2px;
+	border-radius:1px
+}
+.chatBox_fontButton {
+	background:url('images/webim/dim.png') no-repeat 0 -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_fontButton, .ie7 .chatBox_fontButton {
+	background:url('images/webim/dim.png') no-repeat 0 -60px
+}
+.chatBox_faceButton {
+	background:url('images/webim/dim.png') no-repeat -20px -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_faceButton, .ie7 .chatBox_faceButton {
+	background:url('images/webim/dim.gif') no-repeat -20px -60px
+}
+.chatBox_handwriteButton {
+	background:url('images/webim/dim.gif') no-repeat -160px -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_handwriteButton, .ie7 .chatBox_handwriteButton {
+	background:url('images/webim/dim.gif') no-repeat -160px -60px
+}
+.chatBox_sendPicButton {
+	background:url('images/webim/dim.gif') no-repeat -60px -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_sendPicButton, .ie7 .chatBox_sendPicButton {
+	background:url('images/webim/dim.gif') no-repeat -60px -60px
+}
+.chatBox_shakeButton {
+	float:left;
+	width:20px;
+	height:20px;
+	background:url('images/webim/dim.png') no-repeat -140px -60px;
+	_background:url('images/webim/dim.gif') no-repeat -140px -60px;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.chatBox_snapButton {
+	background:url('images/webim/dim.png') no-repeat -120px -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_snapButton, .ie7 .chatBox_snapButton {
+	background:url('images/webim/dim.gif') no-repeat -120px -60px
+}
+.chatBox_sendFileButton {
+	float:left;
+	width:28px;
+	height:28px;
+	margin-top:5px;
+	margin-left:2px;
+	background:url('images/webim/dim.png') no-repeat -70px -380px;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_sendFileButton, .ie7 .chatBox_sendFileButton {
+	background:url('images/webim/dim.gif') no-repeat -70px -380px
+}
+.sendPicForm {
+	overflow:hidden;
+	width:100%;
+	height:100%
+}
+.sendFileForm {
+	float:left;
+	width:28px;
+	height:28px;
+	padding:5px 4px 3px 3px;
+	overflow:hidden;
+	margin:0
+}
+.sendPicForm .f {
+	margin:-2px 0 0 -0px;
+	width:22px;
+	height:25px;
+	overflow:hidden;
+	cursor:pointer;
+	opacity:0;
+	filter:alpha(opacity=0)
+}
+.sendFileForm .f {
+	margin:-2px 0 0 -0px;
+	width:28px;
+	height:30px;
+	overflow:hidden;
+	cursor:pointer;
+	opacity:0;
+	filter:alpha(opacity=0)
+}
+/*.chatBox_maskButton {
+	width:100%;
+	height:100%;
+	background:url('images/webim/dim.png') no-repeat 0 -20px;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_maskButton, .ie7 .chatBox_maskButton {
+	background:url('images/webim/dim.gif') no-repeat 0 -20px
+}
+.chatBox_acceptButton {
+	background:url('images/webim/dim.png') no-repeat -20px -20px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_acceptButton, .ie7 .chatBox_acceptButton {
+	background:url('images/webim/dim.gif') no-repeat -20px -20px
+}*/
+/*
+.facePanel {
+	display:none;
+	position:absolute;
+	bottom:140px;
+	z-index:2;
+	border:1px solid #666;
+	width:446px;
+	height:244px;
+	overflow:hidden;
+	background:white
+}
+.defaultFacePanel {
+	display:none;
+	margin:5px;
+	width:436px;
+	height:204px;
+	overflow:hidden;
+	background:url(images/webim/face.gif) no-repeat
+}
+.defaultFacePanel a {
+	display:block;
+	float:left;
+	width:28px;
+	height:28px;
+	margin:1px 0 0 1px;
+	overflow:hidden;
+	cursor:default
+}
+.defaultFacePanel a:hover {
+	display:block;
+	float:left;
+	border:1px solid blue;
+	width:27px;
+	height:27px;
+	margin:1px 0 0 1px;
+	overflow:hidden;
+	cursor:default
+}
+.customFacePanel {
+	display:none;
+	margin:2px;
+	width:442px;
+	height:210px;
+	overflow:auto;
+	overflow-x:hidden;
+	position:relative
+}
+.customFacePanel a {
+	position:relative;
+	display:block;
+	float:left;
+	border:1px solid #ccc;
+	padding:1px;
+	width:60px;
+	height:60px;
+	margin:5px 0 0 6px;
+	overflow:hidden;
+	cursor:default
+}
+.customFacePanel a img {
+	position:absolute;
+	display:none
+}
+.customFacePanel a.loading {
+	background:url(images/webim/loading.gif) center center no-repeat
+}
+.customFacePanel a.loaded {
+	background:0
+}
+.customFacePanel a.loaded img {
+	display:block
+}
+.customFacePanel_delImgBtn {
+	margin:0;
+	background:url("images/webim/del_face.gif") no-repeat scroll 0 0 transparent;
+	display:none;
+	left:45px;
+	position:absolute;
+	top:2px;
+	z-index:2;
+	height:15px;
+	width:15px
+}
+.customFacePanel a:hover {
+	display:block;
+	float:left;
+	border:1px solid blue;
+	cursor:default
+}
+.noCustomFaceText {
+	margin:90px auto 0 auto;
+	width:90px
+}
+.customFacePanel a.noCustomFaceAddButton {
+	display:none;
+	float:none;
+	margin:3px auto 0 auto;
+	width:80px;
+	height:16px;
+	line-height:14px;
+	color:#45649e;
+	cursor:pointer;
+	background:0
+}
+
+.tabArea {
+	padding:0 0 0 5px;
+	height:30px;
+	background:#d6e9f8;
+	overflow:hidden;
+	zoom:1
+}
+.tabArea a {
+	display:block;
+	float:left;
+	margin:0 1px;
+	padding:5px 10px;
+	height:14px;
+	line-height:16px;
+	overflow:hidden;
+	cursor:default
+}
+.tabArea a:hover {
+	background:white
+}
+.tabArea a.current {
+	background:white
+}
+.tabArea a.addCustomFaceButton {
+	display:block;
+	float:right;
+	margin:3px;
+	padding:4px 5px;
+	height:16px;
+	overflow:hidden;
+	zoom:1
+}
+.addCustomFaceIcon {
+	display:block;
+	float:left;
+	margin:0 2px 0 0;
+	width:16px;
+	height:16px;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) 2px -285px no-repeat
+}
+#uploadCustomFaceIframe {
+	position:absolute;
+	left:-999px;
+	top:-999px;
+	width:1px;
+	height:1px;
+	overflow:hidden
+}
+form#uploadCustomFaceForm {
+	display:block;
+	position:relative;
+	z-index:1;
+	float:right;
+	right:-76px;
+	top:5px;
+	width:76px;
+	height:20px;
+	overflow:hidden;
+	background:blue;
+	cursor:pointer;
+	opacity:0;
+	filter:alpha(opacity=0)
+}
+.uploadCustomFaceButton {
+	display:block;
+	width:65px;
+	height:20px;
+	overflow:hidden;
+	cursor:pointer
+}
+#facePanelNotice {
+	display:none;
+	position:absolute;
+	left:0;
+	top:90px;
+	padding:2px 10px 0 10px;
+	width:100%;
+	height:20px;
+	background:#d2f6ff;
+	text-align:center
+}
+*/
+.chatBox_clearButton {
+	background:url('images/webim/dim.png') no-repeat -80px -60px;
+	width:100%;
+	height:100%;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.ie6 .chatBox_clearButton, .ie7 .chatBox_clearButton {
+	background:url('images/webim/dim.gif') no-repeat -80px -60px
+}
+.chatBox_buttonBar {
+	margin:6px 0 0 0
+}
+.chatBox_buttonBar a {
+	width:36px;
+	height:36px;
+	margin:0 2px 0 0;
+	float:left;
+	list-style:none;
+	display:block
+}
+.chatBox_buttonBar span {
+	display:block;
+	width:28px;
+	height:28px;
+	margin:5px 4px 3px
+}
+.chatBox_buttonBar a:hover {
+	background:url('images/webim/sprite.png') 0 -436px
+}
+.ie6 .chatBox_buttonBar a:hover {
+	background-image:url('images/webim/sprite.gif')
+}
+.chatBox_videoButton {
+	background:url('images/webim/dim.png') no-repeat 3px -380px
+}
+.ie6 .chatBox_videoButton, .ie7 .chatBox_videoButton {
+	background:url('images/webim/dim.gif') no-repeat 3px -380px
+}
+.chatBox_historyButton {
+	float:left;
+	width:20px;
+	height:20px;
+	background:url('images/webim/dim.gif') no-repeat -100px -60px;
+	cursor:pointer;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.chatBox_historyButtonCon {
+	float:right!important;
+	width:90px!important;
+	margin:0 5px!important
+}
+.chatBox_historyButtontxt {
+	color:#000;
+	margin:0 5px;
+	float:left
+}
+.ie .chatBox_historyButtontxt {
+	margin-top:2px
+}
+.ie6 .chatBox_historyButtontxt {
+	margin-top:0
+}
+.chatBox_Down {
+	background:url('images/webim/dim.png') no-repeat 0 -228px;
+	float:left;
+	height:6px;
+	margin:7px 0 0;
+	width:7px;
+	display:inline
+}
+.ie6 .chatBox_Down {
+	background:url('images/webim/dim.gif') no-repeat 0 -228px;
+}
+.ie6 .chatBox_historyButton, .ie7 .chatBox_historyButton {
+	background:url('images/webim/dim.gif') no-repeat -100px -60px
+}
+.chatBox_quitButton {
+	display:inline;
+	float:right;
+	margin:0 4px;
+	width:20px;
+	height:20px;
+	background:url('images/webim/dim.png') no-repeat -218px -380px;
+	cursor:pointer
+}
+.ie6 .chatBox_quitButton, .ie7 .chatBox_quitButton {
+	background-image:url('images/webim/dim.gif')
+}
+.chatBox_inputBox {
+	display:block;
+	position:absolute;
+	left:0;
+	bottom:28px;
+	margin:0 auto;
+	padding:1px 0;
+	height:85px;
+	width:100%;
+	overflow:hidden;
+	font-size:12px
+}
+.chatBox_controlPanel {
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:100%;
+	overflow:hidden;
+	zoom:1;
+	background:#e0eff6;
+	
+}
+.chatBox_sendOptionButton {
+	float:right;
+	margin:5px 8px 4px 0;
+	width:19px;
+	height:22px;
+	line-height:20px;
+	background:url('images/webim/sprite.png') no-repeat 0 -618px;
+	overflow:hidden;
+	text-align:center;
+	display:block;
+	display:inline
+}
+.chatBox_sendOptionButton:hover {
+	background:url('images/webim/sprite.png') no-repeat 0 -576px
+}
+.ie6 .chatBox_sendOptionButton {
+	background-image:url('images/webim/sprite.gif')
+}
+.ie6 .chatBox_sendOptionButton:hover {
+	background-image:url('images/webim/sprite.gif')
+}
+.chatBox_sendMsgButton {
+	float:right;
+	width:64px;
+	height:22px;
+	line-height:20px;
+	margin:5px 0 4px;
+	background:url('images/webim/sprite.png') no-repeat 0 -534px;
+	overflow:hidden;
+	text-align:center;
+	display:block;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.chatBox_sendMsgButton:hover {
+	background:url('images/webim/sprite.png') no-repeat 0 -492px
+}
+.ie7 .chatBox_sendMsgButton, .ie8 .chatBox_sendMsgButton {
+	line-height:24px
+}
+.ie6 .chatBox_sendMsgButton {
+	background-image:url('images/webim/sprite.gif')
+}
+.chatBox_closeButton {
+	float:right;
+	margin:5px 5px 4px 0;
+	line-height:20px;
+	width:69px;
+	height:22px;
+	background:url('images/webim/sprite.png') 0 -702px no-repeat;
+	overflow:hidden;
+	text-align:center;
+	display:block;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.chatBox_closeButton:hover {
+	background:url('images/webim/sprite.png') 0 -660px no-repeat
+}
+.ie7 .chatBox_closeButton, .ie8 .chatBox_closeButton {
+	line-height:24px
+}
+.ie6 .chatBox_closeButton, .ie6 .chatBox_closeButton:hover {
+	background-image:url('images/webim/sprite.gif')
+}
+.chatBox_createDiscuButton {
+	background:url('images/webim/dim.png') no-repeat -256px -378px
+}
+.ie6 .chatBox_createDiscuButton, .ie7 .chatBox_createDiscuButton {
+	background-image:url('images/webim/dim.gif')
+}
+.chatBox_groupShareButton {
+	background:url('images/webim/dim.png') no-repeat -144px -380px
+}
+.ie6 .chatBox_groupShareButton, .ie7 .chatBox_groupShareButton {
+	background-image:url('images/webim/dim.gif')
+}
+.chatBox_groupShareButton {
+	background:url('images/webim/dim.png') no-repeat -145px -380px
+}
+.ie6 .chatBox_groupShareButton, .ie7 .chatBox_groupShareButton {
+	background-image:url('images/webim/dim.gif')
+}
+.chatBox_groupHomeButton {
+	background:url('images/webim/dim.png') no-repeat -108px -380px
+}
+.ie6 .chatBox_groupHomeButton, .ie7 .chatBox_groupHomeButton {
+	background-image:url('images/webim/dim.fig')
+}
+.chatBox_groupImpressButton {
+	background:url('images/webim/dim.png') no-repeat -293px -380px
+}
+.ie6 .chatBox_groupImpressButton, .ie7 .chatBox_groupImpressButton {
+	background-image:url('images/webim/dim.gif')
+}
+a.chatBox_menuButton {
+	width:44px
+}
+a.chatBox_menuButton:hover {
+	background-position:0 -200px;
+	width:44px
+}
+.chatBox_groupSettingButton {
+	background:url('images/webim/dim.png') no-repeat -182px -380px;
+	float:left;
+	margin-right:0!important
+}
+.ie6 .chatBox_groupSettingButton {
+	margin-left:2px!important
+}
+.chatBox_menuButton .chatBox_Down {
+	margin:14px 0 0 2px
+}
+.ie6 .chatBox_groupSettingButton, .ie7 .chatBox_groupSettingButton {
+	background-image:url('images/webim/dim.gif')
+}
+.DIM_msgBox {
+	display:none;
+	position:absolute;
+	bottom:32px;
+	right:30px;
+	z-index:1;
+	border:1px solid #666;
+	width:165px;
+	overflow:hidden;
+	background:#fff
+}
+.DIM_titleInMsgBox {
+	border-bottom:1px solid #c8c8c8;
+	height:24px;
+	overflow:hidden;
+	zoom:1;
+	background:#e1e1e1
+}
+.DIM_titleTextInMsgBox {
+	float:left;
+	padding:4px 5px;
+	height:16px;
+	line-height:16px;
+	color:cccccc
+}
+.DIM_viewMainPanelButtonInMsgBox {
+	display:block;
+	float:right;
+	padding:4px 5px;
+	height:16px;
+	cursor:pointer;
+	line-height:16px;
+	color:#0d2a5c;
+	text-decoration:underline
+}
+.DIM_messageList {
+	margin:0;
+	border-top:1px solid white;
+	padding:0;
+	max-height:270px;
+	overflow:auto;
+	list-style:none
+}
+.DIM_msgInMessageList {
+	display:block;
+	padding:3px 3px;
+	height:22px;
+	overflow:hidden;
+	line-height:22px;
+	cursor:pointer;
+	text-decoration:none;
+	color:black
+}
+.DIM_msgInMessageListHover {
+	display:block;
+	padding:3px 3px;
+	height:22px;
+	overflow:hidden;
+	background:#cbe7fc;
+	text-decoration:none;
+	color:black;
+	line-height:22px;
+	cursor:pointer
+}
+.avatarInMsgBox {
+	float:left;
+	padding:1px;
+	width:20px;
+	height:20px;
+	overflow:hidden;
+	background:white
+}
+.ignoreButtonInMsgBox {
+	float:right;
+	margin:2px 0;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	background:url(images/webim/dim.gif) -17px -185px no-repeat;
+	text-indent:-999em;
+	cursor:pointer
+}
+.msgCounterInMsgBox {
+	float:right;
+	margin:0 2px 0 0;
+	height:20px
+}
+.buddyNameInMsgBox {
+	margin:0 56px 0 24px
+}
+.DIM_ignoreAllMsgButtonInMsgBox {
+	float:right;
+	padding:5px;
+	width:50px;
+	height:16px;
+	line-height:16px;
+	cursor:pointer;
+	text-align:right;
+	color:#0d2a5c;
+	text-decoration:underline
+}
+/*
+.DIM_LoginBox {
+	display:none;
+	position:absolute;
+	bottom:32px;
+	right:30px;
+	z-index:1;
+	border:1px solid #999;
+	width:383px;
+	height:335px;
+	overflow:auto;
+	background:#fff
+}
+.DIM_LoginBox_Title {
+	height:36px
+}
+.DIM_LoginBox_TitleText {
+	margin:0 0 0 5px;
+	padding:5px 0;
+	height:16px;
+	font-size:14px;
+	font-weight:bold
+}
+.DIM_LoginBox_CloseButton {
+	float:right;
+	margin:3px 3px 0 0;
+	width:18px;
+	height:18px;
+	overflow:hidden;
+	text-indent:-999em;
+	background:url(images/webim/dim_sprite.gif?t=20111011001) -17px -59px no-repeat;
+	cursor:pointer
+}
+.DIM_LoginBox_Iframe {
+	margin:0 5px;
+	padding:0;
+	width:372px;
+	height:294px;
+	overflow:auto;
+	border:0 solid blue
+}
+img.DIM_faceImg {
+	position:static;
+	width:24px;
+	height:24px
+}
+img.DIM_replaceDefImg {
+	position:static;
+	width:24px;
+	height:24px
+}
+img.DIM_fixImg {
+	position:static
+}
+*/
+
+.buddyOption_tabHead {
+	margin:0;
+	width:100%;
+	height:22px;
+	background:#dfeef6
+}
+.buddyOption_tabHead_div {
+	float:right;
+	display:inline;
+	margin:2px 4px 0 5px;
+	height:16px;
+	overflow:hidden;
+	color:#004869;
+	cursor:pointer
+}
+.buddyOption_tabBody {
+	display:none;
+	width:100%;
+	height:auto;
+	background:white
+}
+.miniCard_buddyOption_angle {
+	text-indent:-999999999px;
+	height:5px;
+	width:10px;
+	line-height:5px;
+	position:relative;
+	margin:auto auto -1px 13px;
+	background:url('images/webim/dim.png') no-repeat 0 -180px
+}
+.ie .miniCard_buddyOption_angle {
+	margin:auto auto -3px 13px
+}
+.miniCard_buddyOption_Content {
+	margin:0 3px 2px 3px;
+	padding-left:3px;
+	overflow:auto;
+	border:1px solid #fd7000
+}
+
+.rich_editor {
+	height:100%;
+	margin-left:3px;
+	font-family:宋体;
+	font-size:10pt;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	color:#000
+}
+.rich_editor_div, .rich_editor_text {
+	display:block;
+	height:100%;
+	width:100%;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border:0;
+	outline:0;
+	margin:0;
+	padding:0;
+	word-break:break-all;
+	word-wrap:break-word
+}
+.rich_editor_div * {
+	display:inline;
+	margin:0!important;
+	padding:0!important;
+	position:static;
+	float:none;
+	font:inherit!important;
+	text-decoration:inherit!important;
+	color:inherit!important;
+	line-height:inherit!important
+}
+.rich_editor_div img {
+	display:none;
+	vertical-align:text-bottom
+}
+.rich_editor_div img.system {
+	width:24px;
+	height:24px;
+	display:inline
+}
+.rich_editor_div img.custom {
+	display:inline
+}
+.editorToolbar {
+	width:100%;
+	padding:5px 0 3px 0;
+	height:24px;
+	display:none;
+	position:absolute;
+	bottom:142px;
+	border-top:1px solid #b7d3e7;
+	background:#e6f2fd
+}
+.ie .editorToolbar {
+	height:22px
+}
+.editorToolbar ul, .editorToolbar li {
+	margin:0;
+	padding:0;
+	list-style:none
+}
+.editorToolbar ul li {
+	float:left
+}
+.editorToolbar ul.toolbar li {
+	margin:0 1px
+}
+.editorToolbar select.fontFamily {
+	width:130px;
+	border:1px solid #6a9ed2
+}
+.editorToolbar select.fontSize {
+	width:50px;
+	border:1px solid #6a9ed2
+}
+.editorToolbar a.icon {
+	padding:1px;
+	width:15px;
+	height:15px;
+	display:inline-block;
+	border:1px solid #e6f2fd;
+	outline:0
+}
+.editorToolbar a.icon:hover {
+	background-color:#9bc4ea;
+	border:1px solid #7995b2
+}
+.editorToolbar a.selected {
+	background-color:#9bc4ea;
+	border:1px solid #7995b2
+}
+.editorToolbar a.icon:hover span {
+	cursor:pointer
+}
+.editorToolbar a.icon span {
+	display:inline-block;
+	width:15px;
+	height:15px
+}
+.editorToolbar .bold {
+	background:url('images/webim/dim.png') no-repeat -2px -43px
+}
+.ie6 .editorToolbar .bold, .ie7 .editorToolbar .bold {
+	background:url('images/webim/dim.gif') no-repeat -2px -43px
+}
+.editorToolbar .italic {
+	background:url('images/webim/dim.png') no-repeat -42px -43px
+}
+.ie6 .editorToolbar .italic, .ie7 .editorToolbar .italic {
+	background:url('images/webim/dim.gif') no-repeat -42px -43px
+}
+.editorToolbar .underline {
+	background:url('images/webim/dim.png') no-repeat -22px -43px
+}
+.ie6 .editorToolbar .underline, .ie7 .editorToolbar .underline {
+	background:url('images/webim/dim.gif') no-repeat -22px -43px
+}
+.editorToolbar .color {
+	background:url('images/webim/dim.png') no-repeat -63px -43px
+}
+.ie6 .editorToolbar .color, .ie7 .editorToolbar .color {
+	background:url('images/webim/dim.gif') no-repeat -63px -43px
+}
+.editorToolbar .colorPanel {
+	width:130px;
+	border-top:1px solid #b2b2b2;
+	border-left:1px solid #b2b2b2;
+	border-right:1px solid #9bc4ea;
+	border-bottom:1px solid #9bc4ea;
+	clear:left;
+	position:absolute;
+	padding:5px;
+	background:#fff;
+	display:none;
+	left:248px;
+	bottom:22px
+}
+.editorToolbar .colorPanel a {
+	display:inline-block;
+	padding:1px;
+	border:1px solid #fff;
+	font-size:1px;
+	outline:0
+}
+.editorToolbar .colorPanel a:hover {
+	border:1px solid #000
+}
+.editorToolbar .colorPanel a span {
+	display:inline-block;
+	width:10px;
+	height:10px;
+	border:1px solid #a6a6a6;
+	font-size:1px;
+	cursor:pointer
+}
+.warnning_green {
+	padding:0 6px;
+	margin-right:2px;
+	background:url('images/webim/dim.png') no-repeat -44px -4px
+}
+.ie6 .warnning_green, .ie7 .warnning_green {
+	background:url('images/webim/dim.gif') no-repeat -44px -4px
+}
+.warnning_yellow {
+	padding:0 6px;
+	margin-right:2px;
+	background:url('images/webim/dim.png') no-repeat -84px -4px
+}
+.ie6 .warnning_yellow, .ie7 .warnning_yellow {
+	background:url('images/webim/dim.gif') no-repeat -84px -4px
+}
+.warnning_blue {
+	padding:0 8px;
+	background:url('images/webim/dim.png') no-repeat -64px -4px
+}
+.ie6 .warnning_blue, .ie7 .warnning_blue {
+	background:url('images/webim/dim.gif') no-repeat -64px -4px
+}
+.warnning_red {
+	padding:0 8px;
+	background:url('images/webim/dim.png') no-repeat -24px -4px
+}
+.ie6 .warnning_red, .ie7 .warnning_red {
+	background:url('images/webim/dim.png') no-repeat -24px -4px
+}
+.icon_green {
+	padding:0 5px;
+	background:url('images/webim/dim.png') no-repeat -44px -2px
+}
+.ie6 .icon_green, .ie7 .icon_green {
+	background:url('images/webim/dim.gif') no-repeat -44px -2px
+}
+.icon_yellow {
+	padding:0 5px;
+	background:url('images/webim/dim.png') no-repeat -84px -2px
+}
+.ie6 .icon_yellow, .ie7 .icon_yellow {
+	background:url('images/webim/dim.gif') no-repeat -84px -2px
+}
+.icon_blue {
+	padding:0 5px;
+	background:url('images/webim/dim.png') no-repeat -64px -2px
+}
+.ie6 .icon_blue, .ie7 .icon_blue {
+	background:url('images/webim/dim.gif') no-repeat -64px -2px
+}
+.icon_red {
+	padding:0 5px;
+	background:url('images/webim/dim.png') no-repeat -24px -2px
+}
+.ie6 .icon_red, .ie7 .icon_red {
+	background:url('images/webim/dim.gif') no-repeat -24px -2px
+}
+.icon_error {
+	padding:0 5px;
+	background:url('images/webim/dim.png') no-repeat -24px -4px
+}
+.ie6 .icon_red, .ie7 .icon_error {
+	background:url('images/webim/dim.gif') no-repeat -24px -4px
+}
+.error_tips .defaultFontStyle {
+	color:#505050
+}
+.error_tips .defaultFontStyle a {
+	font-size:10pt
+}
+.error_tips a.clickdisable {
+	color:#505050
+}
+.error_tips a.clickdisable:hover {
+	color:#505050
+}
+.receiveFileBox a:link, .receiveFileBox a:visited, .receiveFileBox a:active, .receiveFileBox a:hover {
+	text-decoration:none
+}
+/*
+.icon_excel {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat 0 -158px
+}
+.icon_exe16 {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -60px -158px
+}
+.icon_media {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -100px -158px
+}
+.icon_music {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -120px -158px
+}
+.icon_others {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -140px -158px
+}
+.icon_pdf16 {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -180px -158px
+}
+.icon_pic {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -80px -158px
+}
+.icon_ppt {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -20px -158px
+}
+.icon_rar-zip {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -160px -158px
+}
+.icon_share-txt {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -200px -158px
+}
+.icon_word {
+	display:inline-block;
+	overflow:hidden;
+	height:20px;
+	width:20px;
+	margin:0 2px 0 0;
+	background:url('images/webim/dim.png') no-repeat -40px -158px
+}
+.ie6 .icon_excel, .ie7 .icon_excel {
+	background:url('images/webim/dim.gif') no-repeat 0 -158px
+}
+.ie6 .icon_exe16, .ie7 .icon_exe16 {
+	background:url('images/webim/dim.gif') no-repeat -60px -158px
+}
+.ie6 .icon_media, .ie7 .icon_media {
+	background:url('images/webim/dim.gif') no-repeat -100px -158px
+}
+.ie6 .icon_music, .ie7 .icon_music {
+	background:url('images/webim/dim.gif') no-repeat -120px -158px
+}
+.ie6 .icon_others, .ie7 .icon_others {
+	background:url('images/webim/dim.gif') no-repeat -140px -158px
+}
+.ie6 .icon_pdf16, .ie7 .icon_pdf16 {
+	background:url('images/webim/dim.gif') no-repeat -180px -158px
+}
+.ie6 .icon_pic, .ie7 .icon_pic {
+	background:url('images/webim/dim.gif') no-repeat -80px -158px
+}
+.ie6 .icon_ppt, .ie7 .icon_ppt {
+	background:url('images/webim/dim.gif') no-repeat -20px -158px
+}
+.ie6 .icon_rar-zip, .ie7 .icon_rar-zip {
+	background:url('images/webim/dim.gif') no-repeat -160px -158px
+}
+.ie6 .icon_share-txt, .ie7 .icon_share-txt {
+	background:url('images/webim/dim.gif') no-repeat -200px -158px
+}
+.ie6 .icon_word, .ie7 .icon_word {
+	background:url('images/webim/dim.gif') no-repeat -40px -158px
+}
+*/
+.gray {
+	color:gray
+}
+.aDisable {
+color::gray;
+	cursor:default
+}
+.msgFileBox {
+	color:#505050;
+	padding-left:3px;
+	line-height:20px;
+	vertical-align:middle
+}
+.mainpanel_limit_class_width_outer {
+	float:left;
+	width:60px;
+	overflow:hidden
+}
+.mainpanel_limit_class_width_inner {
+	float:left;
+	width:999px
+}
+.DIM_failBox {
+	display:none;
+	margin:55px 0 0;
+	text-align:center
+}
+/*
+.DIM_discuReLogining_text {
+	display:none
+}
+.DIM_discuCreate {
+	margin-top:40px
+}
+.DIM_discuCreate .createGroup {
+	width:71px;
+	height:26px;
+	background:url("images/webim/create.png") no-repeat scroll center center transparent;
+	-webkit-tap-highlight-color:rgba(6, 6, 6, 0.3)
+}
+.DIM_discuCreate_text {
+	margin:auto;
+	width:150px
+}
+.DIM_discuCreate_button_container {
+	margin:auto;
+	width:80px;
+	height:26px
+}
+.DIM_discuList_Avatar {
+	background:url(images/webim/discu_avatar.gif) no-repeat -55px 1px;
+	border:0 solid #e1e1e1;
+	float:left;
+	height:20px;
+	overflow:hidden;
+	padding:1px;
+	position:static;
+	width:20px
+}
+.chatBoxDiscu_moreInfoArea {
+	height:21px;
+	line-height:21px
+}
+.chatBox_discuInfoArea {
+	font-weight:normal;
+	width:98%;
+	overflow:hidden;
+	white-space:nowrap;
+	display:inline;
+	margin:0;
+	padding:0
+}
+.chatBox_discuInfoArea a.topic {
+	color:#000;
+	padding:0;
+	margin:0;
+	padding-left:7px;
+	display:block;
+	width:160px;
+	overflow:hidden;
+	line-height:21px;
+	height:21px;
+	vertical-align:baseline;
+	zoom:1
+}
+.chatBox_discuInfoArea a.topic:hover {
+	background:url('images/webim/bg_ao_input.png') no-repeat
+}
+.chatBox_discuInfoArea span {
+	float:left;
+	display:block;
+	width:35px;
+	line-height:20px;
+	height:21px;
+	vertical-align:baseline;
+	zoom:1
+}
+.chatBox_discuInfoArea .discuTopicBox {
+	float:left;
+	width:160px;
+	overflow:hidden;
+	line-height:21px;
+	height:21px;
+	vertical-align:middle;
+	padding:0;
+	margin:0;
+	overflow:hidden;
+	position:relative
+}
+.chatBox_discuInfoArea input {
+	position:absolute;
+	left:0;
+	top:0;
+	height:21px;
+	line-height:21px;
+	vertical-align:middle;
+	padding:0;
+	margin:0;
+	padding-left:7px;
+	width:160px;
+	border:0 none;
+	background:url('images/webim/bg_ao_input.png') no-repeat;
+	outline:0
+}
+.ie6 .chatBox_discuInfoArea a.topic:hover, .ie6 .chatBox_discuInfoArea input {
+	background:0;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/webim/bg_ao_input.png', sizingMethod='crop')
+}
+.chatBox_discuMember_mainArea {
+	position:absolute;
+	top:20px;
+	bottom:0;
+	width:100%;
+	overflow:auto;
+	overflow-x:hidden;
+	background:#e8f6fb;
+	border-bottom-right-radius:5px 5px
+}
+.chatBox_groupMember .discuMemberTitle {
+	float:left
+}
+*/
+.eqq_header_switch_icon {
+	background:url('images/webim/dim.png') no-repeat -52px -331px
+}
+.eqq_cxmenu_check_icon {
+	background:url('images/webim/dim.gif') no-repeat 5px -33px
+}
+.eqq_window .window_bg_container {
+	background:#f5fafc url('images/webim/bg3.png') repeat-x;
+	border:none;
+	/*-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	-webkit-box-shadow:1px 1px 4px #333*/
+}
+.chatBox_liteInfoArea {
+	font-weight:normal;
+	overflow:hidden;
+	white-space:nowrap;
+	display:inline;
+	margin:0;
+	padding:0
+}
+.eqq_window .window_titleBar, .window_current .eqq_window .window_titleBar {
+	margin:5px;
+	background:transparent
+}
+.eqq_window .window_content {
+	margin:1px;
+	border:0;
+	border-radius:0;
+	box-shadow:none;
+	position:static
+}
+.eqq_window .window_min {
+	background:url(./images/webim/sprite.png) 0 -944px!important;
+	height:20px;
+	float:right;
+	width:28px;
+	margin:0
+}
+.ie6 .eqq_window .window_min {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_min:hover {
+	background-position:0 -904px!important
+}
+.eqq_window .window_restore {
+	background:url(./images/webim/sprite.png) 0 -1024px!important;
+	height:20px;
+	float:right;
+	width:28px;
+	margin:0
+}
+.ie6 .eqq_window .window_restore {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_restore:hover {
+	background-position:0 -984px!important
+}
+.ie6 .eqq_window .window_restore:hover {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_max {
+	background:url(./images/webim/sprite.png) 0 -864px!important;
+	height:20px;
+	float:right;
+	width:28px;
+	margin:0
+}
+.ie6 .eqq_window .window_max {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_max:hover {
+	background-position:0 -824px!important
+}
+.ie6 .eqq_window .window_max:hover {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_close {
+	background:url(./images/webim/sprite.png) 0 -784px!important;
+	height:20px;
+	float:right;
+	width:39px;
+	margin:0
+}
+.ie6 .eqq_window .window_close {
+	background-image:url(./images/webim/sprite.gif)!important
+}
+.eqq_window .window_close:hover {
+	background-position:0 -744px!important
+}
+.ie6 .eqq_window .window_close:hover {
+	background:url(./images/webim/sprite.gif) 0 -744px
+}
+.eqq_window .window_titleButtonBar {
+	position:absolute;
+	right:2px;
+	top:-1px
+}
+.eqq_window a {
+	color:#000
+}
+.eqq_window .window_button {
+	line-height:20px;
+	width:69px;
+	height:22px;
+	background:url('images/webim/sprite.png') 0 -702px no-repeat;
+	margin:0 10px 0 0
+}
+.ie7 .eqq_window .window_button, .ie8 .eqq_window .window_button {
+	line-height:24px
+}
+.eqq_window .window_button:hover {
+	background-position:0 -660px!important
+}
+.eqq_window .window_cancel {
+	display:inline
+}
+.eqq_window .window_bodyOuter {
+	border:0 none;
+	background:transparent
+}
+.eqq_window .content_area {
+	background:transparent
+}
+.eqq_window .selectBuddy {
+	background:transparent
+}
+.eqq_window .window_title {
+	line-height:15px;
+	text-align:left
+}
+.eqq_window .window_controlArea, .window_current .eqq_window .window_controlArea {
+	height:26px;
+	background:0;
+	border:0
+}
+.eqq_window .ui_messageBox {
+	background:transparent
+}
+.eqq_window .chatBox_msgList a {
+	color:#45649e
+}
+.eqq_window .userDetails_area {
+	background:0
+}
+.typingInChatbox {
+	display: none;
+	float: left;
+	margin: 16px 0 0 -18px;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+/*表情*/
+#editFaceBox li {
+    height: 25px;
+    overflow: hidden;
+    width: 25px;
+}
+.eMenu ul, .eMenu ul li {
+    margin: 0;
+    padding: 0;
+}
+.eMenu ul li {
+    float: left;
+    list-style: none outside none;
+	margin:2px 0 0 2px;
+}

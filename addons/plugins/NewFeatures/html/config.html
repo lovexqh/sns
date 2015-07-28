@@ -1,0 +1,23 @@
+<div class="form2">
+  	<form method="post" action="{:Addons::adminUrl('saveConfig')}" name="addonform">
+    <dl class="lineD">
+    	<dt>是否开启新功能展示：</dt>
+    	<dd>
+			<input type="radio" name="isopen" value="1" <eq name="isopen" value="1">checked=checked</eq>>开启 
+			<input type="radio" name="isopen" value="0" <eq name="isopen" value="0">checked=checked</eq>>关闭
+			<br /><br />
+			<p>新注册用户第一次进入社区首页，或者新功能更新后老用户今日社区首页，都会展示新功能</p>
+    	</dd>
+    </dl>
+    <dl class="lineD">
+    	<dt>展示图片：</dt>
+    	<dd>
+			{:W('UploadAttach',array('type'=>'addon_new_features','allow_exts'=>'jpg,png,gif',"edit"=>$pics))}
+			<p>每次选择一张，最多可以上传10张！</p>
+		</dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+</div>

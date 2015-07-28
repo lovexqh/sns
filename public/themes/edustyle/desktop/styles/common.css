@@ -1,0 +1,19 @@
+img.vm{vertical-align:middle;margin-right:2px;}
+
+/*分页样式*/
+.pgs{}
+.pgs #newspecial,.pgs #newspecialtmp,.pgs #post_reply,.pgs #post_replytmp{float:left;margin-right:5px;}
+.pg{float:right;}
+.pg,.pgb{line-height:26px;}
+.pg a,.pg strong,.pgb a,.pg label{float:left;display:inline;margin-left:4px;padding:0 8px;height:26px;border:1px solid;border-color:#C2D5E3;background-color:#FFF;background-repeat:no-repeat;color:#333;overflow:hidden;text-decoration:none;}
+.pg a.nxt,.pgb a{padding:0 10px;}
+.pg a:hover,.pgb a:hover{border-color:#369;color:#369;}
+.pg a.nxt{padding-right:25px;background-image:url(../images/arw_r.gif);background-position:90% 50%;}
+.pg a.prev{padding-left:25px;background-image:url(../images/arw_l.gif);background-position:10% 50%;}
+.pg strong{background-color:#E5EDF2;}
+.pgb a{padding-left:25px;background-image:url(../images/arw_l.gif);background-position:10px 50%;}
+.pg label{cursor:text;}
+.pg label input{text-align:center;}
+.ie6 .pg label{padding-top:3px;height:23px;}
+.pg label .px{padding:0;width:25px;height:16px;line-height:16px;}
+#pgt .pg,#pgt .pgb{margin-top:5px;}

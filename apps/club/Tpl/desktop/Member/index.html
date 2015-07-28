@@ -1,0 +1,191 @@
+<include file="../Public/_header" />
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_member_page">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_memberHeader" />
+			<div class="member_page">
+				<div class="club_dept_tree">
+					<div class="club_dept_header">
+						<span class="club_dept_header_word">组织分类</span>
+						<php>if($member['type']==1 || $member['type']==2){</php>
+						<a id="club_dept_add" class="club_dept_add">+添加</a>
+						<php>}</php>
+					</div>
+					<ul class="dept_list">
+						<li><a href="{:U('club/Member/index', array('id'=>$clubInfo['id']))}">{$clubInfo.title}</a></li>
+						<volist name="deptList" id="dept">
+						<li class="dept_name_list">
+							<a href="{:U('club/Member/index', array('id'=>$clubInfo['id'], 'deptid'=>$dept['id']))}" class="dept_name" id="deptname_{$dept.id}">{$dept.deptname}</a>
+							<php>if($member['type']==1 || $member['type']==2){</php>
+							<input type="text" id="deptinput_{$dept.id}" deptid="{$dept.id}" class="edit_deptname" value="{$dept.deptname}" style="display:none;width:80px;" />
+							<span class="dept_operate_icon">
+								<a id="dept_edit_btn" class="dept_edit_btn" aid="{$dept.id}"></a>
+								<a class="dept_del_btn" onclick="delDept({$dept.id});"></a>
+							</span>
+							<php>}</php>
+						</li>
+						</volist>
+						<li class="dept_name_list"><input type="text" id="add_dept_input" clubid="{$clubInfo.id}" class="add_dept_input" style="display:none;width:100px;" /></li>
+					</ul>
+				</div>
+				<div class="member_list">
+					<table class="member_tb">
+						<tr class="member_tb_header">
+							<td class="member_tb_name mem_tb_border">姓名</td>
+							<td class="member_tb_grade mem_tb_border">年级</td>
+							<td class="member_tb_jointime mem_tb_border">加入时间</td>
+							<td class="member_tb_identity mem_tb_border">身份</td>
+							<php>if($member['type']==1 || $member['type']==2){</php>
+							<td class="member_tb_operate">操作</td>
+							<php>}</php>
+						</tr>
+						<php>if( empty($memberList['data']) ){</php>
+						<tr><td colspan="5" style="font-size:14px;line-height:30px;padding-left:10px;">暂无成员!</td></tr>
+						<php>}</php>
+						<volist name="memberList.data" id="mem">
+						<tr class="member_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+							<td><a onclick="top.OpenBrowser('{:U('home/Space/index',array(uid=>$mem['uid']))}', '{$mem['uid']|getUserName}的个人主页');" href="javascript:;">{$mem.uid|getUserName}</a></td>
+							<td>
+								<php>if(!empty($mem['grade']) && $mem['grade']!=1){</php>
+								{$mem.grade}级
+								<php>}else if($mem['grade']==1){</php>
+								(老师)
+								<php>}else{</php>
+								--
+								<php>}</php>
+							</td>
+							<td>{$mem.joindate}</td>
+							<td>{$mem.identity}</td>
+							<php>if($member['type']==1 || $member['type']==2){</php>
+							<td>
+								<php>if($mem['type']==1 || $mem['type']==2){</php>
+								<a class="member_domanager" onclick="chgMemberType({$mem.id},1)">取消管理员</a>
+								<php>}else{</php>
+								<a class="member_domanager" onclick="chgMemberType({$mem.id},2)">升为管理员</a>
+								<php>}</php>
+								<a class="member_searchclass" onclick="searchClassTable({$mem.uid});">查课程</a>
+								<a class="member_chgdept" onclick="chgMemberDept({$mem.clubid},{$mem.deptid},{$mem.id});">改部门</a>
+								<a class="member_graduate" onclick="chgMemberType({$mem.id},3)">换届</a>
+								<a class="member_kickout" onclick="chgMemberType({$mem.id},4)">踢出</a>
+							</td>
+							<php>}</php>
+						</tr>
+						</volist>
+					</table>
+					<div class="page" style="text-align:right;">{$memberList.html}</div>
+				</div>
+				<div class="c"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//点击添加,显示添加部门输入框
+	$('.club_dept_add').click(function(){
+		$('#add_dept_input').show(100).focus();
+	});
+	
+	//添加部门
+	$('.add_dept_input').blur(function(){
+		var addDeptname = $(this).val().trim();
+		var clubid = $(this).attr("clubid");
+		if(!addDeptname){
+			$('#add_dept_input').hide(100);
+			//alert("部门名不能为空!");
+			return false;
+		}
+		if (addDeptname.indexOf(" ") >=0){
+			alert("不能有空格！");
+			return false;
+		}
+		if(getLength(addDeptname)>6){
+			alert("部门名不能超过6个字!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: "{:U('club/Member/addDept')}",
+			data:{clubid: clubid, deptname: addDeptname},
+			success: function (data){
+				if( data==1 ){
+					ui.success('添加成功!');
+					window.location.reload(); 
+				}else if(data == 0){
+					$.messager.alert('添加部门','添加失败！'); 
+				}else if(data == 2){
+					alert('不能超过10个部门!');
+					window.location.reload(); 
+				}else if(data == 3){
+					alert('部门名已存在!');
+					$('#add_dept_input').focus();
+					//window.location.reload(); 
+				}else{
+					$.messager.alert('添加部门失败',data);
+				}
+			}
+		});
+	});
+	
+	//点编辑按钮,把部门名转换为输入框形式
+	$('.dept_edit_btn').click(function(){
+		var id = $(this).attr("aid");
+		$('#deptname_'+id).hide();
+		$('#deptinput_'+id).show().focus().select();
+	});
+	
+	//修改部门
+	$('.edit_deptname').blur(function(){
+		var newDeptname = $(this).val();
+		var deptid = $(this).attr("deptid");
+		if(!newDeptname){
+			alert("部门名不能为空");
+			return false;
+		}
+		if (newDeptname.indexOf(" ") >=0){
+			alert("不能有空格！");
+			return false;
+		}
+		if( getLength(newDeptname)>6 ){
+			alert("部门名不能超过6个字!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: "{:U('club/Member/updateDeptname')}",
+			data:{id: deptid, deptname: newDeptname},
+			success: function (data){
+				if( data==1 ){
+					ui.success('修改成功!');
+					window.location.reload(); 
+				}else if(data == 0){
+					$.messager.alert('修改部门','修改失败！'); 
+				}else if(data == 3){
+					alert('部门名已存在!');
+					$('#deptinput_'+deptid).focus();
+				}else{
+					$.messager.alert('修改部门失败',data);
+				}
+			}
+		});
+	});
+	
+	//删除部门
+	function delDept(id){
+		if(confirm("确定要删除该部门吗？\n若该部门下有成员,删除部门后成员将不属于任何部门!")){
+			$.post(U('club/Member/delDept'),{id:id},function(result){
+				switch(result){
+					case "0":
+						ui.error('删除失败');
+						break;
+					case "1":
+						ui.success('删除成功!');
+						window.location.reload(); 
+						break;
+				}
+		   });
+		}
+	}
+</script>
+<include file="../Public/_footer" />

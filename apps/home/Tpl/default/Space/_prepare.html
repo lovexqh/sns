@@ -1,0 +1,54 @@
+            <ul>
+              <if condition="empty($data)">
+                <li style="line-height:80px;">还没有发布备课</li>
+              </if>
+              <volist name="data" id='vo'>
+                <li class="win">
+                  <div class="mid">
+                    <strong>备课名称：<a href="{:U('prepare/Index/show', array('id'=>$vo['id'],'stype'=>$vo['stype']))}" target="_blank">{$vo['title']}</a></strong>
+                    <if condition="$vo['type'] eq 1">
+                        <span>备课类型：个人备课
+                        <if condition="($relate eq 2) or ($vo['uid'] neq $mid)">
+                            备课人：<space uid="vo.uid" target="_blank">{uname}</space> {$vo.uid|getUserGroupIcon}
+                        </if>
+                        </span>
+                    <elseif condition="$vo['type'] eq 2"/>
+                        <span>备课类型：集体备课
+                        <if condition="($relate eq 2) or ($vo['uid'] neq $mid)">
+                            备课人：<space uid="vo.uid" target="_blank">{uname}</space> {$vo.uid|getUserGroupIcon}
+                        </if>
+                        </span>
+                    </if>
+                    <span>
+                      <if condition="$vo['status'] neq 1">
+                      状态：未发布
+                      </if>
+                      <if condition="$relate eq 1">
+                          {$vo.auditStatus}
+                      </if>
+                      最新更新时间：{$vo['mtime']|friendlyDate}
+                    </span>
+                  </div>
+                  <div class="rt">
+                    <a href="'{:U('prepare/Index/show', array('id'=>$vo['id'],'stype'=>$vo['stype']))}" target="_blank">查看详情</a><i class="vline">|</i>
+                    {:W('Weibo',array('tpl_name'=>'prepare_share_weibo','button_title'=>'分享'))}
+                    <php>
+                    $tpl_data = array('author'=>getUserName($uid),'title'=>$vo[title],'url'=>U('prepare/Index/show',array('id'=>$vo['id'],'stype'=>$vo['stype'])),'type'=>1);
+                    $tpl_data = urlencode(serialize($tpl_data));
+                    </php>
+                    <a href="javascript:;" onclick="_widget_weibo_start('', '{$tpl_data}', '{$param_data}');">分享</a>
+                    <php>if($vo['uid']!=$mid){ </php>
+                    <i class="vline">|</i>
+                    <if condition="$vo['stype'] eq 1">
+                   {:W('Favorite',array('fid'=>$vo['id'],'app'=>'prepare','mod'=>'Index','act'=>'show','type'=>'link','count'=>1,'myuid'=>$vo['uid'],'appconfig'=>'prepareknowledge'))}
+                    <elseif condition="$vo['stype'] eq 2"/>
+                   {:W('Favorite',array('fid'=>$vo['id'],'app'=>'prepare','mod'=>'Index','act'=>'show','type'=>'link','count'=>1,'myuid'=>$vo['uid'],'appconfig'=>'preparechapter'))}
+                    </if>
+                    <php>}</php>
+                  </div>
+                </li>
+              </volist>
+            </ul>
+<script type="text/javascript">var is_relink = true;</script>
+<script language="javascript" src="__PUBLIC__/js/desktop/relink.js"></script>
+<script>replace_link('.win');</script>

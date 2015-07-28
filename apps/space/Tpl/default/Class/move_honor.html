@@ -1,0 +1,64 @@
+<include file="../Public/_header" />
+<script type="text/javascript">
+var ctrl = function(){
+}
+ctrl.prototype = {
+	add:function(){
+		ui.box.load('__URL__&act=addbody&deptid={$deptid}',{title:"增加人物"});
+	}
+	}
+</script>
+<include file="../Public/_tab" />
+     <include file="../Public/_movestate_leftmenu" />
+     <div class="trunk_right_r">
+       <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_honor" /><span class="title">荣誉榜</span></div>
+       
+       <div class="trunk_right_inner">
+          <div class="right_content">
+           <volist name="data" id="vo">
+              <ul>
+                  <li><span class="honortitle"><a href="{:U('space/Class/showHonor',array(hid=>$vo['id'],classid=>$classid))}">{$vo.title}</a></span><span  id="honormanage">[{$vo.hTime|date="Y-m-d",###}]</span></li>
+                  <li class="headpic">{$vo['id']|getHonorList}</li>
+                  <li class="honor_content">{$vo.content|getShort="110"}<span class="honor_detil">>><a href="{:U('space/Class/showHonor',array(hid=>$vo['id'],classid=>$classid))}">详情</a></span></li>
+              </ul>
+          </volist>
+          <div class="clear10"></div>
+          <div class="page">{$html}</div>
+          <div class="clear10"></div>
+       </div>
+       </div>
+     </div>
+<include file="../Public/_footer" />             
+<script type="text/javascript">
+function clickshow(){
+				$('#add_announce').slideToggle('slow','swing');
+		}
+function checkData(){
+	var title = $("#title").val();
+	var content = $("#content").val();
+	if( !title || getLength(title.replace(/\s+/g,"")) == 0){
+		ui.error("标题不能为空！");
+		$("#title").focus();
+		return false;
+	}else if(checkPostContent(content) == ''){
+		ui.error("内容不能为空！");
+		$("#content").focus();
+		return false;
+	}
+	
+	// 过滤html，字串检测长度
+	function checkPostContent(content)
+	{
+		content = content.replace(/&nbsp;/g, "");
+		content = content.replace(/<br>/g, "");
+		content = content.replace(/<p>/g, "");
+		content = content.replace(/<\/p>/g, "");
+		return getLength(content);
+	}
+	
+}
+</script> 
+<script type="text/javascript">
+var c = new ctrl();
+</script>
+    

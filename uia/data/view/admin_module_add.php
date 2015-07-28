@@ -1,0 +1,149 @@
+<?php if(!defined('UC_ROOT')) exit('Access Denied');?>
+<?php include $this->gettpl('header');?>
+<style>
+td {
+	text-align: left;
+	padding-left: 10px;
+}
+</style>
+<form id="form1" method="post" onsubmit="return chkForm()">
+	<div id="editform" class="form">
+		<input class="mini-hidden" name="pid" value="<?php echo $pid;?>" />
+		<table style="width: 100%;">
+			<tr style="height: 30px;">
+				<td style="width:100px;">应用名称（英文）：</td>
+				<td style="width:180px;"><input style="width:200px" name="appName" class="mini-textbox" onvalidation="onCheckAppName" required="true" /></td>
+			</tr>
+			<tr style="height: 30px;">
+				<td>应用别名（中文）：</td>
+				<td><input style="width:200px" name="appAlias" class="mini-textbox" onvalidation="onCheckAppalias" required="true" /></td>
+			</tr>
+			<tr style="height: 30px;">	
+				<td>应用描述：</td>
+				<td><input style="width:200px" name="appDesc" class="mini-textbox" /></td>
+			</tr>
+			<tr style="height: 30px;">
+				<td>应用版本：</td>
+				<td><input style="width:200px" name="appVersion" class="mini-textbox" /></td>
+			</tr>
+			<tr style="height: 30px;">
+				<td>应用入口标识：</td>
+				<td><input style="width:200px" name="appEntry" class="mini-textbox" onvalidation="onCheckAppentry" required="true" /></td>
+			</tr>
+			<tr style="height: 30px;">
+				<td>注释说明：</td>
+				<td><input style="width:200px" name="remark" class="mini-textbox" /></td>
+			</tr>
+			<tr style="height: 60px;">
+				<td style="text-align: right; padding-top: 5px; padding-right: 20px;" colspan="6">
+					<a class="mini-button" href="javascript:onOk()">提交</a>
+					<a class="mini-button" href="javascript:onCancel()">取消</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+<script type="text/javascript">
+	mini.parse();
+
+	var form = new mini.Form("form1");
+
+	function SaveData() {
+		var o = form.getData(true);
+		form.validate();
+		if (form.isValid() == false)
+			return;
+		var json = mini.encode([ o ]);
+		$.ajax({
+			url : "admin.php?m=module&a=addNewModule",
+			type: 'POST',
+			data : {
+				data : json
+			},
+			cache : false,
+			success : function(text) {
+				CloseWindow("save");
+			},
+				error : function(jqXHR, textStatus, errorThrown) {
+				alert(jqXHR.responseText);
+				CloseWindow();
+			}
+		});
+	}
+
+	//标准方法接口定义
+	function SetData(data) {
+		if (data.action == "edit") {
+			data = mini.clone(data);
+			$.ajax({
+				url : "admin.php?m=module&a=getModuleById&id="
+						+ data.id,
+				cache : false,
+				success : function(text) {
+					var o = mini.decode(text);
+					form.setData(o);
+					form.setChanged(false);
+				}
+			});
+		}
+	}
+
+	function CloseWindow(action) {
+		if (action == "close" && form.isChanged()) {
+			if (confirm("数据被修改了，是否先保存？")) {
+				return false;
+			}
+		}
+		if (window.CloseOwnerWindow)
+			return window.CloseOwnerWindow(action);
+		else
+			window.close();
+	}
+	function onOk(e) {
+		SaveData();
+	}
+	function onCancel(e) {
+		CloseWindow("cancel");
+	}
+	
+	function onCheckAppName(e){
+		if(e.value != ''){
+			$.post('admin.php?m=module&a=checkAppname',
+				{appName:e.value,time:new Date().getTime() },
+				function(data){
+					if(data == 0){
+						alert('您输入的应用名称已经存在，请重新输入！');
+					}
+				});
+		}
+	}
+	
+	function onCheckAppalias(e){
+		if(e.value != ''){
+			$.post('admin.php?m=module&a=checkAppalias',
+				{appAlias:e.value,time:new Date().getTime() },
+				function(data){
+					if(data == 0){
+						alert('您输入的应用别名已经存在，请重新输入！');
+					}
+				});
+		}
+	}
+	
+	function onCheckAppentry(e){
+		if(e.value != ''){
+			$.post('admin.php?m=module&a=checkAppentry',
+				{appEntry:e.value,time:new Date().getTime() },			////////////////////////
+				function(data){
+					if(data == 0){
+						alert('您输入的应用入口标识已经存在，请重新输入！');
+					}
+				});
+		}
+	}
+	
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,235 @@
+<include file="../Public/_header" />
+<include file="__THEME__/desktop/_editor" />
+<script type="text/javascript" src="../Public/js/club.js"></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="topic_detail_page">
+			<div style="padding: 5px 0 0 10px;">
+				<img src="../Public/images/all_club.png">
+				<span><a href="{:U('club/Index/index')}" target="_self">社团首页</a> ></span>
+				<span><a href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}" target="_self">{$clubInfo.title}</a> ></span>
+				<span><a href="{:U('club/Topic/index', array('id'=>$clubInfo['id']))}" target="_self">帖子</a></span>
+			</div>
+			<div class="topic_detail_title_line">
+				<div class="topic_detail_title">{$topicInfo.title}</div>
+			</div>
+			<div class="topic_detail_reply">
+				<div class="topic_detail">
+					<div class="topic_detail_author">
+						<img src="{$topicInfo.uid|getUserFace=###,'b'}" />
+						<div class="username">
+							<a class="detail_author_name" href="{:U('home/Space/index',array(uid=>$topicInfo['uid']))}" title="{$topicInfo['uid']|getUserName}的个人主页" target="_blank">{$topicInfo['uid']|getUserName}</a>
+						</div>
+						<php>if($mid!=$topicInfo['uid'] && $topicInfo['uid']!=0){</php>
+						<div class="vusername follow_list_{$topicInfo.uid}" id="follow_list_{$topicInfo.uid}" style="text-align:center; padding:10px 0;">
+							<script>document.write(followState('{$topicInfo.followstate}','dolistfollow',{$topicInfo.uid}))</script>
+						</div>
+						<php>}</php>
+					</div>
+					<div class="topic_detail_content">
+						<div class="detail_floor"></div>
+						<div class="floor_num">1楼</div>
+						<div class="detail_content">{$topicInfo.content}</div>
+						<div class="detail_time">
+							<span>发表于</span>
+							<span style="color:#858585;">{$topicInfo.ctime|friendlyDate=###,'full'}</span>
+							<php>if( $replylimit == 1 ){</php>
+							<a class="topic_reply"  onclick="$('html').scrollTop(90000);_KISSY_['replycontent'].focus();">回复</a>&nbsp;
+							<php>}</php>
+							<php>if($topicInfo['uid']==$mid){</php>
+							({$topicInfo.whoreply})
+							<php>}</php>
+						</div>
+					</div>
+					<div class="c"></div>
+				</div>
+				<volist name="replyList.data" id="reply">
+				<div class="topic_reply_content">
+					<div class="topic_detail_author">
+						<img src="{$reply.uid|getUserFace=###,'b'}" />
+						<div class="username">
+							<a class="detail_author_name" href="{:U('home/Space/index',array(uid=>$reply['uid']))}" title="{$reply['uid']|getUserName}的个人主页" target="_blank">{$reply['uid']|getUserName}</a>
+						</div>
+						<php>if($mid!=$reply['uid'] && $reply['uid']!=0){</php>
+						<div class="vusername follow_list_{$reply.uid}" id="follow_list_{$reply.uid}" style="text-align:center; padding:10px 0;">
+							<script>document.write(followState('{$reply.followstate}','dolistfollow',{$reply.uid}))</script>
+						</div>
+						<php>}</php>
+						<!--<a class="add_focus"></a>-->
+					</div>
+					<div class="topic_detail_content">
+						<div class="detail_floor"></div>
+						<div class="floor_num">{$reply.floor}楼</div>
+						<div class="reply_content">{$reply.content}</div>
+						<div class="detail_time">
+							<span>发表于</span>
+							<span style="color:#858585;">{$reply.ctime|friendlyDate=###,'full'}</span>
+							<a class="topic_reply1" id="topic_reply1_{$reply.id}" replyid="{$reply.id}" <php>if( !empty( $reply['reply1'] ) ){echo 'style="display:none;"';}</php>>回复({$reply.reply1count})</a>
+							<a class="topic_reply_fold" id="topic_reply_fold_{$reply.id}" replyid="{$reply.id}" <php>if( empty( $reply['reply1'] ) ){echo 'style="display:none;"';}</php>>收起回复</a>
+						</div>
+						
+						<div class="all_reply1" <php>if( empty( $reply['reply1'] ) ){echo 'style="display:none;"';}</php> id="all_reply1_{$reply.id}">
+							
+							<volist name="reply.reply1" id="vo">
+							<div class="reply1_one">
+								<img src="{$vo.uid|getUserFace}" />
+								<div class="reply1_detail">
+									<div class="reply1_content username">
+										<a class="reply1_username" href="{:U('home/Space/index',array(uid=>$vo['uid']))}" title="{$vo['uid']|getUserName}的个人主页" target="_blank">{$vo['uid']|getUserName}</a>:
+										{$vo.content}
+									</div>
+									<div class="reply1_info">
+										<span class="reply1_time">{$vo.time}</span>
+										<!--<a class="reply1_reply">回复</a>-->
+									</div>
+								</div>
+								<div class="c"></div>
+							</div>
+							</volist>
+							
+							<!-- 评论 start -->
+							<div class="reply1_editarea" id="reply1_editarea">
+								<div class="reply1_edit" id="reply1_edit_{$reply.id}" contenteditable="true" style="height:40px;"></div>
+								<div class="reply1_area">								
+									<span class="reply1_pub_btn" replyid="{$reply.id}" topicid="{$reply.topicid}"></span>
+								</div>
+							</div>
+							<!-- 评论 end -->
+						</div>
+						
+					</div>
+					<div class="c"></div>
+				</div>
+				</volist>
+			</div>
+			<div class="page" style="text-align:center;margin-bottom:20px;">{$replyList.html}</div>
+			<php>if( $replylimit == 1 ){</php>
+			<div class="add_new_topic" id="add_new_topic_reply" style="width: 920px;margin: 10px;">
+				<form method="post" action="{:U('club/Topic/doAddTopicReply')}" id="addTopocReplyForm" enctype="multipart/form-data" style="margin: 10px 0 0 0;">
+					<table class="add_topic_table"> 
+						<tr>
+							<td><textarea id="replycontent" name="replycontent" style="height: 160px; width: 770px;"></textarea></td>
+						</tr>
+						<tr style="line-height:40px;">
+							<td><a class="fbiao_btn" id="doadd_reply_btn" topicid="{$topicInfo.id}"></a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<php>}</php>
+			<div class="c"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	loadEditor("replycontent");
+	$('#doadd_reply_btn').click(function(){
+		var content = getEditorContent('replycontent');
+		var url = $('#addTopocReplyForm').attr('action');
+		var topicid = $(this).attr('topicid');
+		if(!topicid){
+			ui.error("帖子错误!");
+			return false;
+		}
+		if(!content){
+			alert("请输入回复内容!");
+			return false;
+		}
+		if( content.indexOf('src="data:image')>0 ){
+			alert("内容请勿采取 截图粘贴 的方式!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: url,
+			data:{topicid: topicid, content: content},
+			success: function (data){
+				if( data == 1 ){
+					ui.success('回复成功!');
+					window.location.reload();
+				}else if(data == 0){
+					$.messager.alert('回复帖子','回复失败！'); 
+				}else{
+					$.messager.alert('回复帖子失败',data);
+				}
+			}
+		});
+	})
+	
+	$('.topic_reply1').click(function(){
+		var replyid = $(this).attr('replyid');
+		$("#topic_reply1_"+replyid).hide();
+		$("#topic_reply_fold_"+replyid).show();
+		$("#all_reply1_"+replyid).show(300);
+	})
+	
+	$('.topic_reply_fold').click(function(){
+		var replyid = $(this).attr('replyid');
+		$("#topic_reply1_"+replyid).show();
+		$("#topic_reply_fold_"+replyid).hide();
+		$("#all_reply1_"+replyid).hide(300);
+	})
+	
+	$('.reply1_pub_btn').click(function(){
+		var replyid = $(this).attr('replyid');
+		var topicid = $(this).attr('topicid');
+		var content = $("#reply1_edit_"+replyid).html();
+		if(!replyid || !topicid){
+			alert("回复错误!");
+			return false;
+		}
+		if(!content || content==""){
+			alert("回复内容不能为空!");
+			return false;
+		}
+		if( getLength(content)>100 ){
+			alert("回复内容不能超过100个字!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: "{:U('club/Topic/doAddReply1')}",
+			data:{topicid: topicid, content: content, replyid: replyid},
+			success: function (data){
+				if( data == 1 ){
+					ui.success('回复成功!');
+					window.location.reload();
+				}else if(data == 2){
+					alert("回复内容不能为空!");
+				}else if(data == 3){
+					alert("请输入文字内容!");
+				}else if(data == 0){
+					$.messager.alert('回复帖子','回复失败！'); 
+				}else{
+					$.messager.alert('回复帖子失败',data);
+				}
+			}
+		});
+	})
+
+	function dolistfollow(type,target,uid){
+		var html = '';
+		var target=target;
+		var uid=uid;
+		$("#follow_list_"+uid).html( '<img src="'+ _THEME_+'/images/icon_waiting.gif" width="15">' );
+		
+		$.post( U('weibo/Operate/follow') ,{uid:uid,type:type},function(txt){
+			if(txt=='12'){
+				html = followState('havefollow',target,uid);
+				followGroupSelectorBox(uid);
+			}else if(txt=='13'){
+				html = followState('eachfollow',target,uid);
+				followGroupSelectorBox(uid);
+			}else if(txt=='00'){
+				ui.error('对方不允许你关注');
+				html = followState('unfollow',target,uid);
+			}else{
+				html = followState('',target,uid);
+			}
+			$(".follow_list_"+uid).html( html );
+			
+		});
+	}
+</script>
+<script language="javascript" src="../Public/js/format.js?{$verhash}"></script>
+<include file="../Public/_footer" />

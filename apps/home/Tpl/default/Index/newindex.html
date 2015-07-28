@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>吉林建筑大学 - 结合展示</title>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/common.js?{$verhash}{:time()}"></script>
+<link rel="stylesheet" type="text/css" href="../Public/css/showindex.css"/>
+<script>
+$(document).ready(function(){
+	$('.as').click(function(){
+		var id = $(this).attr('id');
+		$('.weibo').css('display','none');
+		$('#weibo_'+id).css('display','block');
+		$('.as').removeClass('ashover');
+		$(this).addClass('ashover');
+	})	
+});
+</script>
+</head>
+
+<body>
+<div class="divc" style="margin-top:40px;background:white;">
+  <div class="divl">
+   	<div class="t1">
+       	<span>社区动态</span>
+      	<a href="javascript:;" id="1" class="as ashover">学生</a>
+        <a href="javascript:;" id="2" class="as">老师</a>
+    </div>
+    <php>$j = 1;</php>
+     <volist name="dynainfo" id="vo" key="i">
+     	<div class="weibo" id="weibo_{$j}" style="display:<neq name='j' value='1'>none</neq>">
+     	<ul class="weibolist" style="border-bottom:0px;">
+            <volist name="vo.weibos" id="weibo">
+            <li>
+           	  <span class="userpic"><img alt="{$weibo.uid|getUserName}" src="{$weibo.uid|getUserFace}" width="28" height="28" /></span>
+           	  <span class="username"><a style="color:#3089e3;" href="{:U('home/Space/index',array('uid'=>$weibo['uid']))}" title="{$weibo.uid|getUserName}" >{$weibo.uid|getUserName}</a></span>
+              <span class="wcntl"></span>
+              <span class="wcnt">{$weibo.content|formatUrl|format}</span>
+              <span class="wcntr"></span>
+              <div class="wtime">{$weibo.ctime|friendlyDate}</div>
+          </li>          
+          </volist>
+         </ul>
+         <ul class="videolist" style="border-top:0px;">
+         <volist name="vo.photos" id="photo">
+	       <li class="vli">
+	         <table width="122" border="0" cellspacing="0" cellpadding="0">
+	           <tr>
+	             <td height="103" align="center"><a href="{:U('photo/Index/photo',array(id=>$photo['id'],aid=>$photo['albumId'],uid=>$photo['userId'],nsb=>'yes'))}" title="{$photo.name}"><img src="__ROOT__/thumb.php?w=143&h=88&url=./data/uploads/{$photo.savepath}" width="122" height="90" /></a></td>
+	           </tr>
+	           <tr>
+	             <td height="20"><a class="asty3" href="{:U('photo/Index/photo',array(id=>$photo['id'],aid=>$photo['albumId'],uid=>$photo['userId'],nsb=>'yes'))}" title="{$photo.name}">{$photo.name|strSubstr=###,0,15}</a></td>
+	           </tr>
+	           <tr>
+	             <td height="20">作者：{$photo['userId']|getUserName}</td>
+	           </tr>
+	         </table>
+	       </li>
+	       </volist>       
+	       <li class="c"></li>
+	    </ul>
+         <php>$j = $j + 1;</php>
+         </div>
+     </volist>
+        
+     
+     <div class="t1">
+        	<span>社团动态</span>       		
+     </div>
+     <div class="grouplist">
+     	<div class="gl">
+       	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        	  <tr>
+        	    <td height="25" colspan="2" class="ti1">社团排行榜</td>
+        	    <td width="30%" align="center" class="ti2">成员数</td>
+      	    </tr>
+      	    <php>$group = 1;</php>
+      	    <volist name="hot_group_list" id="hot_group">
+        	  <tr>
+        	    <td width="15%" height="33" align="left"><img src="../Public/images/g{$group}.jpg" /></td>
+        	    <td width="55%"><a href="{:U('group/Topic/index',array('gid'=>$hot_group['id']))}" title="{$hot_group['name']}">{$hot_group['name']|getShort=12,'...'}</a></td>
+        	    <td align="center">{$hot_group['membercount']}</td>
+      	    </tr>
+      	    <php>$group = $group + 1;</php>
+      	    <php>if($group > 5){break;}</php>
+      	    </volist>
+      	  </table>
+     	</div>
+        <div class="gr">
+          <table width="355" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td height="25" colspan="4" class="ti1">社团热帖</td>
+            </tr>
+            <volist name="hot_thread_list" id="thread" key="i">
+            <tr>
+              <td width="12%" height="33" align="left"><img alt="{$thread['uid']|getUserName}" src="{$thread['uid']|getUserFace}" width="28" height="28" /></td>
+              <td width="35%"><a href="{:U('group/Topic/topic',array('gid'=>$thread['gid'],'tid'=>$thread['id']))}" title="{$thread['title']}" class="asty1">{$i}. {$thread['title']|getShort=###, 10, '...'}</a></td>
+              <td width="27%" align="right"><a href="{:U('group/Topic/index',array('gid'=>$hot_group['id']))}" title="{$thread['name']}" class="asty2">{$thread['name']|getShort=###,6,'...'}</a></td>
+              <td width="26%" align="center"><span class="wtime">{$thread['addtime']|friendlyDate}</span></td>
+            </tr>
+            <php>if($key > 3){break;}</php>
+            </volist>
+          </table>
+        </div>
+        <div class="c"></div>
+     </div>
+     
+    <div class="t2">
+     	<div class="t2b"><img src="../Public/images/t2l.jpg" width="10" height="34" /></div>
+        <div class="t2c">视频推荐</div>
+        <div class="t2b"><img src="../Public/images/t2r.jpg" width="10" height="34" /></div>
+     </div> 
+     <ul class="videolist">
+     	<volist name="hot_video" id="vo">
+     		<li class="vli">
+       	  <table width="122" border="0" cellspacing="0" cellpadding="0">
+        	  <tr>
+        	    <td height="103" align="center"><a href="{:U('square/Video/show',array('id'=>$vo['id'],'iframe'=>'yes'))}" title="{$vo.name}"><img onerror="imgVideoErr();" src="{$vo.pic_url}" width="122" height="90" /></a></td>
+      	    </tr>
+        	  <tr>
+        	    <td height="20"><a class="asty3" href="{:U('square/Video/show',array('id'=>$vo['id'],'iframe'=>'yes'))}" title="{$vo.name}">{$vo.name}</a></td>
+      	    </tr>
+        	  <tr>
+        	    <td height="20">{$vo.cTime|friendlyDate}</td>
+      	    </tr>
+      	  </table>
+        </li>           
+         </volist>     	       
+        <li class="c"></li>
+     </ul>  
+    </div>
+  <div class="divr">
+    	<div class="t3">
+        	<div class="t3b"><img src="../Public/images/t3l.jpg" width="15" height="32" /></div>
+            <div class="t3c">社区数据信息</div>
+            <div class="t3b"><img src="../Public/images/t3r.jpg" width="15" height="32" /></div>
+</div>
+        <div class="tc1">
+       	  <table width="250" border="0" cellspacing="0" cellpadding="0">
+        	  <tr>
+        	    <td height="22" colspan="2" class="pad11" style="border-bottom:1px solid #e6e6e6;">共 <span class="asty1">{$allnum}</span> 个资源</td>
+       	    </tr>
+        	  <tr>
+        	    <td width="121" height="28" class="pad11">文章资源 <span class="asty1">{$blognum}</span></td>
+        	    <td width="129" class="pad11">图片素材<span class="asty1"> {$photonum} </span></td>
+      	    </tr>
+        	  <tr>
+        	    <td height="28" class="pad11">视频资源 <span class="asty1">{$videonum}</span></td>
+        	    <td class="pad11">社团 <span class="asty1">{$groupnum}</span></td>
+      	    </tr>
+        	  <tr>
+        	    <td height="28" class="pad11">帖子 <span class="asty1">{$topicnum}</span></td>
+        	    <td class="pad11">动态 <span class="asty1">{$weibonum}</span></td>
+      	    </tr>
+        	  <tr>
+        	    <td height="44" colspan="2" bgcolor="#f0f0f0" class="pad11" style="line-height:20px;">截止到今天 <php>echo date('Y-m-d');</php> 日，吉建社区已经<br />
+       	        迎来了 <strong><span class="colorred">{$usercount}</span></strong> 名用户，欢迎您的 <span class="colorred">加入</span> ！</td>
+       	    </tr>
+      	  </table>
+        </div>
+               
+        
+    <div class="t3">
+        	<div class="t3b"><img src="../Public/images/t3l.jpg" width="15" height="32" /></div>
+            <div class="t3c">社区明星</div>
+            <div class="t3b"><img src="../Public/images/t3r.jpg" width="15" height="32" /></div>
+      </div>
+      <ul class="tc2">
+      	<volist name="hot_user" id="vo">
+        	<li class="tc2li">
+           	<table width="59" border="0" cellspacing="0" cellpadding="0">
+            	  <tr>
+            	    <td height="59"><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" title="{$vo.uid|getUserName}" ><img alt="{$vo.uid|getUserName}" src="{$vo.uid|getUserFace}" width="59" height="59" /></a></td>
+       	      </tr>
+            	  <tr>
+            	    <td height="30" align="center"><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" title="{$vo.uid|getUserName}"  class="asty3">{$vo.uid|getUserName}</a></td>
+       	      </tr>
+       	    </table>
+          </li>        
+      </volist>
+          <li class="c"></li>
+      </ul>
+      
+       <div class="t3">
+        	<div class="t3b"><img src="../Public/images/t3l.jpg" width="15" height="32" /></div>
+            <div class="t3c">最新文章</div>
+            <div class="t3b"><img src="../Public/images/t3r.jpg" width="15" height="32" /></div>
+      </div>
+      
+       <div class="tc1">
+       	 <table width="250" border="0" cellspacing="0" cellpadding="0">
+       	 <volist name="new_blog" id="blog">
+       	   <tr>
+       	     <td width="191" height="25" align="left"><a href="{:U('blog/Index/show',array('id'=>$blog['id'],'mid'=>$blog['uid'],'nsl'=>'yes'))}" class="asty3">{$blog['title']|getShort=###,14,'...'}</a></td>
+       	     <td width="59" align="left" class="asty1">{$blog['readcount']}点击</td>
+   	       </tr>
+   	       </volist>
+   	     </table>
+    </div>
+    
+     <div class="t3">
+        	<div class="t3b"><img src="../Public/images/t3l.jpg" width="15" height="32" /></div>
+            <div class="t3c">热门文章</div>
+            <div class="t3b"><img src="../Public/images/t3r.jpg" width="15" height="32" /></div>
+    </div>
+      
+       <div class="tc1">
+       	 <table width="250" border="0" cellspacing="0" cellpadding="0">
+       	   <volist name="hot_blog" id="blog">
+       	   <tr>
+       	     <td width="191" height="25" align="left"><a href="{:U('blog/Index/show',array('id'=>$blog['id'],'mid'=>$blog['uid'],'nsl'=>'yes'))}" class="asty3">{$blog['title']|getShort=###,14,'...'}</a></td>
+       	     <td width="59" align="left" class="asty1">{$blog['readcount']}点击</td>
+   	       </tr>
+   	       </volist>                    
+   	     </table>
+    </div>
+    
+    <!-- 
+    <div class="t3">
+        	<div class="t3b"><img src="../Public/images/t3l.jpg" width="15" height="32" /></div>
+            <div class="t3c">最新资源</div>
+            <div class="t3b"><img src="../Public/images/t3r.jpg" width="15" height="32" /></div>
+    </div>
+      
+       <div class="tc1">
+       	 <table width="250" border="0" cellspacing="0" cellpadding="0">
+       	   <tr>
+       	     <td width="191" height="25" align="left"><a href="#" class="asty3"> 昆嵛山踏青活动(25)</a></td>
+       	     <td width="59" align="left" class="asty1">256点击</td>
+   	       </tr>
+           <tr>
+       	     <td width="191" height="25" align="left"><a href="#" class="asty3">昆嵛山踏青活动(25)</a></td>
+       	     <td width="59" align="left" class="asty1">256点击</td>
+   	       </tr>
+           <tr>
+       	     <td width="191" height="25" align="left"><a href="#" class="asty3">昆嵛山踏青活动(25)</a></td>
+       	     <td width="59" align="left" class="asty1">256点击</td>
+   	       </tr>
+           <tr>
+       	     <td width="191" height="25" align="left"><a href="#" class="asty3">昆嵛山踏青活动(25)</a></td>
+       	     <td width="59" align="left" class="asty1">256点击</td>
+   	       </tr>
+           <tr>
+       	     <td width="191" height="25" align="left"><a href="#" class="asty3">昆嵛山踏青活动(25)</a></td>
+       	     <td width="59" align="left" class="asty1">256点击</td>
+   	       </tr>                     
+   	     </table>
+    </div>
+     --> 
+    </div>
+	<div class="c"></div>
+</div>
+<script language="javascript" src="../Public/js/format.js"></script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000083231'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000083231' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>

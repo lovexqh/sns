@@ -1,0 +1,111 @@
+/*导航部分html代码,编写css代码可以参考此代码
+<div onselectstart="return event.srcElement.type== 'text';" unselectable="on" id="navbar" style="width: 220px; left: 558px; top: 341px;">
+	<!--此处为导航的边框-->
+	<div class="LEFT_TOP"></div>
+	<div class="TOP"></div>
+	<div class="RIGHT_TOP"></div>
+	<div class="RIGHT"></div>
+	<div class="RIGHT_BOTTOM"></div>
+	<div class="BOTTOM"></div>
+	<div class="LEFT_BOTTOM"></div>
+	<div class="LEFT"></div>
+	<div class="CENTER"></div>
+	<div id="indicator_Container">
+		<!--系统导航部分-->
+		<a id="indicator_sys_3" class="navItem sysindicator" navid="sys_3" index="1" title="桌面导航" style="left: -1440px;">
+			<img onload="fixpng(this)" src="data/attachment/appimg/201209/30/121509g69kgu9jdoo4fflp.png" class="sysindicator_icon">
+			<div class="sysindicator_text">桌面导航</div>
+		</a>
+		<!--用户导航部分(根据设置的桌面数生成)-->
+		<a id="indicator_1" class="navItem indicator indicator_1" navid="1" index="2" title="桌面1" style="left: -1440px;">1</a>
+		<a id="indicator_2" class="navItem indicator indicator_2 indicator_current indicator_current_3" navid="2" index="3" title="桌面2">2</a>
+		<a id="indicator_3" class="navItem indicator indicator_3" navid="3" index="4" title="桌面3">3</a>
+		<a id="indicator_4" class="navItem indicator indicator_4" navid="4" index="5" title="桌面4">4</a>
+		<a id="indicator_5" class="navItem indicator indicator_5" navid="5" index="6" title="桌面5">5</a>
+		 
+	</div>
+</div>
+*/
+#navbar_flag {
+	width: 10px;/*标志说明
+		width:10px:表示导航左右居中，#navbar .left不起作用;
+	*/
+}
+#navbar{
+	top:0px;
+	left:0px; 
+	height:25px;
+	position:absolute;
+	text-align:center;
+	z-index:4001;
+	overflow:visible;
+	
+}
+#navbar a{
+   text-decoration:none;
+   outline:none;
+}
+
+#indicator_Container{
+	float:left;
+	z-index:10;
+}
+
+#navbar .indicator{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/dzz/off.png', sizingMethod='image');
+	background-image:url(off.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	float:left;height:22px;margin:0;width:22px;color:#FFF;font-family:宋体;font-size:12px;line-height:22px;overflow:hidden;outline:none;text-align:center;
+	margin:9px 5px ;
+	}
+
+#navbar .indicator:hover{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/dzz/offon.png', sizingMethod='image');
+	background-image:url(offon.png) !important;
+	background-image:none;
+	background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+}
+
+#navbar .indicator.indicator_current{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/dzz/on.png', sizingMethod='image');
+	background-image:url(on.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	float:left;height:32px;margin:0;width:32px;color:#FFF;font-family:宋体;font-size:12px;line-height:32px;overflow:hidden;outline:none;text-align:center;
+	margin:4px 5px;
+}
+
+#navbar .sysindicator{
+	float:left;
+	cursor:pointer;display:inline-block;
+	float:left;height:40px;margin:0;width:auto;color:#FFF;font-family:宋体;font-size:12px;line-height:40px;overflow:hidden;outline:none;text-align:center;
+	padding:0 10px;
+	color:#FFF;
+}
+
+#navbar .sysindicator_text {
+	float: left;
+	height: 40px;
+	line-height:40px;
+	color:#FFF; 
+	text-shadow: 0px 0px 1px #000,0px 0px 1px #000;
+}
+
+#navbar .sysindicator_icon {
+	float: left;
+	height: 16px;
+	width: 18px;
+	margin:12px 0px;
+}
+
+#navbar .sysindicator.indicator_current ,#navbar .sysindicator:hover {
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/navbar/default/bg_3.png', sizingMethod='scale');
+	background-image:url(bg_3.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}

@@ -1,0 +1,35 @@
+<!--创建相册弹窗-->
+<dl class="pop_create_album">
+        <dd>
+            <label>相册名称：</label>
+            <input  name="name" type="text" class="TextH20" id="name"  style="width:300px;" onfocus="this.className='Text2'" onblur="this.className='TextH20'" maxlength="20" value="{$album.name}" />
+        </dd>
+        <dd>
+            <label>访问权限：</label>
+            <select name="privacy" id="privacy" onchange="javascript:changePrivacy(this);">
+                <option value="1" <if condition="1 eq $album['privacy']">selected</if>  >所有人可见</option>
+                <!--<option value="2" <if condition="2 eq $album['privacy']">selected</if>  >仅我关注可见</option>-->
+                <option value="3" <if condition="3 eq $album['privacy']">selected</if>  >仅自己可见</option>
+                <option value="4" <if condition="4 eq $album['privacy']">selected</if>  >凭密码访问</option>
+            </select>
+        </dd>
+        <dd id="need_password" style="display:<if condition="4 eq $album['privacy']">block<else />none</if>;">
+            <label>设置密码：</label>
+            <input name="privacy_data" type="password" class="TextH20" value="{$album['privacy_data']}" id="textfield3" style="width:300px;" onblur="this.className='TextH20'" onfocus="this.className='Text2'" />
+        </dd>
+        <dd style="text-align: right;">
+            <input type="hidden" id="albumid" name="albumid" value="{$album.id}">
+            <input type="button" onclick="do_create_album()" class="btn_b" value="确定">
+            <input type="button" onclick="ui.box.close()" class="btn_b" value="取消">
+        </dd>
+</dl>
+<!--End 创建相册弹窗-->
+<script type="text/javascript">
+function changePrivacy(obj){
+	if(obj.value==4){
+		$('#need_password').show();
+	}else{
+		$('#need_password').hide();
+	}
+}
+</script>

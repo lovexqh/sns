@@ -1,0 +1,109 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+   <include file="../Public/_member_leftmenu" />
+   <div class="trunk_right_m">
+	 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="mem_tea" /><span class="title">班主任</span></div>
+	 <div class="clear10"></div>
+	 <table width="98%" border="0" cellspacing="0" cellpadding="0" class="memberlist">
+	   <volist name="teacherlist" id="vo">
+		 <if condition="($vo[dutyid] eq 0)">
+		   <tr>
+			<td width="140" align="center" height="145">
+			  <table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td height="80" colspan="2" valign="top">
+						<if condition="($vo['uid'] eq '')">
+							<img src="__THEME__/images/user_pic_bigjj.gif" class="head_pic"/>
+						<else />
+							<space uid="vo.uid" class="head_pic">{uavatar=b}</space>
+						</if>
+					</td>
+				</tr>
+				<tr>
+					<td height="40">
+                    	<if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+							<a href="javascript:ui.sendclassmessage({$vo['uid']})" class="priv">发私信</a>
+                        <else/>
+                        &nbsp;
+                        </if>
+					</td>
+				</tr>
+			  </table>
+			</td>
+			<td align="left" valign="top">
+			  <table border="0" cellpadding="0" cellspacing="0" align="left">
+				<tr>
+					<td height="25">班主任：{$vo[name]}</td>
+				</tr>
+				<tr>
+					<td height="25">班主任寄语：<font color="#2A8FDD">{$classinfo['sns_class']['message']}</font></td>
+				</tr>
+				<if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)"> 
+                <tr>
+					<td>
+						<div id="follow_list_{$vo.uid}" class="follow_{$vo.uid}">
+							<script>document.write(followStateClass('{:getFollowState($mid, $vo[uid])}','dolistfollowClass',{$vo.uid}))</script>
+						</div>
+					</td>
+				</tr>
+                </if>
+			  </table>
+			</td>
+		  </tr>
+		 </if>
+		 </volist>
+		</table>
+	 <div class="clear10"></div>
+	 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="mem_tea" /><span class="title">教师</span></div>
+	 <div class="clear10"></div>
+	 <table width="98%" border="0" cellspacing="0" cellpadding="0" class="memberlist">
+		 <tr>
+		  <volist name="adminlist" id="vo" key='k'>
+			<td width="120" align="center" height="145">
+			  <table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td height="80" colspan="2" valign="top">
+						<if condition="($vo['uid'] eq '')">
+							<img src="__THEME__/images/user_pic_bigjj.gif" class="head_pic"/>
+						<else />
+							<space uid="vo.uid" class="head_pic">{uavatar=b}</space>
+						</if>
+					</td>
+				</tr>
+				<tr>
+					<td height="40">
+						<if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+							<a href="javascript:ui.sendclassmessage({$vo['uid']})" class="priv">发私信</a>
+                        </if>
+					</td>
+				</tr>
+			  </table>
+			</td>
+			<td width="215" align="left" valign="top">
+			  <table border="0" cellpadding="0" cellspacing="0" align="left">
+				<tr>
+					<td height="25">教师姓名：{$vo['name']}</td>
+				</tr>
+				<tr>
+					<td>代课课程：{$vo['courseid']|get_Datacodename}</td>
+				</tr>
+                <if condition="($vo['uid'] neq '') and ($vo['uid'] neq $uid)">
+				<tr>
+					<td>
+						<div id="follow_list_{$vo.uid}" class="follow_{$vo.uid}">
+							<script>document.write(followStateClass('{:getFollowState($mid, $vo[uid])}','dolistfollowClass',{$vo.uid}))</script>
+						</div>
+					</td>
+				</tr>
+                </if>
+			  </table>
+			</td>
+			<php>if($k%2==0){</php>
+			</tr><tr>
+			<php>}</php>
+		  </volist>
+		  </tr>
+		</table>
+	 <div class="clear10"></div>
+   </div>
+<include file="../Public/_footer" />

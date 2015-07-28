@@ -1,0 +1,262 @@
+#miniCard {
+	left:100px;
+	top:100px;
+	width:220px;
+	height:auto;
+	overflow:visible;
+	position:absolute;
+	z-index:999999;
+}
+.miniCard_avatar {
+	float:left;
+	display:inline;
+	margin:5px 5px 0 5px;
+	width:40px;
+	height:40px;
+	padding:1px;
+	border:1px solid #999;
+	background:white;
+	box-shadow:1px 1px 3px #999;
+	-moz-box-shadow:1px 1px 3px #999;
+	-webkit-box-shadow:1px 1px 3px #999
+}
+.miniCard_name {
+	width:155px;
+	height:18px;
+	overflow:hidden
+}
+.miniCard_name_inner {
+	width:500px;
+	color:#004869
+}
+.miniCard_signature {
+	width:155px;
+	height:18px;
+	overflow:hidden
+}
+.miniCard_signature_inner {
+	width:800px
+}
+.miniCard_signature_inner {
+	height:18px;
+	overflow:hidden
+}
+.miniCard_clientType_WebQQ {
+	height:20px;
+	overflow:hidden
+}
+.miniCard_clientType_Phone {
+	height:20px;
+	overflow:hidden
+}
+.miniCard_clientType_WebQQ .miniCard_clientTypeIcon {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	background:url('images/dim.png') no-repeat -2px -140px
+}
+.miniCard_clientType_Phone .miniCard_clientTypeIcon {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	background:url('images/dim.png') no-repeat -22px -140px
+}
+.miniCard_clientType_QQforPad .miniCard_clientTypeIcon {
+	display:inline;
+	float:left;
+	width:16px;
+	height:16px;
+	overflow:hidden;
+	background:url('images/dim.png') no-repeat -80px -142px
+}
+.ie6 .miniCard_clientType_QQforPad .miniCard_clientTypeIcon, .ie7 .miniCard_clientType_QQforPad .miniCard_clientTypeIcon {
+	background:url('images/dim.gif') no-repeat -80px -142px
+}
+.ie6 .miniCard_clientType_WebQQ .miniCard_clientTypeIcon, .ie7 .miniCard_clientType_WebQQ .miniCard_clientTypeIcon {
+	background:url('images/dim.gif') no-repeat -2px -140px
+}
+.ie6 .miniCard_clientType_Phone .miniCard_clientTypeIcon, .ie7 .miniCard_clientType_Phone .miniCard_clientTypeIcon {
+	background:url('images/dim.gif') no-repeat -22px -140px
+}
+.miniCard_clientType_innerWrapper {
+	display:none
+}
+.miniCard_level {
+	width:155px;
+	height:18px;
+	overflow:hidden
+}
+.miniCard_level_div {
+	display:inline;
+	float:left;
+	margin:0 1px 0 0;
+	width:16px;
+	height:16px;
+	overflow:hidden
+}
+/*.miniCard_level_upinfo {
+	display:block;
+	float:right;
+	text-align:left;
+	width:155px
+}
+.miniCard_level_upinfo {
+	display:block;
+	float:right;
+	text-align:left;
+	width:155px
+}*/
+.miniCard_level_upinfo_div {
+	display:inline
+}
+.miniCard_quickLink {
+	margin:5px 0 0 0;
+	width:100%;
+	height:22px
+}
+.miniCard_quickLink a {
+	float:left;
+	display:inline-block;
+	margin:2px 0 0 5px;
+	width:16px;
+	height:16px;
+	border:1px solid #FFF;
+	overflow:hidden;
+	cursor:pointer
+}
+.ie6 .miniCard_quickLink a {
+	border:1px solid white
+}
+.miniCard_quickLink a:hover {
+	border:1px solid blue
+}
+
+.miniCard_poke {
+	background:url('images/dim.png') no-repeat 0px -122px
+}
+.ie6 .miniCard_poke, .ie7 .miniCard_poke {
+	background:url('images/dim.gif') no-repeat 0px -122px
+}
+.miniCard_visit {
+	background:url('images/dim.png') no-repeat -16px -122px
+}
+.ie6 .miniCard_visit, .ie7 .miniCard_visit {
+	background:url('images/dim.gif') no-repeat -16px -122px
+}
+.miniCard_sendmsg {
+	background:url('images/dim.png') no-repeat -32px -122px
+}
+.ie6 .miniCard_sendmsg, .ie7 .miniCard_sendmsg {
+	background:url('images/dim.gif') no-repeat -32px -122px
+}
+
+.panel_1 {
+    display: none;
+    height: 100%;
+    overflow: visible;
+    padding: 0 6px 30px 9px;
+    position: absolute;
+}
+.panel_1_outer {
+    background: none repeat scroll 0 0 transparent;
+    height: 100%;
+    padding: 5px 5px 5px 4px;
+    position: relative;
+}
+.ie6 .panel_1_outer {
+    height: 120px;
+}
+.panel_1_inner {
+    border: 1px solid #333333;
+    box-shadow: 0 2px 2px 0 #999999;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+.panel_1_container {
+    border: 0 none;
+    display: none;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+.panel_1 {
+    border: 0 none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+.panel_1_center {
+    height: 100%;
+    width: 100%;
+}
+.panel_1_t {
+    height: 5px;
+    left: 0;
+    overflow: hidden;
+    top: -5px;
+    width: 100%;
+}
+.panel_1_rt {
+    height: 5px;
+    overflow: hidden;
+    right: -5px;
+    top: -5px;
+    width: 5px;
+}
+.panel_1_r {
+    height: 100%;
+    overflow: hidden;
+    right: -5px;
+    width: 5px;
+}
+.panel_1_rb {
+    bottom: -5px;
+    height: 5px;
+    overflow: hidden;
+    right: -5px;
+    width: 5px;
+}
+.panel_1_b {
+    bottom: -5px;
+    height: 5px;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+}
+.panel_1_lb {
+    bottom: -5px;
+    height: 5px;
+    left: -5px;
+    overflow: hidden;
+    width: 5px;
+}
+.panel_1_l {
+    height: 100%;
+    left: -5px;
+    overflow: hidden;
+    width: 5px;
+}
+.panel_1_lt {
+    height: 5px;
+    left: -5px;
+    overflow: hidden;
+    top: -5px;
+    width: 5px;
+}
+.panel_1_content {
+    background-color: #FFFFFF;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}

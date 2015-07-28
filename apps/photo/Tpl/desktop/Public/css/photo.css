@@ -1,0 +1,136 @@
+html, body, ul, li, span, a, table, tr, td, div, input, textarea, form, h1, h2, h3, h4, dl, dt, dd, p{margin:0px; padding: 0px; font-family: "Microsoft YaHei","微软雅黑",helvetica,arial,verdana,tahoma,sans-serif; font-size: 14px;}
+ul{ list-style: none;}
+a{ text-decoration: none;}
+img{border: 0px;}
+.bk{ background: #fafafa;}
+body{ background: #ecece9;}
+
+/*创建分组弹窗*/
+.pop_add_group{padding:10px 0 20px;width:400px;overflow:hidden;*zoom:1}
+.pop_add_group dd,.pop_add_group dt{padding:10px 20px 0;overflow:hidden;*zoom:1}
+/*设置分组弹窗*/
+.layerBox{width:400px;overflow:hidden;*zoom:1;padding:20px 10px 20px;}
+.layerBox .mt_btn{text-align:center;margin:20px 0 0}
+.pop_Set_group{text-align:left;border:#ddd solid 1px;background-color:#f3f3f3;padding:10px;margin:0 10px}
+.pop_Set_group dt{padding:0 0 10px 0}
+.pop_Set_group dd{background-color: #FFFEBD;border: 1px solid #C8C8C8;padding: 10px}
+.pop_Set_group .ck{vertical-align:middle;margin:-2px 0 0 0}
+.message_text{padding:5px}
+
+
+.divall{ width: 100%; height: auto;}
+.divcenter{ width: 960px; height: auto; margin:0px auto; overflow: hidden;}
+.clear{ width: 100%; height: 1px; overflow: hidden; clear: both;}
+
+.header_top{ height: 150px; background: url("../images/topbk.jpg") no-repeat; width: 960px; margin: 10px auto;}
+.header_info{ width: 334px; height:170px; background: url("../images/tmbk.png"); padding: 13px 20px; text-align: left;}
+.hi_tit{ height: 50px; line-height: 50px; clear: both; font-size: 22px; color: #fefefe;}
+.hi_pic{ width: 61px; height: 61px; border: 2px solid #ffffff; float: left; margin-right: 15px;}
+.hi_info{ line-height: 30px; color: white; text-align: left; height: 61px; float: left; font-size: 13px;}
+.hi_list{ height: 50px; padding-top: 8px; clear: both;}
+.hi_list li{ width: 64px; height: 48px; border: 1px solid white; float: left; margin-right: 10px;}
+.hi_list li img{ width: 64px; height: 48px;}
+
+.headernav{ height: 40px; background: #0072c6; margin-bottom: 10px;}
+.hdnavl{ float: left;}
+.hdnavl li{ height: 40px; line-height: 40px; padding: 0 25px; float: left;}
+.hdnavl li a{ color: white; font-size: 14px;}
+.hdnavl .hover{ background: url("../images/navbk.jpg") repeat-x;}
+.hdnavl .hover a{ color: black;}
+
+.search{ height: 30px;background: #fafafa; margin: 4px auto; border: 1px solid #cccccc; border-radius: 5px; float: right;  margin-right: 10px; width: 280px; overflow: hidden;}
+.searchkey{ width: 180px; padding-left: 25px;background: #fafafa; color: #bbbbbb; font-size: 15px; float: left; border: 0px; height: 30px; line-height: 30px;}
+.searchbtn{ width: 50px; height: 30px; border: 0px; float: right; background: url("../images/searchbtn.jpg") no-repeat;}
+
+.topnav{ height: 45px; clear: both; margin-bottom: 5px; border-radius: 5px; overflow: hidden; border: 1px solid #eceaea; width: 958px;}
+.topnav li{ height: 45px; line-height: 45px; padding: 0 25px; border-right: 1px solid #eceaea; float: left;}
+.topnav li img{ margin: 0 8px -2px 0;}
+.topnav a{ display: block;}
+.topnav li a{ color: #474444;}
+.topnav .hover{ background: #aed5f0;}
+.topnav .hover a{ color: white;}
+
+#container{ height: auto; min-height: 300px;}
+.item{ width: 228px; border: 1px solid #d2d2d2; background: white; margin:15px 10px 10px 0; float: left; color: #8c7e7e; border-radius: 3px; overflow: hidden; box-shadow: 0px 5px 5px #ccc;}
+.item a{ color: #444444; font-size: 12px;}
+.item .t{padding-left:10px; font-size: 12px; line-height: 20px;}
+
+#infscr-loading{display: none !important;}
+
+
+.photo{ border-top: 1px solid #d2d2d2; padding-top: 15px;}
+.poleft{ width: 740px; height: auto; min-height: 300px; float: left; margin-right: 15px;  position: relative; color: #5c5c5c;}
+.bkwhite{ background: white;}
+.poluser, .polcnt, .pollike, .comment{ height: auto; padding: 14px; border: 1px solid #d2d2d2; clear: both; width: 710px;margin-bottom: 10px; position: relative;}
+.polcnt{ position: relative;}
+.poluser img{ margin-right: 15px;}
+.poluser span{ display: block; float: left;}
+.line-height25{ line-height: 25px; }
+.vusername{ position: absolute; right: 20px; top: 20px; }
+.userfocus a{ color: white;}
+.poltitle{ line-height: 55px; font-size: 22px; color: #0152b7;}
+.polinfo{ line-height: 25px; color: #757575; font-size: 13px;}
+.polinfo img{margin-right:5px;}
+.polpic{ width: 710px; height: auto;padding: 20px 0;}
+.wholike{ width: 720px; height: auto; overflow-x: auto; overflow-y: hidden; margin-top: 10px;}
+.wholike td a{ display: block;width: 60px; height: 60px; border: 5px solid #e0e1db; overflow: hidden; margin-right: 10px;}
+.wholike .hover a{border: 5px solid #7fb6dd;}
+
+.poright{ width: 183px; float: left; min-height: 300px;padding: 10px; border: 1px solid #d2d2d2; background: white;}
+.portop{ line-height: 34px; font-size: 18px; color: #090909;}
+.categorylist{ width: 195px; height: auto;}
+.categorylist li{ clear: both; line-height: 20px; text-align: left;}
+.categorylist li span{ display: block; float: left; margin-right: 10px; line-height: 25px;}
+.categorylist li a{ color: #090909;}
+.height50{ height: 50px; background: white;}
+
+.right{ float: right;}
+.comment{ padding: 0px; font-size: 12px; width: 740px;}
+.message_text{ height: 80px;}
+.feedBox{padding:0 10px; font-size: 12px;}
+.box_comment{ background: none;}
+.polalbum{ margin-bottom: 10px; padding: 5px 15px;}
+.albumtop{ height: 30px; line-height: 30px; background: white;}
+.polphoto{ width: 740px; height: auto;}
+
+/*
+#pre {
+    cursor: url(../images/pre.cur), auto;
+    display: block;
+    float: left;
+    height: 100%;
+    opacity: 0;
+    width: 330px;
+    z-index: 2000;
+     background: none;
+}
+#next {
+    cursor: url(../images/next.cur), auto;
+    display: block;
+    float: left;
+    height: 100%;
+    opacity: 0;
+    width: 330px;
+    z-index: 2000;
+    background: none;
+}
+*/
+.pop_create_album{
+    width:420px;padding:20px; text-align: left; line-height: 20px;
+}
+.pop_create_album dd{ height: 30px; clear: both;}
+.albumlist{ padding: 15px; background: #efefef; height: auto;}
+
+.uploadtop{ background: #69b7f1; height: 35px; line-height: 35px; text-align: center; font-size: 14px; color: white;}
+.uploadcnt{ min-height: 300px;padding: 20px; width: 918px; border: 1px solid #d2d2d2; margin-top: 15px; clear: both; background: #ffffff;}
+.uploadcnt .c1, .uploadcnt .c2{ float: left;}
+.uploadcnt .c1{ height: 30px; line-height: 28px;}
+.uploadbtn{ height: 30px; line-height: 30px; text-align: right; padding-right: 20px;}
+.uploadbtn a{ display: block; float: right; height: 30px; line-height: 30px; background:#69b7f1; padding: 0 15px; color: white; margin-right: 10px;}
+.selpic{ float: right;}
+.pic{ width: 208px; height: 400px;float: left; margin:0 9px 15px 0; border: 1px solid #d2d2d2; padding: 5px; font-size: 12px; position: relative;}
+.pic input{ width: 200px; border: 0px; border-bottom: 1px solid #d2d2d2;}
+.pic textarea{ width: 200px; border: 1px solid #d2d2d2;}
+.photoname{ line-height: 25px; color: #666666;}
+.photoinfo{ line-height: 30px; color: #666666;}
+.photodelete{ position: absolute;}

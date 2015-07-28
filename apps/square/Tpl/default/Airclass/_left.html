@@ -1,0 +1,23 @@
+      <div class="sidebar_box">
+        <h4>基础课堂分类</h4>
+        <div>
+        <table>
+            <tr>
+                <td>
+                    <div id="rb" class="notetree eastbar" style="overflow:hidden">
+                        <UL id="navtree" class="ztree" style=" margin-left:10px;overflow-x: auto; overflow-y: hidden; padding-bottom:20px; min-height:350px;"></UL>
+                    </div>
+                </td>
+            </tr>
+       </table>
+        </div>
+      </div>
+      <div class="sidebar_box">
+        <h4>专题课堂分类</h4>
+        <ul class="lesson">
+          <volist name="categoryList" id='vo'>
+          <li><a href="{:U('square/Airclass/classes',array('category'=>$vo[id]))}">{$vo.title}</a></li>
+          </volist>
+          <div class="clear"></div>
+        </ul>
+      </div>

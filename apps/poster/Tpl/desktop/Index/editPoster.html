@@ -1,0 +1,115 @@
+<include file="__THEME__/desktop/_header" />
+<include file="__THEME__/desktop/_editor" />
+<link rel="stylesheet" href="../Public/poster.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="../Public/poster.js" ></script>
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin -->
+  <div class="main no_l"><!-- 画布 begin -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create"><a href="{:U('poster/index/addPosterSort')}" class="btn_poster_c"></a></div>
+		<include file="../Public/_isHotList" />
+      </div>
+      <div class="mainbox_appC">
+  <div class=page_title> <!-- page_title begin -->
+      <div class="explain" style="width:900px;margin-top: 20px;"><span class="cGray2">修改<span style="color:#FF6E0E;">{$name}</span>--{$explain}</span> 
+      <!-- <div style="float:right;margin-right:10px;"><a href="javascript:history.back( -1 )" style="color:#1A5FAC;">返回上一页</a></div> --></div>
+  </div><!-- page_title end -->
+  <div class="groupBox">
+    <div class="boxL poster_boxL">
+  	<div class="box1">
+  	<php>if(!empty($smallType)){
+      $hasType = "true";
+    }</php>
+    <form method="post" action="{:U('poster/index/doEditPoster')}"  enctype="multipart/form-data" onsubmit="return desktopCheck(this);">
+        <table>
+        	<tr>
+        		<php>if(!empty($smallType)){</php>
+        			<td style="width:70px;"><span class="txt_impt" style="color:#FF0000;">*</span>类别：</td>
+        			<td>
+        				<?php foreach($smallType as $cate){ ?>
+        					<input class="text" type="radio" name="type" text="{$cate.name}" value="{$cate.id}" <php>if($poster['type']==$cate['id']) echo "checked";</php> />{$cate.name}
+        				<?php } ?>
+        			</td>
+        		<php>}</php>
+        	</tr>
+        	<tr>
+        		<td><span class="txt_impt" style="color:#FF0000">*</span>标题：</td>
+        		<td><input name="title" type="text" style="width:300px;" class="easyui-validatebox"  data-options="required:true" missingMessage="请输入标题！" id="title" value="{$poster.title}" maxlength="60" /></td>
+        	</tr>
+        	<tr>
+        		<td><span class="txt_impt" style="color:#FF0000">*</span>地点：</td>
+        		<td>
+        			<input id="province" name="province" value="{$address.provincenn}" class="easyui-combobox"  style="height:29px;" data-options="  
+														            valueField: 'area_id',  
+														            textField: 'title',  
+														            editable:false,
+														            url: '{:U('poster/Area/ajaxArea&pid=0')}' ,
+														            onSelect: function(rec){ 
+														            	var url = U('poster/Area/ajaxArea',['pid='+rec.area_id]); 
+														                $('#cityshow').combobox('reload', url);  
+														                (($('#cityshow').next()).children('input')).val('');
+														            }" />  
+			    	<input id="cityshow" name="cityshow" value="{$address.city}" class="easyui-combobox" required="true" missingMessage="请选择城市！"  style="height:29px;" data-options="
+			    																																						valueField:'area_id',
+			    																																						textField:'title',
+			    																																						editable:false,
+			    																																						url: '{:U('poster/Area/ajaxArea&pid=-1')}' ,
+			    																																						onSelect:function(crec){
+			    																																						var url = U('poster/Area/ajaxArea',['pid='+crec.area_id]); 
+			    																																						}" />
+			    	<input type="hidden" id="city" name="city" value="{$address.province}"/>
+        		</td>
+        	</tr>
+        	<tr>
+        		<td>截止时间：</td>
+        		<td><input id="deadline" name="deadline" value="{$poster.deadline}" type="text" class="text" id="deadline" onfocus="rcalendar(this,'full');" style="width:169px" /></td>
+        	</tr>
+        	<tr>
+        		<td><span class="txt_impt" style="color:#FF0000">*</span>详细介绍：</td>
+        		<td><textarea class="text" id="explain" name="explain" style="width:85%;height:150px">{$poster.content}</textarea></td>
+        	</tr>
+        	<tr>
+        		 <td colspan="2">
+        			<volist name="extraField" id="vo">
+            			{:W($vo['widget'],$vo)}
+          			</volist>	
+        		</td>
+        	</tr>
+        	<tr>
+        		<td>联系方式：</td>
+        		<td>
+        			<input name="contact" type="text" value="{$poster.contact}" class="text" id="contact" size="30" />
+                	<br /><span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX</span>
+        		</td>
+        	</tr>
+        	<tr>
+        		<td>图片：</td>
+        		<td><input name="cover" type="file" class="text" /></td>
+        	</tr>
+        	<tr>
+        		<td colspan="2">
+        			<input type="hidden" name="id"  value="{$poster.id}"/>
+            		<a type="submit" class="easyui-linkbutton medium-primary" >确认发起</a>
+        		</td>
+        	</tr>
+        </table>
+        </form>
+    </div>
+    </div> <!-- end  -->
+ </div>
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/desktop/_footer" /> 
+<script>
+$(document).ready(function(){
+    loadEditor("explain");
+});
+
+</script>

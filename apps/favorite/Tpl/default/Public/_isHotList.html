@@ -1,0 +1,15 @@
+<div class="mainbox_appR">	
+    <div class="mod_class clearfix">
+      <h2>按应用分类收藏信息</h2>
+      <ul class="rankBlog">
+      	<li>
+          <h3><a href="{:U('favourite/Index/Index')}" class="MIB_linkar">全部收藏</a></h3>
+        </li>
+      	<volist name="applist" id="alist">      	
+        <li>
+          <h3><a href="{:U('favorite/Index/Index', array('appname'=>$alist['appname']))}" class="MIB_linkar">{$alist['title']}</a></h3>
+        </li>
+        </volist>
+      </ul>
+    </div>
+</div>

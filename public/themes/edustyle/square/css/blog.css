@@ -1,0 +1,56 @@
+html, body, ul, li, span, a, table, tr, td, div, input, textarea, form, h1, h2, h3, h4{margin:0px; padding: 0px; font-family: "Microsoft YaHei","微软雅黑",helvetica,arial,verdana,tahoma,sans-serif;;}
+ul{ list-style: none;}
+a{ text-decoration: none;}
+img{border: 0px;}
+
+.divall{ width: 100%; height: auto;}
+.divcenter{ width: 960px; height: auto; margin:0px auto; overflow: hidden;}
+.clear{ width: 100%; height: 1px; overflow: hidden; clear: both;}
+
+.header_top{ height: 80px; overflow: hidden; clear: both;}
+.logo{float:left;}
+.search{ float: right; height: auto;}
+
+
+.nav_wrapper{ height: 40px; background: #1071a6; clear: both;margin-bottom: 15px;}
+.nav{ height: 40px;}
+.nav li{ float: left;padding:8px 2px;}
+.nav li a{ color: white; font-size: 14px;}
+
+.blogleft{
+    border-right: 1px solid #DDDDDD;
+    float: left;
+    margin: 0 19px 0 0;
+    overflow: hidden;
+    padding-right: 19px;
+    width: 620px;
+    min-height: 200px;
+}
+.topblog{ width: 992px; height: 150px; clear: both;margin-bottom: 15px;}
+.topblog li{ width: 216px; height: 150px; margin-right: 32px; float: left; background: #cccccc; }
+
+.blogtitle h1{
+    height: 75px;
+    line-height: 75px;
+}
+.bloglist{width: 620px; height: auto; clear: both;}
+.bloglist li{ border-bottom: 1px dashed #dedede; padding-bottom: 15px;}
+.bloglist li h1{ font-size: 28px; margin:20px 0 10px; line-height: 40px; font-weight: normal;}
+.bloglist li h1 a{ color: #000000;}
+.bloglist li h4{ color: #999999;margin: 0 0 15px; font-weight: normal;font-size: 12px;}
+.bloglist li h4 span{ margin:0 8px;}
+.bloglist li .cnt{ color: #666666;font-size: 14px; line-height: 25px;}
+
+.blogright{
+    float: left;
+    overflow: hidden;
+    width: 300px;
+    min-height: 200px;
+}
+.blogrtop{ height: 35px; border-bottom: 2px solid #cccccc; position: relative;}
+.btpinfo{ padding:8px 10px; font-size: 18px; border-bottom: 2px solid #1071a6; position: absolute; left: 0px; bottom:-2px; }
+.btprlist{ height: auto;}
+.btprlist li{ background: url(../images/list_blue.gif) no-repeat 2px 16px; padding: 3px 10px 3px 10px; clear: both;}
+.btprlist li a{ color: #000000; font-size: 12px;}
+
+

@@ -1,0 +1,21 @@
+﻿<div style="display:none">
+ <div id="search_nav"> 
+   <strong>您当前的位置：</strong>
+   <span>博客中心首页</span>
+   <volist name="path" id="vo">
+   	<span>>{$vo.cname}</span>
+   </volist>
+   </div>
+</div>
+<div class="box width">
+        <table border="0" cellpadding="0" cellspacing="0" class="category_list">
+         <volist name="blogcontent.data" id="li">
+          <tr style="height:35px;">
+            <td><a href="{:U('/Article/myblog',array(blogid=>$li['id']))}"style="color:#999999;">[{$li.id|getcategory_blog}]</a></td>
+            <td width="59%"><a href="{:U('/Article/context',array(id=>$li['id']))}"style="color:#666666;">{$li.title}</a></td>
+            <td>{$li.cTime|friendlyDate}({$li.commentCount}/{$li.readCount})</td>
+          </tr>
+		</volist>
+        </table>
+        <ul class="page">{$blogcontent.html}</ul>
+      </div>

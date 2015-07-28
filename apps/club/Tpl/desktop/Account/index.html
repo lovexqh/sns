@@ -1,0 +1,158 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/date/WdatePicker.js"></script>
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_account_page">
+			<include file="../Public/_clubHeader" />
+			<div class="topic_header">
+				<span class="topic_header_word">财务</span>
+			</div>
+			<div class="account_page">
+				<div class="account_header">
+					<span class="account_balance">余额: {$balance} 元</span>
+					<form class="account_search" action="{:U('club/Account/index', array('id'=>$clubInfo['id']))}" method="post" enctype="multipart/form-data" onsubmit="return chkDateSearch(this);">
+						<input type="text" id="starttime" name="starttime" onFocus="WdatePicker({readOnly:true})" />
+						<span class="date_connect">-</span>
+						<input type="text" id="endtime" name="endtime" onFocus="WdatePicker({readOnly:true})" />
+						<input class="search_account_btn" type="submit" ></a>
+					</form>
+					<div class="c"></div>
+				</div>
+				<table class="account_tb">
+					<tr class="account_tb_header">
+						<td style="width:390px;">名目</td>
+						<td style="width:100px;">时间</td>
+						<td style="width:80px;">类型</td>
+						<td style="width:80px;">总计</td>
+						<td class="account_header_operate">操作</td>
+					</tr>
+					<php>if( empty($accountList['data']) ){</php>
+					<tr><td colspan="5" style="font-size:14px;line-height:30px;padding-left:10px;">暂无数据!</td></tr>
+					<php>}</php>
+					<volist name="accountList.data" id="account">
+					<tr class="account_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td class="account_title">{$account.title}</td>
+						<td class="account_time">{$account.addtime|friendlyDate=###,'ymd'}</td>
+						<td class="account_type">{$account.typename}</td>
+						<td class="account_money">{$account.totalmoney}</td>
+						<td class="account_operate">
+							<a href="{:U('club/Account/accountDetail', array('clubid'=>$clubInfo['id'],'id'=>$account['id']))}" class="account_check">查看</a>
+							<php>if($member['type']==1 || $member['type']==2){</php>
+							<a class="account_del" onclick="delAccount({$account.id});">删除</a>
+							<php>}</php>
+						</td>
+					</tr>
+					</volist>
+				</table>
+				<php>if(!empty($accountList['html'])){</php>
+				<div class="page" style="text-align:center;margin-bottom:20px;">{$accountList.html}</div>
+				<php>}</php>
+			</div>
+			<php>if($member['type']==1 || $member['type']==2){</php>
+			<div class="add_account" id="add_account_area">
+				<form method="post" action="{:U('club/Account/doAddAccount')}" id="addAccountForm"  enctype="multipart/form-data">
+					<table class="add_account_tb">
+						<tr>
+							<td><em style="color:#FF0000;">*</em></td>
+							<td style="width:60px;">名目:</td>
+							<td><input type="text" name="title" id="account_title" style="width:400px;" /></td>
+						</tr>
+						<tr>
+							<td><em style="color:#FF0000;">*</em></td>
+							<td>时间:</td>
+							<td><input type="text" id="account_addtime" name="addtime" onFocus="WdatePicker({readOnly:true})" /></td>
+						</tr>
+						<tr>
+							<td><em style="color:#FF0000;">*</em></td>
+							<td>类型:</td>
+							<td>
+								<input type="radio" name="type" value="1" checked="checked" />收入&nbsp;&nbsp;
+								<input type="radio" name="type" value="2" />支出
+							</td>
+						</tr>
+						<tr style="line-height:40px;">
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><a class="publish_btn" id="doadd_account_btn" clubid="{$clubInfo.id}"></a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<php>}</php>
+			<div class="c"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#add_account_btn').click(function(){
+		$('body,html').animate({
+			scrollTop : 1000
+		},'fast');
+	})
+
+	$('#doadd_account_btn').click(function(){
+		var title = $('#account_title').val();
+		var addtime = $('#account_addtime').val();
+		var type = $('input[name="type"]:checked').val();
+		var url = $('#addAccountForm').attr('action');
+		var clubid = $(this).attr('clubid');
+		if(!clubid){
+			ui.error("社团错误!");
+			return false;
+		}
+		if(!title){
+			alert("请输入名目!");
+			return false;
+		}
+		if( getLength(title)>30 ){
+			alert("名目不能超过30个字!");
+			return false;
+		}
+		if(!addtime){
+			alert("请选择日期!");
+			return false;
+		}
+		var year = addtime.substr(0,4);
+		var month = addtime.substr(5,2);
+		var day = addtime.substr(8,2);
+		var time = year + month + day;
+		var d = new Date();
+		var nowYear = d.getFullYear();
+		if(year < 2000){
+			alert("选择的日期过早!");
+			return false;
+		}
+		var nowMonth = d.getMonth()+1;
+		var nowDay = d.getDate();
+		if(nowMonth<10){
+			nowMonth = "0"+nowMonth;
+		}else{
+			nowMonth = ""+nowMonth;
+		}
+		var now = nowYear + nowMonth + nowDay;
+		if(time > now){
+			alert("选择的日期不能超过当前日期!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: url,
+			data:{clubid: clubid, title: title, addtime: addtime, type: type},
+			success: function (data){
+				var rs = eval("(" + data + ")");
+				if( rs.num == 1 ){
+					ui.success('发布成功!');
+					window.location.href = U('club/Account/accountDetail&clubid='+rs.clubid+"&id="+rs.accountid);
+					//window.location.reload();
+				}else if(rs.num == 0){
+					$.messager.alert('添加名目','添加失败！'); 
+				}else{
+					$.messager.alert('添加名目失败',data);
+				}
+			}
+		});
+	})
+	
+</script>
+<include file="../Public/_footer" />

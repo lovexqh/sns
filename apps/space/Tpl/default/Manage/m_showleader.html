@@ -1,0 +1,26 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="re">
+		  <tr>
+			 <td class="line_border"  align="center">学生</td>
+			 <td class="line_border">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tab_th">
+				  <tr>
+					 <th width="15%" height="25" align="center">姓名</th>
+					 <th width="85%"  align="center">身份</th>
+				  </tr>
+				  <volist name="leader" id="vo">
+				  <tr>
+					 <td width="15%" height="25"  align="center">{$vo.identityid|get_namebyidentityid=###,3}</td>
+					 <td style=" padding-left:10px;">
+					 	<volist name="vo['positionid']" id="v">
+							<php>if($i!=1){</php>、<php>}</php>{$v.positionid|get_positionname}
+						</volist>
+					 </td>
+				  </tr>
+				  </volist>
+				</table>
+			 </td>
+		  </tr>
+		</table>
+<div class="clear"></div>
+
+	

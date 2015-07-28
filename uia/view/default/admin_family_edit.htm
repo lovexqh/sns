@@ -1,0 +1,143 @@
+{template header}
+
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+
+<script type="text/javascript">  
+$(document).ready(function(){
+    $("#chkall").click(function() {  
+       $('.checkbox').attr("checked",this.checked);   
+      });  
+     $(".checkbox").click(function(){ 
+     $("#chkall").attr("checked",$(".checkbox").length == $(".checkbox:checked").length ? true : false);
+     }); 
+	  
+	 $("#EditSubmitBtn").click(function(){ 
+		$.post('admin.php?m=family&a=EditSubmit',$('#EditSubmit').serialize(),function(data){
+				if(data.code==1){
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+				}else{
+					$('#errmesg').addClass("errormsg");
+					$('#errmesg').html("<span>"+data.msg+"</span>");
+					$('#errmesg').focus();
+				}
+
+	    },'json');	
+     });
+	 
+});  
+</script> 
+
+	<script type="text/javascript">
+	    function _GET(id) {
+	     return document.getElementById(id);
+      }
+		function switchbtn(btn) {
+			_GET('srchuserdiv').style.display = btn == 'srch' ? '' : 'none';
+			_GET('srchuserdiv').className = btn == 'srch' ? 'tabcontentcur' : '' ;
+			_GET('srchuserbtn').className = btn == 'srch' ? 'tabcurrent' : '';
+		
+			_GET('readexceldiv').style.display = btn == 'read' ? '' : 'none';
+			_GET('readexceldiv').className = btn == 'read' ? 'tabcontentcur' : '';
+			_GET('readexcelbtn').className = btn == 'read' ? 'tabcurrent' : '';
+		}
+	</script>
+
+	<div class="container" >
+    <div class="" id="errmesg"></div>
+    
+		<!--{if $adduser}--><script type="text/javascript">switchbtn('add');</script><!--{/if}-->
+          <br />
+          
+          
+		<h3>家庭信息 <a href="admin.php?m=student&a=Edit&identityid=$familyid"class="sgbtn">返回</a></h3>
+		<div class="mainbox">
+
+               <form  id="EditSubmit">
+               	<input type="hidden" name="familyid" value="$family[familyid]">
+                <input type="hidden" name="formhash" value="{FORMHASH}">
+                
+				<table class="datalist fixwidth">
+                   <tr>
+                       <td>家庭联系人</td>
+                       <td><input  type="text" name="jtlxr" value="$family[jtlxr]" class="Atxt" maxlength="40" /></td>
+                       <td>家庭电话</td>
+                       <td><input  type="text" name="jtdh" value="$family[jtdh]" class="Atxt" maxlength="40" /></td>
+                    </tr>
+                    <tr>
+                       <td>家庭住址</td>
+                       <td><input  type="text" name="jtzz" value="$family[jtzz]" class="Atxt" maxlength="20" /></td>
+                       <td>家庭邮政编码</td>
+                       <td><input  type="text" name="jtyzbm" value="$family[jtyzbm]" class="Atxt" maxlength="20" /></td>
+                    </tr>
+                    <tr>
+                       <td>家庭电子信箱</td>
+                       <td><input  type="text" name="jtdzxx" value="$family[jtdzxx]" class="Atxt" maxlength="40" /></td>
+                       <td>家庭人口</td>
+                       <td><input  type="text" name="jtrk" value="$family[jtrk]" class="Atxt" maxlength="40" /></td>
+                    </tr>
+                    <tr>
+                       <td>家庭主要收入来源</td>
+                       <td><input  type="text" name="jtzysrly" value="$family[jtzysrly]" class="Atxt" maxlength="40" /></td>
+                       <td>家庭月收入金额</td>
+                       <td><input  type="text" name="jtysrje" value="$family[jtysrje]" class="Atxt" maxlength="11" /></td>
+                    </tr>
+                    <tr>
+                       <td>家庭年收入金额</td>
+                       <td><input  type="text" name="jtnsrje" value="$family[jtnsrje]" class="Atxt" maxlength="11" /></td>
+                       <td>离家最近火车站</td>
+                       <td><input  type="text" name="ljzjhcz" value="$family[ljzjhcz]" class="Atxt" maxlength="40" /></td>
+                    </tr>
+
+					<tr class="nobg">
+                         <td><input type="button" value="{lang submit}" class = "btn" id="EditSubmitBtn" /></td>
+                  
+					</tr>
+				</table>
+				</form>
+		</div>
+        
+        
+        <h3>家庭成员信息   <a href="admin.php?m=familymember&a=Add&familyid=$family[familyid]">添加</a></h3>
+		<div class="mainbox">
+			<!--{if $familymemberList}-->
+				<form action="admin.php?m=family&a=Delete&familyid=$family[familyid]" onsubmit="return confirm('确定要删除家庭成员信息吗?');" method="post">
+				<input type="hidden" name="formhash" value="{FORMHASH}">
+				<table class="datalist fixwidth">
+					<tr>
+						<th><input type="checkbox" name="chkall" id="chkall"/><label for="chkall">{lang delete}</label></th>
+						<th>姓名</th>
+						<th>关系</th>
+						<th>联系电话</th>
+						<th>身份证号码</th>
+                        <th>电子邮箱</th>
+						<th>编辑</th>
+					</tr>
+					<!--{loop $familymemberList $familymember}-->
+						<tr>
+							<td class="option"><input type="checkbox" name="delete[]" value="$familymember[identityid]" class="checkbox" /></td>
+							<td>$familymember[xm]</td>
+							<td>$familymember[jtgxm]</td>
+							<td>$familymember[lxdh]</td>
+							<td>$familymember[sfzjh]</td>
+							<td>$familymember[dzxx]</td>
+							<td><a href="admin.php?m=familymember&a=Edit&identityid=$familymember[identityid]">{lang edit}</a></td>
+						</tr>
+					<!--{/loop}-->
+					<tr class="nobg">
+						<td><input type="submit" value="{lang submit}" class="btn" /></td>
+						<td class="tdpage" colspan="7">$multipage</td>
+					</tr>
+				</table>
+				</form>
+			<!--{else}-->
+				<div class="note">
+					<p class="i">{lang list_empty}</p>
+				</div>
+			<!--{/if}-->
+		</div>
+        
+        
+	</div>
+
+
+{template footer}

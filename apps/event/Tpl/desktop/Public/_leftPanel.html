@@ -1,0 +1,33 @@
+	<!-- 左侧收起按钮 start -->
+	<div class="panel-tool">
+		<a class="layout-button-left" href="javascript:void(0)" onclick="panel.collapse('nv_dsk','west');"></a>
+	</div>
+	<!-- 左侧收起按钮 end -->
+	<!-- 左侧列表推荐 start -->
+	<div class="panel-list-box bottom-line">
+		<h2><i class="icon-event"></i>我的活动</h2>
+		<ul class="list">
+	       <li><a href="javascript:void(0)" onclick="tabs.iframe('热门活动','{:U('event/Index/index',array('order'=>'hot'))}')">热门活动</a></li>
+	       <li><a href="javascript:void(0)" onclick="tabs.iframe('我发起的活动','{:U('event/Index/personal',array('action'=>'launch'))}')">我发起的活动</a></li>
+	       <li><a href="javascript:void(0)" onclick="tabs.iframe('我参与的活动','{:U('event/Index/personal', array('action'=>'join'))}')">我参与的活动</a></li>
+	       <li><a href="javascript:void(0)" onclick="tabs.iframe('我关注的活动','{:U('event/Index/personal',array('action'=>'att'))}')">我关注的活动</a></li>
+		   <li><a href="javascript:void(0)" onclick="tabs.iframe('我收藏的活动','{:U('event/Index/favorite')}')">我收藏的活动</a></li>
+		</ul>
+	</div>
+	<!-- 左侧列表推荐 end -->
+    <!-- 左侧列表分类 start -->
+	<div class="panel-list-box bottom-line">
+		<h2><i class="icon-event-class"></i>活动分类</h2>
+		<ul style = "margin-left:50px;">
+      <li><a href="javascript:void(0)" onclick="tabs.iframe('全部','{:U('//')}')">全部</a></li>
+          <php> foreach($category as $k=>$cate){ </php>
+
+          <li><a href="javascript:void(0)" onclick="tabs.iframe('{$cate}','{:U('//', array('cid'=>$k))}')">{$cate}</a></li>
+
+          <php> } </php>
+        </ul>
+       
+   
+　　　
+	</div>
+	<!-- 左侧列表分类 end -->

@@ -1,0 +1,85 @@
+<div id="index" class="edit_club_page">
+	<form method="post" action="{:U('club/Index/doEditClub')}" id="editClubForm" enctype="multipart/form-data">
+		<table class="creat_club_tb edit_club_tb">
+			<tr>
+				<td class="creat_td_1">名称:</td>
+				<td class="creat_td_2">
+					<input type="text" id="clubname" class="text" value="{$clubinfo.title}" style="width:220px;background-color:#EEEEEE;" readonly="readonly" />
+					<!--<span style="color:#FF0000;margin-left:12px;" id="chk_name_rs"></span>-->
+				</td>
+			</tr>
+			<tr>
+				<td>描述:</td>
+				<td><input type="text" name="clubdesc" id="clubdesc" class="text" value="{$clubinfo.description}" style="width:260px;;" /></td>
+			</tr>
+			<tr>
+				<td>头像:</td>
+				<td>
+					<div style="float:left;"><img style="max-width:45px;max-height:45px;" src="{$clubinfo['logo']|get_photo_url}"/></div>
+					<div style="float:left;margin-left:8px;width:218px;">
+		                <div style="line-height:14px;">换用其它图标：</div>
+		            	<input type="file" name="logo" id="clublogo" style="width: 217px;;border:1px solid #BDC7C8;" />
+		            </div>
+				</td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>类型:</td>
+				<td>{$clubinfo.typename}</td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>发布帖子:</td>
+				<td>
+					<input type="radio" name="pubtopic" value="0" <php>if($clubinfo['pubtopic']==0){echo 'checked';}</php> />社团成员&nbsp;&nbsp;
+					<input type="radio" name="pubtopic" value="1" <php>if($clubinfo['pubtopic']==1){echo 'checked';}</php> />所有人
+				</td>
+			</tr>
+			<tr style="line-height:30px;">
+				<td>上传文档:</td>
+				<td>
+					<input type="radio" name="updoc" value="0" <php>if($clubinfo['updoc']==0){echo 'checked';}</php> />仅管理员&nbsp;&nbsp;
+					<input type="radio" name="updoc" value="1" <php>if($clubinfo['updoc']==1){echo 'checked';}</php> />社团成员
+				</td>
+			</tr>
+			<!--
+			<tr style="line-height:30px;">
+				<td>下载文档:</td>
+				<td>
+					<input type="radio" name="downdoc" value="0" <php>if($clubinfo['downdoc']==0){echo 'checked';}</php>  />社团成员&nbsp;&nbsp;
+					<input type="radio" name="downdoc" value="1" <php>if($clubinfo['downdoc']==1){echo 'checked';}</php> />所有人
+				</td>
+			</tr>
+			-->
+			<tr class="creat_club_btn">
+				<td colspan="2">
+					<input type="hidden" name="clubid" value="{$clubinfo.id}" />
+					<input type="button" onclick="creatClub();" value="确定" />
+   					<input type="button" onclick="ui.box.close();" value="取消">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+var enable = true;
+
+function creatClub(){
+	var clubdesc = $("#clubdesc").val();
+	var clublogo = $("#clublogo").val();
+	if( getLength(clubdesc)>60 ){
+		alert("社团描述不能超过60个字!");
+		return false;
+	}
+	//判断选择的文件类型
+	if(clublogo){
+		var lastword = clublogo.lastIndexOf(".");
+		var logotype = clublogo.substring(lastword,clublogo.length).toUpperCase();
+		if(logotype != ".BMP" && logotype != ".PNG" && logotype != ".GIF" && logotype != ".JPG" && logotype != ".JPEG"){ 
+			alert("图片限于bmp,png,gif,jpeg,jpg格式");
+			return false;
+	    }
+	}
+	$('#editClubForm').submit();
+	
+}
+
+</script>

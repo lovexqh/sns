@@ -1,0 +1,69 @@
+<include file="../Public/_header" />
+<style type="text/css">
+.pic_click_right{cursor: url('../Public/images/point_right.cur'), auto;height: 100%;position: absolute;right: 0;top: 0;width: 180px;z-index: 9999;}
+.pic_click_left{cursor: url('../Public/images/point_left.cur'), auto;height: 100%;left: 0;position: absolute;top: 0;width: 180px;z-index: 9999;}
+</style>
+<div class="center">
+	<!-- 头部begin -->
+	<include file="../Public/_top" />
+	<!-- 头部end -->
+	<!-- 左侧begin -->
+	<div class="main_left">
+		<div class="addBlog">
+			<span style="float: left;font-size: 14px;line-height: 40px;">共有 <span class="point">{$blogList['count']}</span> 篇博客</span>
+			<php>if((checkMember($societyInfo['id']))==1){</php>
+            <a class="asty3" href="javascript:;" onclick="top.OpenBrowser ('{:U("blog/Index/post",array("iframe"=>"yes"))}','发表博客', 'width=1024,height=550,titlebutton=close|max|min');"></a>
+            <php>}</php>
+		</div>
+		<div class="blog">
+			<ul>
+			<php>if(empty($blogList['data'])){echo '暂无博客！';}</php>
+            	<volist name="blogList['data']" id="vo">
+					<li id="topic_{$vo.id}">
+                        <div class="user_icon">
+                            <p><img src="{$vo.uid|getUserFace}" /></p>
+                            <p style="font-size: 13px;">
+                            <a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="face" href="javascript:void(0);">{$vo.uid|getUserName}&nbsp;</a>
+                            </p>
+                        </div>
+                        <div class="blog_content">
+                            <div style="font-size: 16px;color: #4582c5;line-height: 25px;"><a class="asty3" href="javascript:;" onclick="top.OpenBrowser ('{:U("blog/Index/show",array("id"=>$vo["id"],"mid"=>$vo["uid"],"nsl"=>"yes"))}','{$vo.title}', 'width=1024,height=550,titlebutton=close|max|min');">{$vo.title}</a></div>
+                            <div style="font-size: 14px;line-height: 23px;margin-bottom: 5px;min-height: 30px;">{$vo.content|text|mStr=###,200}</div>
+                        <php>if(!empty($vo['imglist'])){</php>
+							<div class="topic_pic" style="margin-left: 0px;">
+								<volist name="vo.imglist" id="img">
+								<img class="topic_pic_img" src="{$img.url}" id="smallpic_{$vo.id}_{$img.num}" topicid="{$vo.id}" imgnum="{$img.num}">
+								<div class="big_pic_area" id="bigpic_{$vo.id}_{$img.num}">
+									<a class="big_pic_fold" topicid="{$vo.id}" imgnum="{$img.num}">收起</a>
+									<div class="c"></div>
+									<div class="big_pic_show">
+										<img src="{$img.url}" style="max-height:340px;">
+										<php>if($img['num']==2 || $img['num']==3){</php>
+										<div class="pic_click_left" topicid="{$vo.id}" imgnum="{$img.num}"></div>
+										<php>}</php>
+										<php>if(($img['num']==1 && $vo['imgcount']>1)||($img['num']==2&&$vo['imgcount']>2)){</php>
+										<div class="pic_click_right" topicid="{$vo.id}" imgnum="{$img.num}"></div>
+										<php>}</php>
+									</div>
+								</div>
+								</volist>
+							</div>
+							<php>}</php>
+                            <div style="margin-bottom: 10px;">
+                                <span style="color: #8D8D8D"><em class="time"></em>发表于 {$vo.cTime|date="Y-m-d H:i",###} | <span>阅读({$vo.readCount})</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>评论({$vo.commentCount})</span></span>
+                            </div>
+                        </div>
+					</li>
+            	</volist>
+			</ul>
+            <div class="page">{$blogList.html}</div>
+		</div>
+	</div>
+	<!-- 左侧end -->
+
+	<!-- 右侧begin -->
+	<include file="../Public/_right" />
+	<!-- 右侧end -->
+	<div style="clear: both;"></div>
+</div>
+<include file="../Public/_footer" />

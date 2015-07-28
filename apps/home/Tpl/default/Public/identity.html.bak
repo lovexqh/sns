@@ -1,0 +1,62 @@
+<include file="__THEME__/desktop/header" />
+<div class="registerPicBg">
+	<img src="__THEME__/desktop/images/register/backgroup.gif" width="1026" />
+<!-- end .registerPicBg --></div>
+<div class="registerBox">
+	<h2>新用户注册</h2>
+	<div class="progressBar">
+		<ul>
+			<li class="checked"><i>1</i><span>选择角色</span></li>
+			<li><i>2</i><span>填写基本信息</span></li>
+			<li><i>3</i><span>验证基本信息</span></li>
+			<li><i>4</i><span>看看推荐的人</span></li>
+			<li><i>5</i><span>注册完成</span></li>
+		</ul>
+		<div class="clear"></div>
+	<!-- end .progressBar --></div>
+	
+<php>$regInfo=model('Xdata')->lget('register');</php>
+<php>if($invite_info){</php>  	  
+<!-- 邀请加入显示邀请人的信息 -->
+    <div class="invite_userInfo">
+		<div class="left mt10 ml10" style="width:100px;">
+			<a href="{:U('home/Space/index', array('uid'=>$invite_info['uid']))}" target="_blank">
+               <img style="width:80px; height:80px;" src="{$invite_info.uid|getUserFace='big'}" />
+            </a>
+		</div>
+		<div class="left mt10 ml10">
+			<div class="info">
+	  		    <div class="f14px lh30 mb10"><strong>hi, 我是{$invite_info.uid|getUserName}</strong></div>
+                <div class="f14px lh20">这里貌似挺给力的，快来注册一个吧！</div>
+    		</div>
+		</div>
+    </div>	
+<php>}</php> 
+<!-- 邀请加入显示邀请人的信息结束 -->
+	<div class="identityBox">
+		<!--
+		<div class="realname_area">
+			<div class="reg_type_word">实名注册:</div>
+			<ul>
+				<li>
+					<a href="{:U('home/Public/register', array('identity'=>'student'))}" class="student" hidefocus style="margin-left:64px;"></a>
+					<span class="identityword stuiden">我是学生</span>
+				</li>
+				<li>
+					<a href="{:U('home/Public/register', array('identity'=>'teacher'))}" class="teacher" hidefocus style="margin-left:64px;"></a>
+					<span class="identityword">我是老师</span>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		-->
+		<div class="openreg_area">
+			<div class="reg_type_word">注册:</div>
+			<a href="{:U('home/Public/register', array('identity'=>'visitor'))}" style="font-size:18px;" class="guest"></a>
+			<span class="guestword">我要注册</span>
+		</div>
+	<!-- end .identityBox --></div>
+	
+	<include file="_footer" />
+<!-- end .registerBox --></div>
+<include file="__THEME__/desktop/footer" />

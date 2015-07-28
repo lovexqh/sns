@@ -1,0 +1,440 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<!-- 全局风格CSS -->
+<include file="__THEME__/member/header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="http://127.0.0.1/EDU-SNS/public/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/myfocus/myfocus-2.0.4.min.js"></script>
+<script type="text/javascript">
+//设置
+myFocus.set({
+	id:'top_ad_left',//ID
+	pattern:'mF_dleung'//风格
+});
+</script>
+<!-- 验证码js -->
+<script type="text/javascript">
+/*标签切换函数*/
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('li').removeClass('on');
+	$(obj).parent().parent().parent().find('.context').hide();
+	$(obj).parent().addClass('on');
+	$("#con-"+id).show();	
+}
+function change_dyna(id){
+			$('.dyna_menu').removeClass('on');
+			$('#dmenu_'+id).addClass('on');
+			$('#dyna_'+id).show();
+			$('.dyna_bcont').hide();
+			$('#dyna_'+id).show();
+		}
+</script>
+<link href="__THEME__/square/css/i_index.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="__THEME__/favicon.ico" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<!-- 全局风格CSS -->
+<link href="__THEME__/member/css/index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/myfocus/myfocus-2.0.4.min.js"></script>
+<body class="user_center">
+
+<div class="containerOuter">
+    <div class="container">
+        <div class="containerInner">
+			<div class="main">
+			<!--顶部-->
+				<div class="top_top"></div>
+			<!--导航-->
+				<div class="top_title">
+					<ul>
+						<!-- <li><a href="{:U('square/resource/index')}">资源中心</a></li> -->
+						<li><a href="{:U('square/Video/index')}">视频中心</a></li>
+						<li><a href="{:U('square/Article/index')}">文章中心</a></li>
+					</ul>
+				</div>
+			<!--指针-->
+			<!--  
+				<div class="top_point">
+					<p>阳光教育云全面上线，请各位用户参与使用，欢迎提供宝贵意见!</p>
+					<li>个人用户注册：<span>3{$usercount}</span>人</li>
+					<li>注册班级：<span>{$count.class}</span>个</li>
+					<li>注册学校：<span>1{$count.school}</span>所</li>
+				</div>
+			-->
+			<!--主体部分-->
+				<div class="main_top">
+					<div class="main_top_left">
+<!---------------------------------------------社区动态-------START--------------------------------------------------------------->
+						<div class="left_top">
+							<div class="title">
+							<php>unset($dynainfo[2])</php>
+							<ul style="float:right;padding-right:10px;">
+							<volist name="dynainfo" id="vo">
+								<php>if($i!=1){</php> <li>|</li><php>}</php> 
+								<li style="width:70px;text-align:center;" <php>if($i==1){</php> class="on" style="margin-left:440px;"<php>}</php>><a href="javascript:;" id="d{$vo['IdentityID']}" onClick="tab_show(this);">{$vo.IdentityName}</a></li>
+							</volist>
+							</ul>
+							</div>
+							<php>$j = 1;</php>
+							<volist name="dynainfo" id="vo" key="i">
+							<div id="con-d{$vo.IdentityID}" class="context" style="display:<neq name='j' value='1'>none</neq>">
+								<div class="idx_weibo_box">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+								<volist name="vo.weibos" id="weibo">
+								  <tr style="padding:3px;">
+									<td style="padding-right:15px;">
+										<space uid="weibo['uid']" target="_blank">{uavatar=m}</space>
+									</td>
+									<td>{$weibo.ctime|date=###,'Y-m-d h:i:s'}</td>
+									
+									<td>
+										<p>
+											<space uid="weibo.uid" class="fn">{uname}{$vo.IdentityID}</space>
+											说：{$weibo.content|formatUrl|format}
+										</p>
+										<span>[{$weibo.ctime|date='m月d日 H:i:s',###}]</span>
+									</td>
+								  </tr>
+								</volist>  
+								</table>
+								</div><!-- /idx_weibo_box -->
+							</div><!-- /idx_bcont -->
+                       		<php>$j++;</php>
+                        	</volist>
+						</div>
+<!---------------------------------------------社区动态-------END--------------------------------------------------------------->
+
+
+
+
+<!---------------------------------------------社区文摘-------START--------------------------------------------------------------->
+						<div class="left_down">
+							<div class="title">
+								<li><a href="{:U('square/Article/index')}"><img src="__THEME__/square/images/more.png"/></a></li>
+								<volist name="com_blog['cate']" id="vo">
+									<li <php>if($i==1){</php> style="display:none"<php>}</php> >|</li>
+									<li><a href="javascript:;" id="w{$vo['id']}" onClick="tab_show(this);">{$vo.category_name}</a></li>
+								</volist>
+								<li>|</li><li class="on"><a href="javascript:;" id="wmain" onClick="tab_show(this);" >首页</a></li>
+							</div>
+							<div id="con-wmain" class="context">
+								<volist name="com_blog['main']" id="li">
+									<ul>
+										<li style=" width:205px;"><a href="{:U('square/Article/context',array(id=>$li['id']))}"  style="color:#434343;">{$li.title|text|getshort=###,'15','……'}</a></li>
+										<li style=" width:80px;">作者：<a href="@{$li.uid}">{$li.uid|getweibouser}</a></li>
+										<li style=" width:105px;">{$li.cTime|friendlyDate}</li>
+										<li style=" width:75px;">阅读：({$li.readCount}次)</li>
+									</ul>
+								</volist>
+							</div>
+						<volist name="com_blog['cate']" id="vo">
+							<div id="con-w{$vo['id']}" class="context" style="display:none;">
+								<volist name="com_blog['category'][$vo['id']]" id="li">
+								<ul>
+										<li style=" width:205px;"><a href="{:U('square/Article/context',array(id=>$li['id']))}"  style="color:#434343;">{$li.title|text|getshort=###,'15','……'}</a></li>
+										<li style=" width:80px;">作者：<a href="@{$li.uid}">{$li.uid|getweibouser}</a></li>
+										<li style=" width:105px;">{$li.cTime|friendlyDate}</li>
+										<li style=" width:75px;">阅读：({$li.readCount}次)</li>
+									</ul>
+								</volist>
+							</div>
+						</volist>
+						</div>
+						<div class="clear"></div>
+					</div>
+<!-----------------------------------------社区文摘--END-------------------------------------------------------------------------->
+
+
+
+<!---------------------------------------------社区明星-------START--------------------------------------------------------------->
+					<div class="main_top_right">
+						<div class="right_title"><!--<a href="#"><img src="__THEME__/square/images/more.png"/></a>--></div>
+						<div class="right_context">			
+							<volist name="com_star" id="li">
+								<div class="right_context_li" <php>if($i>=11){</php>style="border:0px;"<php>}</php>>
+									<a href="@{$li.uid}"><space uid="li.uid">{uavatar=m}</space></a>
+									<ul>
+										<li><a href="@{$li.uid}">{$li.uid|getweibouser}</a></li>
+										<li>粉丝：<span>{$li.count}</span>人</li>
+									</ul>
+								</div>
+							</volist>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+<!---------------------------------------------社区明星-------END--------------------------------------------------------------->
+
+
+
+
+			<!--教育社团-->
+				<div class="main_center1">
+<!--------------------------------------------教育社团-------START--------------------------------------------------------------->
+					<div class="main_center1_left">
+						<div class="title">
+							<li><a href="{:U('group/Index/index')}"><img src="__THEME__/square/images/more.png"/></a></li>
+							<volist name="edu_org['cate']" id="vo">
+								<li<php>if($i==1){</php> style="display:none"<php>}</php>>|</li><li>
+								<a href="javascript:;" id="j{$vo['id']}" onClick="tab_show(this);">{$vo.title|getshort='5'}</a></li>
+							</volist><li>|</li>
+							<li class="on"><a href="javascript:;" id="jmain" onClick="tab_show(this);" >首页</a></li>
+						</div>
+						<div class="context" id="con-jmain">
+						  <volist name="edu_org['main']" id="li">
+							<ul>
+							 <php>$li['logo']=SITE_URL.'/data/uploads/'.$li['logo'];</php>
+								<li><a href="{:U('group/Index/index',array(gid=>$li['id']))}"><img title="{$li[logo]}" src="{$li[logo]}" width="120px" height="120px;"/></a></li>
+								<li><a href="{:U('group/Index/index',array(gid=>$li['id']))}">{$li.name}</a></li>
+								<li>{$li.intro|getshort='10'}</li>
+							</ul>
+						 </volist>
+						</div>
+						<volist name="edu_org['cate']" id="vo">
+						<div id="con-j{$vo['id']}" class="context" style="display:none;">
+						  <volist name="edu_org[$vo['id']]" id="li">
+							<ul>
+							 <php>$li['logo']=SITE_URL.'/data/uploads/'.$li['logo'];</php>
+								<li><a href="{:U('group/Index/index')}"><img title="{$li[logo]}" src="{$li[logo]}" width="120px" height="120px;"/></a></li>
+								<li><a href="{:U('group/Index/index')}">{$li.name}</a></li>
+								<li>{$li.intro|getshort='10'}</li>
+							</ul>
+						 </volist>
+						</div>
+						</volist>
+					</div>
+<!--------------------------------------------教育社团-------END--------------------------------------------------------------->
+
+
+
+
+<!--------------------------------------------社区精选-------START--------------------------------------------------------------->
+					<div class="main_center1_right">
+						<div class="right_title"><a href="{:U('square/Article/index')}"><img src="__THEME__/square/images/more.png"/></a></div>
+						<div class="rt_top">
+							<volist name="selected[1]" id="li">
+								<a href="@{$li.uid}"><space uid="li.uid">{uavatar=m}</space></a>
+								<p><a href="{:U('square/Article/context',array(id=>$li['id']))}">{$li.title}</a></p>
+								<p>{$li.content|text|getshort='24'}</p>
+								<li>………………………<a href="{:U('square/Article/context',array(id=>$li['id']))}">[详细]</a></li>
+							</volist>
+							<div class="clear"></div>
+						</div>
+						<ul>
+							<volist name="selected[2]" id="li">
+							<li><a href="{:U('square/Article/context',array(id=>$li['id']))}">{$li.title|text|getshort=###,'20','……'}</a></li>
+							</volist>
+						</ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+<!--------------------------------------------社区精选------END--------------------------------------------------------------->
+
+
+
+<!-----------------------------------------资源中心--START-------------------------------------------------------------------------->
+				<div class="main_center2">
+			<!--资源中心-->
+					<div class="main_center2_left">
+						<div class="title">
+							<!-- <li><a href="{:U('square/resource/index')}"><img src="__THEME__/square/images/more.png"/></a></li> -->
+							<volist name="resource['cate']" id="vo">
+								<li><a href="javascript:;" id="r{$vo['DataCode']}" onClick="tab_show(this);">
+							{$vo.DataName|text|getshort=###,'6','……'}</a></li><li>|</li>
+							</volist>
+							<li class="on"><a href="javascript:;" id="zmain" onClick="tab_show(this);" >首页</a></li>
+						</div>
+						<div class="context" id="con-zmain">
+							<volist name="resource['main']" id="li">
+							<php>if($i==1){</php>
+							<div class="big_img">
+								<a href="{:U('square/resource/show',array(id=>$li['id']))}">
+								<img title={$li['title']} src="{$li['id']|getThumb}" height="105px" width="140px"></a>
+								<li><a href="{:U('square/resource/show',array(id=>$li['id']))}">{$li.title|getshort='5'}…</a></li>
+								<li>{$li.info|text|getshort=###,'15','……'}…</li>
+								<p><a href="{:U('square/resource/show',array(id=>$li['id']))}">[查看]</a></p>
+							</div>
+							<php>}else{</php>
+							<div class="small_right">
+								<a href="{:U('square/resource/show',array(id=>$li['id']))}">
+								<img title={$li['title']} src="{$li['id']|getThumb}" height="85px" width="120px"></a>
+								<ul>
+									<li><a href="{:U('square/resource/show',array(id=>$li['id']))}" style=" color:#000000; font-weight:bold;">{$li.title|getshort='5'}…</a></li>
+									<li>{$li.info|getshort='12'}…</li>
+									<li><a href="{:U('square/resource/show',array(id=>$li['id']))}">[查看]</a></li>
+								</ul>
+							</div>
+							<php>}</php>
+							</volist>
+						</div>
+						<volist name="resource['cate']" id="vo">
+						<div class="context" id="con-r{$vo['DataCode']}" style="display:none;">
+							<volist name="resource['category'][$vo['DataCode']]" id="li">{$vo.id}
+							<php>if($i==1){</php>
+							<div class="big_img">
+								<a href="{:U('square/resource/show',array(id=>$li['id']))}">
+								<img title={$li['title']} src="{$li['id']|getThumb}" height="105px" width="140px"></a>
+								<li><a href="{:U('square/resource/show',array(id=>$li['id']))}">{$li.title|getshort='5'}…</a></li>
+								<li>{$li.info|text|getshort=###,'15','…'}</li>
+								<p><a href="{:U('square/resource/show',array(id=>$li['id']))}">[查看]</a></p>
+							</div>
+							<php>}else{</php>
+							<div class="small_right">
+								<a href="{:U('square/resource/show',array(id=>$li['id']))}">
+								<img title={$li['title']} src="{$li['id']|getThumb}" height="85px" width="120px"></a>
+								<ul>
+									<li><a href="{:U('square/resource/show',array(id=>$li['id']))}" style=" color:#000000; font-weight:bold;">			{$li.title|getshort='5'}…</a></li>
+									<li>{$li.info|text|getshort=###,'12','…'}</li>
+									<li><a href="{:U('square/resource/show',array(id=>$li['id']))}">[查看]</a></li>
+								</ul>
+							</div>
+							<php>}</php>
+							</volist>
+						</div>
+						</volist>
+					</div>
+<!-----------------------------------------资源中心--END-------------------------------------------------------------------------->
+
+
+<!-----------------------------------------社区投票---START------------------------------------------------------------------------->
+					<div class="main_center2_right">
+						<div class="right_title"></div>
+						<div  style="height:165px;">
+						<p>标题：{$voting.title.title}</p>
+						<ul>
+							<volist name="voting['opt']" id="vo">
+								<li>
+									<span style=" float:left;">{$i}.{$vo.name}</span>
+										<div class="opt"><div style=" background:#00CC33; width:{$vo.num}%; float:left; height:20px;"></div>
+										<div style=" float:left;">{$vo.num}%</div>
+									</div>
+								</li>
+							</volist>
+						</ul>
+						</div>
+						<a href="{:U('vote/Index/index')}"><img src="__THEME__/square/images/cleck.png"/></a>
+					</div>
+					<div class="clear"></div>
+				</div>
+<!-----------------------------------------社区投票---END------------------------------------------------------------------------->
+				<div class="main_foot">
+<!--------------------视频中心---------\-----------START---------------------------------------------------------------------->
+					<div class="main_foot_left">
+						<div class="title">
+							<li><a href="{:U('square/Video/index')}"><img src="__THEME__/square/images/more.png"/></a></li>
+							<volist name="video_center['cate']" id="vo">
+								<li><a href="javascript:;" id="s{$vo['id']}" onClick="tab_show(this);">
+							{$vo.category_name|getshort='6'}</a></li><li>|</li>
+							</volist>
+							<li class="on"><a href="javascript:;" id="smain" onClick="tab_show(this);" >首页</a></li>
+						</div>
+<!--		主页面显示				-->
+						<div id="con-smain" class="context"> 
+							<volist name="video_center['main']" id="li">
+							<php>if($i==1){</php>
+								<div class="big_img">
+									<a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank"/>
+									<img title={$li['name']} src="__ROOT__/thumb.php?w=136&h=108&url={$li.id|get_picture_url}"/></a>
+									<li><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">{$li.name|text|getshort=###,'12','…'}</a></li>
+									<li>点击：{$li.readCount}次</li>
+									<p><a href="{:U('/Video/show',array(id=>$li['id']))}">[点击观看]</a></p>
+								</div>
+							<php>}else{</php>
+							<ul>
+							<li style=" width:75px;white-space:nowrap;"><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">{$li.name|text|getshort=###,'5','…'}</a></li>
+							<li style=" width:155px;white-space:nowrap;"><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">&nbsp;{$li.info|text|getshort=###,'10','…'}</a></li>
+								<li style=" width:105px;white-space:nowrap;">{$li.cTime|friendlyDate}</li>
+								<li style=" width:35px;white-space:nowrap;">{$li.readCount}次</li>
+							</ul>
+							<php>}</php>
+							</volist>
+						</div>
+<!--		各分页面显示				-->
+						<volist name="video_center['cate']" id="vo">
+							<div id="con-s{$vo['id']}" class="context" style="display:none;">
+							<volist name="video_center['category'][$vo['id']]" id="li">
+								<php>if($i==1){</php>
+									<div class="big_img">
+										<a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank"/>
+										<img title={$li['name']} src="__ROOT__/thumb.php?w=136&h=108&url={$li.id|get_picture_url}"/></a>
+										<li><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">{$li.name|text|getshort=###,'12','…'}</a></li>
+										<li>点击：{$li.readCount}次</li>
+										<p><a href="{:U('/Video/show',array(id=>$li['id']))}">[点击观看]</a></p>
+									</div>
+								<php>}else{</php>
+								<ul>
+								<li style=" width:75px;white-space:nowrap;"><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">{$li.name|text|getshort=###,'5','…'}}</a></li>
+								<li style=" width:155px;white-space:nowrap;"><a href="{:U('/Video/show',array(id=>$li['id']))}" target="_blank">&nbsp;{$li.info|getShort='10'}</a></li>
+									<li style=" width:105px;white-space:nowrap;">{$li.cTime|friendlyDate}</li>
+									<li style=" width:35px;white-space:nowrap;">{$li.readCount}次</li>
+								</ul>
+								<php>}</php>
+								</volist>
+							</div>
+						</volist>
+					</div>
+<!--------------------视频中心----------------------------------END---------------------------------------------------------------------->
+			<!--合作伙伴-->
+					<div class="main_foot_right">
+						<div class="mfr_top">
+							<img src="__THEME__/square/images/down_img.png"/>
+							<li>合作伙伴</li>
+						</div>
+						<div class="mfr_down">
+							<ul>
+								<li><a href="http://www.zfjy.cn">芝罘区教育局</a></li>
+								<li><a href="http://tieba.baidu.com">百度贴吧</a></li>
+								<li><a href="http://www.cisco.com">思科科技</a></li>
+								<li><a href="http://www.lkedu.org/">龙口市教育局</a></li>
+								<li><a href="http://weibo.com">新浪微博</a></li>
+								<li><a href="http://www.zcool.com.cn/">站酷网</a></li>
+								<li><a href="http://www.ytjyj.gov.cn/">亿通教育</a></li>
+								<li><a href="http://t.qq.com/">腾讯微博</a></li>
+								<li><a href="http://bbs.cpanet.cn">百家论坛</a></li>
+								<li><a href="http://www.qxjy.com/">栖霞市教育局</a></li>
+								<li><a href="http://edu.163.com/">网易教育</a></li>
+								<li><a href="http://app.hiapk.com/">安卓系统</a></li>
+								<li><a href="http://www.laishanedu.cn/">莱山区教育局</a></li>
+								<li><a href="http://www.youku.com/">优酷网</a></li>
+								<!--<li><a href="#">更多>></a></li>-->
+			
+							</ul>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			<!--底部-->
+				<div class="idx_footer">
+            	<div class="idx_explist"></div>
+                <div class="idx_powerinfo">
+                	<div class="fmenu_box">
+                    	关于我们 | 网站服务 | 商务合作 | 客服中心 | 联系我们 
+                    </div>
+                    <div class="fintro_box">
+                    	Powered by <a href="http://www.gridinfo.com.cn">EDU-GridSNS</a>   <a href="http://www.gridinfo.com.cn">山东锐杰网格信息技术有限公司</a> <a href="http://www.miibeian.gov.cn">鲁ICP备09072052号</a> <br/>
+						Tel:0535-6711586 6660368    Fax:0535-2103377    客服热线:400-690-8887    Email: <a href="mailto:service@ruijie-grid.com">service@ruijie-grid.com</a> 
+                    </div>
+                </div>
+            </div>
+			</div>
+				<div class="clear"></div> 
+			 </div>         
+        </div><!-- /containerInner -->
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+
+
+</body>
+</html>

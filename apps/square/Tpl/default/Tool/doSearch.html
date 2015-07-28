@@ -1,0 +1,65 @@
+<include file="_header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/resource.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<div class="containerOuter">
+    <div class="container">
+       <div class="containerInner">
+          <include file="../public/_reshead" />
+          <div class="middleOut">
+            <div class="middleInner">
+                 <div class="ldetil_content">
+                   <div class="ldetil_head"><h2>资源列表</h2></div>
+                   <div class="clear5"></div>
+                   <php>if($data){</php>
+                      <div class="ldetil_list">
+                     <ul class="ldel_list">
+                     
+                       <volist name="data" id="vo">
+                         <li>
+                         <div class="lres_title"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}">{$vo['title']}</a></div>
+                         <div class="lcontent">
+                           <span>
+                              <php>if($vo['class']){</php>{$vo['class']|getDictionary}<php>}</php>
+                           </span>
+                           <dl class="lcont">
+                          <dt class="lre_pic"><a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="{$vo['id']|getThumb}"></a></dt>
+                             <dd style=" float:left;width:88%; padding-left:10px;">
+                                <dl style=" height:76px;">
+                                   <dt style=" float:left;width:500px;color:#999; letter-spacing:1px; line-height:25px;">{$vo['info']}</dt>
+                                   <dd style=" float:right;width:110px; padding-left:40px;padding-top:25px;">
+                                     <ul>
+                                        <li>评分：<img src="__THEME__/square/images/fullpeach.png"><img src="__THEME__/square/images/fullpeach.png"><img src="__THEME__/square/images/fullpeach.png"><img src="__THEME__/square/images/emptypeach.png"></li>
+                                        <li style=" color:#0A8CCC; font-weight:bold;">在线阅读：<a href="{:U('square/Resource/show',array('id'=>$vo['id']))}"><img src="__THEME__/square/images/arrow.gif"></a></li>
+                                     </ul>
+                                   </dd>
+                                </dl>
+                                <dl>
+                          <dt style=" text-align:right;">时间:{$vo['time']|date="Y-m-d H:i",###} 下载次数：21次 发布人：{$vo['uid']|getUserName=###}</dt>
+                                </dl>
+                             </dd>
+                          </dl>
+                         </div>
+                       </li>
+                       <div class="clear8"></div>
+                       </volist>
+                     </ul>
+                     <div class="pagelist">{$html}</div>
+                   </div>
+                   <php}else{</php>
+                   
+                   <php>}</php>
+                   <div class="clear"></div>
+                 </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+       </div>
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+</body>
+</html>

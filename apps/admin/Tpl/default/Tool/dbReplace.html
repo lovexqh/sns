@@ -1,0 +1,42 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">社区配置</div>
+  <div class="tit_tab">
+    <ul>
+    <li><a href="{:U('admin/Global/siteInit')}">数据库初始化</a></li>
+    <li><a href="{:U('admin/Global/siteCustom')}">用户个性定制</a></li>
+    <li><a href="{:U('admin/Tool/dbReplace')}" class="on">路径批量替换</a></li>
+    <li style="display:none"><a href="#">社区图片上传</a></li>
+    </ul>
+  </div>
+  
+  <div class="page_tit">站点配置</div>
+  
+  <div class="form2">
+  	<form method="post" action="{:U('admin/Tool/doDbReplace')}">
+    <dl class="lineD">
+      <dt>社区旧域名：</dt>
+      <dd>
+        <input name="oldurl" type="text" value="{$oldurl}" size="60">
+        <span>不要以"/"为结束符</span>
+      </dd>  
+    </dl>
+    <dl class="lineD">
+      <dt>社区新域名：</dt>
+      <dd>
+        <input name="newurl" type="text" value="{$newurl}" size="60">
+        <span>不要以"/"为结束符</span>
+      </dd>  
+    </dl>
+  </div>
+  <br/>
+  <div style=" text-align:center">
+  	<span style="color:red">注意：进行该操作时请谨慎，该操作会把数据库中的所有记录批量替换URL</span>
+  </div>
+  <br/>
+  <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+  </div>
+    
+</div>
+<include file="../Public/_footer" />

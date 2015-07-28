@@ -1,0 +1,26 @@
+<div style="width:400px; height:270px;">
+  <div class="mon_search" style="border:0 none;">
+    <table width="700">
+      <tr height="35">
+        <td width="60">类&nbsp;&nbsp;&nbsp;&nbsp;型:</td>
+        <td><if condition="$type eq 1">收入<else/>支出</if></td>
+      </tr>
+      <tr height="35">
+        <td>金额:</td>
+        <td>{$amount}</td>
+      </tr>
+      <tr height="35">
+        <td>经&nbsp;手&nbsp;人:</td>
+        <td>{$handle}</td>
+      </tr>
+      <tr height="35">
+        <td>事由:</td>
+        <td>{$remark}</td>
+      </tr>
+      <tr height="35">
+        <td colspan="2"><input name="" style=" margin:0 10px 0 60px;" type="submit" class="btn" value="确定" />
+      </tr>
+      <input type="hidden" name="id" value="{$id}" /><input type="hidden" name="classid" value="{$classid}" /><input type="hidden" name="uid" value="{$mid}" />
+    </table>
+  </div>
+</div>

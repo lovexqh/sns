@@ -1,0 +1,60 @@
+/*
+公共样式
+*/
+.box_create{margin-top:10px;}
+.btn_resource_c{background:url(../images/add_btn.png) no-repeat left top;display:block;margin:0 auto;width:220px;height:52px;}
+
+.mod_create{
+	margin-top:10px;
+}
+.mod_create h4{
+	display:block;
+	margin:0 auto;
+	padding:0px;
+}
+.mod_create h4 a{
+	display:block;
+	text-align:center;
+	background:url(../images/btn.gif) no-repeat 0px -404px;
+	width:138px;
+	height:32px;
+	line-height:32px;
+	margin:0 auto;
+	font-size:14px;
+	color:#fff;
+	font-family:微软雅黑;
+}
+.mod_create h4 a:hover{
+	background:url(../images/btn.gif) no-repeat 0px -404px;
+}
+/* showtool页面使用的样式 */
+.dlBox{width: 700px;margin:0 0 10px; zoom:1; background:#fff;font-size:13px; margin-left:30px;height:700px;}
+.dlBox h1{font-weight:bold;margin:13px 10px 0; padding:0; font-size:16px; line-height:18px; height:18px; display:inline; float:left; overflow:hidden}
+.dlBox .th{height:39px; overflow:hidden; border-bottom:1px solid #dbdada}
+.dlBox .th .mark{width:600px}
+.dlBox .th .subMark{line-height:40px; width:170px; text-align:right}
+.dlBox .th .subMark em{color:#f60; font-weight:bold}
+.dlBox .th .dlBtn{width:89px; height:23px; display:block; float:left; text-indent:-999px; zoom:1; margin:9px 0 0; background:url(http://www1.pconline.com.cn/dl/2010/images/index.png) no-repeat 0 -21px}
+.dlBox .tbL{width:662px; float:left; overflow:hidden}
+.dlBox .tbR{width:126px; float:right; overflow:hidden}
+.dlBox .tbR .modBoxH,.pcbox_6{border:none; border-left:1px solid #dbdada}
+.dlBox .meg{width:748px;_height:404px; float:left; min-height:404px;}
+.dlBox .mList{float:left;background:none repeat scroll 0 0 #F5F5F5;}
+.dlBox .mList li{display:block; overflow:hidden; clear:both; height:40px; line-height:40px; padding:0 0 0 10px; float:left; width:230px;}
+.dlBox .mList .btns{height:41px; line-height:42px;}
+.dlBox .btns i{float:left}
+.dlBox .ad{height:399px; float:left; padding:55px 0 0; line-height:28px; overflow:hidden; text-align:center}
+ .dlBox .group{height:109px; overflow:hidden; border-top:1px solid #dbdada; clear:both}
+.dlBox .dl{width:332px; float:left; text-align:center; overflow:hidden}
+.dlBox .dl i{display:block; line-height:30px}
+.dlBox .mList li span{float:left}
+
+
+
+
+
+
+
+
+
+

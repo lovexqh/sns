@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+    border:0;
+}
+body {
+    background-color:#3464a6;
+    color: rgb(51, 51, 51);
+    font-family: "Lucida Grande",Tahoma,Verdana,Lucida,Arial,sans-serif;
+    font-size: 12px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img {
+    border: 0 none;
+}
+img, a img {
+    border: 0 none;
+    color: rgb(255, 255, 255);
+    vertical-align: middle;
+}
+address, caption, cite, code, dfn, em, strong, th, var, i {
+    font-style: normal;
+    font-weight: normal;
+}
+ol,ul {
+    list-style: none outside none;
+	vertical-align:top;
+}
+caption, th {
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+abbr, acronym {
+    border: 0 none;
+    font-variant: normal;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+textarea {
+    resize: vertical;
+}
+input, button, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+select {
+    white-space: nowrap;
+	padding:3px;
+}
+input{
+    border:1px solid #b0b0b0;
+    padding:3px;
+    color:#979797;
+}
+/*input[type="text"], input[type="password"], textarea {
+    border: 1px solid rgb(204, 204, 204);
+}
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+    border: 1px solid rgb(153, 153, 153);
+}*/
+input[type="submit"], input[type="button"], input[type="checkbox"], input[type="radio"], label {
+    cursor: pointer;
+}
+a {
+    color: rgb(51, 51, 51);
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+}
+a:active {
+    color: #BA2636;
+}
+.strong {
+    font-weight: bold;
+}
+.clearfix {
+}
+.clearfix:before, .clearfix:after {
+    content: ".";
+    display: block;
+    font-size: 0;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.clearfix:after {
+    clear: both;
+}
+* {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.clear {
+    clear:both;
+}

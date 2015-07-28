@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>
+<neq name="ts['site']['page_title']" value="">
+    {$ts['site']['page_title']} {$ts['site']['site_name']}
+<else/>
+    {$ts['site']['site_name']}
+</neq>
+</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta name="keywords" content="{$ts['site']['site_header_keywords']}" />
+<meta name="description" content="{$ts['site']['site_header_description']}" />
+<script>
+	var _UID_   = <php> echo (int) $uid;</php>;
+	var _MID_   = <php> echo (int) $mid;</php>;
+	var _ROOT_  = '__ROOT__';
+	var _THEME_ = '__THEME__';
+	var _PUBLIC_ = '__PUBLIC__';
+	var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+	var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+	var $CONFIG = {};
+		$CONFIG['uid'] = _UID_;
+		$CONFIG['mid'] = _MID_;
+		$CONFIG['root_path'] =_ROOT_;
+		$CONFIG['theme_path'] = _THEME_;
+		$CONFIG['public_path'] = _PUBLIC_;
+		$CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+		$CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+    var bgerr;
+    try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+</script>
+<!-- 全局风格CSS -->
+<link href="__THEME__/member/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/member/css/main.css" rel="stylesheet" type="text/css" />
+    
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/html5.js"></script>
+<![endif]-->
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+<!-- 核心JS加载 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+
+<link media="all" rel="stylesheet" type="text/css" href="__PUBLIC__/js/colorbox/colorbox.css" />
+<!-- 打开窗口样式 -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.colorbox.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script src="__PUBLIC__/js/jquery.jgrow.min.js"></script>
+<script src="__PUBLIC__/js/jquery.isotope.min.js"></script>
+
+<php>if($appname!='square'){</php>
+<!-- IM插件载入 -->
+
+<php>}</php>
+
+<!-- 编辑器样式文件 -->
+<link href="__PUBLIC__/js/editor/editor/theme/base-min.css" rel="stylesheet"/>
+<!--[if lt IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-sprite-min.css" rel="stylesheet"/>
+<!--<![endif]-->
+<!--[if gte IE 8]><!-->
+<link href="__PUBLIC__/js/editor/editor/theme/cool/editor-pkg-min-datauri.css" rel="stylesheet"/>
+<!--<![endif]-->
+
+{:Addons::hook('public_head',array('uid'=>$uid))}
+
+</head>
+
+<body>

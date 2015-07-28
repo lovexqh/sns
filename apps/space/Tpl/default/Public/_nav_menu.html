@@ -1,0 +1,15 @@
+<div class="header_navi">
+    <ul>
+      <li><a href="{:U('space/Class/index',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('index')))echo 'class="nav_visit"';</php>>首&nbsp;&nbsp;页 </a></li>
+      <if condition="$adviser eq 1">
+          <li><a href="{:U('space/Manage/ManageInfo',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('ManageInfo','ManagePower','ManageLeader','ManageCourse','ManageSeat','ManageAnnounce','ManagePhoto','ManageHonor','album','photo','album_edit','muti_edit_photos','album_order')))echo 'class="nav_visit"';</php>>班级管理</a></li>
+       <elseif condition="$adviser eq 2"/>
+          <volist name="powerlist" id="vo" offset="0" length='1'>
+          <php>$act="space/Manage/".getMagageType($vo['mid']);</php>
+             <li><a href="{:U($act,array('classid'=>$classid))}">班级管理</a></li>
+          </volist>      	
+       </if>
+      <li><a href="{:U('space/Class/StudentMember',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('StudentMember','TeacherMember','LeaderMember','SeatMember')))echo 'class="nav_visit"';</php>>班级成员</a></li>
+      <li><a href="{:U('space/Class/MoveAnnounce',array('classid'=>$classid))}" <php>if(in_array((ACTION_NAME),array('MoveExercise','MoveState','MoveAnnounce','MoveCourse','MoveHonor','MovePhoto','MoveBirthday','albums','photos','showAnnounce','showExercise','showHonor')))echo 'class="nav_visit"';</php>>班级动态</a></li>
+    </ul>
+</div>

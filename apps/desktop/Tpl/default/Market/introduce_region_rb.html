@@ -1,0 +1,52 @@
+<include file="../Public/_header_ajax" />
+<div style="display: block;" class="appPanel sidePanel radius5 rankingList simpleRanking searchRanking">
+    <div id="appPanel_introduce_like_titleBar" class="appPanelTitleBar">{:L('you_like')}</div>
+    <div id="appPanel_introduce_like_body" class="appPanelBody">
+        <ul style="margin-top: 0px;" class="appListUl">
+            <volist name="list" key="key" id="value">
+             <li class="appListLi ">
+             <a href="javascript:void(0);" class="appListItem" appid="{$value['appid']}" cat="{classid}" cmd="introduce" title="{$value['appname']}"> <img class="appSmallIcon" src="{$value['appico']}" onload="fixpng(this)"></span> <span class="appName">{$value['appname']}</span> <span class="appInfo">{:L('be_added')}<span class="appNum">{$value['setupnum']}</span>{:L('ci')}</span> </a> </li>
+            </volist>
+            <volist name="list" key="key" id="value">
+            <php>if($key==6) break;</php>
+             <li class="appListLi <if condition='$key eq count($list)'>appListLiLast</if> ">
+             <a href="javascript:void(0);" class="appListItem" appid="{$value['appid']}" cat="{classid}" cmd="introduce" title="{$value['appname']}"> <img class="appSmallIcon" src="{$value['appico']}" onload="fixpng(this)"></span> <span class="appName">{$value['appname']}</span> <span class="appInfo">{:L('be_added')}<span class="appNum">{$value['setupnum']}</span>{:L('ci')}</span> </a> </li>
+             </li>
+            </volist>
+        </ul>
+    </div>
+    <div id="appPanel_introduce_like_pageBar" class="appPanelPagebar">
+        <div class="appPanelPagination"> <a href="javascript:void(0);" class="paginationBtn preBtn" hidefocus="">&lt;</a>
+            <div class="paginationList"></div>
+            <a href="javascript:void(0);" class="paginationBtn nextBtn" hidefocus="">&gt;</a> </div>
+    </div>
+</div>
+<script type="text/javascript" reload="1">
+jQuery('#appPanel_introduce_like_body .appListItem').bind('click',function(){
+        var cat=parseInt(jQuery(this).attr('cat'));
+        var appid=parseInt(jQuery(this).attr('appid'));
+        var cmd=jQuery(this).attr('cmd');
+        control_click(jQuery(this),cmd,cat,0,appid);
+        return false;
+    });
+</script>
+<script type="text/javascript" reload="1">
+var introduce_like_timer=setInterval(introduce_like_gun,3000);
+jQuery('#appPanel_introduce_like_body ul').bind('mouseover',function(){
+    window.clearInterval(introduce_like_timer);
+});
+jQuery('#appPanel_introduce_like_body ul').bind('mouseout',function(){
+    introduce_like_timer=setInterval(introduce_like_gun,3000);
+});
+var introduce_like_sum=parseInt('{$count}');
+function introduce_like_gun(){
+    var el=jQuery('#appPanel_introduce_like_body .appListUl');
+    var top=parseInt(el.css('margin-top'))-33;
+    if(top<-33*introduce_like_sum){
+        el.css('margin-top',0);
+    }else{
+        el.animate({'margin-top':top},'slow');
+    }
+}
+</script>
+<include file="../Public/_footer_ajax" />

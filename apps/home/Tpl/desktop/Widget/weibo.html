@@ -1,0 +1,82 @@
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+
+<style type="text/css">
+/*分享微广播弹窗*/
+.pop_share_weibo{padding:0 0 10px 0;width:400px;text-align:left;overflow:hidden;*zoom:1}
+.pop_share_weibo dd,.pop_share_weibo dt{padding:10px 20px 0;overflow:hidden;*zoom:1}
+.pop_share_weibo .btn_b{background-position:0 -78px}
+/*发布框下图标*/
+
+.icon_add_face_d,.icon_add_topic_d{background: url(__THEME__/images/ico.png) no-repeat 0 0;display: inline-block;vertical-align:middle}
+.icon_add_face_d{background-position: 0 0px;height:25px;width:19px;margin:0 2px -3px 0}/*表情*/
+.icon_add_topic_d{background-position:0 -23px;height:25px;width:19px;margin:0 2px -2px 0}/*话题*/
+
+
+/*弹出表情*/
+.talkBox{padding:0}
+.talkPop{clear:left;margin-top:20px;*margin-top:0px;*padding-top:20px;position:absolute !important;*left:0;*top:0;}
+.talkPop_arrow{background-position: -143px -4px;height:8px;width:15px;overflow:hidden}
+.talkPop_box{background-color:#F8FAFC;border:solid 1px #666;margin-bottom:5px;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius:3px;box-shadow:0px 0px 3px rgba(0, 0, 0, 0.3);width:440px}
+.talkPop_box #weibo_close_handle{margin:0}
+.talkPop_box #publish_type_content{}
+.talkBox h2 {height:37px;overflow:hidden;margin-bottom:8px}
+.talkBox h2 span{font-size: 18px;line-height: 42px;float:left}
+.talkPop_box .pop_tit{background-color:#eee;padding:0 10px;border-radius:3px 3px 0 0;position:relative}
+.wordNum{float:right;font-size:12px;color:#999}
+.wordNum strong{font-family:Constantia,Georgia;font-size:30px;font-weight:normal;top:-1px;vertical-align:-2px}
+.talkBox .cntBox {overflow:hidden;*zoom:1;padding:0 0 5px 0}
+.talkBox .cntBox textarea,.talkBox .cntBox .txtShadow{padding:5px 0;margin:0;font-size:14px;overflow:hidden}
+.txtShadow {left:0;opacity:0;position:absolute;top:0;*top:1px;z-index:-1}
+#publish_type_content_before{_padding-top:8px}
+
+.talkBox .funBox{position:relative;line-height:25px;z-index:800;*zoom:1}
+.talkBox .funBox a.a52 {width:52px;display:inline-block;_display:block;_float:left;_margin-top:-9px;color:#686868;}
+/*发布按钮*/
+.pop_share_weibo .btn_b{ color:#FFF;border:0;width:60px; height:27px; line-height:24px;cursor:pointer;vertical-align:middle;_height:24px;background: url(__THEME__/member/images/btn.gif) no-repeat left top;display: inline-block}
+</style>
+    <!--分享微广播弹窗-->
+    <form action="{:U('home/Widget/doShare')}" method="post" id="share_form">
+        <dl class="pop_share_weibo">
+            <dt><span class="right wordNum numObj" id="_widget_weibo_words_count"></span></dt>
+            <dd>
+            <textarea id="content_publish" name="content" class="contentObj" style="font-family: Tahoma,宋体; overflow: hidden; border: 1px solid #ccc; background-color:#F8F8F8; word-wrap: break-word; font-size: 12px; line-height: 18px; height: 65px; width:358px;">{$content}</textarea>
+            </dd>
+            <dd>
+            <input type="hidden" name="aid" value="{$aid}"/>
+			<input type="hidden" name="source" value="{$source}"/>
+			<input type="hidden" name="sourceUrl" value="{$sourceUrl}"/>
+            <input type="hidden" name="type" value="{$type}"/>
+            <input type="hidden" name="type_data" value='{$type_data}'/>
+            <span class="right"><input type="button" class="btn_b buttonObj" value="{$button_title}"></span>
+            <div id="publish_type_content_before" class="left"><?php /* Addons::hook('home_index_middle_publish_type',array("position"=>"other")) */ ?></div>
+            </dd>
+        </dl>
+    </form>
+    <!--/分享微广播弹窗-->
+<script>
+var weibo = $.weibo();
+$(document).ready(function(){
+   var default_transpond_string = document.getElementById("content_publish").value;
+   weibo.initForm("share_form",{       
+        blur:function(formObj,buttonObj,contentObj,numObj){
+            if(contentObj.val() == '') {
+                contentObj.val(default_transpond_string);
+            }
+        },
+        enter:function(formObj,buttonObj,contentObj,numObj,txt){
+			ui.success("分享成功");
+            ui.box.close();
+        },
+        after:function(formObj,buttonObj,contentObj,numObj){
+                if (contentObj.val() == '') {
+                    contentObj.val(default_transpond_string);
+                }else {
+                  weibo.contentFirst('content_publish');
+               }
+               contentObj.focus();
+        }
+   });
+});
+</script>
+{:Addons::hook('weibo_js_plugin')}

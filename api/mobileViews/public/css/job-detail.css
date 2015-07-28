@@ -1,0 +1,72 @@
+#thelist{
+    position: relative;
+}
+.club{
+    min-height: 100px;
+    width: 94%;
+    margin: 0 auto;
+    font-size:14px;
+    margin-top: 10px;
+    background: white;
+    border-radius: 3px;
+}
+.logo{
+    position: relative;
+}
+.logo img{
+    max-height: 50px;
+    margin: 5px;
+}
+.joined,.unjoin,.public,.past{
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    height: 30px;
+    width: 65px;
+    text-align: center;
+    line-height:30px;
+    border-radius: 5px;
+    color: white;
+}
+.joined{
+    background : #5bd6fd;
+}
+.past{
+    background : #e50000;
+}
+.public{
+    background : #00c500;
+}
+.unjoin{
+    background : #f98a5d;
+}
+.info{
+    margin: 5px;
+    width: 100%;
+}
+h3{
+    padding-top:10px;
+    color:#2932E1;
+}
+.info p{
+    color:#4B4B4B;
+    margin-top: 5px;
+    font-size: 13px;
+}
+.intro{
+    padding: 3px;
+    width: 94%;
+    margin-top: 5px;
+    min-height: 105px;
+    border: 1px solid #ededed;
+    background: #fdfdfd;
+    border-radius: 3px;
+    color: #000000;
+    white-space:normal;
+}
+.light{
+    color: #000000;
+}
+.bottom{
+    height: 5px;
+}

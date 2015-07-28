@@ -1,0 +1,41 @@
+<include file="../Public/_header_ajax" />
+<div class="slideContainer" id="slideContainer">
+    <ul class="slideSheets" id="appMarketSlider_sheets">
+        <li id="1_sheet" class="slideSheet"> <img src="data/uploads/desktop/2013/0701/banner1.jpg" width="514" height="191" onload="fixpng(this)"> </li>
+		<li id="2_sheet" class="slideSheet"> <img src="data/uploads/desktop/2013/0701/banner2.jpg" width="514" height="191" onload="fixpng(this)"> </li>
+    </ul>
+    <div class="slideTriggers_container">
+		<div class="slideTriggers" id="appMarketSlider_triggers">
+			<a id="1_trigger" index="1" href="javascript:void(0);" hidefocus="" class="slideTrigger current">1</a>
+			<a id="2_trigger" index="2" href="javascript:void(0);" hidefocus="" class="slideTrigger">2</a>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" reload="1">
+    var appMarketSlider_Timer=setInterval(appMarketSlider_run,3000);
+    var appMarketSlider_current=0;
+    jQuery('#slideContainer').bind('mouseover',function(){
+        window.clearInterval(appMarketSlider_Timer);
+    });
+    jQuery('#slideContainer').bind('mouseout',function(){
+        appMarketSlider_Timer=setInterval(appMarketSlider_run,3000);
+    });
+    jQuery('#appMarketSlider_triggers>.slideTrigger').bind('mouseover',function(){
+        jQuery('#appMarketSlider_triggers>.current').removeClass('current');
+        jQuery(this).addClass('current');
+        appMarketSlider_current=parseInt(jQuery(this).attr('index'));
+        jQuery('#appMarketSlider_sheets>.slideSheet').hide();
+        jQuery('#'+this.id.replace('trigger','sheet')).show();
+    });
+    function appMarketSlider_run(){
+        var el=jQuery('#appMarketSlider_sheets>.slideSheet');
+        el.hide();
+        var id=jQuery(el.eq(appMarketSlider_current)).attr('id');
+        jQuery('#'+id).show();
+        jQuery('#appMarketSlider_triggers>.current').removeClass('current');
+        jQuery('#'+id.replace('sheet','trigger')).addClass('current');
+        appMarketSlider_current+=1;
+        if(appMarketSlider_current>=jQuery('#appMarketSlider_sheets').find('li').length) appMarketSlider_current=0;
+    }
+</script>
+<include file="../Public/_footer_ajax" />

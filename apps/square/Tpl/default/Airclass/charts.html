@@ -1,0 +1,142 @@
+<include file="_header" />
+<link href="__THEME__/square/css/public.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/square/css/main.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/js/zTree/zTreeStyle.css" type="text/css">
+<link href="__THEME__/square/css/airclass.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.js"></script>
+<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodes =[
+			<volist name="leftcate" id='obj'>
+				{ id:'{$obj[id]}', pId:'{$obj[p_id]}', name:"{$obj[category_name]}",iconOpen:"../Public/images/open.png",icon:"../Public/images/close.png",url:"", target:"_self", click:"noteClick({$obj['id']})"<volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist>},				
+			</volist>
+		];
+		function noteClick(id){
+			$.post("__URL__&act=ChartSearchs", {id:id},			
+				function(data){
+					$('#middle_right').html(data);
+					$('.crumbs_left>ul').html($(data).find('#crumbs_left').html());	
+						
+			});			
+			
+		}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#navtree"), setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("navtree");
+		});
+		//-->
+	</SCRIPT>
+<script type="text/javascript">
+function tab_show(obj){
+	var id = obj.id;
+	$(obj).parent().parent().find('a').removeClass('tab_visited');
+	$(obj).parent().parent().parent().parent().parent().find('.detil_content').hide();
+	$(obj).addClass('tab_visited');
+	$("#con_"+id).show();	
+}
+</script>
+<div class="containerOuter">
+    <div class="container">
+		<div class="containerInner">
+			<include file="_reshead" />
+			<div class="middleOut">
+				<div class="middleInner">
+					<div class="middle_left">
+						<div class="middle_res">
+							<div class="res_title">
+								<h2><span>组织结构</span></h2>
+							</div>
+							<div>
+								<UL id="navtree" class="ztree" style="overflow-x: auto; overflow-y: hidden; padding-bottom:20px;"></UL>
+							</div>
+						</div>
+					</div>
+					<!--右侧信息开始-->
+					<div class="middle_right" id="middle_right">
+						<div class="detil_title_chart">
+							<ul>
+								<li><a href="javascript:;" id="people" class="tab_visited" onclick="tab_show(this);">活跃人物排行榜</a></li>
+								<li><a href="javascript:;" id="active" onclick="tab_show(this);">课堂活动排行榜</a></li>
+							</ul>
+						</div>
+						<div class="detil_content" id="con_people" style="display:block;"> 
+						   <table border="0" cellpadding="0" cellspacing="0" width="97%">
+							   <tr>
+									<th width="70px"></th>
+									<th>姓名</th>
+									<th>创建课堂数</th>
+									<th>实参加课堂</th>
+									<th>应参加课堂</th>
+									<th>上传资源数</th>
+									<th>下载资源数</th>
+							   </tr>
+							   <volist name="person.data" id="obj">
+							   <tr>
+									<td style="text-align:center;"><a href="@{$obj.uid}"><space uid="obj.uid">{uavatar=m}</space></a></td>
+									<td>{$obj.uid|getwusername}</td>
+									<td>{$obj.count}</td>
+									<td>{$obj.ycanjia}</td>
+									<td>{$obj.scanjia}</td>
+									<td>{$obj.resource}</td>
+									<td>{$obj.resource}</td>
+							   </tr>
+							   </volist>
+						   </table>
+						   <div class="clear"></div>
+						</div>
+						
+						<div class="detil_content"  id="con_active" style="display:none;"> 
+						   <table border="0" cellpadding="0" cellspacing="0" width="97%">
+							   <tr>
+									<th>课堂名称</th>
+									<th>点击数</th>
+									<th>评论数</th>
+									<th>活动资源数</th>
+									<th>应参加人数</th>
+									<th>实际参加人数</th>
+							   </tr>
+							   <volist name="teaching.data" id="obj">
+							   <tr>
+									<td style="text-align:left; padding-left:10px;">
+										<a href="{:U('square/airclass/show',array('id'=>$obj['classid']))}">
+											{$obj.name|getshort=###,'16','…'}
+										</a>
+									</td>
+									<td>{$obj.readcount}</td>
+									<td>{$obj.commentcount}</td>
+									<td>{$obj.resource}</td>
+									<td>{$obj.ycanjia}</td>
+									<td>{$obj.scanjia}</td>
+							   </tr>
+							   </volist>
+						   </table>
+						   <div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+       </div>
+    </div><!-- /container -->
+</div><!-- /containerOuter -->
+<include file="../public/_footer" />
+<script language="javascript" type="text/javascript">
+function searchmore(str)
+{
+	if(str=='kai')
+		document.getElementById('searchmore').style.display='block';
+	else
+		document.getElementById('searchmore').style.display='none';
+}
+</script>
+</body>
+</html>

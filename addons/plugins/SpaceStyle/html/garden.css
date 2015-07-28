@@ -1,0 +1,39 @@
+/* 
+    老师基础样式
+*/
+
+body{font-size:12px; background:#c3fa9f url(garden/bg.jpg) repeat-x top center;;}
+.containerOuter{
+	width:100%;
+	background:url(garden/garden_bg.jpg) no-repeat top center;
+}
+header h1{
+	position:absolute;
+	left:10px;
+	top:50px;
+	display:block;
+	height:38px;
+	line-height:38px;
+	font-size:220%;
+	font-family:微软雅黑;
+	color:#1c9218;
+}
+header em{
+	position:absolute;
+	left:10px;
+	top:90px;
+	color:#1c9218;
+}
+
+/*底部样式*/
+footer{
+	display:block;
+	clear:both;
+	width:960px;
+	margin:0 auto;
+	padding:10px 0px;
+	color:#1c9218;
+}
+footer a{color:#1c9218}
+footer a:hover{color:#1c9218;text-decoration:underline}
+footer .menu{float:right}

@@ -1,0 +1,475 @@
+.widget{
+}
+.widget .CONTENT
+{
+	position:absolute;width:100%;height:100%;background:url(../../images/b.gif);
+}
+.widget .EDIT
+{
+	position:absolute;
+	display:none;
+	right:-21px;
+	top:21px;
+	width:21px;
+	height:21px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/edit.png', sizingMethod='scale');
+	background-image:url(edit.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.widget .EDIT:hover
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/edit_1.png', sizingMethod='scale');
+	background-image:url(edit_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.widget .DELETE
+{	
+	position:absolute;
+	display:none;
+	right:-21px;
+	top:0px;
+	width:21px;
+	height:21px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/close.png', sizingMethod='scale');
+	background-image:url(close.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.widget .DELETE:hover
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/close_1.png', sizingMethod='scale');
+	background-image:url(close_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+.widget .MOVE
+{	
+	position:absolute;
+	display:none;
+	right:-21px;
+	top:42px;
+	width:21px;
+	height:21px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/move.png', sizingMethod='scale');
+	background-image:url(move.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+
+/* 边框样式 trans_black*/
+
+.brown_wood .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 8px;
+	height: 12px;
+	left:-8px;
+	top:-12px;
+	background:url(brown_wood/LEFT_TOP.gif) no-repeat;
+}
+.brown_wood .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 100%;
+	height: 12px;
+	left:0;
+	top:-12px;
+	background:url(brown_wood/TOP.gif) repeat-x;
+}
+
+.brown_wood .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 7px;
+	height: 12px;
+	right:-7px;
+	top:-12px;
+	background:url(brown_wood/RIGHT_TOP.gif) no-repeat;
+}
+
+.brown_wood .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 7px;
+	height: 100%;
+	right:-7px;
+	top:0;
+	background:url(brown_wood/RIGHT.gif) repeat-y;
+}
+.brown_wood .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 7px;
+	height: 12px;
+	right:-7px;
+	bottom:-12px;
+	background:url(brown_wood/RIGHT_BOTTOM.gif) no-repeat;
+}
+
+.brown_wood .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 100%;
+	height: 12px;
+	left:0px;
+	bottom:-12px;
+	background:url(brown_wood/BOTTOM.gif) repeat-x;
+}
+
+.brown_wood .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 8px;
+	height: 12px;
+	left:-8px;
+	bottom:-12px;
+	background:url(brown_wood/LEFT_BOTTOM.gif) no-repeat;
+}
+
+.brown_wood .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 8px;
+	height: 100%;
+	left:-8px;
+	top:0;
+	background:url(brown_wood/LEFT.gif) repeat;
+}
+.brown_wood .EDIT
+{
+	right:-27px;
+}
+.brown_wood .DELETE
+{	
+	right:-27px;
+}
+.brown_wood .MOVE
+{	
+	right:-27px;
+	
+}
+
+/* 边框样式 trans_black*/
+.trans_black .CONTENT{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/bg.png', sizingMethod='scale');
+	background-image:url(trans_black/bg.png) !important;
+	background-image:none;
+	background-repeat: repeat;
+}
+.trans_black .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 19px;
+	left:-23px;
+	top:-19px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/LEFT_TOP.png', sizingMethod='scale');
+	background-image:url(trans_black/LEFT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.trans_black .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 19px;
+	width:100%;
+	left:0px;
+	top:-19px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/TOP.png', sizingMethod='scale');
+	background-image:url(trans_black/TOP.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+.trans_black .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 19px;
+	right:-23px;
+	top:-19px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/RIGHT_TOP.png', sizingMethod='scale');
+	background-image:url(trans_black/RIGHT_TOP.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.trans_black .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height:100%;
+	right:-23px;
+	top:0;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/RIGHT.png', sizingMethod='scale');
+	background-image:url(trans_black/RIGHT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+.trans_black .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 29px;
+	right:-23px;
+	bottom:-29px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/RIGHT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(trans_black/RIGHT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+.trans_black .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 29px;
+	width:100%;
+	left:0px;
+	bottom:-29px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/BOTTOM.png', sizingMethod='scale');
+	background-image:url(trans_black/BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: repeat-x;
+}
+
+.trans_black .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 29px;
+	width:23px;
+	left:-23px;
+	bottom:-29px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/LEFT_BOTTOM.png', sizingMethod='scale');
+	background-image:url(trans_black/LEFT_BOTTOM.png) !important;
+	background-image:none;
+	background-repeat: no-repeat;
+}
+
+.trans_black .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height:100%;
+	left:-23px;
+	top:0;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/LEFT.png', sizingMethod='scale');
+	background-image:url(trans_black/LEFT.png) !important;
+	background-image:none;
+	background-repeat: repeat-y;
+}
+.trans_black .CONTENT
+{
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/widget/trans_black/bg.png', sizingMethod='scale');
+	background-image:url(trans_black/bg.png) !important;
+	background-image:none;
+	background-repeat: repeat;
+}
+.trans_black .EDIT
+{
+	right:-33px;
+}
+.trans_black .DELETE
+{	
+	right:-33px;
+}
+.trans_black .MOVE
+{	
+	right:-33px;
+	
+}
+
+/* 边框样式tv_black*/
+.tv_black .CONTENT{
+	background:#000;
+}
+.tv_black .LEFT_TOP
+{
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 20px;
+	left:-23px;
+	top:-20px;
+	background:url(tv_black/LEFT_TOP.gif) no-repeat;
+}
+.tv_black .TOP
+{
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 100%;
+	height: 20px;
+	left:0;
+	top:-20px;
+	background:url(tv_black/TOP.gif) repeat-x;
+}
+
+.tv_black .RIGHT_TOP
+{
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 20px;
+	right:-23px;
+	top:-20px;
+	background:url(tv_black/RIGHT_TOP.gif) no-repeat;
+}
+
+.tv_black .RIGHT
+{
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 100%;
+	right:-23px;
+	top:0;
+	background:url(tv_black/RIGHT.gif) repeat-y;
+}
+.tv_black .RIGHT_BOTTOM
+{
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 23px;
+	right:-23px;
+	bottom:-23px;
+	background:url(tv_black/RIGHT_BOTTOM.gif) no-repeat;
+}
+
+.tv_black .BOTTOM
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 100%;
+	height: 23px;
+	left:0px;
+	bottom:-23px;
+	background:url(tv_black/BOTTOM.gif) repeat-x;
+}
+
+.tv_black .LEFT_BOTTOM
+{
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 23px;
+	left:-23px;
+	bottom:-23px;
+	background:url(tv_black/LEFT_BOTTOM.gif) no-repeat;
+}
+
+.tv_black .LEFT
+{
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 23px;
+	height: 100%;
+	left:-23px;
+	top:0;
+	background:url(tv_black/LEFT.gif) repeat;
+}
+.tv_black .LOGO
+{
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	width: 100%;
+	height: 26px;
+	left:0px;
+	bottom:-22px;
+	z-index:10;
+	background:url(tv_black/logo.gif) 50% 50% no-repeat;
+}
+.tv_black .EDIT
+{
+	right:-42px;
+}
+.tv_black .DELETE
+{	
+	right:-42px;
+}
+.tv_black .MOVE
+{	
+	right:-42px;
+}
+
+/* 边框样式 simple*/
+
+.simple .CONTENT
+{
+	padding:6px;
+	background:#FFF;
+	border:1px solid #CCC;
+	box-shadow:0px 0px 15px #000;
+}
+.simple .EDIT
+{
+	right:-33px;
+}
+.simple .DELETE
+{	
+	right:-33px;
+}
+.simple .MOVE
+{	
+	right:-33px;
+}
+
+/*插件编辑窗口样式*/
+.fwin{
+	empty-cells:show;
+	border-collapse:collapse;
+}
+.fwin em{ font-style:normal;}
+.t_l,.t_c,.t_r,.m_l,.m_r,.b_l,.b_c,.b_r{overflow:hidden;background:#000;opacity:0.2;filter:alpha(opacity=20);}
+.t_l,.t_r,.b_l,.b_r{width:8px;height:8px;}
+.t_c,.b_c{height:8px;}
+.m_l,.m_r{width:8px;}
+.t_l{-moz-border-radius:8px 0 0 0;-webkit-border-radius:8px 0 0 0;border-radius:8px 0 0 0;}
+.t_r{-moz-border-radius:0 8px 0 0;-webkit-border-radius:0 8px 0 0;border-radius:0 8px 0 0;}
+.b_l{-moz-border-radius:0 0 0 8px;-webkit-border-radius:0 0 0 8px;border-radius:0 0 0 8px;}
+.b_r{-moz-border-radius:0 0 8px 0;-webkit-border-radius:0 0 8px 0;border-radius:0 0 8px 0;}
+.m_c{background:#FFF;}
+.m_c .tb{margin:0 0 10px;padding:0 10px;}
+.m_c .c{padding:0 10px 10px;}
+.m_c .o{padding:8px 10px;height:26px;text-align:right;border-top:1px solid #CCC;background:#F2F2F2;}
+.m_c .el{width:420px;}
+.m_c .el li{padding:0;border:none;}
+.flb{padding:10px 10px 8px;height:20px;line-height:20px;}
+.flb em{float:left;font-size:14px;font-weight:700;color:#369; font-style:normal; font-family:宋体;}
+.flb em a{text-decoration:none;}
+.flb .needverify{float:left;margin-left:8px;padding-left:13px;width:45px;height:21px;line-height:21px;background:url(re_unsolved.gif) no-repeat 0 0;font-size:12px;color:#999;font-weight:400;}
+.flb .onerror,.flb .onright{padding-left:20px;height:auto;line-height:140%;white-space:nowrap;font-size:12px;font-weight:400;}
+.flb .onerror{background:url(check_error.gif) no-repeat 0 50%;}
+.flb .onright{background:url(check_right.gif) no-repeat 0 50%;color:#666;}
+.flb span{float:right;color:#999;}
+.flb span a,.flb strong{float:left;text-decoration:none;margin-left:8px;font-weight:400;color:#333;}
+.flb span a:hover{color:#999;}
+.flbc{float:left;width:20px;height:20px;overflow:hidden;text-indent:-9999px;background:url(cls.gif) no-repeat 0 0;cursor:pointer;}
+.flbc:hover{background-position:0 -20px;}
+.cl:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.cl{zoom:1;}
+.mtm{margin-top:10px !important; margin-bottom:0;}
+button::-moz-focus-inner{border:0;padding:0;}
+.pn{vertical-align:middle;overflow:hidden;margin-right:3px;padding:0;height:23px;border:1px solid #999;background:#E5E5E5 url(pn.png) repeat-x 0 0;cursor:pointer;-moz-box-shadow:0 1px 0 #E5E5E5;-webkit-box-shadow:0 1px 0 #E5E5E5;box-shadow:0 1px 0 #E5E5E5;}
+.pn:active{background-position:0 -23px;}
+.ie6 .pn{overflow-x:visible;width:0;}
+.pn em,.pn span,.pn strong{padding:0 10px;line-height:21px;}
+.pn em,.pn strong{font-weight:700;}
+.ie7 .pn em,.ie7 .pn span,.ie7 .pn strong{padding:0 5px;line-height:18px;}
+a.pn{height:21px;line-height:21px;color:#444 !important;}
+a.pn:hover{text-decoration:none;}
+.ie6 a.pn{width:auto;}
+.ie6 a.pn em,.ie6 a.pn span,.ie6 a.pn strong{display:block;}
+.ie7 a.pn em,.ie7 a.pn span,.ie7 a.pn strong{line-height:21px;}
+.pnc,a.pnc{border-color:#235994;background-color:#06C;background-position:0 -48px;color:#FFF !important;}
+.pnc:active{background-position:0 -71px;}
+.xg1,.xg1 a{color:#999 !important;}
+.xg1 .xi2{color:#369 !important;}
+.m_c p{margin-bottom:0;}
+.m_c input[type="radio"],
+.m_c input[type="checkbox"] {
+	cursor: pointer;
+	border:0;
+}
+.z{float:left;height:29px;}
+
+.altw{width:350px;}
+.altw .fltc{margin-bottom:0;padding:8px;}
+.alert_right,.alert_error,.alert_info{padding:6px 0 6px 58px;min-height:40px;height:auto !important;height:40px;line-height:160%;background:url(right.gif) no-repeat 8px 8px;font-size:14px;}
+.alert_error{background-image:url(error.gif);}
+.alert_error a{font-weight:700;color:#369;}
+.alert_info{background-image:url(info.gif);}
+.alert_btnleft{margin-top:8px;}
+.alert_btn{margin-top:20px;text-align:center;}
+.alert_act{margin-top:20px;padding-left:58px;}

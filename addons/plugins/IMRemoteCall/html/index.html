@@ -1,0 +1,120 @@
+<!DOCTYPE "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/js/desktop/html5.js"></script>
+<![endif]-->
+<script> 
+	function stop(){ 
+		return false; 
+	} 
+	document.oncontextmenu=stop; 
+	
+	function change(k){
+		document.getElementById('li_'+k).style.background = "#D7E4EC";
+	}
+	function rechange(k){
+		document.getElementById('li_'+k).style.background = "white";
+	//	alert(k);
+	}
+	//iframe.setAttribute('frameborder', 0, 0); 
+</script>
+ <script type="text/javascript">
+ <!--
+	 var omitformtags=["input", "textarea", "select"]
+	 omitformtags=omitformtags.join("|")
+	 function disableselect(e){
+		 if (omitformtags.indexOf(e.target.tagName.toLowerCase())==-1)
+		 return false
+	 }
+	function reEnable(){
+		return true
+	}
+	if (typeof document.onselectstart!="undefined")
+		document.onselectstart=new Function ("return false")
+	else{
+		document.onmousedown=disableselect
+		document.onmouseup=reEnable
+	}
+	function    document.onkeydown()           
+	{           
+	  if(event.keyCode==116)           
+	   {           
+		event.keyCode    =    0;           
+		event.cancelBubble    =   true;           
+		return   false;           
+	   }           
+	} 
+-->
+</script> 
+<style type="text/css">
+body{ border: 0px; /*可自动隐藏或显示滚动条；设为 hidden 完全隐藏滚动条*/ } 
+a {
+	text-decoration:none;
+	color:#5f5a60;
+	font-size:12px;
+	font-family:"微软雅黑";
+}
+img {
+	border:0 none;
+}
+ul {
+	margin:0;
+	padding:0;
+	border:0;
+}
+span {
+	display:block;
+	text-align:center;
+}
+span a.title {
+	display:block;
+}
+li {
+	display:inline-block;
+	float:left;
+	margin: 0 auto;
+	height:55px;
+	width:80px;
+}
+
+li a {
+	display:block;
+	height:20px;
+	line-height:20px;
+	margin:0 auto;
+}
+.img_sty {
+	clear:both;
+	padding-left:22px;
+	padding-top:10px;
+}
+.clearfix:before, .clearfix:after {
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.clearfix:after {
+    clear: both;
+}
+</style>
+</head>
+<body>
+<div style="width:240px; margin:auto;">
+  <ul style="list-style:none;" id="ul_id">
+    <volist name="data" id="vo">
+      <li class="clearfix" id="li_{$key}"  onMouseOver="change({$key});" onMouseOut="rechange({$key})">
+	  <a class="img_sty" href="{:U('home/Public/displayAddons', array('addon'=>'IMRemoteCall', 'hook'=>'imLogin', 'u'=>$u, 'p'=>$p, 'code'=>$code, 'o'=>$vo['app_name']))}" target="_blank"> <img src="{$vo.img}" alt="{$vo.name}" width="30" height="30"/> </a>
+	  <span><a href="{:U('home/Public/displayAddons', array('addon'=>'IMRemoteCall', 'hook'=>'imLogin', 'u'=>$u, 'p'=>$p, 'code'=>$code, 'o'=>$vo['app_name']))}" target="_blank"> {$vo.name}</a></span>
+	  </li>
+    </volist>
+  </ul>
+</div>
+</body>
+</html>

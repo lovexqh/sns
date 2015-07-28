@@ -1,0 +1,56 @@
+<include file="../Public/_header_ajax" />
+<script type="text/javascript" reload="1">var apps_main_weekRankBox=new Array();</script>
+<div class="appPanelBody" id="appPanel_mainWeekRank_weekRank_body">
+	<ul class="appListUl">
+		<volist name="list" key="key" id="value">
+		<li class="appListLi"><a title="{$value.appname}" cmd="introduce" cat="{$classid}" appid="{$value.appid}" class="appListItem" href="javascript:void(0);"> <span class="appHot">{$value.starnum}</span> <span class="appIndex radius3 ">{$key}</span> <img src="{$value.appico}" class="appSmallIcon" width="16" height="16" onload="fixpng(this)"><span class="appName">{$value.appname}</span> </a></li>
+		<div style="display:none">
+			<div title="{$value.appname}" cmd="introduce" appid="{$value.appid}" class="appListItem" href="javascript:void(0);">
+			<if condition="empty($myicos)">
+				<a class="appOpenBtn appAdded"  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="top.OpenWindow('',encodeURI('{$value[appurl]}'),'{$value[appname]}');return false;">{:L('added')}</a>
+			<elseif condition="$myicos[$value['appid']] gt 0" />
+				<a class="appOpenBtn appAdded "  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="top._ico.Open('{$myicos[$app[appid]]}');return false;">{:L('added')}</a>
+			<else />
+				<a class="appAddBtn appAdded"  href="javascript:void(0);" appid="{$value.appid}"  cmd="add" hidefocus="" onclick="addapp('appAddBtn_{$value.appid}','{$value.appid}');return false;">{:L('added')}</a>
+			</if>
+			<img src="{$value.appico}" width="32" height="32" cmd="introduce" cat="{$classid}" appid="{$value.appid}" class="appMidIcon" onload="fixpng(this)"><span class="appName" cmd="introduce" cat="{$classid}" appid="{$value.appid}">{$value.appname}</span>
+			<div title="$value[star] {:L('fen')}" class="appStars"><div style="width: {eval echo $value[star]*10}%" class="appStar"></div></div>
+			</div>
+		</div>
+		</volist>
+	</ul>
+	<div class="clear"></div>
+</div>
+<div class="appPanelPagebar" id="appPanel_mainWeekRank_weekRank_pageBar" style="display: block;">
+	<div class="appPanelPagination"> 
+		<a hidefocus="" class="paginationBtn preBtn <!--{if $page<2}-->preBtn_dis<!--{/if}-->" href="javascript:void(0);" <!--{if $page>1}--> onclick="ajaxget('{DZZSCRIPT}?mod=market&op=ajax&do=mainWeekRank_weekRankBox&page={eval echo $page-1;}','mainWeekRank_weekRankBox','ajaxwaited');"<!--{/if}-->>&lt;</a>
+		<div class="paginationList">{$page}/{$total}</div>
+		<a hidefocus="" class="paginationBtn nextBtn <!--{if $page>=$total}-->nextBtn_dis<!--{/if}-->" href="javascript:void(0);"  <!--{if $page<$total}--> onclick="ajaxget('{DZZSCRIPT}?mod=market&op=ajax&do=mainWeekRank_weekRankBox&page={eval echo $page+1;}','mainWeekRank_weekRankBox','ajaxwaited');"<!--{/if}-->>&gt;</a> 
+	</div>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript" reload="1">
+var weekRank_oldhtml=''
+jQuery('#appPanel_mainWeekRank_weekRank_body .appListItem').bind('mouseover',function(){
+	if(weekRank_oldhtml){
+		jQuery('#appPanel_mainWeekRank_weekRank_body .select').html('').append(weekRank_oldhtml).removeClass('select');
+	}
+	var el=jQuery(this).parent();
+	weekRank_oldhtml=jQuery(this).clone(true);
+	
+	var appid=jQuery(this).attr('appid');
+	el.addClass('select');
+	el.html(el.next().html());
+	
+	jQuery('#appPanel_mainWeekRank_weekRank_body .appMidIcon,#appPanel_mainWeekRank_weekRank_body .appName').bind('click',function(){
+		var cat=parseInt(jQuery(this).attr('cat'));
+		var appid=parseInt(jQuery(this).attr('appid'));
+		var cmd=jQuery(this).attr('cmd');
+		control_click(jQuery(this),cmd,cat,0,appid);
+		return false;
+	});
+	
+});
+</script>
+<include file="../Public/_footer_ajax" />

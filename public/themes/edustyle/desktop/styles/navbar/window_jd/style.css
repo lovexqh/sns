@@ -1,0 +1,158 @@
+/*导航部分html代码,编写css代码可以参考此代码
+<div onselectstart="return event.srcElement.type== 'text';" unselectable="on" id="navbar" style="width: 220px; left: 558px; top: 341px;">
+	<!--此处为导航的边框-->
+	<div class="LEFT_TOP"></div>
+	<div class="TOP"></div>
+	<div class="RIGHT_TOP"></div>
+	<div class="RIGHT"></div>
+	<div class="RIGHT_BOTTOM"></div>
+	<div class="BOTTOM"></div>
+	<div class="LEFT_BOTTOM"></div>
+	<div class="LEFT"></div>
+	<div class="CENTER"></div>
+	<div id="indicator_Container">
+		<!--系统导航部分-->
+		<a id="indicator_sys_3" class="navItem indicator sysindicator" navid="sys_3" index="1" title="桌面导航" style="left: -1440px;">
+			<img onload="fixpng(this)" src="data/attachment/appimg/201209/30/121509g69kgu9jdoo4fflp.png" class="sysindicator_icon">
+			<div class="sysindicator_text">桌面导航</div>
+		</a>
+		<!--用户导航部分(根据设置的桌面数生成)-->
+		<a id="indicator_1" class="navItem indicator indicator_1" navid="1" index="2" title="桌面1" style="left: -1440px;">1</a>
+		<a id="indicator_2" class="navItem indicator indicator_2 indicator_current indicator_current_3" navid="2" index="3" title="桌面2">2</a>
+		<a id="indicator_3" class="navItem indicator indicator_3" navid="3" index="4" title="桌面3">3</a>
+		<a id="indicator_4" class="navItem indicator indicator_4" navid="4" index="5" title="桌面4">4</a>
+		<a id="indicator_5" class="navItem indicator indicator_5" navid="5" index="6" title="桌面5">5</a>
+		 
+	</div>
+</div>
+*/
+#navbar_flag {
+	width: 10px;/*标志说明
+		width:10px:表示导航左右居中，#navbar.left不起作用;
+	*/
+}
+#navbar {
+	top: 0;
+	left: 0;
+	height: 28px;
+	position: absolute;
+	text-align: center;
+	z-index: 4001;
+	background: none;
+	overflow: visible;
+}
+#indicator_Container{
+	float:left;
+	z-index:10;
+}
+#navbar .indicator {
+	float: left;
+	margin: 5px 4px;
+	height: 16px;
+	width: 18px;
+	color: #000;
+	font-family: 宋体;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 14px;
+	text-align: center;
+	outline: none;
+	background: #d4d0c8;
+	border: 1px solid #d4d0c8;
+}
+#navbar .indicator:hover, #navbar .indicator_current {
+	text-decoration: none;
+	border-top: 1px solid #FFF;
+	border-right: 1px solid #808080;
+	border-bottom: 1px solid #808080;
+	border-left: 1px solid #FFF;
+}
+#navbar .sysindicator {
+	float: left;
+	margin: 5px 4px;
+	height: 16px;
+	width: auto;
+	color: #000;
+	font-family: 宋体;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 16px;
+	text-align: center;
+	outline: none;
+	background: #d4d0c8;
+	border: 1px solid #d4d0c8;
+}
+#navbar .sysindicator:hover, #navbar .indicator_current {
+	text-decoration: none;
+	border-top: 1px solid #FFF;
+	border-right: 1px solid #808080;
+	border-bottom: 1px solid #808080;
+	border-left: 1px solid #FFF;
+}
+#navbar .sysindicator_text {
+	float: left;
+	height: 16px;
+	width: auto;
+	line-height: 16px;
+}
+#navbar .sysindicator_icon {
+	float: left;
+	height: 16px;
+	width: 18px;
+}
+
+/* 边框样式 */
+#navbar .LEFT_TOP {
+	/* 左上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+#navbar .TOP {
+	position: absolute;
+	/* 上边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	height: 0;
+	width: 0;
+}
+#navbar .RIGHT_TOP {
+	/* 右上：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0px;
+}
+#navbar .RIGHT {
+	/* 右边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+#navbar .RIGHT_BOTTOM {
+	/* 右下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+#navbar .BOTTOM {
+	/* 下边：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	height: 0;
+	width: 0;
+}
+#navbar .LEFT_BOTTOM {
+	/* 左下：请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+#navbar .LEFT {
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+#navbar .CENTER {
+	/* 请不要定义padding/margin/border/top/right/bottom/left属性 */
+	position: absolute;
+	width: 0;
+	height: 0;
+}

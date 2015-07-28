@@ -1,0 +1,142 @@
+
+#topbar{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:27px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:10;
+	overflow:hidden;
+}
+#topbar_back{
+	top:0px;
+	left:0px; 
+	right:0px;
+	height:27px;
+	width:100%;
+	position:absolute;
+	text-align:center;
+	z-index:-1;
+	overflow:hidden;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/bg.png', sizingMethod='scale');
+	background-image:url(bg.png) !important;
+	background-position:center;
+	background-repeat: repeat-x;
+	background-image:none;
+}
+#topbar a{
+   text-decoration:none;
+}
+#topbar .navlogo_container{
+	float:left;
+	height:22px;
+}
+#topbar .navlogo{
+	float:left;
+	width:165px;
+	height:18px;
+	margin:1px 0px 0px 5px;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/logo.png', sizingMethod='scale');
+	background-image:url(logo.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+#topbar .nav_spacename{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	line-height:21px;
+	height:21px;
+	margin:0 0 0 0px;
+	font-weight:bold;
+}
+
+#topbar .userinfo_container{
+	float:right;
+	height:30px;
+	padding-right:5px;
+	padding-top:2px;
+}
+#topbar .userinfo{
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	display:inline-block;
+}
+
+#topbar .vwmy {
+     padding-right: 16px;
+	 padding-left: 5px;
+	 background-position:100% 50%;
+}
+#topbar .user_avatar_mask {
+	display:none;
+}
+#topbar .user_avatar {
+     display:none;
+}
+#topbar .sys_message_container{
+	float:left;
+	position:relative;
+}
+#topbar .sys_message {
+	display:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/message.png', sizingMethod='image');
+	background-image:url(message.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+	height:16px;;width:16px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:1px 5px;
+	margin-right:5px;
+}
+#topbar .sys_message_glint {
+	_fileter:none;
+	background-image:url(../../../images/b.gif) !important;
+}
+#topbar .sys_exit {
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/exit.png', sizingMethod='image');
+	background-image:url(exit.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+	cursor:pointer;display:inline-block;
+	height:16px;;width:16px;line-height:1.5;text-indent:-999em;overflow:hidden;outline:none;
+	padding:1px 5px;
+	margin-left:10px;
+}
+
+#topbar .sys_exit:hover {
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dzz/styles/topbar/mac/exit_1.png', sizingMethod='image');
+	background-image:url(exit_1.png) !important;
+	background-image:none;background-position:center;
+	background-repeat: no-repeat;
+}
+
+#topbar .nav_text{
+	color:#333; 
+	text-shadow: 0px 0px 1px #FFF,0px 0px 1px #FFF;
+	
+}
+#topbar .reglink{
+	float:left;
+	font-size:12px;
+	display:inline-block;
+	padding-right:5px;
+}
+#topbar .login{
+	float:left;
+	font-size:12px;
+	display:inline-block;
+	padding-right:10px;
+}
+#topbar .topbar_container{
+	position:relative;
+	height:100%;
+	padding:1px 0;
+	overflow:hidden;
+}
+
+

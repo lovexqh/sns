@@ -1,0 +1,119 @@
+<script type="text/javascript">
+	$('html').css('height', '100%');
+	$('html').css('width', '100%');
+	$('html').css('overflow', 'hidden');
+	$('.close').click(function() {
+		$('html').css('height', '100%');
+		$('html').css('width', '100%');
+		$('html').css('overflow', 'auto');
+	});
+	//踢除员工
+	function del(uid){
+		if(confirm('确认踢出本圈子吗？')){
+			$.ajax({
+				url        : '{:U('society/Index/delMember')}',
+				type       : "POST",
+				dataType   : "json",
+				data       : {
+				societyId  : $('input[name=societyId]').val(),
+				uid        : uid
+				},
+				success : function(ajaxData) {
+					if(ajaxData.status==1){
+						$("#m_"+uid).remove();
+					}else{
+						ui.error(ajaxData.msg);
+						return false;
+					}
+				}
+			});	
+		}
+	}
+	//升为OR取消管理员
+	function conf(uid,status){
+		var societyId =  $('input[name=societyId]').val();
+		if(status==1?confirm('确认升为管理员吗？'):confirm('确认取消管理员吗？')){
+			$.ajax({
+				url      : '{:U('society/Index/confManager')}',
+				type     : "POST",
+				dataType : "json",
+				data     : {
+					societyId  : societyId,
+					status     : status,
+					uid        : uid
+				},
+				success : function(ajaxData) {
+					if(status==0){
+						if(ajaxData.status==1){
+							$('#m_'+uid+' .cancel').html('升为管理员');
+							$('#m_'+uid+' .tex').html('成员');
+							var click = $('#m_'+uid+' .cancel').attr('onclick');
+							click = click.replace(",'0'",",'1'");
+							$('#m_'+uid+' .cancel').attr('onclick',click);
+							$('#m_'+uid+' .cancel').attr('class','conf');
+						}else{
+							ui.error(ajaxData.msg);
+							return false;
+						}
+					}else if(status==1){
+						if(ajaxData.status==1){
+							$('#m_'+uid+' .conf').html('取消管理员');
+							$('#m_'+uid+' .tex').html('管理员');
+							var click = $('#m_'+uid+' .conf').attr('onclick');
+							click = click.replace(",'1'",",'0'");
+							$('#m_'+uid+' .conf').attr('onclick',click);
+							$('#m_'+uid+' .conf').attr('class','cancel');
+						}else{
+							ui.error(ajaxData.msg);
+							return false;
+						}
+					}
+				}
+			});	
+		}
+	}
+</script>
+<div style="width: 750px;height:500px;overflow-Y: scroll;background-color: #F9F9F9;" class="memberManager">
+	<p>圈子成员共计<span style="color: red;"><php>echo count($memberList);</php></span>人</p>
+	<div class="member_title"></div>
+	<div class="member_list">
+		<table>
+			<volist name="memberList" id="vo">
+				<tr id="m_{$vo.uid}">
+					<td width="117px">
+						<img width="20" height="20" alt="" title="1377" src="{$vo.uid|getUserFace}">
+						<a title="{$vo.uid|getUserName}的个人主页" class="username" uid="{$vo.uid}" rel="user" href="javascript:void(0);">{$vo.uid|getUserName}</a>
+					</td>
+					<td width="91px">{$vo.uid|getIdentity}</td>
+					<td width="114px">{$vo.cTime|date='Y-m-d',###}</td>
+					<td width="84px" class="tex">
+						<php>
+							if($vo['status']==0){
+								echo '成员';
+							}else if($vo['status']==1){
+								echo '管理员';
+							}else if($vo['status']==2){
+								echo '圈主';
+							}
+						</php>
+					</td>
+					<td width="160px">
+						<if condition="($memberOfMy['status']-$vo['status']) gt 0">
+							<if condition="($vo['status'] eq 1) and ($memberOfMy['status'] eq 2)">
+								<a class="cancel" href="javascript:;" onclick="conf({$vo.uid},'0');">取消管理员</a> 
+							<elseif condition="($vo['status'] eq 0) and ($memberOfMy['status'] eq 2)"/>
+								<a class="conf" href="javascript:;" onclick="conf({$vo.uid},'1');">升为管理员</a>
+							</if>
+						</if>
+					</td>
+					<td width="150px">
+						<if condition="($memberOfMy['status']-$vo['status']) gt 0">
+							<a href="javascript:;" onclick="del({$vo.uid});">踢出本圈子</a>
+						<else/>
+						</if>
+					</td>
+				</tr>
+			</volist>
+		</table>
+	</div>
+</div>

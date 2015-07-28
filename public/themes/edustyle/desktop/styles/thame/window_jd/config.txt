@@ -1,0 +1,10 @@
+[name]windows经典[/name] 	/*主题名称；*/
+[folder]window_jd[/folder]/*主题文件目录名*/
+[btype]1[/btype]  	/* 0:为html背景（必须定义[url]标签）; 1:拉伸；2：平铺；3：适应；4：居中；*/
+[url][/url] 		/*当btype为0时必须设定此值*/
+[dock]dock6[/dock]	/*dock风格目录名*/
+[window]window_jd[/window]	/*窗体风格目录名*/
+[browser]mac[/browser]	/*浏览器风格目录名*/
+[topbar]window_jd[/topbar]	/*顶部导航风格目录名*/
+[filemanage]window_jd[/filemanage]	/*顶部导航风格目录名*/
+[background-color]#3a6ea5[/background-color]	/*背景颜色,如果不加入此项，则使用此目录的背景图片back.jpg作为背景*/

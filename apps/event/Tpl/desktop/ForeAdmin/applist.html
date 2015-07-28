@@ -1,0 +1,51 @@
+<include file="__THEME__/desktop/_header" />
+<link href="../Public/css/meeting.css" rel="stylesheet" type="text/css" />
+
+<!-- 头部 end -->
+<div class="content_holder">
+  <div class="teaching-list" style="margin-top:5px;">
+    <div class="toolbar">
+      <a href="javascript:;" class="easyui-linkbutton small-normal checkNone" onclick="checkAllOrNone(this)"><b>全选</b></a> 
+      {$list.toolbar}
+    </div>
+    <div class="list">
+      <table border="0" cellspacing="0" cellpadding="0" class="table_list">
+        <tr>
+          <th style="width:30px;">选择</th>
+          <th>ID</th>
+          <th>名称</th>
+          <th>创建者</th>
+          <th>开始时间</th>
+          <th>结束时间</th>
+          <th>状态</th>
+          <th style="width:80px;">审核</th>
+        </tr>
+        <volist name="list.data" id='vo'>
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="checkbox2" id="checkbox2"   value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td style="text-align:left;" class="name"><a href="javascript:;" onclick="parent.tabs.iframe('{$vo['title']}','{:U('event/Index/eventDetail',array('id'=>$vo[id],'uid'=>$vo[uid]))}');" title="{$vo[title]}">{$vo[title]} </a></td>
+            <td>{$vo.uid|getUserName}</td>
+            <td>{$vo.sTime|date="Y-m-d H:i:s",###}</td>
+            <td>{$vo.eTime|date="Y-m-d H:i:s",###}</td>
+            <td>{$vo.statusName}</td>
+            <td>{$vo.auditBtns}</td>
+          </tr>
+        </volist>
+      </table>
+    </div>
+    <div class="page">{$list.html}</div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script language="javascript" type="text/javascript">
+var url_edit = 'event/Index/edit';
+var idFieldName = '{$config.idFieldName}';
+var action_name = '{$action_name}';
+var URL = '__URL__';
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/desktop/admin.js?{$verhash}{:time()}"></script>
+
+<include file="__THEME__/desktop/_footer" />

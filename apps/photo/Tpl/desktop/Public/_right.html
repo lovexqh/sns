@@ -1,0 +1,26 @@
+<div class="rtop"><php>if($type == 'hot'){echo '最新照片';}else{ echo '热门照片';}</php></div>
+<ul class="rlist">
+    <volist name="rphoto['data']" id="po">
+        <li>
+            <p><a href="{:U('photo/Index/detail',array('pid'=>$po['id']))}" title="{$po['name']}" ><img src="{$po['savepath']|get_photo_url}" alt="{$po['name']}" width="228"></a></p>
+            <p style="padding:10px 0 15px 0;"><a href="{:U('photo/Index/detail',array('pid'=>$po['id']))}" title="{$po['name']}" > {$po['name']} </a></p>
+        </li>
+    </volist>
+</ul>
+<div class="rtop">用户排行榜</div>
+<ul class="rulist">
+    <volist name="hotuser" id="hu" key="i">
+        <li>
+            <span><img class="upic" src="{$hu['userId']|getUserFace}" width="30" height="30"></span>
+                    <span style="width: 115px; overflow: hidden;">
+                        <p><a href="{:U('photo/Index/usercate',array('uid'=>$hu['userId']))}">{$hu['userId']|getUserName}</a></p>
+                        <p>榜单 第{$i}名</p>
+                    </span>
+                    <span style="margin: 0px;">
+                        <p>总数</p>
+                        <p>{$hu['num']}</p>
+                    </span>
+        </li>
+    </volist>
+
+</ul>

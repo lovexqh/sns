@@ -1,0 +1,159 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/date/WdatePicker.js"></script>
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_account_page">
+			<include file="../Public/_clubHeader" />
+			<div class="topic_header">
+				<span class="topic_header_word">财务</span>
+			</div>
+			<div class="account_page">
+				<div class="account_item_header">
+					<span class="account_detail_info">
+						<span class="account_detail_title">{$accountInfo.title}</span>
+						<span class="account_detail_time">{$accountInfo.addtime|friendlyDate=###,'ymd'}</span>
+					</span>
+					<div class="c"></div>
+				</div>
+				<table class="account_tb">
+					<tr class="account_tb_header">
+						<td style="width:360px;">款项</td>
+						<td style="width:116px;">金额</td>
+						<td style="width:300px;">备注</td>
+						<td style="width:180px;">经手人</td>
+						<php>if($member['type']==1 || $member['type']==2){</php>
+						<td style="width:90px;">操作</td>
+						<php>}</php>
+					</tr>
+					<php>if( empty($accountItem) ){</php>
+					<tr><td colspan="5" style="font-size:14px;line-height:30px;padding-left:10px;">还没有明细哦!</td></tr>
+					<php>}</php>
+					<volist name="accountItem" id="item">
+					<tr class="account_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td class="account_title">{$item.title}</td>
+						<td class="account_time">{$item.money}</td>
+						<td class="account_type">{$item.remark}</td>
+						<td class="account_money">{$item.useperson}</td>
+						<php>if($member['type']==1 || $member['type']==2){</php>
+						<td class="account_operate"><a class="account_item_del" onclick="delAccountItem({$item.id}, {$item.accountid});">删除</a></td>
+						<php>}</php>
+					</tr>
+					</volist>
+				</table>
+				<div class="account_item_sum">
+					<span class="account_item_type">
+						<php>if( $accountInfo['type'] == 1 ){</php>
+						收入
+						<php>} else if( $accountInfo['type'] == 2 ){</php>
+						支出
+						<php>}</php>
+					</span>
+					<span class="account_totalmoney">总计:<span class="account_totalmoney_num">{$accountInfo['totalmoney']}</span>元</span>
+				</div>
+			</div>
+			<php>if($member['type']==1 || $member['type']==2){</php>
+			<div class="add_account" id="add_item_area">
+				<form method="post" action="{:U('club/Account/doAddAccountItem')}" id="addAccountItemForm"  enctype="multipart/form-data">
+					<table class="add_account_tb">
+						<tr>
+							<td><em style="color:#FF0000;">*</em></td>
+							<td style="width:60px;">款项:</td>
+							<td><input type="text" name="title" id="item_title" style="width:400px;" /></td>
+						</tr>
+						<tr>
+							<td><em style="color:#FF0000;">*</em></td>
+							<td>金额:</td>
+							<td><input type="text" name="money" id="item_money" style="width:100px;" />&nbsp;元</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>备注:</td>
+							<td><input type="text" name="remark" id="item_remark" style="width:300px;" /></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>经手人:</td>
+							<td><input type="text" name="useperson" id="item_useperson" style="width:160px;" /></td>
+						</tr>
+						<tr style="line-height:40px;">
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><a class="publish_btn" id="doadd_account_item_btn" clubid="{$clubInfo.id}" accountid="{$accountInfo.id}"></a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<php>}</php>
+			<div class="c"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#doadd_account_item_btn').click(function(){
+		var title = $('#item_title').val(); 		//款项
+		var money = $('#item_money').val();			//金额
+		var remark = $('#item_remark').val();		//备注
+		var useperson = $('#item_useperson').val();//经手人
+		var url = $('#addAccountItemForm').attr('action');
+		var clubid = $(this).attr('clubid');
+		var accountid = $(this).attr('accountid');
+		var isNum = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;;
+		if(!clubid){
+			ui.error("社团错误!");
+			return false;
+		}
+		if(!accountid){
+			ui.error("财务名目错误!");
+			return false;
+		}
+		if(!title){
+			alert("请输入款项!");
+			return false;
+		}
+		if( getLength(title)>20 ){
+			alert("款项不能超过20个字!");
+			return false;
+		}
+		if(!money){
+			alert("请输入金额!");
+			return false;
+		}
+		if(!(isNum.test(money))){
+			alert("请输入正确金额!");
+			return false;
+		}
+		if( getLength(remark)>30 ){
+			alert("备注不能超过30个字!");
+			return false;
+		}
+		if( getLength(useperson)>10 ){
+			alert("经手人不能超过10个字!");
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url: url,
+			data:{
+				clubid: clubid, 
+				accountid: accountid, 
+				title: title, 
+				money: money, 
+				remark: remark, 
+				useperson: useperson
+			},
+			success: function (data){
+				if( data==1 ){
+					ui.success('添加成功!');
+					window.location.reload();
+				}else if(data == 0){
+					$.messager.alert('添加款项','添加失败！'); 
+				}else{
+					$.messager.alert('添加款项失败',data);
+				}
+			}
+		});
+	})
+	
+</script>
+<include file="../Public/_footer" />

@@ -1,0 +1,153 @@
+<include file="_header" />
+<script type="text/javascript" src="__THEME__/square/js/flexpaper.js"></script>
+<style type="text/css">
+.uploads {
+	display:block;
+	margin-left:14px;
+	width:161px;
+	height:38px;
+	background:url(__THEME__/square/images/down.png);
+}
+h2{
+	font-size:14px;
+	margin:10px;
+	
+}
+</style>
+<div class="wrapper">
+  <include file="header" />
+  <div class="main">
+    <div class="main_left">
+      <div class="info detail_box">
+        <div class="info_title">
+          <h1>{$title}</h1>
+          <span>最新更新时间：{$mtime|friendlyDate}</span>        
+         	
+          <div class="clear"></div>
+        </div>
+        <div id="FlexPaper" style="width:100%;height:540px;margin:auto; padding:0;"">
+                正在加载
+         </div>
+      	<script type="text/javascript"> 
+					$(document).ready(function(e) {
+                         $('#FlexPaper').FlexPaperViewer(
+							  { config : {
+								  SWFFile : escape("<php>echo getSiteUrl();</php>__ROOT__/data/uploads/{$filepath}"),
+								  Scale : 0.8,
+								  ZoomTransition : 'easeOut',
+								  ZoomTime : 0.5,
+								  ZoomInterval : 0.1,
+								  FitPageOnLoad : true,
+								  FitWidthOnLoad : true,
+								  FullScreenAsMaxWindow : true,
+								  ProgressiveLoading : true,
+								  MinZoomSize : 0.6,
+								  MaxZoomSize : 3,
+								  SearchMatchAll : true,
+								  InitViewMode : 'Portrait',
+								  RenderingOrder : 'flash,html',
+								  StartAtPage : '',
+								  ViewModeToolsVisible : true,
+								  ZoomToolsVisible : true,
+								  NavToolsVisible : true,
+								  CursorToolsVisible : true,
+								  SearchToolsVisible : true,
+								  WMode : 'transparent',
+								  localeChain: 'zh_CN',
+								  jsDirectory:	'__THEME__/square/js/'
+							  }}
+					  );
+                    });	 
+				</script> 
+      </div>
+      <php>if($cat){</php>
+      <div class="detail_box">
+        <div class="relation">
+        
+        <span class="title">猜您所需：</span> 
+        
+        <volist name="cat" id="obj">
+            <span><a href="#">{$obj.category_name}</a></span> 
+        </volist>
+       
+          <div class="clear"></div>
+        </div>
+        <div>
+          <table border="0" cellpadding="0" cellspacing="0" class="booklist" width="100%">
+          <volist name="resource" id="obj">
+            <tr>
+              <td width="450">
+              	<a href="{:U('square/Resource/show',array('id'=>$obj['id']))}">{$obj.title}</a>
+              </td>
+              <td width="90">{$obj.uid}</td>
+              <td width="75">{$obj.downCount}下载</td>
+              <td>{$obj.readCount}人阅读</td>
+            </tr>
+          </volist>
+          </table>
+           </div>
+      </div>
+      <php>}</php>
+    </div>
+    <div class="main_right">
+      <div class="source_right">
+        <h3>统计信息：
+        	 {:W('Weibo',array('tpl_name'=>'video_share_weibo','button_title'=>'分享'))}
+            <if condition="$uid neq $mid">
+            <if condition="$stype eq 1">
+                {:W('Favorite',array('type'=>'link', 'fid'=>$id, 'app'=>'prepare', 'mod'=>'Index', 'act'=>'swfshow','fid'=>$id,'appconfig'=>'prepareknowledge','type'=>'detail'))}
+            <elseif condition="$stype eq 2" />
+                {:W('Favorite',array('type'=>'link', 'fid'=>$id, 'app'=>'prepare', 'mod'=>'Index', 'act'=>'swfshow','fid'=>$id,'appconfig'=>'preparechapter','type'=>'detail'))}
+            </if>
+            </if>
+   
+            <php>
+              $tpl_data = array('author'=>getUserName($uid),'title'=>$title,'url'=>U('prepare/Index/swfshow',array('id'=>$id,'stype'=>$stype)),'type'=>1);
+              $tpl_data = urlencode(serialize($tpl_data));
+              $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布成功')));
+            </php>
+            {:showShareBtn($tpl_data, $param_data, $data, 0, 'prepare')}
+            
+        </h3>
+        <div class="source_count"> 
+          <p><strong>发布人：</strong>
+		  <span><space uid="uid" class="co">{uname}</space></span>
+		  <php>if($schoolid){</php>
+		  [{$schoolid|getSchoolName}]
+		  <php>}</php></p>
+          <p><strong>最新更新时间：</strong><span>{$mtime|friendlyDate}</span></p>
+		  <!--<p><strong>文件大小：</strong><span>{$resourcesize|getSize}</span></p>-->
+          <p><strong>浏览次数：</strong><span>{$readcount}次</span></p>
+        </div>
+        <a href="{:U('square/resource/down',array('id'=>$id,'stype'=>$stype))}" class="uploads"></a>
+        <h2>相关文档推荐</h2>
+        <ul class="recommend">
+         <volist name='resource' id='vo'>
+            <li style=" margin:10px 3px;">
+          	   <strong>
+                 <php>if($vo[type]==1){</php>
+                    <a href="{:U('square/Resource/prepareshow',array('id'=>$vo['id']))}">
+                <php>}else{</php>
+                 	<a href="{:U('square/Resource/chaptershow',array('id'=>$vo['id']))}">
+                <php>}</php>
+               {$vo['title']|getshort='8'}……</a>
+               <span style="float:right;">点击：{$vo['readcount']}</span>
+               </strong>
+           </li>
+           <div class="clear"></div>
+          </volist>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <include file="_footer" />
+  <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+l = new ctr();
+</script>
+</body>
+</html>

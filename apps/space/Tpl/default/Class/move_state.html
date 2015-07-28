@@ -1,0 +1,44 @@
+<include file="../Public/_header" />
+<include file="../Public/_tab" />
+               <include file="../Public/_movestate_leftmenu" />
+               <div class="trunk_right_s">
+                 <div class="navi_rtitle"><img src="__THEME__/space/images/space.gif" class="move_state" /><span class="title">同学动态</span></div>
+                 <div class="clear10"></div>
+                 <div class="right_content">
+                    <div id="cont-follow" class="contentbox weibo_box">
+                     <!--<div id="ClasscountNew"></div>-->
+					 {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>4))}
+                     
+                          <div class="page">{$list['html']}</div>
+                    </div>
+                    <div class="clear10"></div>
+                 </div>
+               </div>
+<include file="../Public/_footer" />  
+<script language="javascript" type="text/javascript">
+var weibo = $.weibo({
+      sinceId: parseInt('{$sinceId}'),
+      lastId:parseInt('{$lastId}'),
+      show_feed:parseInt('{$show_feed}'),
+      follow_gid:parseInt('{$follow_gid}'),
+      gid:parseInt('0'),
+      weiboType:'{$weibo_type}',
+      type:parseInt('0'),
+	  classid:parseInt('{$classid}')
+});
+//微广播收起功能
+function retract(obj){
+	 var length = $(obj).parent().find('ul>li').length;
+	 if(length>15){
+		 $(obj).parent().find('ul>li').each(function(i, e) {
+            if(i>=15){
+				$(this).remove();	
+			}
+        });
+	 }
+	 $('#hidejs').remove();
+	 $(obj).find('#ClassloadMoreDiv').html('<span class="ico_morefoot"></span>更多');
+}
+</script>
+
+    

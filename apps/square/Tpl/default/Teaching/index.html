@@ -1,0 +1,385 @@
+<include file="../Public/_header" />
+<include file="../Public/_teachheader" />
+<SCRIPT type="text/javascript">
+		
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			}
+		};
+		
+		var zNodes =[				
+				<volist name="treeNode" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick('{$obj[id]}')"}
+								
+				</volist>
+		];
+		var treeNoSchool =[				
+				<volist name="treeNoSchool" id='obj' key='k'>
+					<if condition="$k neq 1">,</if>
+					{ id:'{$obj[id]}', pId:'{$obj[pid]}', name:"{$obj[name]}", click:"noteClick2('{$obj[id]}')"}
+								
+				</volist>
+		];
+		
+		function noteClick(id){
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学校_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				schoolid	=	'';
+			}else{				
+				schoolid	=	'&schoolid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[3];
+			}
+			if(typeof(newarr[4])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[4];
+			}
+			window.location.href="__URL__&act=teachList"+phaseid+schoolid+courseid+gradeid;
+		}
+		function noteClick2(id){
+			var newarr	=	id.split('_');
+    		//id的顺序是.字母_学段_学科编号_年级编号_年级.
+			if(typeof(newarr[1])=='undefined'){
+				phaseid	=	'';
+			}else{				
+				phaseid	=	'&phaseid='+newarr[1];
+			}
+			if(typeof(newarr[2])=='undefined'){
+				courseid	=	'';
+			}else{				
+				courseid	=	'&courseid='+newarr[2];
+			}
+			if(typeof(newarr[3])=='undefined'){
+				gradeid	=	'';
+			}else{				
+				gradeid	=	'&gradeid='+newarr[3];
+			}
+			window.location.href="__URL__&act=teachList"+phaseid+courseid+gradeid;
+		}
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			return targetNode ? targetNode.drop !== false : true;
+		}		
+		$(document).ready(function(e) {
+            $.fn.zTree.init($("#dept_tree"), setting, zNodes);
+			$.fn.zTree.init($("#noschool_tree"), setting, treeNoSchool);
+        });
+</SCRIPT>
+<script type="text/javascript">
+$(function() {
+	$(".category li").click(function(){
+		$(this).parents("ul").find("li").removeClass('on');
+		$(this).addClass('on');
+		$(this).parents(".box").find(".source_list").css("display","none");
+		$(this).parents(".box").find(".source_list").eq($(this).parents("ul").find("li").index($(this))).css("display","");
+	});
+
+	$(".star li").click(function(){
+		$(this).parents("ul").find("li").removeClass('on');
+		$(this).addClass('on');
+		$(this).parents(".rank").find("table").css("display","none");
+		$(this).parents(".rank").find("table").eq($(this).parents("ul").find("li").index($(this))).css("display","");
+	});
+});
+
+function rank(obj){
+	if(obj=='dept_tree'){
+		$('#noschool_tree').hide();	
+		$('#'+obj).show();		
+	}else if(obj=='noschool_tree'){
+		$('#dept_tree').hide();	
+		$('#'+obj).show();		
+	}
+}
+</script>
+  <div class="main">
+    <div class="sidebar">
+        <!--<div class="sidebar_box">
+            <h4>教研分享公告</h4>
+            <ul class="share">
+              <li><a href="#">1.中考中考中考中考中考中</a></li>
+              <li><a href="#">2.高考高考高考高考高考高考高</a></li>
+              <li><a href="#">3.高考高考高考高考高高考高考</a></li>
+              <li><a href="#">4.高考高考高考高考高考考高考</a></li>
+              <li><a href="#">4.高考高考高考高考高考考高考</a></li>
+              <div class="clear"></div>
+            </ul>
+        </div>-->
+      <div class="sidebar_box">
+        <h4>教研活动</h4>
+        <ul class="star" style="background-color:#F5F5F5">
+            <li><a href="javascript:void(0)" onclick="rank('dept_tree')">按本校</a></li>
+            <li><a href="javascript:void(0)" onclick="rank('noschool_tree')">按科目</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div>
+          <ul id="dept_tree" class="ztree">
+          </ul>
+          <ul id="noschool_tree" class="ztree" style="display:none">
+          </ul>
+        </div>
+      </div>
+      <div class="sidebar_box">
+        <h4>教研类型</h4>
+        <ul class="lesson">
+        <volist name='types' id='vo'>
+          <li><a href="__URL__&act=teachList&teachingtype={$vo.id}">{$vo.datacode}</a></li>
+		</volist>
+          <div class="clear"></div>
+        </ul>
+      </div>      
+	  
+      <div class="clear"></div>
+    </div>
+    <div class="content">
+      
+      <div class="so_left"> 
+        <!--教研活动-->
+        <div class="box">
+          <div class="title">
+            <h2>教研活动</h2>
+            <a href="{:U('square/Teaching/teachList')}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          <ul class="category">
+            <li><a href="javascript:void(0)" >推荐</a></li>
+            <li><a href="javascript:void(0)" >正进行</a></li>
+            <li><a href="javascript:void(0)" >将开始</a></li>
+            <div class="clear"></div>
+          </ul>
+          <ul class="source_list" name="tab1" id="tab1_tj">
+          <volist name='tj' id='vo'>
+            <li><a href="{:U('square/Teaching/show', array('meetingId'=>$vo['meetingid']))}">{$vo['meetingname']}</a><span>开始时间:{$vo['starttime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          <ul class="source_list" id="tab1_on" name="tab1" style="display:none">
+          <volist name='recommend' id='vo'>
+            <li><a href="{:U('square/Teaching/show', array('meetingId'=>$vo['meetingid']))}">{$vo.meetingname}</a><span>开始时间:{$vo['starttime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          <ul class="source_list" id="tab1_ready" name="tab1" style="display:none">
+          <volist name='contribute' id='vo'>
+            <li><a href="{:U('square/Teaching/show', array('meetingId'=>$vo['meetingid']))}">{$vo['meetingname']}</a><span>开始时间:{$vo['starttime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+        </div>
+        <!--基础资源-->
+        <div class="box">
+          <div class="title">
+            <h2>教研组</h2>
+            <a href="{:U('square/Teaching/groupList')}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          <ul class="category">
+            <li><a href="javascript:void(0)" >全部</a></li>
+            <li><a href="javascript:void(0)" >小学</a></li>
+            <li><a href="javascript:void(0)" >初中</a></li>
+            <li><a href="javascript:void(0)" >高中</a></li>
+            <div class="clear"></div>
+          </ul>
+          
+          <ul class="source_list" id="tab2_all" name="tab2">
+          <volist name='allgroup' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>创建时间:{$vo['ctime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          
+          <ul class="source_list" id="tab2_xiao" style="display:none" name="tab2">
+          <volist name='xiaogroup' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>创建时间:{$vo['ctime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          
+          <ul class="source_list" id="tab2_chu" style="display:none" name="tab2">
+          <volist name='chugroup' id='vo'>
+           	<li><a href="#">{$vo['name']}</a><span>创建时间:{$vo['ctime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          
+          <ul class="source_list" id="tab2_gao" style="display:none" name="tab2">
+          <volist name='gaogroup' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>创建时间:{$vo['ctime']|dateFormat}</span><span style="margin:1px 10px 0 0;">创建者：{$vo.uid|getUserSpace}</span></li>
+          </volist>
+          </ul>
+          
+        </div>     
+        <div class="box">
+          <div class="title">
+            <h2>教研资源</h2>
+            <a href="{:U('square/Teaching/resList')}" class="more">更多>></a>
+            <div class="clear"></div>
+          </div>
+          <ul class="category">
+            <li><a href="javascript:void(0)" >文档</a></li>
+            <li><a href="javascript:void(0)" >图片</a></li>
+            <li><a href="javascript:void(0)" >视频</a></li>
+            <li><a href="javascript:void(0)" >压缩</a></li>
+            <div class="clear"></div>
+          </ul>
+          <ul class="source_list" id="tab3_all" name="tab3">
+          <volist name='docres' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>{$vo['downcount']}次下载</span><span style="margin:1px 10px 0 0;">上传人：{$vo.userId}</span></li>
+          </volist>
+          </ul>
+          <ul class="source_list" id="tab3_xiao" style="display:none" name="tab3">
+          <volist name='picres' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>{$vo['downcount']}次下载</span></li>
+          </volist>
+		  </ul>
+
+          <ul class="source_list" id="tab3_chu" style="display:none" name="tab3">
+          <volist name='videores' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>{$vo['downcount']}次下载</span></li>
+          </volist>
+          </ul>
+          <ul class="source_list" id="tab3_gao" style="display:none" name="tab3">
+          <volist name='zipres' id='vo'>
+            <li><a href="#">{$vo['name']}</a><span>{$vo['downcount']}次下载</span></li>
+          </volist>
+          </ul>
+        </div>   
+        
+      </div>
+      <div class="so_right">
+        <div class="statistics">
+          <h3>教研统计：</h3>
+          <div class="source_count">
+            <p><strong>教研共计：</strong><span class="number">{$countTeach['all']}个</span></p>
+            <p><strong>正在进行：</strong><span>{$countTeach['on']}个</span></p>
+            <p><strong>即将开始：</strong><span>{$countTeach['ready']}个</span></p>
+            <p><strong>已经完成：</strong><span>{$countTeach['finish']}个</span></p>
+          </div></div>
+        <div class="rank">
+          <h4>贡献排行榜</h4>
+          <ul class="star">
+            <li><a href="javascript:void(0)" >上传排行榜</a></li>
+            <li><a href="javascript:void(0)" >下载排行榜</a></li>
+            <div class="clear"></div>
+          </ul>
+          <table border="0" cellspacing="0" cellpadding="0" id="uprank">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="50%">名字</th>
+              <th scope="col" width="50%">上传数</th>
+            </tr>
+            <volist name='up' id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td>{$vo.uid|getUserName}</td>
+              <td>{$vo.count}</td>
+              
+            </tr>
+            </volist>            
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" id="downrank" style="display:none">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="50%">姓名</th>
+              <th scope="col" width="50%">下载数</th>
+            </tr>
+            <volist name='down' id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td>{$vo.uid|getUserName}</td>
+              <td>{$vo.count}</td>              
+            </tr>
+            </volist>  
+          </table>
+        </div>
+        <div class="rank">
+          <h4>活跃度排行榜</h4>
+          <ul class="star">
+            <li><a href="javascript:void(0)" >个人</a></li>
+            <li><a href="javascript:void(0)" >学校</a></li>
+            <div class="clear"></div>
+          </ul>
+          <table border="0" cellspacing="0" cellpadding="0" class="tl" id="person">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="100">姓名</th>
+              <th scope="col">教研数</th>
+            </tr>
+            <volist name='peractive' id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td>{$vo.uid|getUserName}</td>
+              <td>{$vo.tcount}</td>              
+            </tr>
+            </volist>  
+          </table>
+          <table border="0" cellspacing="0" cellpadding="0" class="tl" id="school" style="display:none">
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col" width="100">学校</th>
+              <th scope="col">教研数</th>
+            </tr>
+            <volist name='schactive' id='vo'>
+            <tr>
+              <td><code class="<php>echo $i<=3?('top'.($i>1?'2':'')):'';</php>">{$i}</code></td>
+              <td>{$vo.schoolid|getSchoolName}</td>
+              <td>{$vo.count}</td>              
+            </tr>
+            </volist> 
+          </table>
+        </div>
+        <div class="rank">
+          <h4>优秀团队排行榜</h4>
+          <ul class="group">
+          
+          <volist name='term' id='vo'>
+          <li>
+              <div class="g_left">
+					<php>if($vo['logo']==null){</php>
+                    <img src="../Public/images/group.png" width="60" height="60">
+                    <php>}else{</php>
+                    <img src="__ROOT__/thumb.php?w=60&h=60&url=./data/uploads/{$vo.logo}">
+                    <php>}</php>
+              </div>
+              <div class="g_right">
+                <ul id="g_list">
+                    <li>{$vo.name|msubstr=0,8}</li>
+                    <li>教研数:{$vo.tcount}个</li>
+                </ul>
+              </div>
+           </li>
+           </volist>
+          <div class="clear"></div>
+        </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+<include file="../Public/_footer" />

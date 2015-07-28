@@ -1,0 +1,61 @@
+<include file="../Public/_header" />
+<script type="text/javascript" src="../Public/js/date/WdatePicker.js"></script>
+<script  type="text/javascript" src="../Public/js/club.js" ></script>
+<div class="content_holder content main mainbox">
+	<div class="mainbox_W">
+		<div class="club_noclass_member">
+			<include file="../Public/_clubHeader" />
+			<include file="../Public/_memberHeader" />
+			<div class="member_page">
+				<div class="search_noclass">
+					<form id="account_search_form" class="account_search" action="{:U('club/Member/noclassMember', array('id'=>$clubInfo['id']))}" method="post">
+						<span class="noclass_date">日期</span>
+						<input type="text" id="searchtime" name="searchtime" onFocus="WdatePicker({readOnly:true})" />
+						<input type="checkbox" name="class1" />第一节
+						<input type="checkbox" name="class2" />第二节
+						<input type="checkbox" name="class3" />第三节
+						<input type="checkbox" name="class4" />第四节
+						<input type="checkbox" name="class5" />第五节
+						<input type="checkbox" name="class6" />第六节
+						<a class="search_noclass_btn" onclick="chkNoclassSearch()"></a>
+						<!--<input class="search_noclass_btn" type="submit" >-->
+					</form>
+					<div class="c"></div>
+				</div>
+				<table class="account_tb">
+					<tr class="account_tb_header">
+						<td style="width:210px;">姓名</td>
+						<td style="width:210px;">年级</td>
+						<td>加入时间</td>
+						<td style="width:210px;">身份</td>
+					</tr>
+					<php>if($search==1 && empty($noClassMember)){</php>
+					<tr><td colspan="4" style="line-height:30px;padding-left:10px;font-size:14px;">没有没课的成员!</td></tr>
+					<php>}else if(empty($search)){</php>
+					<tr><td colspan="4" style="line-height:30px;padding-left:10px;font-size:14px;">选择日期和节次进行查询!</td></tr>					
+					<php>}</php>
+					<volist name="noClassMember" id="member">
+					<tr class="account_tb_list" <php>if($i % 2 == 0){ echo 'style="background:#F8F8F8;"';}</php>>
+						<td class="account_title">{$member.username}</td>
+						<td class="account_type">
+							<php>if(!empty($member['grade']) && $member['grade']!=1){</php>
+							{$member.grade}级
+							<php>}else if($member['grade']==1){</php>
+							(老师)
+							<php>}else{</php>
+							--
+							<php>}</php>
+						</td>
+						<td class="account_time">{$member.mtime|friendlyDate=###,'ymd'}</td>
+						<td class="account_money">{$member.identity}</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+</script>
+<include file="../Public/_footer" />

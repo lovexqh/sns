@@ -1,0 +1,81 @@
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+
+
+
+<div class="sidebar">
+      <div class="sidebar_box">
+        <h4>工具分类目录</h4>
+        <div>
+       		<UL id="navtreeother" class="ztree" style="overflow-x: auto; overflow-y: hidden; padding-bottom:20px;"></UL>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+<script type="text/javascript">
+//选择备课节点时给隐藏域相应输入框赋值
+function zTreeOnClick(event, treeId, treeNode) {
+	var url = '';
+	if(typeof(treeNode.section)!='undefined'){
+		var section=treeNode.section;
+		if(section=='1'){
+		url += "&stage=small"}
+		if(section=='2'){
+		url += "&stage=middle"}
+		if(section=='3'){
+		url += "&stage=high"}
+	}
+	if(typeof(treeNode.Grade)!='undefined'){
+		var grade=treeNode.Grade;
+		url += "&grade="+treeNode.Grade;
+	}
+	if(typeof(treeNode.Subject)!='undefined'){
+		var subject=treeNode.Subject;
+		url += "&subject="+treeNode.Subject;
+	}
+	if(typeof(treeNode.Publisher)!='undefined'){
+		var publisher=treeNode.Publisher;
+		url += "&publisher="+treeNode.Publisher;
+	}
+	if(typeof(treeNode.Volume)!='undefined'){
+		var volume=treeNode.Volume;
+		url += "&volume="+treeNode.Volume;
+	}
+	if(typeof(treeNode.Cell)!='undefined'){
+		var cell=treeNode.Cell;
+		url += "&cell="+treeNode.Cell;
+	}
+	if(typeof(treeNode.CourseID)!='undefined'){
+		var courseid=treeNode.CourseID;
+		url += "&courseid="+treeNode.CourseID;
+	}
+	document.location.href = "{:U('square/Tool/getList')}"+url;	
+};
+<!--其他分类的树-->
+		var settingother = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodesother =[
+			<volist name="sqcategory" id='obj'>
+			<php>if($obj['id']!=3){</php>
+				{ id:'{$obj[id]}', pId:'{$obj[p_id]}', name:"{$obj[category_name]}", target:"_self", click:"noteClick({$obj['id']})"<php>if($obj['id']=='31' or $obj['id']=='32'){</php>,open:"true"<php>}else{</php>  <volist name="path" id='v'><php>if($v['id']==$obj['id']){</php>,open:"true"<php>}</php></volist><php>}</php>},	
+				<php>}</php>				
+			</volist>
+		];
+		function noteClick(id){
+			document.location.href = "{:U('square/Tool/getList')}&cateid="+id;			
+		}
+	<!--基础分类树-->
+	$(document).ready(function(){
+		$.fn.zTree.init($("#navtreeother"), settingother, zNodesother);
+	});	
+//-->
+</script>
+<include file="__THEME__/desktop/_KnowledgeTree" />

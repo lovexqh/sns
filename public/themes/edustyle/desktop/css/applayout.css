@@ -1,0 +1,347 @@
+@charset "utf-8";
+/*************************
+ *	基础样式表
+ *	作者: 小波
+ *	创建日期: 2013-7-31
+ *	xiaobosun@gridinfo.com.cn
+ *************************/
+html, body {height: 100%;}
+
+.right{ float:right;}
+.left{float:left;}
+
+/*应用框架基础样式begin*/
+.container {display: block;position: relative; width: 100%;height: auto!important; /*for ie6 bug and ie7+,moz,webkit 正确*/height: 100%; /*修复IE6,all browser*/min-height: 100%; /*for ie6 bug and ie7+,moz,webkit 正确*/z-index: 1;overflow: hidden;}
+header {position: absolute;left: 0;top: 0;display: block;width: 100%;height: 32px;background-color: #f2f2f2;border-bottom: #ccc solid 1px;z-index: 2;}
+header .tools_menu{display:inline-block; margin-left:10px;}
+header .tools_menu li{float:left; padding:0 3px; height:16px; line-height:16px; margin-top:8px; color:#b2c3cc}
+header .tools_menu li a{vertical-align:middle; color:#6c6c6c;}
+.panel_left {position: absolute;min-width: 110px;height: auto!important;height: 100%;min-height: 100%;top: 32px;left: 0px;border-right:#ccc solid 1px;background-color: #f7f7f7;z-index: 0;}
+.panel_slide{position:absolute;right:0;top:0;width:4px;height: auto!important;height: 100%;min-height: 100%;border-left:#ccc solid 1px;cursor:col-resize;}
+.panel_left .bottom_block {display: block;clear: both;height: 64px;width: 100%;}
+.panel_right{display:block;margin-top:32px;margin-right:5px;}
+.jspContainer{position:absolute;right:5px; z-index:0;}
+footer {position: absolute;left: 0;bottom: 0;display: block;width: 100%;height: 32px;background-color: #e2e7eb;border-top: #ccc solid 1px;z-index: 2;}
+footer address {margin-left: 10px;line-height: 32px;color: #9f9f9f;cursor: default;}
+/*应用框架基础样式end*/
+
+.header_other{
+	padding-right:10px;
+	line-height:32px;
+	color:#333;
+}
+#joinHeader{
+	display:none;
+}
+
+/*左侧菜单样式*/
+ul.nav_menu{
+	margin-top:5px;
+	display:block;
+	clear:both;
+}
+ul.nav_menu li{
+	margin-top:8px;
+	display:block;
+	width:80px;
+	float:right;
+	margin-right:5px;
+	line-height:1.2;
+	text-align:center;
+	border:solid 1px #ccc;
+	border-right:0;
+	-moz-border-radius: 3px 0 0 3px; 
+	-webkit-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	
+	background:#fafafa; 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#dadada'); 
+	background: linear-gradient(top, #fafafa, #dadada); 
+	background: -moz-linear-gradient(top, #fafafa, #dadada); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fafafa), to(#dadada));
+	
+	box-shadow:inset 0px 0px 1px #fff;
+    -moz-box-shadow:inset 0px 0px 1px #fff;
+    -webkit-box-shadow:inset 0px 0px 1px #fff;
+	
+	cursor: pointer; 
+}
+ul.nav_menu li.sele{
+	padding-left:5px;
+	padding-right:5px;
+	color:#fff;
+	border:solid 1px #1f73a5;
+	background:#2b8dd6; 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2da0df', endColorstr='#1f73a5'); 
+	background: linear-gradient(top, #2da0df, #1f73a5); 
+	background: -moz-linear-gradient(top, #2da0df, #1f73a5); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2da0df), to(#1f73a5));
+}
+ul.nav_menu li a{
+	padding:8px 0;
+	display:block;
+	color:#333;
+}
+ul.nav_menu li a:hover{
+	font-weight:bold;
+	text-decoration:none;
+}
+ul.nav_menu li.sele a{
+	color:#fff;
+	font-weight:bold;
+}
+
+/*图标基础样式begin*/
+.icon_homepage,.icon_refresh{display:inline-block; float:left; width:20px; height:16px; vertical-align:middle; background-image:url(../images/tools_icon.gif);background-repeat:no-repeat;}
+.icon_homepage{background-position:0 0;}
+.icon_refresh{background-position:-20px 0;}
+/*图标基础样式end*/
+
+/*模式窗口样式*/
+#status_dialog{
+	position: fixed;
+    z-index:99999;
+    top: 50%;
+    left: 50%;
+	margin-left:-90px;
+	margin-top:-32px;
+	padding:5px 20px;
+    height:64px;
+	line-height:64px;
+	font-size:14px;
+	font-weight:bold;
+    width:180px;
+	background-color:#fff;
+	border:solid 5px #dedede;
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display:none;
+}
+#status_dialog.success{
+	color:#093;
+}
+#status_dialog.error{
+	color:#F30;
+}
+#status_dialog i{
+	display:inline-block;
+	width:64px;
+	height:64px;
+	margin-right:10px;	
+	background-image:url(../images/success.gif);
+	background-repeat:no-repeat;
+	vertical-align:middle;
+}
+#status_dialog i.success{
+	background-position:0 0;
+}
+#status_dialog i.error{
+	background-position:0 -64px;
+}
+
+/*按钮样式*/
+.btn{
+	display: inline-block; 
+	padding: 5px 15px 6px;
+	text-decoration: none;
+	line-height:1.2;
+	border:solid 1px #ccc;
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	
+	background:#fafafa; 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#dadada'); 
+	background: linear-gradient(top, #fafafa, #dadada); 
+	background: -moz-linear-gradient(top, #fafafa, #dadada); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fafafa), to(#dadada));
+	
+	box-shadow:inset 0px 0px 1px #fff;
+    -moz-box-shadow:inset 0px 0px 1px #fff;
+    -webkit-box-shadow:inset 0px 0px 1px #fff;
+	
+	cursor: pointer; 
+}
+.btn:hover{
+	text-decoration:none;
+	border-color: rgba(82, 168, 236, 0.8);
+  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.blue-button{
+	color:#fff;
+	border:solid 1px #1f73a5;
+	background:#2b8dd6; 
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2da0df', endColorstr='#1f73a5'); 
+	background: linear-gradient(top, #2da0df, #1f73a5); 
+	background: -moz-linear-gradient(top, #2da0df, #1f73a5); 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2da0df), to(#1f73a5));
+}
+.blue-button:hover{
+	text-decoration:none;
+	border:solid 1px #1f73a5;
+  	-webkit-box-shadow: 0 0 10px rgba(82, 168, 236, 0.9);
+    -moz-box-shadow: 0 0 10px rgba(82, 168, 236, 0.9);
+    box-shadow: 0 0 10px rgba(82, 168, 236, 0.9);
+}
+.btn.medium{
+	padding: 6px 15px 7px;
+}
+.btn.large{
+	font-size:14px;
+	font-weight:bold;
+	padding: 9px 15px 10px;
+}
+.btn.long{
+	padding-left:25px;
+	padding-right:25px;	
+}
+
+/*input 样式*/
+button,
+input,
+select,
+textarea {
+	margin: 0;
+	font-size: 100%;
+	vertical-align: middle;
+}
+button,
+input {
+	*overflow: visible;
+	line-height: normal;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	cursor: pointer;
+	-webkit-appearance: button;
+}
+label,
+select,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] {
+	cursor: pointer;
+}
+input[type="search"] {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	-webkit-appearance: textfield;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}
+
+textarea {
+	overflow: auto;
+	vertical-align: top;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	display: inline-block;
+	height: 20px;
+	padding: 4px 6px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #555555;
+	vertical-align: middle;
+	-webkit-border-radius: 4px;
+	 -moz-border-radius: 4px;
+		  border-radius: 4px;
+}
+
+textarea {
+	height: auto;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	 -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+		  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+	 -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+	   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+		  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+input[type="radio"],
+input[type="checkbox"]{
+	margin-right:4px;
+}
+
+/*表单验证*/
+.validateform{}
+.validateform input.error{
+	
+}
+.validateform label.error{
+	padding-left:10px;
+	color:red;
+}
