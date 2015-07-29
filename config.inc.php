@@ -3,8 +3,8 @@ if (!defined('SITE_PATH')) exit();
 return array(
     // 数据库常用配置
     'DB_TYPE'			=>	'mysql',			// 数据库类型
-//     'DB_HOST'			=>	'127.0.0.1',			// 数据库服务器地址
-    'DB_HOST'			=>	'10.1.5.123',			// 数据库服务器地址
+    'DB_HOST'			=>	'127.0.0.1',			// 数据库服务器地址
+//     'DB_HOST'			=>	'10.1.5.123',			// 数据库服务器地址
     'DB_NAME'			=>	'dalian_dsk_db',			// 数据库名
     'DB_USER'			=>	'root',		// 数据库用户名
     'DB_PWD'			=>	'root',		// 数据库密码
@@ -25,8 +25,8 @@ return array(
     'URL_ROUTER_ON'		=> false,
 		//memcache配置
 		'DATA_CACHE_TYPE' => 'Memcache',
-		'MEMCACHE_HOST'   =>  '10.3.200.115:11211',
-// 		'MEMCACHE_HOST'   =>  '127.0.0.1:11211',
+// 		'MEMCACHE_HOST'   =>  '10.3.200.115:11211',
+		'MEMCACHE_HOST'   =>  '127.0.0.1:11211',
 	  'DATA_CACHE_TIME' => '3600',
 
     'SHOW_PAGE_TRACE' =>true,
