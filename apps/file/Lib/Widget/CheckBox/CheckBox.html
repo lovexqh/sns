@@ -1,0 +1,15 @@
+<tr>
+	<th>{$label}：</th>
+	<td>
+		<volist name="data" id='vo'>
+		<php>
+		$checked = null;
+		if(strpos($vo,'[selected]') !== false){
+			$checked="checked";
+		}
+		$vo = str_replace('[selected]','',$vo);
+		</php>
+		<label><input type="checkbox" name="{$field}[]" {$checked} id="choice1" value="{$vo}" />{$vo}</label>
+		</volist>
+	  </td>
+</tr>

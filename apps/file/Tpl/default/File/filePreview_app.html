@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>文档预览</title>
+        <script type="text/javascript">
+            var _UID_   = <php> echo (int) $uid;</php>;
+            var _MID_   = <php> echo (int) $mid;</php>;
+            var _UNAME_ = '{$userInfoCache['uname']}';
+            var _ROOT_  = '__ROOT__';
+            var _THEME_ = '__THEME__';
+            var _PUBLIC_ = '__PUBLIC__';
+            var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+            var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+            var _USER_EXP_TABLE = {$level_list};
+            var $CONFIG = {};
+            $CONFIG['uid'] = _UID_;
+            $CONFIG['mid'] = _MID_;
+            $CONFIG['root_path'] =_ROOT_;
+            $CONFIG['theme_path'] = _THEME_;
+            $CONFIG['public_path'] = _PUBLIC_;
+            $CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+        </script>
+        <link href="__THEME__/css/base.css" rel="stylesheet" type="text/css" />
+        <link href="__THEME__/layout.css" rel="stylesheet" type="text/css" />
+        <link href="__THEME__/form.css" rel="stylesheet" type="text/css" />
+        <link href="../Public/css/material_view.css" rel="stylesheet" type="text/css"/>
+        <link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+    </head>
+    <body>
+        <div id="iframe_wrap">    
+            <div id="file_head">
+                <input type="hidden" value="{$attachInfo}"/>
+                <h1 id="file_title" title="{$attachInfo['title']}">{$attachInfo['title']}</h1>
+                <div class="right_btn_2">
+                    {:W('Weibo',array('tpl_name'=>$_SESSION['mid']==$attachInfo['uid']?'file_create_weibo':'file_share_weibo','button_title'=>'分享'))}
+                    <php>
+                        $tpl_data = urlencode(serialize(array(
+                        'author'=>getUserName($attachInfo['uid']),
+                        'title'=>$attachInfo['title'],
+                        'url'=>U('file/File/fileDetail',array('id'=>$id)),
+                        )));
+                        $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布资料成功')));
+                    </php>
+                    <a href="javascript:;" class="report_00 button" id="file_share" hidefocus="true" onclick="_widget_weibo_start('', '{$tpl_data}');">分享</a>
+                    <?php if($attachInfo['no_down'] == 0){ ?>
+                    <a id="file_download" href="{:U('home/Attach/download', array('id'=>$attachInfo['attach_id'], 'uid'=>$attachInfo['uid'], 'download_status'=>$attachInfo['download_status']))}" class="button" target="_blank">下载 ({$attachInfo['down_count']}人)</a>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <div id="file_info1">
+                <span>上传：<a href="{:U('home/Space/index',array('uid'=>$attachInfo['uid']))}" uid="{$attachInfo['uid']}" rel="face" target="_blank">{$attachInfo['uname']}</a></span>
+                <span>
+                    上传时间：{$attachInfo['uploadTime']|friendlyDate}
+                </span>
+                <php>if($attachInfo['app_name'] == '社区微博'){</php>
+                <span>来源：{$attachInfo['app_name']}</span>
+                <php>}else{</php>
+                <span>来源：{$attachInfo['app_name']}</span>
+                <php>}</php>
+                <span>分类：{$attachInfo['typeName']}</span>
+            </div>
+
+            <div id="file_view">
+                <php>if($attachInfo['extension']=='file'){</php>
+                <include file="view_document" />
+                <php>} else if($attachInfo['extension']=='img'){</php>
+                <include file="view_image" />
+                <php>} else {</php>
+                <include file="view_error" />
+                <php>}</php>
+            </div>
+            <iframe id="file_info" name="file_info" src="{:U('file/File/infor_document',array('id'=>$id))}" frameborder="0" scrolling="no"></iframe>
+            <!--add-->
+
+            <!--addEND-->
+
+
+            <div style="display: none;">
+                <include file="__THEME__/footer" />
+            </div> 
+            <script type="text/javascript">
+                //窗口尺寸交互优化
+                $(window).ready(function(){
+                    var _html = $('html');
+                    setInterval(function(){
+                        var _html_true_height = _html[0].scrollHeight;
+                        if(_html.height() < _html_true_height)
+                        {
+                            _html.height(_html_true_height);
+                        }
+                        //parent.$('title').text(_html.height()+':'+_html_true_height);
+                    },300);
+                });
+
+                //底部tab切换
+                $('#file_operate a').mouseover(function(){
+                    if($(this).hasClass('set')) return;
+                    if(!$('#'+$(this).attr('id')+'_sub').length)
+                    {
+                        $('#file_operate a').removeClass('set');
+                        $('.file_info_sub').hide();
+                        return;
+                    }
+                    $('#file_operate a').removeClass('set');
+                    $(this).addClass('set');
+                    $('.file_info_sub').hide();
+                    $('#'+$(this).attr('id')+'_sub').show();
+                }).eq(0).mouseover();
+
+                //标签搜索
+                $('#file_tags a').click(function(){
+                    try{
+                        parent.$('#pos_input').val($(this).text());
+                        parent.get_file_list(1);
+                    }
+                    catch(e){}
+                });
+
+                //推荐，不推荐
+                $('#file_vote a').one('click',function(){
+                    try{
+                        if($(this).hasClass('disabled')) return;
+                        $(this).addClass('disabled');
+                        var _this = $(this);
+                        var params = {
+                            id:{$attachInfo['attach_id']},
+                            val:_this.attr('val')//+-1
+                        };
+                        $.post('{:U("file/File/doDingCai")}',params,function(result){
+                            if(result=="1")
+                            {
+                                if(params.val==1)
+                                {
+                                    $('#file_vote_up span').text(parseInt($('#file_vote_up span').text())+1);
+                                    ui.success('Ta被你顶了一下');
+                                }
+                                else
+                                {
+                                    $('#file_vote_down span').text(parseInt($('#file_vote_down span').text())+1);
+                                    ui.success('Ta被你踩了一下');
+                                }
+                            }
+                            else
+                            {
+                                ui.error('服务器发生错误');
+                            }
+                        });
+                    }catch(e){}
+                })
+
+                function del_file(fileid,userid)
+                {
+                    try{
+                        var params = {id:fileid,userId:userid};
+                        $.post('{:U("file/Index/doDeletePoster")}',params,function(result){
+                            if(result=="1")
+                            {
+                                ui.success('文件已经删除');
+                                setTimeout(function(){parent.location.reload()},300);
+                            }
+                            else
+                            {
+                                ui.error('服务器发生错误，删除失败');
+                            }
+                        });
+                    }catch(e){}
+                }
+
+                function file_favorite(id)
+                {
+                    try{
+                        var params={
+                            id:{$attachInfo['attach_id']},
+                            favorite:$('#file_favorite').hasClass('isfavorite')?'0':'1'
+                        };
+                        ui.loading(true);
+                        $.post("{:U('file/File/favoriteFile')}",params,function(result){
+                            ui.loading(false);
+                            if(result=="1")
+                            {
+                                $('#file_favorite').toggleClass('isfavorite');
+                                $('#file_favorite').hasClass('isfavorite')?parent.ui.success('收藏成功'):parent.ui.success('取消成功');
+                            }
+                            else
+                            {
+                                parent.ui.error('服务端发生错误');
+                            }
+                        })
+                    }catch(e){}
+                }
+
+                //
+                $('#file_evaluate').click(function(){
+                    $('#file_evaluate_sub #EvaluateButton').click();
+                });
+
+                //    $('#file_upload_time').html('上传时间：'+get_friend_time({$attachInfo['uploadTime']}*1000));
+
+                $('#file_tools_nav li a').eq(1).mouseover();
+                //$('a[rel="face"]').usercard();
+  
+                setInterval(function(){
+                    try{
+                        $('iframe#file_info').height( $('iframe#file_info').contents().find('#file_info2').outerHeight()+40);//margin值40px
+                    }catch(e){}
+
+                },300);
+                //分享
+
+            </script>
+    </body>
+</html>

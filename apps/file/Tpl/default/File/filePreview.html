@@ -1,0 +1,166 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/material_view.css" rel="stylesheet" type="text/css"/>
+
+<div id="p_body">
+    <div id="iframe_wrap">
+        <div id="file_head">
+            <input type="hidden" value="{$attachInfo}"/>
+            <h1 id="file_title">{$attachInfo['title']}</h1>               
+            <a id="file_download" href="{:U('home/Attach/download', array('id'=>$attachInfo['attach_id'], 'uid'=>$attachInfo['uid'], 'download_status'=>$attachInfo['download_status']))}" class="button" target="_blank">下载 ({$attachInfo['down_count']}人)</a>
+        </div>
+        <div id="file_info1">
+            <span>上传：<a href="{:U('home/Space/index',array('uid'=>$attachInfo['uid']))}" uid="{$attachInfo['uid']}" rel="face" target="_blank">{$attachInfo['uname']}</a></span>
+            <span>
+                上传时间：{$attachInfo['uploadTime']|friendlyDate}
+            </span>
+            <span>来源：<a href="{:U('file/File/index', array('type'=>$attachInfo['type']))}" target="_blank">{$attachInfo['app_name']}</a></span>
+            <span>分类：{$attachInfo['typeName']}</span>
+        </div>
+
+        <div id="file_view">
+            <php>if($attachInfo['extension']=='file'){</php>
+            <include file="view_document" />
+            <php>} else if($attachInfo['extension']=='img'){</php>
+            <include file="view_image" />
+            <php>} else {</php>
+            <include file="view_error" />
+            <php>}</php>
+        </div>
+        {:W('Weibo',array('tpl_name'=>$_SESSION['mid']==$attachInfo['uid']?'file_create_weibo':'file_share_weibo','button_title'=>'分享'))}
+        <php>
+            $tpl_data = urlencode(serialize(array(
+            'author'=>getUserName($attachInfo['uid']),
+            'title'=>$attachInfo['title'],
+            'url'=>U('file/File/fileDetail',array('id'=>$id)),
+            )));
+            $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布资料成功')));
+        </php>
+        <iframe id="file_info" name="file_info" src="{:U('file/File/infor_document',array('id'=>$id))}" frameborder="0" scrolling="no"></iframe>	
+    </div>
+</div>
+<script type="text/javascript">
+    //窗口尺寸交互优化
+    $(window).ready(function(){
+        var _html = $('html');
+        setInterval(function(){
+            var _html_true_height = _html[0].scrollHeight;
+            if(_html.height() < _html_true_height)
+            {
+                _html.height(_html_true_height);
+            }
+            //parent.$('title').text(_html.height()+':'+_html_true_height);
+        },300);
+    });
+
+    //底部tab切换
+    $('#file_operate a').mouseover(function(){
+        if($(this).hasClass('set')) return;
+        if(!$('#'+$(this).attr('id')+'_sub').length)
+        {
+            $('#file_operate a').removeClass('set');
+            $('.file_info_sub').hide();
+            return;
+        }
+        $('#file_operate a').removeClass('set');
+        $(this).addClass('set');
+        $('.file_info_sub').hide();
+        $('#'+$(this).attr('id')+'_sub').show();
+    }).eq(0).mouseover();
+
+    //标签搜索
+    $('#file_tags a').click(function(){
+        try{
+            parent.$('#pos_input').val($(this).text());
+            parent.get_file_list(1);
+        }
+        catch(e){}
+    });
+
+    //推荐，不推荐
+    $('#file_vote a').one('click',function(){
+        if($('#file_vote a').hasClass('disabled')) return;
+        $('#file_vote a').addClass('disabled');
+
+        var _this = $(this);
+        var params = {
+            id:{$attachInfo['attach_id']},
+            val:_this.attr('val')//+-1
+        };
+        $.post('{:U("file/File/doDingCai")}',params,function(result){
+            if(result=="1")
+            {
+                if(params.val==1)
+                {
+                    $('#file_vote_up span').text(parseInt($('#file_vote_up span').text())+1);
+                    ui.success('Ta被你顶了一下');
+                }
+                else
+                {
+                    $('#file_vote_down span').text(parseInt($('#file_vote_down span').text())+1);
+                    ui.success('Ta被你踩了一下');
+                }
+            }
+            else
+            {
+                ui.error('服务器发生错误');
+            }
+        });
+    })
+
+    function del_file(fileid,userid)
+    {
+        var params = {id:fileid,userId:userid};
+        $.post('{:U("file/Index/doDeletePoster")}',params,function(result){
+            if(result=="1")
+            {
+                ui.success('文件已经删除');
+                setTimeout(function(){parent.location.reload()},300);
+            }
+            else
+            {
+                ui.error('服务器发生错误，删除失败');
+            }
+        });
+    }
+
+    function file_favorite(id)
+    {
+        var params={
+            id:{$attachInfo['attach_id']},
+            favorite:$('#file_favorite').hasClass('isfavorite')?'0':'1'
+        };
+        ui.loading(true);
+        $.post("{:U('file/File/favoriteFile')}",params,function(result){
+            ui.loading(false);
+            if(result=="1")
+            {
+                $('#file_favorite').toggleClass('isfavorite');
+                $('#file_favorite').hasClass('isfavorite')?parent.ui.success('收藏成功'):parent.ui.success('取消成功');
+            }
+            else
+            {
+                parent.ui.error('服务端发生错误');
+            }
+        })
+    }
+
+    //
+    $('#file_evaluate').click(function(){
+        $('#file_evaluate_sub #EvaluateButton').click();
+    });
+
+    //    $('#file_upload_time').html('上传时间：'+get_friend_time({$attachInfo['uploadTime']}*1000));
+
+    $('#file_tools_nav li a').eq(1).mouseover();
+    //$('a[rel="face"]').usercard();
+  
+    setInterval(function(){
+        try{
+            $('iframe#file_info').height( $('iframe#file_info').contents().find('#file_info2').outerHeight()+40);//margin值40px
+        }catch(e){}
+
+    },300);
+    //分享
+
+</script>
+<include file="__THEME__/footer" />

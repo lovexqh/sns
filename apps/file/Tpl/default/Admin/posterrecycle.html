@@ -1,0 +1,236 @@
+<include file="_header" />
+<script type="text/javascript" src="__PUBLIC__/js/My97DatePicker/WdatePicker.js"></script>
+<link href="__THEME__/css/base.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css"/>
+<script>
+    function getChecked() {
+        var ids = new Array();
+        $.each($('table input:checked'), function(i, n){
+            ids.push( $(n).val() );
+        });
+        return ids;
+    }
+
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+
+    function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+    
+    //恢复文档
+    function restore(id,uid){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+            ui.error("请选择要恢复的文档");return false;
+        }
+        if( confirm("是否恢复{$ts['app']['app_alias']}？") ){
+            $.post( '__URL__&act=doRestorePoster',{id:id,uid:uid},function(text ){
+                if( text == 1 ){
+                    ui.success( "恢复多个{$ts['app']['app_alias']}成功" );
+                    var id_list = id.split( ',' );   
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove(); 
+                    }
+                }else if( text == 2 ){
+                    ui.success( "恢复成功" );
+                    $('#list_'+id).remove();
+                }else{
+                    ui.error( "恢复失败" );
+                }
+            });
+        }
+    }
+
+    //搜索用户
+    var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+    function searchObject() {
+        if(isSearchHidden == 1) {
+            $("#searchObject_div").slideDown("fast");
+            $(".searchObject_action").html("搜索完毕");
+            isSearchHidden = 0;
+        }else {
+            $("#searchObject_div").slideUp("fast");
+            $(".searchObject_action").html("搜索文档");
+            isSearchHidden = 1;
+        }
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+        del:function(id,uid){
+            var id = id ? id : getChecked();
+            id = id.toString();
+            if(id=='' || id==0){
+                ui.error("请选择要删除的文档");return false;
+            }
+            if( confirm("是否删除{$ts['app']['app_alias']}？") ){
+                $.post( '__URL__&act=doDeleteRecyclePoster',{id:id,uid:uid},function(text ){
+                    if( text == 1 ){
+                        ui.success( "删除多个{$ts['app']['app_alias']}成功" );
+                        var id_list = id.split( ',' );   
+                        for (var j=0 ; j< id_list.length ; j++   ){
+                            $('#list_'+id_list[j]).remove(); 
+                        }
+                    }else if( text == 2 ){
+                        ui.success( "删除成功" );
+                        $('#list_'+id).remove();
+                    }else{
+                        ui.error( "删除失败" );
+                    }
+                });
+            }
+        }
+    }
+    /*文档预览判断*/
+    $('.list a.fileTitle').live('click',function(){
+        var thisID=$(this).attr('id');
+        var thisURL=$(this).attr('url');
+        ui.mybox("{:U('file/File/filePreview_app')}"+"&id="+thisID+"&t=1","文档预览","700","600");
+    });
+    var c = null;
+</script>
+
+<div class="so_main">
+    <include file="_tab" />
+
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+        <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+        <div class="form2">
+            <form action="__URL__&act=adminPoster" method="POST">
+                <input type="hidden" name="isSearch" value="1"/>
+                <input type="hidden" name="isSearch" value="1"/>
+                <php>if($isSearch != '1') $uid = '';</php>
+                <dl class="lineD">
+                    <dt>用户ID：</dt>
+                    <dd>
+                        <input name="uid" class="txt" value="{$uid}"><span> 多个用户用英文逗号隔开。</span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>标题：</dt>
+                    <dd>
+                        <input name="title" class="txt" value="{$title}"><span>支持模糊查询。 </span>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>{$ts['app']['app_alias']}大分类：</dt>
+                    <dd>
+                        <select name="pid">
+                            <option value=0>请选择大分类</option>
+                            <volist name="posterType" k="key" id="vo">
+                                <option value="{$key}" <php>if($key == $_POST['pid'])echo "selected";</php>>{$vo}</option>
+                            </volist>
+                        </select>
+                    </dd>
+                </dl>        
+                <dl>
+                    <dt>{$ts['app']['app_alias']}小分类：</dt>
+                    <dd>
+                        <select name="type">
+                            <option value=0>请选择小分类</option>
+                            <volist name="smallType" k="key" id="vo">
+                                <option value="{$key}" <php>if($key == $_POST['type'])echo "selected";</php>>{$vo}</option>
+                            </volist>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="lineD">
+                    <dt>上传日期：</dt>
+                    <dd>
+                        <input class="txt" type="text" value="{$ctime}"  name="ctime" onClick="WdatePicker()" style="width: 100px" id="fromTime">
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>警告状态：</dt>
+                    <dd>
+                        <select name="is_warn"  id="vo">
+                            <option value=0>全部</option>
+                            <option value=2 <php>if(1 == $_POST['is_warn'])echo "selected";</php>>已警告</option>
+                            <option value=1 <php>if(0 == $_POST['is_warn'])echo "selected";</php>>未警告</option>
+                        </select>
+                    </dd>
+                </dl>
+                <div class="page_btm">
+                    <input type="submit" class="btn_b" value="确定" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width:30px;">
+                    <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                    <label for="checkbox"></label>
+                </th>
+                <th>ID</th>
+                <th>文档名称</th>
+                <th style="width:150px; padding-left: 20px">文档分类</th>
+                <th>发起者</th>
+                <th style="width:40px; ">浏览</th>
+                <th style="width:40px;">评论</th>
+                <th style="width:40px;">下载</th>
+                <th>来源</th>
+                <th>时间</th>
+                <th>附件ID</th>
+                <th>删除者</th>
+                <th style="width:150px; padding-left: 20px">管理</th>
+            </tr>
+            <volist name="data" id="vo">
+                <tr id="list_{$vo.id}">
+                    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+                    <td>{$vo.id}</td>
+                    <td><a onclick="" id="{$vo['attach_id']}" hidefocus="true" class="fileTitle" href="#">{$vo.title}</a></td>
+                    <td style="padding-left: 20px;">{$vo.typename}</td>
+                    <td><a href="{:U('home/space/index',array('id'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserName}</a></td>
+                    <td>{$vo.read_count}</td>
+                    <td>{$vo.count}</td>
+                    <td>{$vo.down_count}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.cTime|friendlyDate}</td>
+                    <td>{$vo.attach_id}</td>
+                    <td>{$vo.deleteuid|getUserName}</td>
+                    <td><a href="javascript:void(0);"  onclick="restore({$vo['id']},{$vo['uid']});">恢复</a>
+                        <a href="javascript:void(0);"  onclick="c.del({$vo['id']},{$vo['uid']})">删除</a>
+                        <a href="{:U('file/Admin/downList',array('id'=>$vo['id']))}">下载记录</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+    c = new ctrl();
+</script>

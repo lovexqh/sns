@@ -1,0 +1,275 @@
+<include file="__THEME__/header" />
+<link href="__THEME__/css/layout_app.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/poster_form.css" rel="stylesheet" type="text/css"/>
+<div id="p_body">
+    <div class="app_container" id="form_multiple"><!--	id=app_name/module_name	-->
+        <div id="app_head">
+            <div class="L">图片库批量上传</div>
+            <div class="R">
+				<a href="{:U('file/Index/addPoster',array('pid'=>$pid))}" class="button" id="btn_create">单文件上传</a>
+				<a href="{:U('file/File/index',array('type'=>$pid))}" class="button" id="btn_create">返回</a>
+			</div>
+        </div>
+        <div id="app_body">
+            <div id="template_form" style="display: none;">
+                <div class="row">
+                    <table class="formtable">
+                        <tr>
+                            <th>文件：</th>
+                            <td class="fileinfo"><!--文件信息--></td>
+                        </tr>
+                        <tr>
+                            <th>标题：</th>
+                            <td><input class="input validate" name="title[]" maxLength="60" value="" type="text" validate="{empty:false,doit:true,maxlength:60,text_wrong:'标题不能为空,并且小于60个字符'}"></td>
+                        </tr>	
+                        <tr>
+                            <th>分类：</th>
+                            <td>
+                                <select id="type" name="type[]" class="select">
+                                    <volist name="type" id="vo">
+                                        <option value="{$vo.id}" <eq name="vo.id" value="$file['type']">selected</eq> >{$vo.name}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>标签：</th>
+                            <td><input class="input" name="tag[]" value="" type="text" autocomplete="off"/></td>
+                        </tr>
+                        <tr>
+                            <th>描述：</th>
+                            <td><textarea style="width: 650px; height: 80px; resize: none;" class="input validate" name="explain[]" validate="{empty:true,doit:true,maxlength:255,text_wrong:'最多只能输入255个字符'}"></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="file_select_container">
+<!--                <div class="warning1"><p>加密文档和扫描文档不能转换，转换预览时需要时间，请稍等一下~</p></div>-->
+                <div id="upload_box_btn"></div>
+                <p>一次只能上传5个文件,单个文件最大允许上传{$system_default['attach_max_size']}M</p><p>允许上传格式为jpg,gif,png,jpeg,bmp</p>
+                <div id="filenum">上传队列 0</div>
+            </div>
+
+            <form name="form" id="form" action="{:U('file/Index/doAddFormBatchPoster')}" encType="multipart/form-data" method="post" autocomplete="off">
+                <div id="upload_files"></div>
+				<div id="upload_submit">
+					<input type="button" value="提交数据" class="button large" onclick="form_submit()"/>
+                                        <input type="hidden" name="pid"  value="{$pid}"/>
+				</div>
+            </form>
+        </div>
+		<div id="upload_view"><!--	文件上传状态--></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //覆写Weibo Swfuplod config
+    var OPTIONS_SWF_UPLOAD_NOW = OPTIONS_SWF_UPLOAD_IMG;
+    OPTIONS_SWF_UPLOAD_NOW.file_upload_limit = 5;
+    OPTIONS_SWF_UPLOAD_NOW.file_queue_limit = 0;
+    OPTIONS_SWF_UPLOAD_NOW.button_text = '<span class="btn_upload">请选择多个文件</span>';
+    OPTIONS_SWF_UPLOAD_NOW.button_image_url = _THEME_ + "/images/swfupload/btn_upload3.png";
+    OPTIONS_SWF_UPLOAD_NOW.button_width = "180";
+    OPTIONS_SWF_UPLOAD_NOW.button_height = "40";
+    OPTIONS_SWF_UPLOAD_NOW.button_text_left_padding = 45;
+    OPTIONS_SWF_UPLOAD_NOW.button_text_top_padding = 10;
+    OPTIONS_SWF_UPLOAD_NOW.upload_url = U("file/Index/doAddBatchPoster");
+    //自定义
+    OPTIONS_SWF_UPLOAD_NOW.file_upload_limit2 = OPTIONS_SWF_UPLOAD_NOW.file_upload_limit;//用于记录配置
+    OPTIONS_SWF_UPLOAD_NOW.file_upload_error = 0;
+    OPTIONS_SWF_UPLOAD_NOW.file_upload_success = 0;
+    OPTIONS_SWF_UPLOAD_NOW.file_upload_queue = 0;//上传队列数
+
+    OPTIONS_SWF_UPLOAD_NOW.file_queued_handler = function(file) {
+        var html = $('#template_form').html();
+        $('#upload_files').prepend(html);
+        var append_dom = $('#upload_files .row:first');
+        append_dom.attr('id',file.id);
+        append_dom.find('.fileinfo').html(file.name+'<span id="'+file.id+'_fileinfo">等待上传</span>');
+        append_dom.find('input[name="title\[\]"]').val(file.name);
+		append_dom.find('.validate').aui_validate();
+		append_dom.find('input[name="tag\[\]"]').autocomplete(U('weibo/Index/getTags'),{
+			width: 260,
+			highlight: false,
+			multiple: true,
+			multipleSeparator: " ",
+			scroll: true,
+			scrollHeight: 300,
+			autoFill:true,
+			matchContains:true,
+			onselected:function(item){}
+		});
+		
+        OPTIONS_SWF_UPLOAD_NOW.file_upload_queue++;
+
+    };
+    OPTIONS_SWF_UPLOAD_NOW.file_dialog_complete_handler = function(numFilesSelected, numFilesQueued)
+    {
+        if(!numFilesSelected) return false;
+        if (numFilesQueued > 0)
+        {
+            this.startUpload();
+        }
+        else
+        {
+            ui.error('只能同时提交'+OPTIONS_SWF_UPLOAD_NOW.file_upload_limit2+'个文件，或者文件尺寸超过'+OPTIONS_SWF_UPLOAD_NOW.file_size_limit);
+        }
+    };
+
+    OPTIONS_SWF_UPLOAD_NOW.upload_progress_handler = function(file, bytesLoaded, bytesTotal)
+    {
+        var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
+        $('#' + file.id + '_fileinfo').text('上传中 '+percent+'%');
+		view_file_upload_infomation('<strong>'+file.name+'</strong> '+percent+'%');
+    }
+
+    OPTIONS_SWF_UPLOAD_NOW.upload_success_handler = function(file, serverData)
+    {
+		serverData = $.parseJSON(serverData);
+        if (serverData.boolen)
+        {
+			$('#'+file.id).find('.fileinfo').html('<p><img src="'+serverData.file_fullurl+'"/></p>'+file.name+'<span><a href="javascript:;" onclick="remove_file(\''+file.id+'\',\''+serverData.file_id+'\')">删除</a></span>');
+            $('#'+file.id).append('<input type="hidden" name="file_id[]" value="'+serverData.file_id+'"><input type="hidden" name="file_url[]" value="'+serverData.file_url+'">');
+			$('#' + file.id).addClass('success');
+		
+            OPTIONS_SWF_UPLOAD_NOW.file_upload_success++;
+        }
+        else
+        {
+            $('#' + file.id).addClass('error');
+            $('#' + file.id + '_fileinfo').html('上传失败');
+		
+            OPTIONS_SWF_UPLOAD_NOW.file_upload_error++;
+            SWFU.setFileUploadLimit(OPTIONS_SWF_UPLOAD_NOW.file_upload_limit2 + OPTIONS_SWF_UPLOAD_NOW.file_upload_error);
+
+            setTimeout(function(){
+                $('#' + file.id).slideUp(500,function(){ $(this).remove();});
+            },5000);
+        }
+        OPTIONS_SWF_UPLOAD_NOW.file_upload_queue--;
+        view_file_upload_infomation('');
+		
+		if(OPTIONS_SWF_UPLOAD_NOW.file_upload_success)
+		{
+			$('#upload_submit').show();
+		}
+		else
+		{
+			$('#upload_submit').hide();
+		}
+		
+        this.startUpload();
+    };
+
+    OPTIONS_SWF_UPLOAD_NOW.upload_complete_handler = function(file)
+    {
+	
+        //	if (this.getStats().files_queued === 0) {
+        //		$('#upload_box_btn_start').hide().text('开始上传');
+        //		$('#content_publish').val($('#content_publish').val() + OPTIONS_SWF_UPLOAD_NOW.title).focus();
+        //	}
+    };
+    OPTIONS_SWF_UPLOAD_NOW.file_queue_error_handler = function(file, errorCode, message)
+    {
+        //	alert('file_queue_error_handler')
+        //	OPTIONS_SWF_UPLOAD_NOW.file_upload_error++;
+        //	OPTIONS_SWF_UPLOAD_NOW.file_upload_limit = OPTIONS_SWF_UPLOAD_NOW.file_upload_limit + OPTIONS_SWF_UPLOAD_NOW.file_upload_error;
+        //	SWFU.setFileUploadLimit(OPTIONS_SWF_UPLOAD_NOW.file_upload_limit);
+        //	
+        //	alert(OPTIONS_SWF_UPLOAD_NOW.file_upload_error +':'+OPTIONS_SWF_UPLOAD_NOW.file_upload_limit);
+    };
+
+    OPTIONS_SWF_UPLOAD_NOW.upload_error_handler = function(file, errorCode, message)
+    {
+        //	alert('upload_error_handler')
+        //	OPTIONS_SWF_UPLOAD_NOW.file_upload_error++;
+        //	OPTIONS_SWF_UPLOAD_NOW.file_upload_limit = OPTIONS_SWF_UPLOAD_NOW.file_upload_limit + OPTIONS_SWF_UPLOAD_NOW.file_upload_error;
+        //	SWFU.setFileUploadLimit(OPTIONS_SWF_UPLOAD_NOW.file_upload_limit);
+        //	
+        //	alert(OPTIONS_SWF_UPLOAD_NOW.file_upload_error +':'+OPTIONS_SWF_UPLOAD_NOW.file_upload_limit);
+    };
+
+    var SWFU = new SWFUpload(OPTIONS_SWF_UPLOAD_NOW);
+
+
+	//显示文件队列的状态
+	function view_file_upload_infomation(progress)
+	{
+		$('#filenum').text('上传队列 '+OPTIONS_SWF_UPLOAD_NOW.file_upload_queue);
+		$('#upload_view').html('文件队列正在上传中（'+OPTIONS_SWF_UPLOAD_NOW.file_upload_queue+'）'+progress);
+		if(OPTIONS_SWF_UPLOAD_NOW.file_upload_queue)
+			$('#upload_view').show();
+		else
+			$('#upload_view').delay(500).fadeOut(1000);
+	}
+
+    function remove_file(fileid,id)//fileid=dom file id,filedbid database id
+    {
+		$('#'+fileid).slideUp('fast',function(){
+			$(this).remove();
+		});
+		OPTIONS_SWF_UPLOAD_NOW.file_upload_error++;
+		OPTIONS_SWF_UPLOAD_NOW.file_upload_success--;
+		SWFU.setFileUploadLimit(OPTIONS_SWF_UPLOAD_NOW.file_upload_limit2 + OPTIONS_SWF_UPLOAD_NOW.file_upload_error);
+		if (id != '')
+		{
+			$.post(U('file/File/deleteFiles'), {id: id}, function(result) {
+			});//服务端删除
+		}
+		if(OPTIONS_SWF_UPLOAD_NOW.file_upload_success)
+		{
+			$('#upload_submit').show();
+		}
+		else
+		{
+			$('#upload_submit').hide();
+		}
+    }
+	
+	function form_submit()
+	{
+		//检测文件是否都上传完毕
+		var upload_result = $('#upload_files .row');
+		for(var i=0;i<upload_result.length;i++)
+		{
+			if(!$(upload_result).eq(i).hasClass('success'))
+			{
+				ui.error('文件正在上传中，请稍候提交');
+				return false;
+			}
+		}
+		
+		//数据验证
+		var validate_result = $('.validate_output');
+		for(var i=0;i<validate_result.length;i++)
+		{
+			if(!$(validate_result).eq(i).find('.validate_output_right').length)
+			{
+				ui.error('输入内容必须通过验证');
+				return false;
+			}
+		}
+		
+		
+		ui.loading(true);
+		$('#form').ajaxSubmit({
+			success:function(result){
+				ui.loading(false);
+				if(result == '1')
+				{
+					ui.success('文件提交成功');
+					setTimeout(function(){
+						history.go(-1);
+					},1000);
+				}
+				else
+				{
+					ui.success('文件提交发生错误');
+				}
+			}
+		});
+	}
+
+</script>
+<include file="__THEME__/footer" />

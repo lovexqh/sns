@@ -1,0 +1,47 @@
+<include file="_header" />
+
+    <script type="text/javascript">
+    function checkType(){
+        var word1 = $("#word1").val();
+        var word2 = $("#word2").val();
+        if (!word1 || getLength(word1.replace(/\s+/g,"")) == 0) {
+          ui.error("词汇1不能为空");
+          $("#word1").focus();
+          return false;
+        }else if(!word2 || getLength(word2.replace(/\s+/g,"")) == 0){
+          ui.error("词汇2不能为空");
+          $("#word2").focus();
+          return false;
+        }
+      }
+    </script>
+
+  <div id="container" class="so_main">
+    <include file="_tab" />
+
+      <div class="Toolbar_inbox">
+        <span>编辑词组</span>
+      </div>
+      <form action="__URL__&act=doEditWord" method="post" onsubmit="return checkType();">
+        <div class="form2 no_line">
+          <dl class="lineD">
+            <dt>词汇1：</dt>
+            <dd>
+              <input name="word1" class="txt" value="{$word['word1']}" id="word1"/>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt>词汇2：</dt>
+            <dd>
+              <input name="word2" class="txt" value="{$word.word2}" id="word2"/>
+            </dd>
+          </dl>
+          <div class="page_btm">
+            <input type="hidden" name="id" value="{$word.id}" />
+            <input type="submit" class="btn_b" value="确定" />
+          </div>
+        </div>
+      </form>
+  </div>
+<include file="_footer" />
+

@@ -1,0 +1,228 @@
+<include file="__THEME__/header" />
+<link href="__THEME__/css/base.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/layout_app.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/material_image.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../Public/Js/jquery.masonry.min.js"></script>
+<div id="p_body">
+    <div class="app_container" id="app_material_image">
+        <div id="app_head"><include file="_nav" /></div>
+        <div id="app_body">
+            <div class="tabs_wrap">
+                <ul class="tabs">
+                    <li><a href="#all" hidefocus="true">所有图片</a></li>
+                    <li><a href="#isme" hidefocus="true">我上传的图片</a></li>
+                    <li><a href="#favorite" hidefocus="true">我收藏的图片</a></li>
+                </ul>
+                <a href="{:U('file/Index/addBatchImage',array('pid'=>$type))}" class="button small" style=" margin-right: 110px">批量上传</a>
+                <a href="{:U('file/Index/addPoster',array('pid'=>$type))}" class="button small" hidefocus="true">上传新图片</a>
+            </div>
+            <div class="filewrap" >
+                <div class="pos_search">
+                    <input id="img_input" class="input" autocomplete="off" name="" type="text" value='<?php if(empty($key1)){echo "请输入关键字...";}else{echo $key1;} ?>' maxlength='70' onfocus="if($(this).val()=='请输入关键字...') this.value=''" onblur="if($(this).val()=='') this.value='请输入关键字...'"/>
+                    <span class="button" id="imgsearch">搜索</span>
+                    <select id="imgselect2" class="select_file select" name="sort" onchange="img_list(1)">
+                        <option value="times">最新发布</option>
+                        <option value="viewnubmer">浏览最多</option>
+                        <option value="loadnumber">下载最多</option>
+                    </select>
+                    <select id="imgselect1" class="select_file select" name="classify" onchange="img_list(1)">
+                        <option value="">全部分类</option>
+                        <volist id="vo1" name="fileSmallType">
+                            <option value="{$vo1.id}">{$vo1.name}</option>
+                        </volist>
+                    </select>
+                </div>
+
+                <div id="container_items">
+                    <div id="filterOpacity"></div>
+                </div>
+                <div id="Pagination" class="paginations" style="display: none;"></div>
+                <p id="imgload"></p>
+            </div>
+            <div id="nodata" style="display:none">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var pages=1;//页码；
+    var screen_=1;;//加载更多初始变量；
+    var screenCtrl=3;//可以滚动加载的次数；
+    var imgcount;//从服务端获取分页总数；
+    var nodatas="没有更多数据了"
+    var nodataCtrl=0;//没有数据的变量控制；
+    /*加载更多*/
+    $(document).ready(function(){
+        var aa = $('html').scrollTop();            
+    });
+    $(window).scroll(function(){         
+        var scrolls = document.documentElement.scrollTop ? document.documentElement.scrollTop :document.body.scrollTop;       
+        var windowH = $(window).height();
+        var divload= $('#imgload').offset().top;
+        if(scrolls+windowH > divload)
+        {
+            if(pages>=imgcount)
+            {                                
+                switch(nodataCtrl){
+                    case 0: ui.message(nodatas,""); break;
+                    case 1: break;   
+                }
+                nodataCtrl = 1;				
+                return;
+            }
+            clearTimeout(window.at);
+            window.at=setTimeout(function(){
+                if(screen_ < screenCtrl)
+                {
+                                   
+                    screen_++;
+                    pages++;                                         
+                    img_list(pages);
+                    setTimeout(function(){
+                        $('#Pagination').show().css("display","block")
+                    },1000);
+                    return;
+                }
+            },400);
+        }
+    });
+    /*搜索*/
+    $('.pos_search #imgsearch').click(function(){
+        $('#container_items').html('').append('<div id="filterOpacity"></div>');
+        img_list(1);
+    });
+    /*下拉框排序*/
+    $('#imgselect1,#imgselect2').change(function(){
+        $('#container_items').html('').append('<div id="filterOpacity"></div>');
+    });
+    /*TAB*/
+    var tabSrc;
+    $('div.tabs_wrap .tabs li a').click(function(){
+        $('div.tabs_wrap .tabs li a').removeClass('set')
+        $(this).addClass('set');
+        tabSrc = $(this).parent().index();
+        $('#container_items').find('div.nodata').remove();
+        $('#container_items').html('').append('<div id="filterOpacity"></div>');
+        $("#Pagination").html('');
+        screen_ = 1;
+        pages=1;
+        img_list(pages);
+    });
+    /*获取列表*/
+    var container =  $('#container_items');
+    container.imagesLoaded( function(){
+        container.masonry({
+            itemSelector : '.item',
+            columnWidth : 0
+        });
+    });
+
+    function img_list(page){
+        try{
+            var params={
+                p:page,
+                page_count:30,
+                order:$('#imgselect2').val(),
+                type:$('#imgselect1').val(),
+                key:$('#img_input').val(),
+                is_me: tabSrc,
+                pid:"{$type}"
+            };
+            if(params.key=='请输入关键字...'){
+                params.key=null;
+            }
+            ui.loading(true);
+            $.post('{:U("file/File/loadData")}',$.param(params),function(result){                                        
+                ui.loading(false);
+                $("#Pagination").html('');
+                var rs = $.parseJSON(result);                              
+                var pagesize = params.page_count;                        
+                imgcount = Math.ceil(rs.count/pagesize);                        
+                var imgcounts = rs.count;                        
+                if(!rs.data.length)
+                {
+                    ui.loading(false);
+                    container.html('<div class="nodata">没有数据</div>').css('height','70px');
+                    $("#Pagination").html('');
+                    return;
+                }
+                var _html = '';
+                var images = new Array();
+                $.each(rs.data,function(i,j){                            
+                    var k=pages*params.page_count+i;
+                    images[k] = new Image();				
+                    images[k].id=k;
+                    images[k].onload=function(){
+                        $('#images'+this.id).attr('src',this.src);                                        
+                        $('#images'+this.id).parent().removeClass('loading');
+                    }                                                        
+                    setTimeout(function(){images[k].src="__UPLOAD__"+j.middlecover},200); 
+                    var imgHeight;                                    
+                    if( j.length_width==null || $.parseJSON(j.length_width).height==null || $.parseJSON(j.length_width).width ==null)
+                    {                                                                       
+                        imgHeight="200";
+                    }   
+                    else
+                    {
+                        imgHeight = $.parseJSON(j.length_width).height*200/$.parseJSON(j.length_width).width;    
+                    }                                
+                    var array = new Array();
+                    array[0]='id='+j.attach_id;
+                    array[1]='uid='+j.uid;
+                    array[2]='fid='+j.id;
+                    if(j.no_down == 0){
+                        var down = '			<a href="'+U('home/Attach/download',array)+'" class="img_download" title="点此下载"></a>';
+                    }
+                    _html += '<div class="item" id="'+j.id+'">'
+                        +'		<a href="'+U('file/File/children_image',array)+'" target="_blank" class="loading" title="'+j.name+'">'
+                        +'			<img id="images'+k+'"  src="../Public/images/public/loading.gif" width="200" height="'+imgHeight+'"/>'
+                        +'		</a>'
+                        +'		<div class="imgTitle">'
+                        +'			<a href="'+U('file/File/children_image',array)+'" title="'+j.name+'" class="img_title" target="_blank">'+j.name+'</a>'
+                        +'                  <a href="__UPLOAD__'+j.cover+'" target="_blank" hidefocus="true" class="imgviewOld" title="查看原图"></a>'
+                        + down
+                        +'		</div>'
+                   
+                        +'	</div>'
+                    images[k].onerror = function(){
+                        imagerror.init($('#images'+this.id).get(0),2);
+//                        $('#images'+this.id).attr('src','../Public/images/fileview/pic_error.gif');                        
+                        $('#images'+this.id).parent().removeClass('loading');    
+                        this.onerror = null;
+                    }
+                });
+                container.append(_html).masonry('reload');
+                var Nowpage = Math.ceil(pages/3);
+                var page_tag = 0;
+                /*分页*/
+                $("#Pagination").pagination({
+                    maxentries:imgcounts,
+                    items_per_page:params.page_count*screenCtrl,
+                    current_page:Nowpage-1,
+                    prev_text:'上页',
+                    next_text:'下页',
+                    first_text:'首页',
+                    last_text:'末页',
+                    num_display_entries:20,
+                    callback:function(page,jq){
+                        if(page_tag){
+                            container.html('').append('<div id="filterOpacity"></div>');
+                            pages=page*3+1;
+                            img_list(pages);
+                            screen_=1;          
+                            $('html').scrollTop(0);                                                
+                        }
+                        page_tag=1;
+                    }
+                });
+            });
+        }catch(error){}
+    }
+    /*URL*/
+    var hash = location.hash;
+    if(hash == "")hash = "#all";
+    $('ul.tabs a[href="'+hash+'"]').click();
+</script>
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

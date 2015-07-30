@@ -1,0 +1,38 @@
+@import url("material.css");
+#app_body{ background-color: #fff; }
+#app_material_image{ background-color:#F0F0F0}
+#app_material_image #container_items{ border: 1px solid #ccc; border-top: none; background-color: #fcfcfc;}
+#app_material_image #container_items .item{width: 209px; text-align: left; margin: 11px; float: left; padding: 3px; border-radius:4px; overflow: hidden; border: 1px solid #C6C6C6; background-color: #fff; z-index: 4;}
+#app_material_image #container_items .item:hover{ box-shadow:0px 0px 8px rgba(0,0,0,0.4); border: 1px solid #9E9C9C;}
+#app_material_image #container_items .item a{ display: block; overflow: hidden; text-align: center;}
+#app_material_image #container_items .item a.loading{ background:url(../images/public/loading.gif) no-repeat center center;}
+#app_material_image #container_items .item img{ width: 100%; border-radius:3px 3px 0px 0px;}
+/*#app_material_image #container_items .item img:hover{ -moz-animation-name:transform;-moz-animation-duration:0.4s; -moz-animation-timing-function:linear; -webkit-animation-name:transform;-webkit-animation-duration:0.6s; -webkit-animation-timing-function:linear;}*/
+#app_material_image #container_items .item a.loading img{ visibility: hidden;}
+
+/**/
+#app_material_image #container_items .imgTitle{ margin-top: 2px; height: 18px; line-height: 18px;}
+#app_material_image #container_items .imgTitle a,
+#app_material_image #container_items .imgTitle a:link,
+#app_material_image #container_items .imgTitle a:visited{ text-decoration: none; color:#999;}
+#app_material_image #container_items .imgTitle a.img_title{float: left; padding-left: 5px; margin-top: 1px; width: 162px; display: inline-block; height: 16px; line-height:16px; text-align: left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+#app_material_image #container_items .imgTitle a.img_download,
+#app_material_image #container_items .imgTitle a.imgviewOld{ outline: none;  float: left; margin: 1px 2px 0px 0px; display: inline-block; width:17px; height: 16px; overflow: hidden; background: url(../images/fileview/icons.png) no-repeat; background-position: 1px -21px;}
+#app_material_image #container_items .imgTitle a.img_download{ background: url(../images/fileview/icons.png) no-repeat; background-position: 1px -21px;}
+#app_material_image #container_items .imgTitle a.imgviewOld{ background: url(../images/fileview/icons.png) no-repeat; background-position: 1px -100px;}
+
+/*收藏*/
+/*#app_material_image #container_items .imgInformation a.img_like{ background:url(../images/fileview/like_1.png) no-repeat; background-position: 0px -21px; padding-left: 18px; }
+#app_material_image #container_items .imgInformation a.img_like2{ background:url(../images/fileview/like_1.png) no-repeat; background-position: 0px -1px; padding-left: 18px;}
+#app_material_image #container_items .imgInformation a.img_like:hover{background-position: 0px -1px;}
+#app_material_image #container_items .imgInformation a.img_like2:hover{background-position: 0px -21px;}*/
+
+/**/
+#app_material_image #container_items div.nodata{ height:  50px; line-height: 50px; padding: 10px; font-size: 16px; color:#4692CC; text-align: center;font-weight: bold; background-color:#FAFAFA; cursor: pointer}
+#filterOpacity{position: relative; left: 0; top: 0; border-radius:4px; height: 100%; width: 100%; background-color: #fff; opacity:0.7; filter:Apache(opacity=70); z-index: 5; display: none;}
+#app_material_image .filewrap p#imgload{ display: block; height:1px; width:100%;}
+
+
+#app_material_image #nodata{ width: 150px; text-align: center; display: none; z-index: 15; font-size: 14px; height: 40px; line-height: 40px; position: absolute; background-color: #999; opacity:0.7;filter:Alpha(opacity=70); color: #fff; border-radius:8px; display: block;}
+
+/*body .imgView{ padding: 8px; border: 2px solid #C6C6C6; display: block; box-shadow: 1px 1px 4px rgba(0,0,0,0.4);position: absolute; z-index: 100; background-color: #fff; border-radius:5px;}*/

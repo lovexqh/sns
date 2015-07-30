@@ -1,0 +1,33 @@
+@import url("material.css");
+/* 文档库结构 */
+#p_body .filewrap{background-color: #fff;}
+#p_body .filewrap .R-list{width:260px; float:left; background-color: #f6f6f6; border: 1px #ccc solid; border-top: none; margin-bottom: 15px;}
+#p_body .filewrap .R-list.fixed{ position: fixed; top: 50px; border: 1px solid #a9a9a9; box-shadow:0px 0px 5px rgba(0,0,0,0.3);}
+#p_body .filewrap .R-list #Pagination{ overflow: hidden;}
+#p_body .filewrap .R-list ul li{  height: 50px; line-height: 50px; display:block; background-color: #FFF; border-bottom:1px #ccc dotted; padding-top: 10px; cursor: pointer;*margin-bottom:-4px;}
+#p_body .filewrap .R-list ul .nodata,
+#p_body .filewrap .R-list ul .loading{text-align: center; line-height: 40px;}
+#p_body .filewrap .R-list ul li:hover,#p_body .filewrap .R-list ul .li_cur{width: 261px;background: url(../images/R_list_arrow.gif) 250px -36px no-repeat;background-color: #EDF4F9; border-right:none; }
+#p_body .filewrap .R-list ul li p{width: 207px; height: 18px; float: left; line-height: 18px;color:#a9a9a9; margin-top: 5px; overflow: hidden;}
+#p_body .filewrap .R-list ul li .tit{ font-weight: bold; color:#383838; overflow: hidden; text-overflow: ellipsis;white-space: nowrap; margin-top: 0;}
+#p_body .filewrap .R-list ul li .filetype{width:25px; height: 36px; overflow: hidden; margin: 2px 10px 15px 10px; }
+#p_body .filewrap .R-list ul li .filetype .filetype_ico{ font-size: 10px; width:25px; height: 36px; color: #fff; background:url(../images/file_format.png) 0 0 no-repeat;line-height: 36px;  text-align: center;}
+#p_body .filewrap .R-list ul li span{ float: left;}
+#p_body .filewrap .R-list ul li span.uploadtit{ max-width: 50px; overflow:hidden; text-overflow: ellipsis;white-space: nowrap;}
+#p_body .filewrap .R-list ul li span.uploadinfo{float: none; margin-left: 8px;}
+
+#p_body .filewrap .R-list ul li .icon1{width:12px; height: 12px;display: block; background:url(../images/des_ico.jpg) 0 0 no-repeat; margin:3px 3px 0 0 ;}
+#p_body .filewrap .R-list ul li .icon2{width:12px; height: 12px;display: block; background:url(../images/des_ico.jpg) -12px 0 no-repeat; margin:3px 3px 0 0;}
+#p_body .filewrap .L-elem{width:696px;border:1px #ddd solid; border-top:none; border-left: none;float: right; padding:0px; margin-bottom: 25px; background-color: #fff; position: relative;}
+#p_body .filewrap .L-elem .ui_loading_img{ position: absolute; top: 250px; left: 50%; margin-left: -20px;}
+#p_body .filewrap .L-elem #file{width:100%; height: 500px;}
+
+
+.sess { height: 28px;}
+
+/*404页面*/
+#p_body #app_file_error #app_body{height: 1%;}
+/*#p_body #app_file_error #app_body #error_img{ height: 360px; margin: 20px 70px 30px;/* background-color: #F3F3F3; background-image: url(../images/error.png); background-position: center 30px;}*/
+#p_body #app_file_error #app_body #error_img{ height: 360px; margin: 40px 90px 60px; background-color: #F3F3F3; background-image: url("../images/error.png"); background-position: center 30px;}
+#p_body #app_file_error #app_body #back_btn{margin:0px 90px; text-align: center; padding: 30px 0px; border-top: 1px solid #d7d7d7;}
+

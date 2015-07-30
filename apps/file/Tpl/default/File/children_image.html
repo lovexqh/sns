@@ -1,0 +1,512 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/material_view.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/childrenImage.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.mousewheel.min.js"></script>
+<div id="p_body">
+    <div id="iframe_wrap">  
+        <div id="file_head">
+            <input type="hidden" id="hiddenInput" value="{$attachInfo['id']}"/>
+            <h1 id="file_title"></h1>       
+            {:W('Weibo',array('tpl_name'=>$_SESSION['mid']==$attachInfo['uid']?'file_create_weibo':'file_share_weibo','button_title'=>'分享'))}
+            <php>
+                $tpl_data = urlencode(serialize(array(
+                'author'=>getUserName($attachInfo['uid']),
+                'title'=>$attachInfo['title'],
+                'url'=>U('file/File/children_image',array('id'=>$id)),
+                )));
+                $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布资料成功')));
+            </php>
+            <a href="{$url}" class="button" title="点击查看原图" hidefocus="true" target="_blank" id="viewsrcA">查看原图</a>
+<!--            <a href="javascript:;" class="imgshare button" id="file_share" hidefocus="true" tpldata="">分享</a>-->
+            <a href="javascript:;" class="imgshare button" id="file_share" hidefocus="true" onclick="_widget_weibo_start('', '{$tpl_data}');">分享</a>
+            <?php if($attachInfo['no_down'] == 0){ ?>
+            <a id="file_download" href="javascript:;" class="button" target="_blank">下载(<span id="uploadcount"></span>人)</a>   
+            <?php } ?>
+        </div>
+        <div id="file_info1">
+            <span>上传：<a id="uploadPerson" href="" uid="" rel="face" target="_blank"></a></span>
+            <span>
+                上传时间：<span id="uploadTime"></span>
+            </span>
+            <span>分类：<span id="types"></span></span>
+            <span>来源：<span id="aname"></span></span>
+            <span><span id="readc"></span>人阅读</span>            
+        </div>
+        <php>if($attachInfo['extension'] == 'img'){</php>
+        <div id="file_view">
+            <div id="file_view_image">
+                <a href="javascript:;" title="点击查看原图" hidefocus="true" target="_blank" id="viewsrcAs" style="cursor: url(__THEME__/images/cursor_zoom.cur),auto">
+                    <img src="../Public/images/public/loading.gif" id="viewsrc" onerror="javascript:this.src='../Public/images/fileview/pic_error.gif';this.parentNode.href='javascript:void(0)';">
+                </a>
+                <a href="javascript:;" id="file_view_image_prev" hidefocus="true" style="cursor: url(__THEME__/images/left.cur),auto" ></a>
+                <a href="javascript:;" id="file_view_image_next" hidefocus="true" style="cursor: url(__THEME__/images/right.cur),auto"  ></a>
+            </div>
+            <div id="smallArea">                    
+                <div id="MainViewArea" class="smallview">
+                    <table id="view_table" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td id="waitLoad">        
+                                <img style="width: 20px; height: 20px;" src="../Public/images/public/loading.gif"/>  
+                                <div>正在努力加载中.....</div>                                                              
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <a href="javascript:;" id="smallview_left" class="left_right" hidefocus="true"></a>
+                <a href="javascript:;" id="smallview_right" class="left_right" hidefocus="true"></a>
+            </div>                
+        </div>    
+        <php>}else{</php>
+        <include file="../File/view_error" />
+        <php>}</php>
+        <div id="file_app_view">
+            <iframe id="file_info" name="file_info" src="" frameborder="0" scrolling="no"></iframe>                    
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//    $(function(){                  
+        var ctrlload = ["default","left","right","clickleft"],
+        loadfunction = ["a","b"],
+         loadcount = 50,
+         noajaxL = 0,
+         noajaxR = 0,
+         ajaxstop = 0,
+         mouse = 0,
+         tags = "";
+        $(window).ready(function(){                 
+            var aid = $('#hiddenInput').val();
+            get_list(aid,ctrlload[0],loadcount);                 
+            $(document).keyup(function(key){                
+                if(key.keyCode == 37){     
+                    clearTimeout(window.keytime);                    
+                    var prev = $('#view_table tr').find('td.set').prev().find('a');  
+                    var previd = prev.parent().attr('id');
+                    var prevbtn = $('#file_view_image_prev');
+                    prevbtn.removeClass('click_l');
+                    if( typeof previd != "string"){
+                        ui.error("没有更多图片了");
+                        return false;  
+                    }
+                    else{
+                        prevbtn.addClass('click_l');
+                        window.keytime = setTimeout(function(){prevbtn.removeClass('click_l');},200);
+                        prev.click();    
+                    }                    
+                }
+                else if(key.keyCode == 39){
+                    clearTimeout(window.keytime2);                    
+                    var next = $('#view_table tr').find('td.set').next().find('a');
+                    var nextid = next.parent().attr('id');
+                    var nextbtn = $('#file_view_image_next');
+                    nextbtn.removeClass('click_r');
+                    if( typeof nextid != "string"){
+                        ui.error("没有更多图片了");
+                        return false;
+                    }
+                    else{
+                        nextbtn.addClass('click_r');
+                        window.keytime2 = setTimeout(function(){nextbtn.removeClass('click_r');},200);
+                        next.click();
+                    }
+                }
+                else{
+                    return;
+                }
+            });
+            $('#MainViewArea').mousewheel(function(event, delta){                
+                if(mouse == 0){
+                    var box_ = $('#MainViewArea');
+                    if(delta == -1){
+                        mouse=1;    
+                        var scrollleft = box_.scrollLeft();                
+                        var boxwidth = box_.innerWidth();                    
+                        var tablewidth = $('#view_table').outerWidth();                        
+                        if(scrollleft+4*boxwidth>tablewidth && noajaxR == 0)
+                        {                        
+                            var aid = $('#view_table tr td:last-child').attr('id');        
+                            get_list(aid,ctrlload[2],loadcount);                        
+                            box_.stop().animate({scrollLeft:scrollleft+boxwidth},function(){check2(); mouse=0;});                         
+                        }            
+                        else
+                        {
+                            box_.stop().animate({scrollLeft:scrollleft+boxwidth},function(){check2(); mouse=0;}); 
+                        }   
+                    }
+                    else if(delta==1){                        
+                        mouse =1;     
+                        var scrollleft = box_.scrollLeft();
+                        var boxwidth = box_.innerWidth();                           
+                        if(scrollleft < 4*boxwidth && noajaxL == 0)
+                        {
+                            var aid = $('#view_table tr td:eq(0)').attr('id');                    
+                            get_list(aid,ctrlload[1],loadcount);                            
+                            return;
+                        }                   
+                        else
+                        {                       
+                            box_.stop().animate({scrollLeft:scrollleft-boxwidth},function(){check2();mouse=0;});                        
+                        } 
+                    }
+                    else{
+                        return;
+                    }
+                }        
+                return false;
+            });
+            $('#view_table tr td a').live('click',function(){                
+                var this_ = $(this),                
+                    this_attchid = this_.attr('attchid'),                 
+                    u="{:U('file/File/infor_document')}&id="+this_attchid,                                
+                    this_src = this_.attr('bigsrc'), 
+                    this_title = this_.attr('title'),
+                    this_uid = this_.attr('uid'),
+                    this_uname = this_.attr('uname'),                
+                    this_smalltype = this_.attr('small_type'),
+                    this_uploadtime = this_.attr('uploadtime'),
+                    this_downcount = this_.attr('down_count'),
+                    this_appname = this_.attr('appname'),
+                    this_readcount = this_.attr('readcount'),       
+                    this_preview = this_.attr('preview'),
+                    index_ = this_.parent().index('td'),
+                    length_ = $('#view_table tr td').length - 4,
+                    tpl_data = this_.attr('tpl_data');
+                $('#viewsrc').attr('src',this_src);
+                $('#viewsrcA').attr('href',this_src);                
+                $('#viewsrcAs').attr('href',this_src);                
+                $('#uploadPerson').attr('uid',this_uid);
+                $('#file_title').html(this_title);                
+                $('#uploadPerson').html(this_uname);                
+                $('#types').html(this_smalltype);
+                $('#uploadTime').html(this_uploadtime);
+                $('#uploadcount').html(this_downcount);     
+                $('#aname').html(this_appname);                     
+                $('#readc').html(this_readcount);     
+                $('#file_app_view #file_info').attr('src',u);
+                $('#file_share').attr('tpldata',''+tpl_data+'');
+                if( this_preview == "0" ){
+                    var attid = { attach_id : this_attchid }
+                    $.post("{:U('file/File/preview_status_count')}",attid,function(result){
+                        if(result == "1"){
+                            this_.attr('preview','1');
+                        }
+                    });
+                }
+                if( index_ < 4 )
+                {
+                    if(this_.attr('nodata')!="1")
+                    {                        
+                        var aid = $('#view_table tr td:eq(0)').attr('id');
+                        $('#view_table a').removeClass('set');
+                        $('#view_table td').removeClass('set');
+                        $(this).addClass('set');
+                        $(this).parent().addClass('set');     
+                        get_list( aid ,ctrlload[1],loadcount ,loadfunction[0]);       
+                        scrollToCenter(false);                          
+                    }
+                    else
+                    {                        
+                        $('#view_table a').removeClass('set');
+                        $('#view_table td').removeClass('set');
+                        $(this).addClass('set');
+                        $(this).parent().addClass('set');      
+                        scrollToCenter(false);   
+                        check();                        
+                    }                   
+                }    
+                else if( index_ >= length_)
+                {                    
+                    if(this_.attr('nodata')!="1")
+                    {                        
+                        var aid = $('#view_table tr td:last-child').attr('id');
+                        $('#view_table a').removeClass('set');
+                        $('#view_table td').removeClass('set');
+                        $(this).addClass('set');
+                        $(this).parent().addClass('set');     
+                        get_list( aid, ctrlload[2],loadcount, loadfunction[0]);   
+                        scrollToCenter(false);  
+                    }
+                    else
+                    {                        
+                        $('#view_table a').removeClass('set');
+                        $('#view_table td').removeClass('set');
+                        $(this).addClass('set');
+                        $(this).parent().addClass('set');     
+                        scrollToCenter(false);  
+                        check();
+                    }                 
+                }
+                else
+                {                    
+                    $('#view_table a').removeClass('set');
+                    $('#view_table td').removeClass('set');
+                    $(this).addClass('set');
+                    $(this).parent().addClass('set');                    
+                    scrollToCenter(true);
+                    check();
+                }  
+                dataload();
+            });
+            $('#smallview_left').click(function(){                  
+                var box_ = $('#MainViewArea');
+                var scrollleft = box_.scrollLeft();
+                var boxwidth = box_.innerWidth();                           
+                if(scrollleft < 4*boxwidth && noajaxL == 0)
+                {
+                    var aid = $('#view_table tr td:eq(0)').attr('id');                    
+                    get_list(aid,ctrlload[1],loadcount);                            
+                    return;
+                }                   
+                else
+                {                       
+                    box_.stop().animate({scrollLeft:scrollleft-boxwidth},function(){check2();});                        
+                }                
+            });
+            $('#smallview_right').click(function(){       
+                var box_ = $('#MainViewArea');
+                var scrollleft = box_.scrollLeft();                
+                var boxwidth = box_.innerWidth();                    
+                var tablewidth = $('#view_table').outerWidth();                        
+                if(scrollleft+4*boxwidth>tablewidth && noajaxR == 0)
+                {                        
+                    var aid = $('#view_table tr td:last-child').attr('id');        
+                    get_list(aid,ctrlload[2],loadcount);                        
+                    box_.stop().animate({scrollLeft:scrollleft+boxwidth},function(){check2();});                         
+                }            
+                else
+                {
+                    box_.stop().animate({scrollLeft:scrollleft+boxwidth},function(){check2();}); 
+                }                                                
+            });
+            $('#file_view_image_prev').click(function(){
+                var obj_ = $('#view_table tr td').find('a.set').parent().prev().find('a');
+                var obj_id = obj_.parent().attr('id');                
+                if( (typeof obj_id).toLowerCase() == "string" ){
+                    obj_.click();
+                }
+                else{
+                    ui.error("没有更多图片了");
+                }
+            });
+            $('#file_view_image_next').click(function(){
+                var obj_ = $('#view_table tr td').find('a.set').parent().next().find('a');
+                var obj_id = obj_.parent().attr('id'); 
+                if( (typeof obj_id).toLowerCase() == "string" ){
+                    obj_.click();
+                }
+                else{
+                    ui.error("没有更多图片了");
+                }
+            });
+        });                         
+        function scrollToCenter(animate){
+            var box_ = $('#MainViewArea');
+            var obj = $('#view_table tr td a.set').parent();                        
+            var toscroll = obj.index()*obj.innerWidth()-(box_.innerWidth()-obj.innerWidth())/2;
+            if(animate)
+            {
+                box_.stop().animate({
+                    scrollLeft:toscroll
+                });                
+            }
+            else
+            {
+                box_.scrollLeft(toscroll);
+            }
+        }
+        function check(){            
+            var check_prev_index = $('#view_table tr td.set').index('td');
+            var check_prev = $('#view_table tr td:lt('+check_prev_index+')').length;            
+            var check_next = $('#view_table tr td:gt('+check_prev_index+')').length;                  
+            if(check_prev < 5 && check_next > 5){    
+                $('#smallview_right').removeClass('no');
+                $('#smallview_left').addClass('no');
+                noajaxL = 1;                
+            }                               
+            else if(check_next < 5 && check_prev > 5){     
+                $('#smallview_left').removeClass('no');
+                $('#smallview_right').addClass('no');                
+                noajaxR = 1;                
+            }
+            else if(check_prev < 5 && check_next < 5){
+                $('#smallview_left').addClass('no');
+                $('#smallview_right').addClass('no'); 
+                noajaxL = 1; 
+                noajaxR = 1;  
+            }
+            else{                
+                $('#smallview_left').removeClass('no');
+                $('#smallview_right').removeClass('no');                
+            }
+        }
+        function check2(){
+            var box_ = $('#MainViewArea');
+            var boxscroll = box_.scrollLeft();      
+            var boxwidth = box_.width();
+            var tablewidth = $('#view_table').width();            
+            if(boxscroll <= 0 && tablewidth-boxscroll > boxwidth)
+            {            
+                $('#smallview_right').removeClass('no');
+                $('#smallview_left').addClass('no');
+                noajaxL = 1;
+            }
+            else if(tablewidth-boxscroll <= boxwidth && boxscroll > 0 )
+            {                    
+                $('#smallview_left').removeClass('no');
+                $('#smallview_right').addClass('no');
+                noajaxR = 1;
+            }
+            else if(boxscroll <= 0 && tablewidth-boxscroll <= boxwidth){
+                $('#smallview_left').addClass('no');
+                $('#smallview_right').addClass('no');
+                noajaxL = 1;
+                noajaxR = 1;
+            }
+            else
+            {
+                $('#smallview_left').removeClass('no');
+                $('#smallview_right').removeClass('no');
+            }
+        }
+        function dataload(){
+            var setdata = $('#view_table tr').find('td.set').next().find('a');
+            var setdata2 = $('#view_table tr').find('td.set').prev().find('a');
+            var img = new Image();     
+            var img2 = new Image();            
+            img.src = setdata.attr('bigsrc');            
+            img2.src = setdata2.attr('bigsrc');            
+        }        
+        function get_list(loadaid,ctrlload,loadcount,ctrl,tag){   
+            if(ajaxstop == 1){return;}      
+            ajaxstop = 1;
+            var pid = "{$selectMap['pid']}";
+            var key = "{$selectMap['key']}";
+            var is_me = "{$selectMap['is_me']}";
+            var type = "{$selectMap['type']}";            
+            var order = "{$selectMap['order']}";
+            if( !!tag ){ tags = tag; }                        
+            var params = {
+                aid:loadaid,
+                button:ctrlload,
+                limit:loadcount,
+                pid:pid,
+                key:key,
+                is_me:is_me,
+                type:type,
+                order:order,
+                tag : tags
+            }                         
+            $.post("{:U('file/File/getImages')}",$.param(params),function(result){   
+                ajaxstop = 0;                                
+                if( !!$.parseJSON(result).data){                            
+                    if($('#waitLoad')){
+                        $('#waitLoad').remove();
+                    }
+                    var rs = $.parseJSON(result),                                            
+                        html  = "",        
+                        image = new Array(),
+                        nowid = rs.aid;             //当前图片ID                                             
+                    $.each(rs.data,function(i,j){                   
+                        var n = j.id;
+                        image[n] = new Image();				
+                        image[n].id=n;
+                        image[n].onload=function(){                            
+                            $('#image'+this.id).attr('src',this.src);                                        
+                            $('#image'+this.id).parent().removeClass('loading');
+                        }   
+                        setTimeout(function(){image[n].src="__UPLOAD__"+j.smallcover},200); 
+                        var set="";
+//                        if(ctrlload == "default"){  set= params.aid==j.id?"set":"normal";}else{ set == "normal"}
+                        html +='<td id="'+j.id+'" class="'+set+'">'                                  
+                            +'     <a href="javascript:;" hidefocus="true" tpl_data="'+j.tpl_data+'" bigsrc="__UPLOAD__'+j.cover+'" id="a'+j.id+'" attchid ="'+j.attach_id+'" class="loading '+set+'" title="'+j.title+'" uid="'+j.uid+'" readcount="'+j.read_count+'" preview="'+j.preview_status+'" uname="'+j.uname+'" down_count="'+j.down_count+'" small_type="'+j.smallType+'" uploadtime="'+j.uploadTime+'" appname="'+j.app_name+'">'                                                                               
+                            +'         <img id="image'+n+'" src="../Public/images/public/loading.gif"/>'
+                            +'     </a>'
+                            +'</td>';                                              
+                        image[n].onerror = function(){
+                            $('#image'+this.id).attr('src','../Public/images/fileview/pic_error.gif');
+                            $('#image'+this.id).parent().removeClass('loading');
+                        }
+                    });    
+                    switch(ctrlload)
+                    {
+                        case "default" : $('#view_table tr').html("").append(html); $('#a'+nowid).click(); scrollToCenter(false); check(); dataload(); break;  
+                        case "left" :                           
+                            if(ctrl == "a")
+                            { 
+                                $('#view_table tr').prepend(html); 
+                                scrollToCenter(false);                                 
+                                check();
+                                break;
+                            }
+                            else
+                            {
+                                var box_ = $('#MainViewArea');
+                                var scl = box_.scrollLeft(); 
+                                var tdwidth = $('#view_table tr td').innerWidth();                            
+                                var boxwidth = box_.innerWidth();
+                                var left_ = parseInt(rs.length*tdwidth+scl);                                 
+                                $('#view_table tr').prepend(html);                             
+                                box_.scrollLeft(left_);                            
+                                box_.stop().animate({scrollLeft:left_ - boxwidth});
+                                if(rs.length < loadcount)
+                                {
+                                    noajaxL = 1;                                
+                                    $('#view_table tr td:lt(4) a').attr('nodata','1');
+                                    check();                                    
+                                }                                                   
+                                check2();
+                                break;
+                            }                            
+                        case "right" : 
+                            $('#view_table tr').append(html);
+                            if(ctrl == "a")
+                            {
+                                scrollToCenter(false);
+                                check();
+                                break;
+                            }         
+                            else
+                            {                                
+                                if(rs.length < loadcount)
+                                {                                             
+                                    noajaxR = 1;                                    
+                                    check2();
+                                }     
+                                check2();
+                                break;  
+                            }                                                                                                   
+                    }                  
+                }    
+                else
+                {                                    
+                    switch(ctrlload)
+                    {
+                        case "left":$('#view_table tr td:lt(4) a').attr('nodata','1'); noajaxL = 1;check(); break;
+                        case "right": 
+                            var lengths_ = $('#view_table tr td').length-5; 
+                            $('#view_table tr td:gt('+lengths_+') a').attr('nodata','1'); noajaxR = 1; check();break;
+                    }                    
+                }
+            });       
+        }        
+        $('#file_download').live('click',function(){
+            if( $(window.frames["file_info"]).length ){
+                var href = $(window.frames["file_info"].document).find('#file_download').attr('href');            
+                $(this).attr('href',href);
+            }
+            else{
+                return;
+            }
+        });
+        $('#file_share').click(function(){
+           var thisshare = $(this).attr('tpldata');            
+//           _widget_weibo_start('',''+thisshare+'');
+        });
+//    });       
+    var _html = $('html');
+    setInterval(function(){
+        var h = $('#file_info').contents().find('#file_info2').outerHeight()+10;			
+        $('#file_info').height(h);
+    },300);
+</script>
+<include file="__THEME__/footer" />

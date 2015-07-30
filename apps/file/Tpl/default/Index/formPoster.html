@@ -1,0 +1,122 @@
+<include file="__THEME__/header" />
+<link href="__THEME__/css/layout_app.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/poster_form.css" rel="stylesheet" type="text/css"/>
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<div id="p_body">
+	<div class="app_container"><!--	id=app_name/module_name	-->
+		<div id="app_head">
+			<div class="L">{$name}({$explain})</div>
+			<div class="R"><a href="javascript:;" class="button" id="btn_create" onclick="history.go(-1)">返回</a></div>
+		</div>
+		<div id="app_body">
+
+		    <form method="post" id="form" action="{:U('file/index/doAddPoster')}" autocomplete="off" enctype="multipart/form-data" name="form">
+				<table class="formtable">
+					<php>if(!empty($smallType)){</php>
+					<tr>
+						<th>类别：</th>
+						<td>
+							<select class="select" name="type">
+								<?php foreach($smallType as $cate){ ?><option value="{$cate.id}">{$cate.name}</option><?php } ?>
+							</select>
+						</td>
+					</tr>
+					<php>}</php>
+					<tr>
+						<th>标题：</th>
+						<td><input name="title" type="text" class="input aui_validate" validate="{empty:false,doit:true,maxlength:60,text_wrong:'标题不能为空,并且小于60个字符'}" id="title" maxlength="60" /></td>
+					</tr>
+					<tr>
+					    <th><span class="txt_impt">*</span>地点：</th>
+					    <td><script>ui.getarea('area','select');</script></td> 
+					    <input type="hidden" id="current" name="areaid"/>
+					</tr>
+					<tr>
+					    <th>截止时间：</th>
+					    <td> 
+						<input id="deadline" value="{$poster.deadline}" name="deadline" type="text" class="text" id="deadline" onfocus="rcalendar(this,'full');" id="deadline" /> 
+					    </td>
+					</tr>
+					<tr>
+						<th>详细介绍：</th>
+						<td><textarea class="input aui_validate" validate="{empty:true,doit:true,maxlength:255,text_wrong:'最多只能输入255个字符'}" id="explain" name="explain" style="width:650px; height:120px; resize:none;"></textarea></td>
+					</tr>
+					<volist name="extraField" id="vo">
+					{:W($vo['widget'],$vo)}
+					</volist>
+					<tr>
+					    <th>联系方式：&nbsp;&nbsp;&nbsp;</th>
+					    <td>
+						<input name="contact" type="text" value="{$poster.contact}" class="text" id="contact" size="30" />
+						<br />
+						<br/>
+						<span class="cGray2">填写联系人电话，如：赵先生，1584049XXXX            </span>
+					    </td>
+					</tr>
+					<tr>
+						<th>图片：</th>
+						<td><input id="file" name="cover" type="file" /></td>
+					</tr>
+					<tr>
+						<th><input type="hidden" name="pid"  value="{$id}"/></th>
+						<td><input type="button" class="button" id="btn_submit" value="保存" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var p;
+$("#sel1").change(function(){
+   var num = $(this).val();
+   $('#current').val(num);
+   p = num;
+})
+
+$("#sel2").change(function(){
+   var set = $(this).val();
+    $('#current').val(p + ','+ set);
+})
+
+
+$('#btn_submit').click(function(){
+
+	var obj = $(this);
+	if(obj.hasClass('disabled')) return false;
+
+	if(!$('#title').aui_validate_result())
+	{
+	    ui.error("标题信息不正确");
+	    return false;
+	}
+
+	if($('#file').val()=="")
+	{
+	    ui.error("请选择一个要上传的文件");
+	    return false;
+	}
+
+	
+	
+
+//	$('#form').ajaxSubmit(function(result){
+//		if(result=='1')
+//		{
+//			ui.error('保存成功');
+//		}
+//		else
+//		{
+//			ui.error('服务端保存失败');
+//		}
+//		$('#form input,#form select,#form textarea').attr('disabled',false);
+//		obj.val('保存').removeClass('disabled');
+//	});
+
+	$('#form').submit();
+	exit();
+	obj.val('提交中...').addClass('disabled');
+	$('#form input,#form select,#form textarea').attr('disabled',true);
+});
+</script>
+<include file="__THEME__/footer" />

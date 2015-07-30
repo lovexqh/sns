@@ -1,0 +1,14 @@
+<include file="__THEME__/header" />
+<div id="p_body">	
+	<iframe id="file" width="100%" name="file" src="{:U('file/File/filePreview_app',array('id'=>$id))}" frameborder="0" scrolling="no"></iframe>	
+</div>
+<script type="text/javascript">	
+	$(document).ready(function(e){
+		setInterval(function(){
+			var h = $('#file').contents().find('#iframe_wrap').outerHeight()+10;			
+			$('iframe#file').height(h);
+		},300)		
+	})
+	
+</script>
+<include file="__THEME__/footer" />

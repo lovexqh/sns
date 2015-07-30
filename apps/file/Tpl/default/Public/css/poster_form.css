@@ -1,0 +1,35 @@
+#p_body .app_container #app_head>.L{ background-image:url(../images/app_file/file_ico.gif); padding-left: 25px;}
+#app_body .warning{ width: 705px; height:34px; line-height: 34px; border:1px solid #E8E8E8;color:#6D6D6D; background-image:url(../images/exclamation1.png);background-position: 10px 9px;background-color: #FFFDE5; padding-left: 33px; margin-left: 100px; margin-top: 20px; font-size: 14px;}
+#app_body .warning1{ width: 500px; height:34px; line-height: 25px; border:1px solid #E8E8E8;color:#6D6D6D; background-image:url(../images/exclamation1.png);background-position: 10px 9px;background-color: #FFFDE5; padding-left: 33px; margin-bottom: 15px; font-size: 14px;}
+
+#app_body table.formtable{ margin: 30px 120px 30px 30px;}
+#app_body table.formtable label{ display: inline-block; margin-right: 5px}
+#app_body table.formtable .input{ width: 250px;}
+#app_body table.formtable #btn_area{ height: 32px; line-height: 32px; padding:0px 10px; }
+
+/* 批量上传 */
+#file_select_container{ position: relative; padding: 20px 0px 20px 30px; border-bottom: 1px dotted #CCCCCE; margin-bottom: 0px; box-shadow:0px 2px 5px rgba(0,0,0,0.2); background-color: #F6FBFF;}
+#file_select_container p{ font-size: 12px; margin-top: 5px;}
+#file_select_container #filenum{ position: absolute; font-size: 18px; color: #3F83BE;  text-align: right; top: 30px; right:30px;}
+
+#form_multiple #upload_files{ margin-top: 5px;}
+#form_multiple #upload_files .row{ width: 925px; margin: 0px auto; border-bottom: 1px dotted #ccc; border-bottom: 1px solid #CCCCCE; margin-bottom: 5px;}
+#form_multiple #upload_files .row:last-child{ border-bottom: none;}
+#form_multiple #upload_files .row table.formtable{ width:100%;}
+#form_multiple table.formtable .fileinfo{font-size: 12px; overflow: hidden;}
+#form_multiple table.formtable .fileinfo span{ margin-left: 10px;}
+
+
+
+#form_multiple #upload_files .row.error{ border:1px solid red; background-color: #FFF7F7; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2); overflow: hidden;}
+#form_multiple #upload_files .row.error .fileinfo{ font-weight: bold; color: red;}
+#form_multiple #upload_files .row.error .fileinfo span{ color: #000; font-weight: normal;}
+
+
+#form_multiple #upload_files .row.success{}
+#form_multiple #upload_files .row.success .fileinfo{ font-weight: bold; color: green;}
+#form_multiple #upload_files .row.success .fileinfo img{ max-width: 100px; max-height: 100px;}
+#form_multiple #upload_files .row.success .fileinfo span{ color: #000; font-weight: normal;}
+
+#upload_submit{ text-align: center; padding: 30px; border-top: 1px solid #ccc; background-color: #F6FBFF; display:none;}
+#upload_view{ display: none; position: fixed; bottom: 10px; width: 950px; left:50%; margin-left: -475px; height: 40px; line-height: 40px; font-size: 16px; color:#234E73; border: 1px solid red; background-color: #FFF6E4; text-align: center; box-shadow: 2px 2px 2px rgba(0,0,0,0.2);}

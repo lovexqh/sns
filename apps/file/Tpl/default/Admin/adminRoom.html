@@ -1,0 +1,202 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchObject() {
+    if(isSearchHidden == 1) {
+        $("#searchObject_div").slideDown("fast");
+        $(".searchObject_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchObject_div").slideUp("fast");
+        $(".searchObject_action").html("搜索房间");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+			ui.error("请选择要删除的房间");return false;
+		}
+        if( confirm("是否删除房间？") ){
+          $.post( '__URL__&act=doDeleteRoom',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除多个房间成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败" );
+              }
+          });
+        }
+    },
+    transfer:function(id){
+      var id = id ? id : getChecked();
+      id = id.toString();
+      if(id=='' || id==0) return ;
+      ui.box.load('__URL__&act=transferEventTab&id='+id,{title:'活动分类转移'});
+    },
+    edit:function(id,act){
+      if( act == 'recommend' ){
+          v= "推荐";
+          v2 = "取消推荐";
+          act2 = 'cancel';
+        
+      }else{
+          v = "取消推荐";
+          v2 = "推荐";
+          act2 = 'recommend';
+      }
+      if( confirm( '是否'+v ) ){
+        $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+              if( text == 1 ){
+              ui.success( "操作成功" );
+              $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+           }else{alert(text);
+              ui.error( "设置失败" );
+           }
+        });
+      }
+    }
+}
+var c = null;
+</script>
+
+<div class="so_main">
+  <include file="_tab" />
+
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索房间 [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+    <div class="form2">
+    <form action="__URL__&act=adminRoom" method="POST">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input name="uid" class="txt" value="{$uid}"><span> 多个用户用英文逗号隔开。</span>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>房间名称：</dt>
+          <dd>
+            <input name="title" class="txt" value="{$title}"><span>支持模糊查询。 </span>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>房间类型：</dt>
+          <dd>
+            <select name="type">
+              <option value=0>-请选择房间类型-</option>
+              <option value="1" <php>if(1 == $_POST['type'])echo "selected";</php>>公开</option>
+              <option value="2" <php>if(2 == $_POST['type'])echo "selected";</php>>需验证</option>
+            </select>
+          </dd>
+        </dl>        
+        <dl>
+          <dt>玩家人数：</dt>
+          <dd>
+            <select name="ptype">
+              <option value=0>-请选择房间难度-</option>
+              <option value="1" <php>if(1 == $_POST['ptype'])echo "selected";</php>>1级</option>
+              <option value="2" <php>if(2 == $_POST['ptype'])echo "selected";</php>>2级</option>
+            </select>
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索房间<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除房间</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th>ID</th>
+            <th>房间名称</th>
+            <th>房间类型</th>
+            <th>房间难度</th>
+            <th>房间状态</th> 
+            <th>验证码</th>             
+            <th>创建者</th>
+            <th>创建时间</th>
+            <th>管理</th>
+          </tr>
+          <volist name="data" id="vo">
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}({$vo.id|countRoomPlayerNum}玩家)</td>
+            <td>{$vo.type|switchType}</td>
+            <td>{$vo.ptype|switchPtype}</td>
+            <td>{$vo.status|switchStatus}</td>
+            <td><neq name="vo.token" value="">{$vo.token}<else/>...</neq></td>
+            <td><space uid="vo.uid" class="fn" target="_blank">{uname}</space></td>
+            <td>{$vo.cTime|friendlyDate}</td>
+            <td><a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索房间<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除房间</span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

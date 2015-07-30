@@ -1,0 +1,28 @@
+#file_view_image{ min-height: 100px;}
+#smallArea{ width: 800px; padding: 0px 5px; margin:  40px auto; position: relative;}
+#smallArea .smallview{ width: 702px; height: 80px; padding:3px 0px; margin: 0px auto; overflow: hidden; position: relative; }/*
+*/
+#smallArea a#smallview_left,
+#smallArea a#smallview_right{ width: 21px; position: absolute; top: 0px; bottom: 0px;}
+#smallArea a#smallview_left{ left: 0px; background:url(../images/fileview/prev.png) -21px center no-repeat;}
+#smallArea a#smallview_right{ right: 0px; background:url(../images/fileview/next.png) -21px center no-repeat;}
+#smallArea a#smallview_left:hover,
+#smallArea a.left_right:hover,
+#smallArea a#smallview_right:hover{background-position: 0px center;}
+#smallArea a#smallview_left.no{left: 0px; top: 0px; bottom: 0px; background:url(../images/fileview/prev.png) no-repeat; background-position: 0px center;}
+#smallArea a#smallview_right.no{right: 0px; top: 0px; bottom: 0px; background:url(../images/fileview/next.png) no-repeat; background-position: 0px center; }
+
+#smallArea #view_table{ padding: 0px; margin: 0px; height: 70px; border: none;}
+#smallArea #view_table tr td{ margin: 0px; padding:3px; width: 70px; height: 70px; visibility: visible;}
+#smallArea #view_table tr td img{ border:none;  cursor: pointer; width: 70px; height: 70px; outline: none;}
+#smallArea #view_table tr td a{ display: block; height: 70px; width: 70px; overflow: hidden; position: relative; border: 1px solid #ccc;}
+#smallArea #view_table tr td a:hover{ border: 1px solid #000}
+#smallArea #view_table tr td.set{ padding: 2px;}
+#smallArea #view_table tr td a.set{ border: 2px solid #3F83BE; border-radius:5px; padding: 0px;}
+#smallArea #view_table tr td a.loading{ background:url(../images/public/loading.gif) no-repeat center center;}
+#smallArea #view_table tr td a.loading img{ visibility: hidden;}
+#smallArea #view_table tr td#waitLoad{width: 800px; color: #666; font-size:16px; text-align: center;}
+#iframe_wrap #file_info1 span#readc{ margin-right: 0px;}
+#file_head #file_share.imgshare{ position: absolute; top: 0px; right: 100px; height: 28px; line-height: 28px; padding: 0px 25px;}
+#file_head #viewsrcA{position: absolute; top: 0px; right: 195px; height: 28px; line-height: 28px; padding: 0px 15px;}
+

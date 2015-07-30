@@ -1,0 +1,33 @@
+html,body{ font-size: 12px;}
+
+/* 头部 */
+#p_body .app_container #app_head{  border-bottom: 1px solid #CCCCCC;  overflow: hidden; height: 55px; line-height: 55px; padding: 0px;}
+#p_body #app_head ul{ margin-left: 25px;height:45px; padding-top: 6px;}
+#p_body #app_head ul li{ float: left; margin: 0px; margin-right: 5px; height: 45px;}
+#p_body #app_head ul li a{ display: block; height:40px; line-height: 40px; overflow: hidden; padding: 0px 30px 0px 50px; font-size: 14px; text-decoration: none; color:#333; border: 1px solid #CCCCCC; border-radius:3px; box-shadow:0px 0px 5px rgba(0,0,0,0.1);background: url(../images/public/navicon.png) -0px 0px no-repeat;background-color: #E7E7E7;}
+#p_body #app_head ul li a#nav_9{ background-position: 22px -126px;}
+#p_body #app_head ul li a#nav_10{ background-position: 22px -168px;}
+#p_body #app_head ul li a#nav_9.set{ background-position: 22px 0px;}
+#p_body #app_head ul li a#nav_10.set{ background-position: 22px -42px;}
+#p_body #app_head ul li a:hover{ background-color: #F6F6F6;}
+#p_body #app_head ul li a.set,
+#p_body #app_head ul li a.set:hover{ background-color: #fff;cursor: default;}
+
+#p_body #app_body{ padding: 10px;}
+
+/* 正文导航 */
+#p_body #app_body .tabs_wrap{overflow: hidden; position: relative; height: 45px;}
+#p_body #app_body .tabs_wrap ul{ height: 43px;}
+#p_body #app_body .tabs_wrap ul li a{padding: 0 40px; height: 43px; line-height: 43px;}
+#p_body #app_body .tabs_wrap ul li a.set{ line-height: 39px;}
+#p_body #app_body .tabs_wrap .button{ position: absolute; top: 8px; right: 15px; height: 28px; line-height: 28px;}
+
+/* 搜索框 */
+.pos_search{height: 45px; line-height: 28px;background-color: #f7f7f7; left:-25px; border-bottom: 1px #ccc dotted;padding: 15px 25px 0px 25px; border-left:1px #ccc solid; border-right: 1px #ccc solid;}
+.pos_search .select_file{ height:28px;float:right;margin-left:15px; color: #999;}
+.pos_search label{margin-left: 3px;}
+.pos_search #pos_input,
+.pos_search #img_input{width:375px;float: left;border-radius:3px 0px 0px 3px; height: 26px;}
+.pos_search .button{width: 81px; height: 26px; cursor: pointer;text-align: center;line-height: 28px; float: left;padding:0;border-radius:0px 3px 3px 0px;}
+.pos_search #pos_check{*margin-top:4px!important;margin-top: 8px; float: left; margin-left:10px;}
+.pos_search .check_span{line-height:28px; width:50px; height: 23px;display: block; float: left;*padding-top: 0px !important; padding-top: 3px;}

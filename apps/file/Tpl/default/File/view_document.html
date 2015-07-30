@@ -1,0 +1,31 @@
+<script type="text/javascript" src="__PUBLIC__/js/flexpaper/flexpaper_flash.js"></script>
+<style>#viewerPlaceHolder{ width:627px; height: 600px;}</style>
+<div class="file_view_document" style="height:600px; ">
+	<a id="viewerPlaceHolder"></a>
+	<script type="text/javascript">
+		var fp = new FlexPaperViewer(
+		'__PUBLIC__/js/flexpaper/FlexPaperViewer',
+		'viewerPlaceHolder', { config : {
+				SwfFile : '<php>echo $url;</php>',
+				Scale : 0.6,
+				ZoomTransition : 'easeOut',
+				ZoomTime : 0.5,
+				ZoomInterval : 0.2,
+				FitPageOnLoad : true,
+				FitWidthOnLoad : false,
+				PrintEnabled : true,
+				FullScreenAsMaxWindow : true,
+				ProgressiveLoading : false,
+				MinZoomSize : 0.2,
+				MaxZoomSize : 5,
+				SearchMatchAll : false,
+				InitViewMode : 'Portrait',
+				ViewModeToolsVisible : true,
+				ZoomToolsVisible : false,
+				NavToolsVisible : true,
+				CursorToolsVisible : true,
+				SearchToolsVisible : true,
+				localeChain: 'en_US'
+			}});
+	</script>
+</div>

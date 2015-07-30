@@ -19,12 +19,12 @@ return array(
     'SECURE_CODE'       =>  'SECURE18785',
 
     // 默认应用
-    'DEFAULT_APPS'		=> array('api', 'admin','comment', 'home','space', 'square', 'myop', 'weibo', 'wap', 'w3g','blog','photo','poster','event','vote','gift','timeline','desktop','campus','club','society'),
+    'DEFAULT_APPS'		=> array('api', 'admin','comment', 'home','space', 'square', 'myop', 'weibo', 'wap', 'w3g','blog','photo','poster','event','vote','gift','timeline','desktop','campus','club','society','file'),
 
     // 是否开启URL Rewrite
     'URL_ROUTER_ON'		=> false,
 		//memcache配置
-		'DATA_CACHE_TYPE' => 'Memcache',
+// 		'DATA_CACHE_TYPE' => 'Memcache', 
 // 		'MEMCACHE_HOST'   =>  '10.3.200.115:11211',
 		'MEMCACHE_HOST'   =>  '127.0.0.1:11211',
 	  'DATA_CACHE_TIME' => '3600',

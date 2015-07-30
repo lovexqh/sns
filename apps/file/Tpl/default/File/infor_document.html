@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>infor_document</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <script type="text/javascript">
+                var _UID_   = <php> echo (int) $uid;</php>;
+                var _MID_   = <php> echo (int) $mid;</php>;
+                var _UNAME_ = '{$userInfoCache['uname']}';
+                var _ROOT_  = '__ROOT__';
+                var _THEME_ = '__THEME__';
+                var _PUBLIC_ = '__PUBLIC__';
+                var _LENGTH_ = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+                var _LANG_SET_ = '<php> echo LANG_SET;</php>';
+                var _USER_EXP_TABLE = {$level_list};
+                var $CONFIG = {};
+                $CONFIG['uid'] = _UID_;
+                $CONFIG['mid'] = _MID_;
+                $CONFIG['root_path'] =_ROOT_;
+                $CONFIG['theme_path'] = _THEME_;
+                $CONFIG['public_path'] = _PUBLIC_;
+                $CONFIG['weibo_length'] = <php> echo (int) $GLOBALS['ts']['site']['length'];</php>;
+                $CONFIG['lang'] =  '<php> echo LANG_SET;</php>';
+                var bgerr;
+                try { document.execCommand('BackgroundImageCache', false, true);} catch(e) {  bgerr = e;}
+            </script>        
+            <link href="__THEME__/css/base.css" rel="stylesheet" type="text/css" />
+            <link href="__THEME__/layout.css" rel="stylesheet" type="text/css" />
+            <link href="__THEME__/form.css" rel="stylesheet" type="text/css" />
+            <link href="../Public/css/material_view.css" rel="stylesheet" type="text/css"/>
+            <link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css"/>
+            <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+            <script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+            <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+            <script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+    </head>
+    <body>
+        {:W('Weibo',array('tpl_name'=>$_SESSION['mid']==$attachInfo['uid']?'file_create_weibo':'file_share_weibo','button_title'=>'分享'))}
+        <php>
+            $tpl_data = urlencode(serialize(array(
+            'author'=>getUserName($attachInfo['uid']),
+            'title'=>$attachInfo['title'],
+            'url'=>U('file/File/fileDetail',array('id'=>$id)),
+            )));
+            $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布资料成功')));
+        </php>
+        <div id="file_info2"  style="padding-bottom: 120px;">
+            <div id="file_operate" class="file_tools">
+                <a href="javascript:;" id="file_infomation" hidefocus="true">介绍</a>
+                <?php if($attachInfo['no_down'] == 0){ ?>
+                <a href="{:U('home/Attach/download', array('id'=>$attachInfo['attach_id'], 'uid'=>$attachInfo['uid'], 'download_status'=>$attachInfo['download_status']))}" target="_blank" id="file_download" hidefocus="true">下载({$attachInfo['down_count']})</a>
+                <?php } ?>
+                <a href="javascript:;" id="file_comment" hidefocus="true">评论({$attachInfo['comment_count']})</a>
+                <a href="javascript:;" id="file_favorite" <eq name="attachInfo['favorites_status']" value="1">class="isfavorite"</eq> hidefocus="true" onclick="file_favorite()">收藏</a>	    
+                <?php if($_SESSION['mid']==$attachInfo['uid']){  if(is_null($attachInfo['src_tag'])) { ?>
+                <a href="javascript:;" id="file_del" hidefocus="true" onclick="ui.confirm(this,'是否删除该文档?');" callback="del_file({$attachInfo['id']},{$attachInfo['uid']})">删除</a>
+                <?php } ?>
+                <a href="javascript:;" id="file_edit" hidefocus="true" onclick="window.open('{:U(\'file/Index/editPoster\', array(\'id\'=>$attachInfo[\'id\'],\'src_tag\'=>$attachInfo[\'src_tag\']))}')">修改</a>
+                <?php } ?>
+                <a href="javascript:;" id="file_evaluate" hidefocus="true">评价</a>
+                <a href="javascript:void(0)" class="report" onclick="parent.parent.denounce('file',{$attachInfo.id},'{$attachInfo.content}',{$attachInfo.uid},{$_SESSION['mid']})">{:L('report')}</a>
+            </div>
+
+            <div id="file_vote" class="file_tools">
+                <a href="javascript:;" id="file_vote_up" hidefocus="true" title="推荐"  val="1" <php>if($attachInfo['ding_cai_status']){ echo 'class="disabled"'; }</php>>顶(<span>{$attachInfo['ding_count']}</span>)</a><a href="javascript:;" id="file_vote_down" hidefocus="true" title="不推荐" val="2" <php>if($attachInfo['ding_cai_status']){ echo 'class="disabled"'; }</php>>踩(<span>{$attachInfo['cai_count']}</span>)</a>
+            </div>
+
+            <div id="file_infomation_sub" class="file_info_sub">
+                <div id="file_text">{$attachInfo['content']}</div>
+                <div id="file_tags">
+                    <ul>
+                        <li id="file_tags_label">标签：</li>
+                        <!--					{$attachInfo['tag']}-->
+                        <?php if(is_array($attachInfo['tag'])){  ?>
+                        <volist name="attachInfo.tag" id="vo">
+                            <a href="javascript:;" tag="{$vo}" onclick="javascript:titleSearch(this);">{$vo}</a>&nbsp;
+                        </volist>
+
+                        <?php } else { ?>
+                        {$attachInfo['tag']}
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>                
+            <div id="file_download_sub" class="file_info_sub">
+                <ul>
+                    <volist name="attachInfo.download_log" id="vo">
+                        <li><a href="{:U('home/Space/index',array('uid'=>$vo['uid']))}" rel="face" uid="{$vo.uid}" target="_blank">{$vo.uname}</a> {$vo.download_time|friendlyDate} 下载了该文档</li>
+                    </volist>
+                </ul>                        
+            </div>
+            <div id="file_comment_sub" class="file_info_sub">
+                {:W('Comment',array('type'=>'file','appid'=>$attachInfo['id'],'author_uid'=>$attachInfo['uid'],'title'=>$attachInfo['title'],'url'=>U('file/File/fileDetail',array('id'=>$attachInfo['attach_id'],'uid'=>$_SESSION['mid'])),'table'=>'comment','id_field'=>'id','comment_count_field'=>'commentCount'))}
+            </div>
+            <div id="file_evaluate_sub" class="file_info_sub">
+                <?php
+                $typeInfo = M('file_type')->where("id=".$attachInfo['pid'])->find();
+                ?>
+                <php>if($typeInfo['name'] == '图片库'){</php>
+                {:Addons::addonsHook('Evaluation','qt_evaluation',array('aid'=>$attachInfo['id'],'key_name'=>'fileDoc','callback'=>'parent.frames["file_info"].callback'))}
+                <php>}else{</php>
+                {:Addons::addonsHook('Evaluation','qt_evaluation',array('aid'=>$attachInfo['id'],'key_name'=>'fileDoc','callback'=>'parent.frames["file"].frames["file_info"].callback'))}
+                <php>}</php>
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            function titleSearch(obj){
+                var tag = obj.getAttribute('tag');
+                if(!!tag && (typeof parent.parent.get_file_list).toLowerCase() == "function"){                    
+                    parent.parent.get_file_list(1,tag);
+                }else if(!!tag && (typeof parent.get_list).toLowerCase() == "function"){                    
+                    parent.get_list( "",'default',50,'',tag);
+                }else{
+                    return;
+                }                
+            }
+            //窗口尺寸交互优化
+            $(window).ready(function(){
+                var _html = $('html');
+                setTimeout(function(){
+                    //                                var _html_true_height = $('#file_info2').outerHeight();
+                    //                                _html.css({'min-height':_html_true_height});
+                    $('#file_info2').height( $('html')[0].scrollHeight );
+                    //                                 if(_html.height() < _html_true_height)
+                    //                                {
+                    //                                        _html.height(_html_true_height);
+                    //                                }
+                    //parent.$('title').text(_html.height()+':'+_html_true_height);
+                               
+                },300);                               
+            });
+            function tabHeight(){
+                var subNum=$('#file_info2 [id$="sub"]').length;
+                var temHeight=$('#file_info2 [id$="sub"]').eq(0).height();
+                for(var i=1;i<subNum;i++){
+                    if(temHeight<$('#file_info2 [id$="sub"]').eq(i).height()){
+                        temHeight=$('#file_info2 [id$="sub"]').eq(i).height(); 
+                        $('#file_info2 [id$="sub"]').css('min-height',temHeight);
+                    }
+                }
+                $('#file_info2').css('height',temHeight);
+            }
+            $('#file_operate a').mouseover(function(){
+                if($(this).hasClass('set')) return;
+                if(!$('#'+$(this).attr('id')+'_sub').length)
+                {
+                    $('#file_operate a').removeClass('set');
+                    $('.file_info_sub').hide();
+                    return;
+                }
+                $('#file_operate a').removeClass('set');
+                $(this).addClass('set');
+                $('.file_info_sub').hide();
+                tabHeight();
+                $('#'+$(this).attr('id')+'_sub').show();
+            }).eq(0).mouseover();
+                
+            //标签搜索
+            //                $('#file_tags a').click(function(){
+            //                        try{
+            //                                parent.$('#pos_input').val($(this).text());
+            //                                parent.get_file_list(1);
+            //                        }
+            //                        catch(e){}
+            //                });
+
+            //推荐，不推荐
+            $('#file_vote a').one('click',function(){
+                try{
+                    if($('#file_vote a').hasClass('disabled')) return;
+                    $('#file_vote a').addClass('disabled');
+
+                    var _this = $(this);
+                    var params = {
+                        id:{$attachInfo['attach_id']},
+                        val:_this.attr('val')//+-1
+                    };
+                    $.post('{:U("file/File/doDingCai")}',params,function(result){
+                        if(result=="1")
+                        {
+                            if(params.val==1)
+                            {
+                                $('#file_vote_up span').text(parseInt($('#file_vote_up span').text())+1);
+                                parent.ui.success('Ta被你顶了一下');
+                            }
+                            else
+                            {
+                                $('#file_vote_down span').text(parseInt($('#file_vote_down span').text())+1);
+                                parent.ui.success('Ta被你踩了一下');
+                            }
+                        }
+                        else
+                        {
+                            parent.ui.error('服务器发生错误');
+                        }
+                    });
+                }catch(e){}
+            })
+            function file_favorite(id)
+            {
+                try{
+                    var params={
+                        id:{$attachInfo['attach_id']},
+                        favorite:$('#file_favorite').hasClass('isfavorite')?'0':'1'
+                    };
+                    $.post("{:U('file/File/favoriteFile')}",params,function(result){
+                        if(result=="1")
+                        {
+                            $('#file_favorite').toggleClass('isfavorite');
+                            $('#file_favorite').hasClass('isfavorite')?parent.ui.success('收藏成功'):parent.ui.success('取消成功');
+                        }
+                        else
+                        {
+                            parent.ui.error('服务端发生错误');
+                        }
+                    })
+                }catch(e){}
+            }
+            function del_file(fileid,userid)
+            {
+                var params = {id:fileid,userId:userid};
+                $.post('{:U("file/Index/doDeletePoster")}',params,function(result){
+                    if(result=="1")
+                    {
+                        ui.success('文件已经删除');
+                        setTimeout(function(){parent.location.reload()},300);
+                        parent.parent.$('div.pos_search span.button').click();//刷新左侧列表
+                    }
+                    else
+                    {
+                        ui.error('服务器发生错误，删除失败');
+                    }
+                });
+            }
+            //
+            $('#file_evaluate').bind('click',function(){
+                $('#file_evaluate_sub #EvaluateButton').click();
+            });
+
+            //    $('#file_upload_time').html('上传时间：'+get_friend_time({$attachInfo['uploadTime']}*1000));
+
+            $('#file_tools_nav li a').eq(1).mouseover();
+            // $('a[rel="face"]').usercard();
+        </script>
+    </body>
+</html>

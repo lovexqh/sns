@@ -1,0 +1,260 @@
+<include file="__THEME__/header" />
+<link href="__THEME__/css/base.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/layout_app.css" rel="stylesheet" type="text/css"/>
+<link href="../Public/css/material_file.css" rel="stylesheet" type="text/css"/>
+<div id="p_body">
+    <div class="app_container" id="app_material_file">
+        <div id="app_head"><include file="_nav" /></div>
+        <div id="app_body">
+            <div class="tabs_wrap">
+                <ul class="tabs">
+                    <li><a href="#all" >所有文档</a></li>
+                    <li><a href="#isme">我上传的文档</a></li>
+                    <li><a href="#favorite">我收藏的文档</a></li>
+                </ul>
+                <a href="{:U('file/Index/addBatchFile',array('pid'=>$type))}" class="button small" style=" margin-right: 110px">批量上传</a>
+                <a href="{:U('file/Index/addPoster',array('pid'=>$type))}" class="button small" hidefocus="true">上传新文档</a>
+            </div>
+            <div class="filewrap">
+                <div class="pos_search">
+                    <input id="pos_input" class="input" autocomplete="off" name="pos_search" type="text" value='<?php if(empty($key1)){echo "请输入关键字...";}else{echo $key1;} ?>' maxlength='70' onfocus="if($(this).val()=='请输入关键字...') this.value=''" onblur="if($(this).val()=='') this.value='请输入关键字...'"/>
+                    <span class="button">搜索</span>
+                    <select id="fileselect2" class="select_file select" name="sort" onchange="get_file_list(1)" autocomplete="off">
+                        <option value="time">最新发布</option>
+                        <option value="read">浏览最多</option>
+                        <option value="down">下载最多</option>
+                    </select>
+                    <select id="fileselect1" class="select_file select" name="classify" onchange="get_file_list(1)" autocomplete="off">
+                        <option value="">全部分类</option>
+                        <volist id="vo1" name="fileSmallType">
+                            <option value="{$vo1.id}">{$vo1.name}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="R-list">
+                    <ul id="filelist"></ul>
+                    <div id="Pagination" class="paginations"></div>
+                </div>
+                <div class="L-elem">
+                    <iframe id="file" name="file" src="" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.L-elem').html('');
+    window.tags = "";
+    $(window).scroll(function(){
+        if($(window).scrollTop()>172)
+        {
+            $('.R-list').addClass('fixed');
+        }
+        else
+        {
+            $('.R-list').removeClass('fixed');
+        }
+    });
+
+    //ajax获得用户列表，定位判断
+    var oLi=$('div.tabs_wrap .tabs li');
+    var tag_index;
+    oLi.find('a').attr('hidefocus','true');
+    oLi.click(function(){       
+        $(this).find('a').addClass('set');
+        $(this).siblings().find('a').removeClass('set');        
+        window.tags = "";           
+        tag_index=$(this).index();
+        $('#pos_input').val("请输入关键字...");    
+        get_file_list(1);
+        window.iscroll = false;
+    })
+    //搜索----------------------------------------------------------------
+    $('div.pos_search span.button').click(function(){
+        window.tags = "";        //  置空标签搜索   
+        get_file_list(1);
+    })
+    //单击列表------------------------------------------------------------
+	var iscroll = false;//是否自动滚动到文档区
+    $('ul#filelist li[class!="loading"][class!="nodata"]').live('click',function(){
+        //ui.loading(true);
+        var u="{:U('file/File/filePreview_app')}&id="+$(this).attr("fileid")//+"&attach_type="+{$attachInfo['attach_type']};//
+        //$('.L-elem').html('');
+        $('.L-elem').html('<div class="ui_loading_img"></div><iframe id="file" name="file" src="'+u+'" frameborder="0" scrolling="no" onload="$(\'.ui_loading_img\').remove();/*if(iscroll) $(\'html\').animate({scrollTop:195},500); iscroll = true*/"></iframe>');
+        $(this).addClass("li_cur").siblings().removeClass('li_cur');
+    });
+	//$('ul#filelist li[class=="nodata"]').live('click',function(){ $('.L-elem').html(''); });
+    function titFlesh(obj){
+        var tag = obj.getAttribute('tag');
+        get_file_list(1,tag);
+    }
+    //get_file_list方法---------------------------------------------------
+    function get_file_list(page,tag)
+    {       
+        if(!!tag){window.tags = tag; $('#pos_input').val("请输入关键字...");}     
+        var keys = $('#pos_input').val();
+        var user_params={
+            p:page,
+            page_count:parseInt(($(window).height()-280)/60),//每页数据个数 //动态分页
+            order:$('#fileselect2').val(),
+            type:$('#fileselect1').val(),
+            pid:"{$type}",//第一大类 图片库 文档库
+            key:keys,
+            is_me:tag_index,//全部文档或我的文档tag
+            tag : window.tags
+        };        
+        if(user_params.key=='请输入关键字...'){
+            user_params.key=null;
+        }        
+        var userlist = $('#filelist');
+        //userlist.html('<li class="loading">正在加载中...</li>');
+        ui.loading(true);
+
+        $.post('{:U("file/File/loadData")}',$.param(user_params),function(result){
+			ui.loading(false);
+            var rs = $.parseJSON(result);
+            if(!rs.data.length){
+                userlist.html('<li class="nodata">没有数据</li>');
+				$('.L-elem').html('');
+                $("#Pagination").html('');
+                return;
+            }            
+            var html = '';
+            var servertime = {$server_time}*1000;
+            $.each(rs.data,function(index,value){
+                
+//                var time = get_friend_time(parseInt(value.uploadTime*1000),servertime);
+                if($('input#pos_input').val()!='请输入关键字...')
+                {
+                    filename=value.name.replace(eval('/('+$('input#pos_input').val()+')/gi'),'<b class="highlight">$1</b>');
+                    tag=value.tag.replace(eval('/('+$('input#pos_input').val()+')/gi'),'<b class=highlight>$1</b>');
+                }
+                else
+                {
+                    filename=value.name;
+                    tag=value.tag;
+                }
+                
+//                if(value.is_warn == 1){
+//                    html +=	'<li style="background-color: #ffeaea;" userid="'+value.uid+'" fileid="'+value.attach_id+'" val="<p><span>标签：</span>'+tag+'</p><p><span>上传时间：</span>'+time+'</p>">'
+//                    +'	<p class="filetype"><span class="filetype_ico">'+value.extension+'</span></p>'
+//                    +'	<p class="tit" title="此文档已被警告" style="color:red;" >'+filename+'</p>'
+//                    +'	<p><span class="uploadtit"><a href="'+U('home/Space/index/')+'&uid='+value.uid+'" uid='+value.uid+'>'+value.uname+'</a></span>'+'上传<span class="uploadinfo">'+value.down_count+'人下载</span><span class="uploadinfo">'+value.read_count+'人阅读</span></p>'
+//                    +'</li>';
+//                }else{
+//                    if( tag == "无标签" ){
+//                        html +=	'<li userid="'+value.uid+'" fileid="'+value.attach_id+'" val="<p><span>标签：</span>'+tag+'</p><p><span>上传时间：</span>'+time+'</p>">'
+//                    }else{
+//                        html +=	'<li userid="'+value.uid+'" tag="'+tag+'"  fileid="'+value.attach_id+'" val="<p><span>标签：</span><a tag='+tag+' title=\'点击搜索\' href=\'javascript:;\' onclick=\'titFlesh(this);\'>'+tag+'</a></p><p><span>上传时间：</span>'+time+'</p>">'
+//                    }      
+                    html +=	'<li userid="'+value.uid+'" fileid="'+value.attach_id+'" val="<p><span>标签：</span>'+tag+'</p><p><span>上传时间：</span>'+value.cTime+'</p>">';
+                    html+='	<p class="filetype"><span class="filetype_ico">'+value.extension+'</span></p>'
+                    +'	<p class="tit" title="'+value.name+'">'+filename+'</p>'
+                    +'	<p><span class="uploadtit"><a href="'+U('home/Space/index/')+'&uid='+value.uid+'" uid='+value.uid+'>'+value.uname+'</a></span>'+'上传<span class="uploadinfo">'+value.down_count+'人下载</span><span class="uploadinfo">'+value.read_count+'人阅读</span></p>'
+                    +'</li>';
+//                }
+            });
+            userlist.html(html);
+            $('div.R-list ul#filelist li a').usercard();
+            var options = {
+                        type: 'special',
+                        point: '',                        
+                        offset_X: '',
+                        timeout : true
+                    }    
+            $('div.R-list ul#filelist li').ZY_tooltip(options);
+            userlist.find('li').eq(0).click();
+
+            //翻页方法-------------------------------------------------------------
+           /* var page_tag = 0;
+            $("#Pagination").pagination({
+                maxentries:rs.count,
+                items_per_page:user_params.page_count,
+                current_page:page-1,
+                prev_text:'上页',
+                next_text:'下页',
+                num_display_entries:3,
+                callback:function(page,jq){
+                    if(page_tag){
+                        get_file_list(page+1);
+                    }
+                    page_tag=1;
+                }
+            });
+	    */
+	  //change by yangjunwu
+	  var iCount = rs.count;
+	  var iPage = user_params.page_count;
+	  var pages = parseInt(iCount/iPage);
+	  var nowPage = page;
+	  var ihtml = '';
+	    ihtml +='<div class="app_page">';
+ 		if(pages == 0){
+		     ihtml += '';   
+		 }else{
+		    if(pages==1 || nowPage==1){
+			ihtml +=' <a id="prev" href="javascript:;" class="disabled" disabled="disabled">上一页</a> ';
+		    }else{
+			ihtml +=' <a id="prev" href="javascript:;" class="b">上一页</a> ';
+		    }
+		    ihtml +='<select class="page_selector select_file select sess" name="pages">';
+		    for(var j=1;j<=pages;j++){
+			    if(j==nowPage){
+				ihtml +='<option value="'+j+'" selected="selected">第'+j+'页</option>';
+			    }else{
+				ihtml +='<option value="'+j+'">第'+j+'页</option>';
+			    }
+		    }
+		    ihtml +='</select>';
+
+		    if(pages==1 || nowPage==pages){
+			ihtml +=' <a id="next" href="javascript:;" class="disabled" disabled="disabled">下一页</a> ';
+		    }else{
+			    ihtml +=' <a id="next" href="javascript:;" class="b">下一页</a> ';
+		    }}
+ 			          ihtml +='</div>';
+	  //change by yangjunwu 
+	   $('#Pagination').html(ihtml);
+        });
+    };
+
+    //change by yangjunwu
+    $(".page_selector").live('change',function(){
+	get_file_list($(this).val());
+    })
+     
+    $("#prev").live('click',function(){
+	if($(this).attr("disabled") == "disabled" || $(this).attr("disabled") == true) return;
+	p = parseInt($(".page_selector").val())-1;
+	get_file_list(p);
+    });
+
+    $("#next").live('click',function(){
+	 if($(this).attr("disabled") == "disabled" || $(this).attr("disabled") == true) return;
+	p = parseInt($(".page_selector").val())+1;
+	get_file_list(p);
+    });
+    //change by yangjunwu
+    $('#pos_input').keyup(function(e){
+        if(e.keyCode==13) get_file_list(1);
+    });
+    var hash = location.hash;
+    if(hash == "")hash = "#all";
+    $('.tabs a[href="'+hash+'"]').click();
+    //搜索关键字，并高亮显示
+    //下载，评论选项卡计算高度
+
+    $('iframe#file').on('load',function(){
+        ui.loading(false);
+    });
+
+    setInterval(function(){
+        try{
+            $('iframe#file').height( $('iframe#file').contents().find('html')[0].scrollHeight);
+        }catch(e){}
+
+    },300);    
+</script>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

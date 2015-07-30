@@ -1,0 +1,5 @@
+<ul>
+<volist name="fileType" id="vo">
+	<li><a href="{:U('file/File/index', array('type'=>$vo['id']))}" hidefocus="true" <eq name="vo['id']"  value="$type">class="set"</eq> id="nav_{$vo.id}" >{$vo.name}</a></li>
+</volist>
+</ul>
